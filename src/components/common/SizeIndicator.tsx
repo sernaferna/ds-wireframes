@@ -1,5 +1,7 @@
 import React from 'react';
-import { ButtonGroup, Card, Button } from 'react-bootstrap';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 export class SizeIndicator extends React.Component<{ show: boolean }> {
   render() {

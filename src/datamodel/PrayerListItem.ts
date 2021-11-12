@@ -3,4 +3,5 @@ export interface PrayerListItem {
   date: Date;
   text: string;
   completed: boolean;
+  id: string;
 }

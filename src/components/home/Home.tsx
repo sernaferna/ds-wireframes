@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import { PrayerList } from '../prayer/PrayerList';
 
 export class Home extends React.Component {
