@@ -9,6 +9,7 @@ import { Home } from './home/Home';
 import { DoPage } from './do/DoPage';
 import { Help } from './common/Help';
 import { FourOhFour } from './common/FourOhFour';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 
 export class App extends React.Component {
   render() {
@@ -27,6 +28,7 @@ export class App extends React.Component {
             <Footer />
           </div>
         </Router>
+        <ToastContainer position="bottom-end" id="main-toast-container" />
         <SizeIndicator show={true} />
       </div>
     );

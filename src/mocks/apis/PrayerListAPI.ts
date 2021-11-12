@@ -107,7 +107,7 @@ export class PrayerListAPI {
 
   public static getPrayerItemByID(id: string): PrayerListItem | null {
     const filteredItems = PrayerListAPI.items.filter((item) => {
-      item.id === id;
+      return item.id === id;
     });
 
     if (filteredItems.length === 1) {
@@ -118,14 +118,17 @@ export class PrayerListAPI {
   }
 
   public static markCompleted(id: string, completed: boolean) {
-    const filteredItems = PrayerListAPI.items.filter((item) => {
-      item.id === id;
+    let success = false;
+    PrayerListAPI.items.forEach((item) => {
+      if (item.id === id) {
+        item.completed = completed;
+        success = true;
+      }
     });
-    if (filteredItems.length !== 1) {
-      throw Error('Invalid ID');
-    }
 
-    filteredItems[0].completed = completed;
+    if (!success) {
+      throw new Error('No items found with that ID');
+    }
   }
 
   public static newItem(item: PrayerListItem) {

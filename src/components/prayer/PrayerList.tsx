@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import styled from 'styled-components';
 import { PrayerListAPI } from '../../mocks/apis/PrayerListAPI';
+import { ToastManager, ToastType } from '../common/toasts/ToastManager';
 
 const MaxHeightText = styled(Card.Text)`
   max-height: 8em;
@@ -20,6 +21,8 @@ interface PrayerListProperties {
 }
 
 export class PrayerList extends React.Component<PrayerListProperties, PrayerListState> {
+  private toastManager: ToastManager | null = null;
+
   public static defaultProps = {
     fullList: false,
   };
@@ -32,6 +35,15 @@ export class PrayerList extends React.Component<PrayerListProperties, PrayerList
     };
   }
 
+  private getToastManager() {
+    if (this.toastManager === null) {
+      const toastContainerDiv = document.getElementById('main-toast-container') as HTMLDivElement;
+      this.toastManager = new ToastManager(toastContainerDiv);
+    }
+
+    return this.toastManager;
+  }
+
   async componentDidMount() {
     const items: PrayerListItem[] = PrayerListAPI.getPrayerItems();
 
@@ -41,6 +53,13 @@ export class PrayerList extends React.Component<PrayerListProperties, PrayerList
   private handleCompleteButton(id: string, complete: boolean) {
     try {
       PrayerListAPI.markCompleted(id, complete);
+      const message = complete ? 'Successfully marked complete' : 'Successfully marked incomplete';
+      this.getToastManager().show({
+        title: 'Success!',
+        content: message,
+        duration: 5000,
+        type: ToastType.Success,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -74,7 +93,7 @@ export class PrayerList extends React.Component<PrayerListProperties, PrayerList
         const footerText = item.completed ? 'Completed' : 'Incomplete';
 
         return (
-          <Col>
+          <Col key={item.title}>
             <Card className="h-100">
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
