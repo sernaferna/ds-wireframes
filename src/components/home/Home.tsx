@@ -7,7 +7,7 @@ export class Home extends React.Component {
     return (
       <Container className="m-0">
         <h1>Devouring Scripture</h1>
-        <PrayerList fullList={false} />
+        <PrayerList fullList={false} cards={false} />
       </Container>
     );
   }

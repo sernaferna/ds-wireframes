@@ -7,6 +7,10 @@ import Navbar from 'react-bootstrap/Navbar';
 export class Header extends React.Component {
   links = [
     {
+      label: 'Prayer',
+      href: '/prayer',
+    },
+    {
       label: 'Read',
       href: '/read',
     },
