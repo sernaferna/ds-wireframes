@@ -27,6 +27,7 @@ export class Header extends React.Component {
       <Navbar bg="dark" variant="dark" expand="sm">
         <Navbar.Brand href="/">
           <Image src="logo192.png" height="50" width="50" />
+          <strong className="ms-2">Devouring Scripture</strong>
         </Navbar.Brand>
         <Container className="m-0">
           <Navbar.Toggle aria-controls="ds-header-navbar" />
