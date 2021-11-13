@@ -93,8 +93,8 @@ export class PrayerList extends React.Component<PrayerListProperties, PrayerList
         const footerText = item.completed ? 'Completed' : 'Incomplete';
 
         return (
-          <Col key={item.title}>
-            <Card className="h-100">
+          <Col key={item.title} className="mt-2">
+            <Card className="h-100 shadow">
               <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
                 <Card.Subtitle>{item.date.toLocaleDateString()}</Card.Subtitle>
