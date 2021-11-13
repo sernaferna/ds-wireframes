@@ -1,12 +1,13 @@
 import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 export class Footer extends React.Component {
   render() {
     return (
-      <footer className="d-flex flex-wrap justify-content-between align-items-center border-top fixed-bottom">
-        <p className="col-md-4 mb-0 text-muted">&copy; 2021 Devouring Scripture</p>
+      <Navbar className="fixed-bottom container-fluid" variant="dark">
+        <p className="d-none d-sm-block col-md-4 mb-0 text-muted">&copy; 2021 Devouring Scripture</p>
         <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-2 mb-md-0 me-md-auto link-dark text-decoration-none">
           <Image src="logo192.png" height="30" width="30" />
         </a>
@@ -27,7 +28,7 @@ export class Footer extends React.Component {
             </Nav.Link>
           </Nav.Item>
         </Nav>
-      </footer>
+      </Navbar>
     );
   }
 }
