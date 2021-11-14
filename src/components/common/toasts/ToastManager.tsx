@@ -22,6 +22,8 @@ export enum ToastType {
   None = 9,
 }
 
+export const TOAST_FADE_TIME = 5000;
+
 export class ToastManager {
   private toasts: ToastProps[] = [];
 

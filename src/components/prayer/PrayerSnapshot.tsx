@@ -25,7 +25,7 @@ export class PrayerSnapshot extends React.Component<PrayerSnapshotProperties> {
     });
 
     return (
-      <Card>
+      <Card className="m-1">
         <Card.Title>Prayer List</Card.Title>
         <Card.Body>{items}</Card.Body>
       </Card>

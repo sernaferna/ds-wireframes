@@ -10,7 +10,7 @@ export class Home extends React.Component {
       <Container className="m-0" fluid>
         <Row>
           <Col xs="2" className="border">
-            Sidebar
+            <PrayerList cards={false} fullList={false} />
           </Col>
           <Col xs="10" className="border">
             Main

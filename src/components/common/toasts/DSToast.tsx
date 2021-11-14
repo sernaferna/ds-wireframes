@@ -26,73 +26,64 @@ const DSToast: React.FC<ToastProps> = (props) => {
   }, [destroy, duration]);
 
   let toastIcon: any = null;
-  let color = 'text-';
-  let titleColor = 'text-';
-  let bgStyle = '';
+  let bodyStyles = 'bg-opacity-25 ';
+  let headingStyles = '';
 
   switch (type) {
     case ToastType.Info:
       toastIcon = <InfoCircleFill className="me-1 text-info" />;
-      color += 'white';
-      titleColor += 'info';
-      bgStyle = 'info';
+      bodyStyles += 'bg-info text-info';
+      headingStyles += 'bg-info text-white';
       break;
     case ToastType.Danger:
       toastIcon = <ExclamationDiamondFill className="me-1 text-danger" />;
-      color += 'white';
-      titleColor += 'danger';
-      bgStyle = 'danger';
+      bodyStyles += 'bg-danger text-danger';
+      headingStyles += 'bg-danger text-white';
       break;
     case ToastType.Dark:
       toastIcon = <InfoCircleFill className="me-1 text-dark" />;
-      color += 'white';
-      titleColor += 'dark';
-      bgStyle = 'dark';
+      bodyStyles += 'bg-dark text-dark';
+      headingStyles += 'bg-dark text-light';
       break;
     case ToastType.Light:
       toastIcon = <InfoCircleFill className="me-1 text-default" />;
-      color += 'default';
-      titleColor += 'dark';
-      bgStyle = 'light';
+      bodyStyles += 'bg-light text-dark';
+      headingStyles += 'bg-light text-dark';
       break;
     case ToastType.Primary:
       toastIcon = <InfoCircleFill className="me-1 text-primary" />;
-      color += 'white';
-      titleColor += 'primary';
-      bgStyle = 'primary';
+      bodyStyles += 'bg-primary text-primary';
+      headingStyles += 'bg-primary text-white';
       break;
     case ToastType.Secondary:
       toastIcon = <InfoCircleFill className="me-1 text-secondary" />;
-      color += 'white';
-      titleColor += 'secondary';
-      bgStyle = 'secondary';
+      bodyStyles += 'bg-secondary text-secondary';
+      headingStyles += 'bg-secondary text-white';
       break;
     case ToastType.Success:
       toastIcon = <CheckSquareFill className="me-1 text-success" />;
-      color += 'white';
-      titleColor += 'success';
-      bgStyle = 'success';
+      bodyStyles += 'bg-success text-success';
+      headingStyles += 'bg-success text-white';
       break;
     case ToastType.Warning:
       toastIcon = <ExclamationDiamondFill className="me-1 text-warning" />;
-      color += 'white';
-      titleColor += 'warning';
-      bgStyle = 'warning';
+      bodyStyles += 'bg-warning text-dark';
+      headingStyles += 'bg-warning text-white';
       break;
     default:
       toastIcon = <InfoCircleFill className="me-1 text-default" />;
-      color += 'dark';
-      titleColor += 'dark';
+      bodyStyles += 'text-normal';
+      headingStyles += 'text-normal';
   }
 
   return (
-    <Toast autohide delay={duration} bg={bgStyle}>
-      <Toast.Header className={titleColor}>
+    <Toast autohide delay={duration}>
+      <Toast.Header className={headingStyles}>
         {toastIcon}
         <strong className="me-auto">{title}</strong>
         <small>{id}</small>
       </Toast.Header>
-      <Toast.Body className={color}>{content}</Toast.Body>
+      <Toast.Body className={bodyStyles}>{content}</Toast.Body>
     </Toast>
   );
 };

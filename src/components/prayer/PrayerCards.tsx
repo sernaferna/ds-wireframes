@@ -1,6 +1,6 @@
 import React from 'react';
 import { PrayerListItem } from '../../datamodel/PrayerListItem';
-import { ToastManager, ToastType } from '../common/toasts/ToastManager';
+import { ToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 import { PrayerListAPI } from '../../mocks/apis/PrayerListAPI';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -35,7 +35,7 @@ export class PrayerCards extends React.Component<PrayerCardsProps> {
       this.getToastManager().show({
         title: 'Success!',
         content: message,
-        duration: 5000,
+        duration: TOAST_FADE_TIME,
         type: ToastType.Success,
       });
     } catch (err) {
