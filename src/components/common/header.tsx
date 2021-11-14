@@ -1,10 +1,32 @@
 import React from 'react';
+import { Offcanvas } from 'react-bootstrap';
+import { Gear } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { Settings } from './Settings';
+import styled from 'styled-components';
 
-export class Header extends React.Component {
+const PointerGear = styled(Gear)`
+  cursor: pointer;
+`;
+
+interface HeaderState {
+  showSettings: boolean;
+}
+
+export class Header extends React.Component<{}, HeaderState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      showSettings: false,
+    };
+
+    this.toggleSettingsState = this.toggleSettingsState.bind(this);
+  }
+
   links = [
     {
       label: 'Prayer',
@@ -26,6 +48,12 @@ export class Header extends React.Component {
     );
   });
 
+  private toggleSettingsState() {
+    this.setState((prevState) => ({
+      showSettings: !prevState.showSettings,
+    }));
+  }
+
   render() {
     return (
       <Navbar bg="dark" variant="dark" expand="sm">
@@ -33,12 +61,24 @@ export class Header extends React.Component {
           <Image src="logo192.png" height="50" width="50" />
           <strong className="ms-2">Devouring Scripture</strong>
         </Navbar.Brand>
-        <Container className="m-0">
+        <Container className="m-0 w-100">
           <Navbar.Toggle aria-controls="ds-header-navbar" />
           <Navbar.Collapse id="ds-header-navbar">
-            <Nav className="me-auto">{this.links}</Nav>
+            <Nav className="m-0">{this.links}</Nav>
+            <Navbar.Text className="w-100 m-0 text-end">
+              <PointerGear className="text-light m-0" width="25" height="25" onClick={this.toggleSettingsState} />
+            </Navbar.Text>
           </Navbar.Collapse>
         </Container>
+
+        <Offcanvas show={this.state.showSettings} onHide={this.toggleSettingsState} placement="end">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Settings</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Settings />
+          </Offcanvas.Body>
+        </Offcanvas>
       </Navbar>
     );
   }
