@@ -10,7 +10,7 @@ import { DoPage } from './do/DoPage';
 import { Help } from './common/Help';
 import { FourOhFour } from './common/FourOhFour';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { PrayerList } from './prayer/PrayerList';
+import { PrayerPage } from './prayer/PrayerPage';
 
 export class App extends React.Component {
   render() {
@@ -21,7 +21,7 @@ export class App extends React.Component {
             <Header />
             <Switch>
               <Route key="/" exact path="/" component={Home} />
-              <Route key="/prayer" path="/prayer" render={() => <PrayerList fullList={true} cards={true} />} />
+              <Route key="/prayer" path="/prayer" component={PrayerPage} />
               <Route key="/read" path="/read" component={ReadPage} />
               <Route key="/do" path="/do" component={DoPage} />
               <Route key="/help" path="/help" component={Help} />
