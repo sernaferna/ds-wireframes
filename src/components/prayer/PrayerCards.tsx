@@ -8,7 +8,9 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import styled from 'styled-components';
 
-const MaxHeightText = styled(Card.Text)`
+const MaxHeightText = styled(Card.Text).attrs(() => ({
+  className: 'overflow-auto',
+}))`
   max-height: 8em;
 `;
 
@@ -72,7 +74,7 @@ export class PrayerCards extends React.Component<PrayerCardsProps> {
             <Card.Body>
               <Card.Title>{item.title}</Card.Title>
               <Card.Subtitle>{item.date.toLocaleDateString()}</Card.Subtitle>
-              <MaxHeightText className="overflow-auto">{item.text}</MaxHeightText>
+              <MaxHeightText>{item.text}</MaxHeightText>
               {submitButton}
               <Card.Footer>{footerText}</Card.Footer>
             </Card.Body>

@@ -4,7 +4,9 @@ import Form from 'react-bootstrap/Form';
 import { PrayerListItem } from '../../datamodel/PrayerListItem';
 import styled from 'styled-components';
 
-const ItemText = styled.p`
+const ItemText = styled.p.attrs(() => ({
+  className: 'overflow-hidden',
+}))`
   height: 1.1em;
 `;
 
@@ -16,7 +18,7 @@ export class PrayerSnapshot extends React.Component<PrayerSnapshotProperties> {
   render() {
     const items = this.props.items.map((item) => {
       const itemBody = (
-        <ItemText className="overflow-hidden">
+        <ItemText>
           <strong className="me-1">{item.title}</strong>
           {item.text}
         </ItemText>

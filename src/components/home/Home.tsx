@@ -2,33 +2,63 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Form from 'react-bootstrap/Form';
+import Collapse from 'react-bootstrap/Collapse';
 import { PrayerList } from '../prayer/PrayerList';
-import Accordion from 'react-bootstrap/Accordion';
+import { SidebarHeading } from '../styled-components/StyledComponents';
+import { HomeSettings } from './HomeSettings';
 
-export class Home extends React.Component {
+interface HomePageState {
+  homeSettingsShow: boolean;
+  prayerListShow: boolean;
+}
+
+export class Home extends React.Component<{}, HomePageState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      homeSettingsShow: true,
+      prayerListShow: true,
+    };
+
+    this.showHideHomeSettings = this.showHideHomeSettings.bind(this);
+    this.showHidePrayer = this.showHidePrayer.bind(this);
+  }
+
+  private showHideHomeSettings() {
+    this.setState((prevState) => ({
+      homeSettingsShow: !prevState.homeSettingsShow,
+    }));
+  }
+
+  private showHidePrayer() {
+    this.setState((prevState) => ({
+      prayerListShow: !prevState.prayerListShow,
+    }));
+  }
+
   render() {
     return (
       <Container className="m-0" fluid>
         <Row>
           <Col xs="2" className="border">
-            <Accordion defaultActiveKey="0" className="accordion-flush">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Configuration</Accordion.Header>
-                <Accordion.Body>
-                  <Form.Check type="checkbox" id="showAllCheck" label="Some Setting" />
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+            <SidebarHeading onClick={this.showHideHomeSettings} aria-controls="home-page-settings" aria-expanded={this.state.homeSettingsShow}>
+              Configuration
+            </SidebarHeading>
+            <Collapse in={this.state.homeSettingsShow}>
+              <div id="home-page-settings">
+                <HomeSettings />
+              </div>
+            </Collapse>
 
-            <Accordion defaultActiveKey="0" className="accordion-flush">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Prayer List</Accordion.Header>
-                <Accordion.Body className="p-0">
-                  <PrayerList cards={false} fullList={false} />
-                </Accordion.Body>
-              </Accordion.Item>
-            </Accordion>
+            <SidebarHeading onClick={this.showHidePrayer} aria-controls="prayer-list" aria-expanded={this.state.prayerListShow}>
+              Prayer List
+            </SidebarHeading>
+            <Collapse in={this.state.prayerListShow}>
+              <div id="prayer-list">
+                <PrayerList cards={false} fullList={false} />
+              </div>
+            </Collapse>
           </Col>
           <Col xs="10" className="border">
             Main

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Offcanvas } from 'react-bootstrap';
+import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Gear } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
@@ -8,7 +8,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Settings } from './Settings';
 import styled from 'styled-components';
 
-const PointerGear = styled(Gear)`
+const PointerGear = styled(Gear).attrs(() => ({
+  className: 'text-light m-0',
+}))`
   cursor: pointer;
 `;
 
@@ -28,6 +30,10 @@ export class Header extends React.Component<{}, HeaderState> {
   }
 
   links = [
+    {
+      label: 'Home',
+      href: '/',
+    },
     {
       label: 'Prayer',
       href: '/prayer',
@@ -66,7 +72,7 @@ export class Header extends React.Component<{}, HeaderState> {
           <Navbar.Collapse id="ds-header-navbar">
             <Nav className="m-0">{this.links}</Nav>
             <Navbar.Text className="w-100 m-0 text-end">
-              <PointerGear className="text-light m-0" width="25" height="25" onClick={this.toggleSettingsState} />
+              <PointerGear width="25" height="25" onClick={this.toggleSettingsState} />
             </Navbar.Text>
           </Navbar.Collapse>
         </Container>
