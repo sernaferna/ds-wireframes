@@ -1,10 +1,9 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Collapse from 'react-bootstrap/Collapse';
 import { PrayerList } from '../prayer/PrayerList';
-import { SidebarHeading } from '../styled-components/StyledComponents';
+import { SidebarHeading, PageMainContainer } from '../styled-components/StyledComponents';
 import { HomeSettings } from './HomeSettings';
 
 interface HomePageState {
@@ -39,7 +38,7 @@ export class Home extends React.Component<{}, HomePageState> {
 
   render() {
     return (
-      <Container className="m-0" fluid>
+      <PageMainContainer>
         <Row>
           <Col xs="2" className="border">
             <SidebarHeading onClick={this.showHideHomeSettings} aria-controls="home-page-settings" aria-expanded={this.state.homeSettingsShow}>
@@ -64,7 +63,7 @@ export class Home extends React.Component<{}, HomePageState> {
             Main
           </Col>
         </Row>
-      </Container>
+      </PageMainContainer>
     );
   }
 }

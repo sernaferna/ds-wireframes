@@ -1,10 +1,9 @@
 import React from 'react';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { PrayerList } from './PrayerList';
 import Collapse from 'react-bootstrap/Collapse';
-import { SidebarHeading } from '../styled-components/StyledComponents';
+import { SidebarHeading, PageMainContainer } from '../styled-components/StyledComponents';
 import { PrayerSettings } from './PrayerSettings';
 
 interface PrayerPageState {
@@ -30,7 +29,7 @@ export class PrayerPage extends React.Component<{}, PrayerPageState> {
 
   render() {
     return (
-      <Container className="0" fluid>
+      <PageMainContainer>
         <Row>
           <Col xs="2">
             <SidebarHeading onClick={this.prayerSettingsExpand} aria-controls="prayer-settings-collapse" aria-expanded={this.state.prayerSettingsShow}>
@@ -46,7 +45,7 @@ export class PrayerPage extends React.Component<{}, PrayerPageState> {
             <PrayerList cards={true} fullList={true} />
           </Col>
         </Row>
-      </Container>
+      </PageMainContainer>
     );
   }
 }
