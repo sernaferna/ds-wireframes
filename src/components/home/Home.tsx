@@ -1,10 +1,8 @@
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Collapse from 'react-bootstrap/Collapse';
 import { PrayerList } from '../prayer/PrayerList';
-import { SidebarHeading, PageMainContainer } from '../styled-components/StyledComponents';
+import { PageMainContainer, PageMainRow, PageMainContentCol, PageSidebarContainerCol } from '../styled-components/StyledComponents';
 import { HomeSettings } from './HomeSettings';
+import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 
 interface HomePageState {
   homeSettingsShow: boolean;
@@ -39,30 +37,18 @@ export class Home extends React.Component<{}, HomePageState> {
   render() {
     return (
       <PageMainContainer>
-        <Row>
-          <Col xs="2" className="border">
-            <SidebarHeading clickFunction={this.showHideHomeSettings} collapseDiv="home-page-settings" visible={this.state.homeSettingsShow}>
-              Configuration
-            </SidebarHeading>
-            <Collapse in={this.state.homeSettingsShow}>
-              <div id="home-page-settings">
-                <HomeSettings />
-              </div>
-            </Collapse>
+        <PageMainRow>
+          <PageSidebarContainerCol>
+            <SidebarCollapseWidget title="Configuration" visible={this.state.homeSettingsShow} clickFunction={this.showHideHomeSettings}>
+              <HomeSettings />
+            </SidebarCollapseWidget>
 
-            <SidebarHeading clickFunction={this.showHidePrayer} collapseDiv="prayer-list" visible={this.state.prayerListShow}>
-              Prayer List
-            </SidebarHeading>
-            <Collapse in={this.state.prayerListShow}>
-              <div id="prayer-list">
-                <PrayerList cards={false} fullList={false} />
-              </div>
-            </Collapse>
-          </Col>
-          <Col xs="10" className="border">
-            Main
-          </Col>
-        </Row>
+            <SidebarCollapseWidget title="Prayer List" visible={this.state.prayerListShow} clickFunction={this.showHidePrayer}>
+              <PrayerList cards={false} fullList={false} />
+            </SidebarCollapseWidget>
+          </PageSidebarContainerCol>
+          <PageMainContentCol>Main</PageMainContentCol>
+        </PageMainRow>
       </PageMainContainer>
     );
   }

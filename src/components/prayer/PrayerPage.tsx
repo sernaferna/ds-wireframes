@@ -1,10 +1,8 @@
 import React from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { PrayerList } from './PrayerList';
-import Collapse from 'react-bootstrap/Collapse';
-import { SidebarHeading, PageMainContainer } from '../styled-components/StyledComponents';
+import { PageMainContainer, PageMainRow, PageSidebarContainerCol, PageMainContentCol } from '../styled-components/StyledComponents';
 import { PrayerSettings } from './PrayerSettings';
+import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 
 interface PrayerPageState {
   prayerSettingsShow: boolean;
@@ -30,21 +28,16 @@ export class PrayerPage extends React.Component<{}, PrayerPageState> {
   render() {
     return (
       <PageMainContainer>
-        <Row>
-          <Col xs="2">
-            <SidebarHeading clickFunction={this.prayerSettingsExpand} collapseDiv="prayer-settings-collapse" visible={this.state.prayerSettingsShow}>
-              Prayer Page Settings
-            </SidebarHeading>
-            <Collapse in={this.state.prayerSettingsShow}>
-              <div id="prayer-settings-collapse">
-                <PrayerSettings />
-              </div>
-            </Collapse>
-          </Col>
-          <Col xs="10">
+        <PageMainRow>
+          <PageSidebarContainerCol>
+            <SidebarCollapseWidget title="Prayer Page Settings" visible={this.state.prayerSettingsShow} clickFunction={this.prayerSettingsExpand}>
+              <PrayerSettings />
+            </SidebarCollapseWidget>
+          </PageSidebarContainerCol>
+          <PageMainContentCol>
             <PrayerList cards={true} fullList={true} />
-          </Col>
-        </Row>
+          </PageMainContentCol>
+        </PageMainRow>
       </PageMainContainer>
     );
   }

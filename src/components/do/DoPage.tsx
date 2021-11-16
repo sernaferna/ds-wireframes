@@ -1,9 +1,7 @@
 import React from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Collapse from 'react-bootstrap/Collapse';
-import { PageMainContainer, SidebarHeading } from '../styled-components/StyledComponents';
+import { PageMainContainer, PageMainRow, PageSidebarContainerCol, PageMainContentCol } from '../styled-components/StyledComponents';
 import { DoPageSettings } from './DoPageSettings';
+import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 
 interface DoPageState {
   showSettings: boolean;
@@ -29,19 +27,16 @@ export class DoPage extends React.Component<{}, DoPageState> {
   render() {
     return (
       <PageMainContainer>
-        <Row>
-          <Col xs="2">
-            <SidebarHeading clickFunction={this.toggleSettings} collapseDiv="do-page-settings" visible={this.state.showSettings}>
-              Settings
-            </SidebarHeading>
-            <Collapse in={this.state.showSettings}>
-              <div id="do-page-settings">
-                <DoPageSettings />
-              </div>
-            </Collapse>
-          </Col>
-          <Col xs="10"></Col>
-        </Row>
+        <PageMainRow>
+          <PageSidebarContainerCol>
+            <SidebarCollapseWidget title="Settings" visible={this.state.showSettings} clickFunction={this.toggleSettings}>
+              <DoPageSettings />
+            </SidebarCollapseWidget>
+          </PageSidebarContainerCol>
+          <PageMainContentCol>
+            <h1>Do Page</h1>
+          </PageMainContentCol>
+        </PageMainRow>
       </PageMainContainer>
     );
   }
