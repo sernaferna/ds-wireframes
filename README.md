@@ -7,6 +7,6 @@ Leverages the following technologies:
 - `react` (and the other obvious stuff like `react-dom` etc.)
 - Typescript (just because)
 - `bootstrap`
-- `react-bootstrap` and `react-bootstrap-icons` (because it's easier)
+- `react-bootstrap` and `react-bootstrap-icons` (because it's easier), along with `styled-components`
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
