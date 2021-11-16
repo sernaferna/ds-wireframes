@@ -31,7 +31,7 @@ export class DoPage extends React.Component<{}, DoPageState> {
       <PageMainContainer>
         <Row>
           <Col xs="2">
-            <SidebarHeading onClick={this.toggleSettings} aria-controls="do-page-settings" aria-expanded={this.state.showSettings}>
+            <SidebarHeading clickFunction={this.toggleSettings} collapseDiv="do-page-settings" visible={this.state.showSettings}>
               Settings
             </SidebarHeading>
             <Collapse in={this.state.showSettings}>

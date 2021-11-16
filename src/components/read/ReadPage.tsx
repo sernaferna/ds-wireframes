@@ -32,7 +32,7 @@ export class ReadPage extends React.Component<{}, ReadPageState> {
       <PageMainContainer>
         <Row>
           <Col xs="2">
-            <SidebarHeading onClick={this.toggleSettings} aria-controls="readPageSettings" aria-expanded={this.state.showSettings}>
+            <SidebarHeading clickFunction={this.toggleSettings} collapseDiv="readPageSettings" visible={this.state.showSettings}>
               Settings
             </SidebarHeading>
             <Collapse in={this.state.showSettings}>

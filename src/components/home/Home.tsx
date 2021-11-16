@@ -41,7 +41,7 @@ export class Home extends React.Component<{}, HomePageState> {
       <PageMainContainer>
         <Row>
           <Col xs="2" className="border">
-            <SidebarHeading onClick={this.showHideHomeSettings} aria-controls="home-page-settings" aria-expanded={this.state.homeSettingsShow}>
+            <SidebarHeading clickFunction={this.showHideHomeSettings} collapseDiv="home-page-settings" visible={this.state.homeSettingsShow}>
               Configuration
             </SidebarHeading>
             <Collapse in={this.state.homeSettingsShow}>
@@ -50,7 +50,7 @@ export class Home extends React.Component<{}, HomePageState> {
               </div>
             </Collapse>
 
-            <SidebarHeading onClick={this.showHidePrayer} aria-controls="prayer-list" aria-expanded={this.state.prayerListShow}>
+            <SidebarHeading clickFunction={this.showHidePrayer} collapseDiv="prayer-list" visible={this.state.prayerListShow}>
               Prayer List
             </SidebarHeading>
             <Collapse in={this.state.prayerListShow}>

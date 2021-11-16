@@ -32,7 +32,7 @@ export class PrayerPage extends React.Component<{}, PrayerPageState> {
       <PageMainContainer>
         <Row>
           <Col xs="2">
-            <SidebarHeading onClick={this.prayerSettingsExpand} aria-controls="prayer-settings-collapse" aria-expanded={this.state.prayerSettingsShow}>
+            <SidebarHeading clickFunction={this.prayerSettingsExpand} collapseDiv="prayer-settings-collapse" visible={this.state.prayerSettingsShow}>
               Prayer Page Settings
             </SidebarHeading>
             <Collapse in={this.state.prayerSettingsShow}>
