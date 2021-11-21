@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import prayerReducer from './PrayerSlice';
+import uiReducer from './UISlice';
 
 const store = configureStore({
   reducer: {
     prayer: prayerReducer,
+    ui: uiReducer,
   },
 });
 
