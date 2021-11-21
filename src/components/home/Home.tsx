@@ -1,5 +1,5 @@
 import React from 'react';
-import { PrayerList } from '../prayer/PrayerList';
+import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { PageMainContainer, PageMainRow, PageMainContentCol, PageSidebarContainerCol } from '../styled-components/StyledComponents';
 import { HomeSettings } from './HomeSettings';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
@@ -44,7 +44,7 @@ export class Home extends React.Component<{}, HomePageState> {
             </SidebarCollapseWidget>
 
             <SidebarCollapseWidget title="Prayer List" visible={this.state.prayerListShow} clickFunction={this.showHidePrayer}>
-              <PrayerList cards={false} fullList={false} />
+              <PrayerSnapshot />
             </SidebarCollapseWidget>
           </PageSidebarContainerCol>
           <PageMainContentCol>Main</PageMainContentCol>
