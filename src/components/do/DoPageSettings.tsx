@@ -1,7 +1,5 @@
 import React from 'react';
 
-export class DoPageSettings extends React.Component {
-  render() {
-    return <h6>Settings</h6>;
-  }
+export function DoPageSettings() {
+  return <h6>Settings</h6>;
 }

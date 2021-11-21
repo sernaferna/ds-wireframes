@@ -12,27 +12,25 @@ import { FourOhFour } from './common/FourOhFour';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import { PrayerPage } from './prayer/PrayerPage';
 
-export class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Router history={history}>
-          <div>
-            <Header />
-            <Switch>
-              <Route key="/" exact path="/" component={Home} />
-              <Route key="/prayer" path="/prayer" component={PrayerPage} />
-              <Route key="/read" path="/read" component={ReadPage} />
-              <Route key="/do" path="/do" component={DoPage} />
-              <Route key="/help" path="/help" component={Help} />
-              <Route path="*" component={FourOhFour} />
-            </Switch>
-            <Footer />
-          </div>
-        </Router>
-        <ToastContainer position="bottom-end" id="main-toast-container" />
-        <SizeIndicator show={true} />
-      </div>
-    );
-  }
+export function App() {
+  return (
+    <div>
+      <Router history={history}>
+        <div>
+          <Header />
+          <Switch>
+            <Route key="/" exact path="/" component={Home} />
+            <Route key="/prayer" path="/prayer" component={PrayerPage} />
+            <Route key="/read" path="/read" component={ReadPage} />
+            <Route key="/do" path="/do" component={DoPage} />
+            <Route key="/help" path="/help" component={Help} />
+            <Route path="*" component={FourOhFour} />
+          </Switch>
+          <Footer />
+        </div>
+      </Router>
+      <ToastContainer position="bottom-end" id="main-toast-container" />
+      <SizeIndicator show={true} />
+    </div>
+  );
 }

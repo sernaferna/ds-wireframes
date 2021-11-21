@@ -1,7 +1,5 @@
 import React from 'react';
 
-export class Settings extends React.Component {
-  render() {
-    return <div>Settings</div>;
-  }
+export function Settings() {
+  return <div>Settings</div>;
 }
