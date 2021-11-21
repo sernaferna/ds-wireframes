@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { PrayerListItem } from '../datamodel/PrayerListItem';
 import { PrayerListAPI } from '../mocks/apis/PrayerListAPI';
+import { RootState } from './Store';
 
 export interface IPrayerState {
   loaded: boolean;
@@ -43,3 +44,11 @@ export const prayerSlice = createSlice({
 export const { markComplete } = prayerSlice.actions;
 
 export default prayerSlice.reducer;
+
+// selectors
+export const selectPrayerState = (state: RootState) => state.prayer;
+
+export const selectPrayerStoreActiveitems = createSelector(selectPrayerState, (pState) => ({
+  loaded: pState.loaded,
+  items: pState.items.filter((item) => !item.completed),
+}));
