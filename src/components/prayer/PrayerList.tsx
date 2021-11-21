@@ -41,7 +41,7 @@ export class PrayerList extends React.Component<PrayerListProperties, PrayerList
     if (this.props.cards) {
       return <PrayerCards items={items} />;
     } else {
-      return <PrayerSnapshot items={items} />;
+      return <PrayerSnapshot />;
     }
   }
 }
