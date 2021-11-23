@@ -47,7 +47,10 @@ export class Home extends React.Component<{}, HomePageState> {
               <PrayerSnapshot />
             </SidebarCollapseWidget>
           </PageSidebarContainerCol>
-          <PageMainContentCol>Main</PageMainContentCol>
+          <PageMainContentCol>
+            <h1>Main Page</h1>
+            <p>To Do</p>
+          </PageMainContentCol>
         </PageMainRow>
       </PageMainContainer>
     );
