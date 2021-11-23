@@ -103,7 +103,7 @@ export function PrayerCards() {
         <Card className="h-100 shadow">
           <Card.Body>
             <Card.Title>{item.title}</Card.Title>
-            <Card.Subtitle>{item.date.toLocaleDateString()}</Card.Subtitle>
+            <Card.Subtitle>{item.date}</Card.Subtitle>
             <MaxHeightText>{item.text}</MaxHeightText>
             {submitButton}
             <Card.Footer>{footerText}</Card.Footer>
