@@ -3,7 +3,7 @@ import prayerReducer from './PrayerSlice';
 import uiReducer from './UISlice';
 import { combineReducers } from 'redux';
 import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore } from 'redux-persist';
+import { persistReducer, persistStore, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 
 export const rootReducer = combineReducers({
   prayer: prayerReducer,
@@ -22,7 +22,9 @@ const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
+      },
     }),
 });
 
