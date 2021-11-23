@@ -1,8 +1,8 @@
 import React from 'react';
-import { PrayerList } from './PrayerList';
 import { PageMainContainer, PageMainRow, PageSidebarContainerCol, PageMainContentCol } from '../styled-components/StyledComponents';
 import { PrayerSettings } from './PrayerSettings';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
+import { PrayerCards } from './PrayerCards';
 
 interface PrayerPageState {
   prayerSettingsShow: boolean;
@@ -35,7 +35,7 @@ export class PrayerPage extends React.Component<{}, PrayerPageState> {
             </SidebarCollapseWidget>
           </PageSidebarContainerCol>
           <PageMainContentCol>
-            <PrayerList cards={true} fullList={true} />
+            <PrayerCards />
           </PageMainContentCol>
         </PageMainRow>
       </PageMainContainer>

@@ -1,6 +1,6 @@
 export interface PrayerListItem {
   title: string;
-  date: Date;
+  date: string;
   text: string;
   completed: boolean;
   id: string;

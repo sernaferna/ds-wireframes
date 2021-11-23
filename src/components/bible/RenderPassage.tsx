@@ -11,13 +11,11 @@ interface PassageMD {
   version: string;
 }
 
-export class RenderPassage extends React.Component<{ metadata: PassageMD }> {
-  render() {
-    if (this.props.metadata.renderType === RenderType.External) {
-      const url = `https://biblegateway.com/passage/?search=${this.props.metadata.passage}&version=${this.props.metadata.version}`;
-      return <iframe src={url} height="500px" className="m-2 shadow" title={this.props.metadata.passage}></iframe>;
-    }
-
-    return <div className="shadow">{this.props.metadata.passage}</div>;
+export function RenderPassage(props: PassageMD) {
+  if (props.renderType === RenderType.External) {
+    const url = `https://biblegateway.com/passage/?search=${props.passage}&version=${props.version}`;
+    return <iframe src={url} height="500px" className="m-2 shadow" title={props.passage}></iframe>;
   }
+
+  return <div className="shadow">{props.passage}</div>;
 }

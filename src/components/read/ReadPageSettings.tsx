@@ -1,7 +1,5 @@
 import React from 'react';
 
-export class ReadPageSettings extends React.Component {
-  render() {
-    return <h6>Read Page Settings</h6>;
-  }
+export function ReadPageSettings() {
+  return <h6>Read Page Settings</h6>;
 }

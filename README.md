@@ -8,5 +8,6 @@ Leverages the following technologies:
 - Typescript (just because)
 - `bootstrap`
 - `react-bootstrap` and `react-bootstrap-icons` (because it's easier), along with `styled-components`
+- `redux` and `redux-toolkit` (even though it's all just fake state)
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
