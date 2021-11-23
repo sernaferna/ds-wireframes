@@ -2,6 +2,9 @@ import React from 'react';
 import { PageMainContainer, PageMainRow, PageSidebarContainerCol, PageMainContentCol } from '../styled-components/StyledComponents';
 import { DoPageSettings } from './DoPageSettings';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
+import { ActionsWidget } from './ActionsWidget';
+import Calendar from 'react-calendar';
+import './Calendar.css';
 
 interface DoPageState {
   showSettings: boolean;
@@ -34,7 +37,8 @@ export class DoPage extends React.Component<{}, DoPageState> {
             </SidebarCollapseWidget>
           </PageSidebarContainerCol>
           <PageMainContentCol>
-            <h1>Do Page</h1>
+            <Calendar />
+            <ActionsWidget />
           </PageMainContentCol>
         </PageMainRow>
       </PageMainContainer>
