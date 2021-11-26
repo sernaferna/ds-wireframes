@@ -1,11 +1,11 @@
 import React from 'react';
-import { useGetByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
+import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import Form from 'react-bootstrap/Form';
 import { UserAttributes } from '../../datamodel/User';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 
 export function Settings() {
-  const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
+  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
   if (isLoading) {

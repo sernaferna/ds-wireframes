@@ -1,11 +1,11 @@
 import React from 'react';
-import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
-import { UserAttributes } from '../../datamodel/User';
-import { DoPageSettings } from './DoPageSettings';
+import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { PrayerSettings } from './PrayerSettings';
+import { UserAttributes } from '../../datamodel/User';
 
-export function DoSidebar() {
+export function PrayerSidebar() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
@@ -16,17 +16,19 @@ export function DoSidebar() {
     return <ErrorLoadingDataMessage />;
   }
 
-  const showSettings = data ? data.settings.actions.showSettings : true;
+  const showSettings = data!.settings.prayer.showSettings;
 
   const toggleSettings = () => {
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.actions.showSettings = !newUser.settings.actions.showSettings;
+    newUser.settings.prayer.showSettings = !newUser.settings.prayer.showSettings;
     update(newUser);
   };
 
   return (
-    <SidebarCollapseWidget title="settings" visible={showSettings} clickFunction={toggleSettings}>
-      <DoPageSettings />
-    </SidebarCollapseWidget>
+    <>
+      <SidebarCollapseWidget title="Prayer Page Settings" visible={showSettings} clickFunction={toggleSettings}>
+        <PrayerSettings />
+      </SidebarCollapseWidget>
+    </>
   );
 }

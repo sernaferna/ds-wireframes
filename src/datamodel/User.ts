@@ -14,5 +14,9 @@ export interface UserAttributes {
       showActions: boolean;
       showPrayers: boolean;
     };
+    prayer: {
+      showSettings: boolean;
+      showAllItems: boolean;
+    };
   };
 }

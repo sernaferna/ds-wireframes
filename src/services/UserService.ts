@@ -6,7 +6,7 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/user/' }),
   tagTypes: ['user'],
   endpoints: (builder) => ({
-    getById: builder.query<UserAttributes, string>({
+    getUserById: builder.query<UserAttributes, string>({
       query: (id) => id,
       providesTags: ['user'],
     }),
@@ -23,6 +23,6 @@ export const userApi = createApi({
   }),
 });
 
-export const { useGetByIdQuery, useUpdateUserMutation } = userApi;
+export const { useGetUserByIdQuery, useUpdateUserMutation } = userApi;
 
 export const HARDCODED_USER_ID = '2f740108-8596-4a8a-b334-518ab34a8c50';

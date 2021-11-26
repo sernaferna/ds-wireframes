@@ -6,7 +6,9 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
+import { ErrorLoadingDataMessage } from '../common/loading';
 import { useGetAllItemsQuery, useMarkReadMutation, useMarkUnreadMutation } from '../../services/PrayerService';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto flex-grow-1',
@@ -48,7 +50,12 @@ export function PrayerCards() {
   const [markRead] = useMarkReadMutation();
   const [markUnread] = useMarkUnreadMutation();
 
-  if (isLoading) {
+  const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const userData = tempObj.data;
+  const userIsLoading = tempObj.isLoading;
+  const userError = tempObj.error;
+
+  if (isLoading || userIsLoading) {
     return (
       <CardContainerRow>
         {createPlaceholderCard()}
@@ -57,8 +64,8 @@ export function PrayerCards() {
     );
   }
 
-  if (error) {
-    return <div>Error!</div>;
+  if (error || userError) {
+    return <ErrorLoadingDataMessage />;
   }
 
   const handleCompleteButton = (id: string, complete: boolean) => {
@@ -80,7 +87,8 @@ export function PrayerCards() {
     }
   };
 
-  const items = data!.map((item) => {
+  const rawItems = userData!.settings.prayer.showAllItems ? data!.slice() : data!.filter((item) => !item.completed);
+  const items = rawItems.map((item) => {
     const submitButton = item.completed ? (
       <Button
         className="mt-auto"

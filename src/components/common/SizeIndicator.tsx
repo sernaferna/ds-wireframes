@@ -3,10 +3,10 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { DisplayFill, LaptopFill, PhoneFill, PhoneLandscapeFill, TabletFill } from 'react-bootstrap-icons';
-import { useGetByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 
 export function SizeIndicator() {
-  const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
+  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   if (isLoading) {
     return null;
   }

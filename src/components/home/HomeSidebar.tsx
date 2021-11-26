@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGetByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
+import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import { UserAttributes } from '../../datamodel/User';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { HomeSettings } from './HomeSettings';
@@ -8,7 +8,7 @@ import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export function HomeSidebar() {
-  const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
+  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
   if (isLoading) {
