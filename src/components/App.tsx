@@ -29,7 +29,9 @@ export function App() {
           <Footer />
         </div>
       </Router>
-      <ToastContainer position="bottom-end" id="main-toast-container" />
+      <div aria-live="polite" aria-atomic="true">
+        <ToastContainer position="bottom-end" id="main-toast-container" />
+      </div>
       <SizeIndicator show={true} />
     </div>
   );

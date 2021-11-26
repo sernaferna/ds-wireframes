@@ -52,3 +52,14 @@ export class ToastManager {
     ReactDOM.render(toastsList, this.containerRef);
   }
 }
+
+let toastManager: ToastManager | null = null;
+
+export const getToastManager = (): ToastManager => {
+  if (!toastManager) {
+    const containerDiv = document.getElementById('main-toast-container') as HTMLDivElement;
+    toastManager = new ToastManager(containerDiv);
+  }
+
+  return toastManager;
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
+import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/ToastManager';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -37,7 +37,6 @@ const createPlaceholderCard = () => {
 };
 
 export function PrayerCards() {
-  let toastManager: ToastManager | null = null;
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
   const [markUnread] = useMarkUnreadMutation();
@@ -54,15 +53,6 @@ export function PrayerCards() {
   if (error) {
     return <div>Error!</div>;
   }
-
-  const getToastManager = () => {
-    if (toastManager === null) {
-      const toastContainerDiv = document.getElementById('main-toast-container') as HTMLDivElement;
-      toastManager = new ToastManager(toastContainerDiv);
-    }
-
-    return toastManager;
-  };
 
   const handleCompleteButton = (id: string, complete: boolean) => {
     try {
