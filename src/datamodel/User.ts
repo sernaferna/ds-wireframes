@@ -5,6 +5,7 @@ export interface UserAttributes {
   signupDate: string;
   id: string;
   settings: {
+    showSizeIndicator: boolean;
     actions: {
       showSettings: boolean;
     };
