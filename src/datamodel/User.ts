@@ -8,5 +8,10 @@ export interface UserAttributes {
     actions: {
       showSettings: boolean;
     };
+    home: {
+      showSettings: boolean;
+      showActions: boolean;
+      showPrayers: boolean;
+    };
   };
 }
