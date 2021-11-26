@@ -56,11 +56,11 @@ export function Header() {
         <Image src="logo192.png" height="50" width="50" />
         <strong className="ms-2">Devouring Scripture</strong>
       </Navbar.Brand>
-      <Container className="m-0 w-100">
+      <Container fluid>
         <Navbar.Toggle aria-controls="ds-header-navbar" />
-        <Navbar.Collapse id="ds-header-navbar">
+        <Navbar.Collapse id="ds-header-navbar" className="w-100">
           <Nav className="m-0">{links}</Nav>
-          <Navbar.Text className="w-100 m-0 text-end">
+          <Navbar.Text className="w-100 m-2 text-end">
             <PointerGear width="25" height="25" onClick={toggleSettings} />
           </Navbar.Text>
         </Navbar.Collapse>
