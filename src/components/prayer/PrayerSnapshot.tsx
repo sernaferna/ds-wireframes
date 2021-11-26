@@ -10,9 +10,9 @@ const ItemText = styled.p.attrs(() => ({}))`
 `;
 
 const ItemTitle = styled.div.attrs(() => ({
-  className: 'badge rounded-pill bg-secondary overflow-hidden me-1',
+  className: 'overflow-hidden fw-bold',
 }))`
-  max-width: 33%;
+  max-width: 100%;
   height: 1.2em;
 `;
 
@@ -48,18 +48,23 @@ export function PrayerSnapshot() {
   };
 
   const renderedItems = unreadItems.map((item) => {
-    const itemBody = (
-      <ItemText>
-        <ItemTitle>{item.title}</ItemTitle>
-        {item.text}
-      </ItemText>
+    const itemBody = <ItemText>{item.text}</ItemText>;
+
+    const itemTitle = <ItemTitle>{item.title}</ItemTitle>;
+
+    return (
+      <>
+        <Form.Check key={item.id} label={itemTitle} type="checkbox" id={item.id} checked={item.completed} onChange={() => handleCheck(item.id)} />
+        <Form.Label htmlFor={item.id}>{itemBody}</Form.Label>
+      </>
     );
-    return <Form.Check key={item.id} type="checkbox" id={item.id} label={itemBody} checked={item.completed} onChange={() => handleCheck(item.id)} />;
   });
 
   return (
     <Card className="m-0">
-      <Card.Body>{renderedItems}</Card.Body>
+      <Card.Body>
+        <Form>{renderedItems}</Form>
+      </Card.Body>
     </Card>
   );
 }

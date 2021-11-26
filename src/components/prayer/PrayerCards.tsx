@@ -9,10 +9,17 @@ import styled from 'styled-components';
 import { useGetAllItemsQuery, useMarkReadMutation, useMarkUnreadMutation } from '../../services/PrayerService';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
-  className: 'overflow-auto',
+  className: 'overflow-auto flex-grow-1',
 }))`
   max-height: 8em;
 `;
+
+const CardContainerRow = styled(Row).attrs(() => ({
+  xs: '1',
+  md: '2',
+  lg: '3',
+  xxl: '4',
+}))``;
 
 const createPlaceholderCard = () => {
   return (
@@ -43,10 +50,10 @@ export function PrayerCards() {
 
   if (isLoading) {
     return (
-      <Row xs="1" md="2" lg="3" xxl="4">
+      <CardContainerRow>
         {createPlaceholderCard()}
         {createPlaceholderCard()}
-      </Row>
+      </CardContainerRow>
     );
   }
 
@@ -76,6 +83,7 @@ export function PrayerCards() {
   const items = data!.map((item) => {
     const submitButton = item.completed ? (
       <Button
+        className="mt-auto"
         variant="secondary"
         onClick={() => {
           handleCompleteButton(item.id, false);
@@ -85,6 +93,7 @@ export function PrayerCards() {
       </Button>
     ) : (
       <Button
+        className="mt-auto"
         variant="primary"
         onClick={() => {
           handleCompleteButton(item.id, true);
@@ -93,26 +102,20 @@ export function PrayerCards() {
         Mark Complete
       </Button>
     );
-    const footerText = item.completed ? 'Completed' : 'Incomplete';
 
     return (
       <Col key={item.id} className="mt-2">
         <Card className="h-100 shadow">
-          <Card.Body>
+          <Card.Body className="d-flex flex-column">
             <Card.Title>{item.title}</Card.Title>
-            <Card.Subtitle>{item.date}</Card.Subtitle>
             <MaxHeightText>{item.text}</MaxHeightText>
             {submitButton}
-            <Card.Footer>{footerText}</Card.Footer>
+            <Card.Footer>{item.date}</Card.Footer>
           </Card.Body>
         </Card>
       </Col>
     );
   });
 
-  return (
-    <Row xs="1" md="2" lg="3" xxl="4">
-      {items}
-    </Row>
-  );
+  return <CardContainerRow>{items}</CardContainerRow>;
 }
