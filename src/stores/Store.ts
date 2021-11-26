@@ -1,34 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import prayerReducer from './PrayerSlice';
 import uiReducer from './UISlice';
-import { combineReducers } from 'redux';
-import storage from 'redux-persist/lib/storage';
-import { persistReducer, persistStore, FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
-
-export const rootReducer = combineReducers({
-  prayer: prayerReducer,
-  ui: uiReducer,
-});
-
-const persistConfig = {
-  key: 'root',
-  version: 1,
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
+import { prayerApi } from '../services/PrayerService';
 
 const store = configureStore({
-  reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
-      },
-    }),
+  reducer: {
+    [prayerApi.reducerPath]: prayerApi.reducer,
+    ui: uiReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(prayerApi.middleware),
 });
 
-export const persister = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
+
+setupListeners(store.dispatch);

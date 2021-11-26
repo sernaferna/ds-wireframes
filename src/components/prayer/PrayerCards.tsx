@@ -6,8 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectPrayerState, fetchAllPrayerItems, markComplete } from '../../stores/PrayerSlice';
+import { useGetAllItemsQuery, useMarkReadMutation, useMarkUnreadMutation } from '../../services/PrayerService';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto',
@@ -39,17 +38,21 @@ const createPlaceholderCard = () => {
 
 export function PrayerCards() {
   let toastManager: ToastManager | null = null;
-  const prayerState = useSelector(selectPrayerState);
-  const dispatch = useDispatch();
+  const { data, error, isLoading } = useGetAllItemsQuery();
+  const [markRead] = useMarkReadMutation();
+  const [markUnread] = useMarkUnreadMutation();
 
-  if (!prayerState.loaded) {
-    dispatch(fetchAllPrayerItems());
+  if (isLoading) {
     return (
       <Row xs="1" md="2" lg="3" xxl="4">
         {createPlaceholderCard()}
         {createPlaceholderCard()}
       </Row>
     );
+  }
+
+  if (error) {
+    return <div>Error!</div>;
   }
 
   const getToastManager = () => {
@@ -63,7 +66,11 @@ export function PrayerCards() {
 
   const handleCompleteButton = (id: string, complete: boolean) => {
     try {
-      dispatch(markComplete({ id, complete }));
+      if (complete) {
+        markRead(id);
+      } else {
+        markUnread(id);
+      }
       const message = complete ? 'Successfully marked complete' : 'Successfully marked incomplete';
       getToastManager().show({
         title: 'Success!',
@@ -76,7 +83,7 @@ export function PrayerCards() {
     }
   };
 
-  const items = prayerState.items.map((item) => {
+  const items = data!.map((item) => {
     const submitButton = item.completed ? (
       <Button
         variant="secondary"
@@ -99,7 +106,7 @@ export function PrayerCards() {
     const footerText = item.completed ? 'Completed' : 'Incomplete';
 
     return (
-      <Col key={item.title} className="mt-2">
+      <Col key={item.id} className="mt-2">
         <Card className="h-100 shadow">
           <Card.Body>
             <Card.Title>{item.title}</Card.Title>
