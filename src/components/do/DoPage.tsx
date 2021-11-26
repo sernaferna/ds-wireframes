@@ -5,43 +5,42 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { ActionsWidget } from './ActionsWidget';
 import Calendar from 'react-calendar';
 import './Calendar.css';
+import { useGetByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
+import { UserAttributes } from '../../datamodel/User';
 
-interface DoPageState {
-  showSettings: boolean;
-}
+export function DoPage() {
+  const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
+  const [update] = useUpdateUserMutation();
 
-export class DoPage extends React.Component<{}, DoPageState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      showSettings: true,
-    };
-
-    this.toggleSettings = this.toggleSettings.bind(this);
+  if (isLoading) {
+    return <div>Waiting...</div>;
   }
 
-  private toggleSettings() {
-    this.setState((prevState) => ({
-      showSettings: !prevState.showSettings,
-    }));
+  if (error) {
+    return <div>{error}</div>;
   }
 
-  render() {
-    return (
-      <PageMainContainer>
-        <PageMainRow>
-          <PageSidebarContainerCol>
-            <SidebarCollapseWidget title="Settings" visible={this.state.showSettings} clickFunction={this.toggleSettings}>
-              <DoPageSettings />
-            </SidebarCollapseWidget>
-          </PageSidebarContainerCol>
-          <PageMainContentCol>
-            <Calendar />
-            <ActionsWidget />
-          </PageMainContentCol>
-        </PageMainRow>
-      </PageMainContainer>
-    );
-  }
+  const showSettings = data ? data.settings.actions.showSettings : true;
+
+  const toggleSettings = () => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.actions.showSettings = !newUser.settings.actions.showSettings;
+    update(newUser);
+  };
+
+  return (
+    <PageMainContainer>
+      <PageMainRow>
+        <PageSidebarContainerCol>
+          <SidebarCollapseWidget title="Settings" visible={showSettings} clickFunction={toggleSettings}>
+            <DoPageSettings />
+          </SidebarCollapseWidget>
+        </PageSidebarContainerCol>
+        <PageMainContentCol>
+          <Calendar />
+          <ActionsWidget />
+        </PageMainContentCol>
+      </PageMainRow>
+    </PageMainContainer>
+  );
 }
