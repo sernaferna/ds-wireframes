@@ -3,8 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllPrayerItems, selectPrayerStoreActiveitems, markComplete } from '../../stores/PrayerSlice';
+import { useGetAllItemsQuery, useMarkReadMutation } from '../../services/PrayerService';
 
 const ItemText = styled.p.attrs(() => ({
   className: 'overflow-hidden',
@@ -26,26 +25,31 @@ const createPlaceholder = () => {
 };
 
 export function PrayerSnapshot() {
-  const prayerState = useSelector(selectPrayerStoreActiveitems);
-  const dispatch = useDispatch();
+  const { data, error, isLoading } = useGetAllItemsQuery();
+  const [markRead] = useMarkReadMutation();
 
-  if (!prayerState.loaded) {
-    dispatch(fetchAllPrayerItems());
-    createPlaceholder();
+  if (isLoading) {
+    return createPlaceholder();
   }
 
+  if (error) {
+    return <div>Error!</div>;
+  }
+
+  const unreadItems = data!.filter((item) => !item.completed);
+
   const handleCheck = (id: string) => {
-    dispatch(markComplete({ id, complete: true }));
+    markRead(id);
   };
 
-  const renderedItems = prayerState.items.map((item) => {
+  const renderedItems = unreadItems.map((item) => {
     const itemBody = (
       <ItemText>
         <strong className="me-1">{item.title}</strong>
         {item.text}
       </ItemText>
     );
-    return <Form.Check type="checkbox" id={item.id} label={itemBody} checked={item.completed} onChange={() => handleCheck(item.id)} />;
+    return <Form.Check key={item.id} type="checkbox" id={item.id} label={itemBody} checked={item.completed} onChange={() => handleCheck(item.id)} />;
   });
 
   return (
