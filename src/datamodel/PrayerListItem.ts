@@ -1,7 +1,10 @@
-export interface PrayerListItem {
+export interface BasePrayerListItem {
   title: string;
-  date: string;
   text: string;
   completed: boolean;
+}
+
+export interface PrayerListItem extends BasePrayerListItem {
+  date: string;
   id: string;
 }
