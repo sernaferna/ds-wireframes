@@ -4,6 +4,8 @@ import { ActionsWidget } from './ActionsWidget';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 import { DoSidebar } from './DoSidebar';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 export function DoPage() {
   return (
@@ -13,8 +15,15 @@ export function DoPage() {
           <DoSidebar />
         </PageSidebarContainerCol>
         <PageMainContentCol>
-          <Calendar />
-          <ActionsWidget />
+          <Row>
+            <Col xs="6">
+              <Calendar />
+              <ActionsWidget />
+            </Col>
+            <Col xs="6">
+              <div>Other stuff</div>
+            </Col>
+          </Row>
         </PageMainContentCol>
       </PageMainRow>
     </PageMainContainer>

@@ -1,0 +1,24 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ActionsForDay } from '../datamodel/Action';
+
+export const actionsApi = createApi({
+  reducerPath: 'actions',
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/actions/entries/' }),
+  tagTypes: ['actions'],
+  endpoints: (builder) => ({
+    getRecentActions: builder.query<ActionsForDay[], void>({
+      query: () => {
+        return {
+          url: 'recent',
+        };
+      },
+      providesTags: ['actions'],
+    }),
+    getActionByDate: builder.query<ActionsForDay, string>({
+      query: (date) => date,
+      providesTags: ['actions'],
+    }),
+  }),
+});
+
+export const { useGetRecentActionsQuery, useGetActionByDateQuery } = actionsApi;
