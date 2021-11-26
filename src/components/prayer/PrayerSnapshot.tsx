@@ -6,9 +6,16 @@ import styled from 'styled-components';
 import { useGetAllItemsQuery, useMarkReadMutation } from '../../services/PrayerService';
 
 const ItemText = styled.p.attrs(() => ({
-  className: 'overflow-hidden',
+  className: 'overflow-hidden w-100',
 }))`
-  height: 1.1em;
+  height: 1.2em;
+`;
+
+const ItemTitle = styled.div.attrs(() => ({
+  className: 'badge rounded-pill bg-secondary overflow-hidden me-1',
+}))`
+  max-width: 33%;
+  height: 1.2em;
 `;
 
 const createPlaceholder = () => {
@@ -45,7 +52,7 @@ export function PrayerSnapshot() {
   const renderedItems = unreadItems.map((item) => {
     const itemBody = (
       <ItemText>
-        <strong className="me-1">{item.title}</strong>
+        <ItemTitle>{item.title}</ItemTitle>
         {item.text}
       </ItemText>
     );
