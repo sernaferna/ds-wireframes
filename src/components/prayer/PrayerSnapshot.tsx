@@ -5,9 +5,7 @@ import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
 import { useGetAllItemsQuery, useMarkReadMutation } from '../../services/PrayerService';
 
-const ItemText = styled.p.attrs(() => ({
-  className: 'overflow-hidden w-100',
-}))`
+const ItemText = styled.p.attrs(() => ({}))`
   height: 1.2em;
 `;
 
