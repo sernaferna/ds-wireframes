@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDateForActions, updateDateShowingInActions } from '../../stores/UISlice';
 import { CaretLeft, CaretRight } from 'react-bootstrap-icons';
+import Card from 'react-bootstrap/Card';
 
 export function ActionsWidget() {
   const dateToShow = new Date(useSelector(getDateForActions));
@@ -19,12 +20,14 @@ export function ActionsWidget() {
   };
 
   return (
-    <div>
-      <h4>
-        <CaretLeft onClick={() => handleDateScroll(false)} />
-        {dateToShow.toISOString().split('T')[0]}
-        <CaretRight onClick={() => handleDateScroll(true)} />
-      </h4>
-    </div>
+    <Card className="m-0">
+      <Card.Body>
+        <h4>
+          <CaretLeft onClick={() => handleDateScroll(false)} />
+          {dateToShow.toISOString().split('T')[0]}
+          <CaretRight onClick={() => handleDateScroll(true)} />
+        </h4>
+      </Card.Body>
+    </Card>
   );
 }

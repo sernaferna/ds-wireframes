@@ -3,7 +3,7 @@ import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { PageMainContainer, PageMainRow, PageMainContentCol, PageSidebarContainerCol } from '../styled-components/StyledComponents';
 import { HomeSettings } from './HomeSettings';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
-import { DoSidebar } from '../do/DoSidebar';
+import { ActionsWidget } from '../do/ActionsWidget';
 
 interface HomePageState {
   homeSettingsShow: boolean;
@@ -52,7 +52,7 @@ export class Home extends React.Component<{}, HomePageState> {
             </SidebarCollapseWidget>
 
             <SidebarCollapseWidget title="Actions" visible={this.state.actionsShow} clickFunction={this.showHideActions}>
-              <DoSidebar />
+              <ActionsWidget />
             </SidebarCollapseWidget>
 
             <SidebarCollapseWidget title="Prayer List" visible={this.state.prayerListShow} clickFunction={this.showHidePrayer}>
