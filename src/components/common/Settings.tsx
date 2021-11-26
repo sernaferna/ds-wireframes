@@ -1,6 +1,5 @@
 import React from 'react';
 import { useGetByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
-import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { UserAttributes } from '../../datamodel/User';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
