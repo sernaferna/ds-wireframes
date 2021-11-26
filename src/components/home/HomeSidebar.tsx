@@ -5,16 +5,17 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { HomeSettings } from './HomeSettings';
 import { ActionsWidget } from '../do/ActionsWidget';
 import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export function HomeSidebar() {
   const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
   if (isLoading) {
-    return <div>Waiting...</div>;
+    return <LoadingMessage />;
   }
   if (error) {
-    return <div>An error occurred: {error}</div>;
+    return <ErrorLoadingDataMessage />;
   }
 
   const showSettings = data!.settings.home.showSettings;

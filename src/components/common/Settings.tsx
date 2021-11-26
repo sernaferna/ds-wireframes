@@ -3,21 +3,17 @@ import { useGetByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../..
 import Alert from 'react-bootstrap/Alert';
 import Form from 'react-bootstrap/Form';
 import { UserAttributes } from '../../datamodel/User';
+import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 
 export function Settings() {
   const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
   if (isLoading) {
-    return <Alert variant="info">Loading...</Alert>;
+    return <LoadingMessage />;
   }
   if (error) {
-    return (
-      <Alert variant="danger">
-        <Alert.Heading>Error</Alert.Heading>
-        <p>Error loading settings</p>
-      </Alert>
-    );
+    return <ErrorLoadingDataMessage />;
   }
 
   const handleShowSIChange = () => {

@@ -3,16 +3,17 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { useGetByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import { UserAttributes } from '../../datamodel/User';
 import { DoPageSettings } from './DoPageSettings';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export function DoSidebar() {
   const { data, error, isLoading } = useGetByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
   if (isLoading) {
-    return <div>Waiting...</div>;
+    return <LoadingMessage />;
   }
   if (error) {
-    return <div>{error}</div>;
+    return <ErrorLoadingDataMessage />;
   }
 
   const showSettings = data ? data.settings.actions.showSettings : true;
