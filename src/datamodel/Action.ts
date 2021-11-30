@@ -12,6 +12,7 @@ export interface ActionEntry extends ActionType {
 
 export interface ActionsForDay {
   date: string;
+  id: string;
   defaultActions: ActionEntry[];
   customActions: ActionEntry[];
 }

@@ -6,43 +6,24 @@ import Card from 'react-bootstrap/Card';
 import { useGetActionByDateQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ActionsForDay } from '../../datamodel/Action';
+import { ActionWidgetForm } from './ActionWidgetForm';
+import styled from 'styled-components';
 
-const generateBoxesForActionDay = (day: ActionsForDay) => {
-  const customItems = day.customActions.map((item) => {
-    return (
-      <li key={item.id}>
-        {item.displayName}: {item.completed ? 'Yes' : 'No'}
-      </li>
-    );
-  });
+const PreviousDayButton = styled(CaretLeft).attrs(() => ({}))`
+  cursor: pointer;
+`;
 
-  const stringForItem = (id: string) => {
-    const itemObj = day.defaultActions.find((item) => {
-      return item.id === id;
-    });
+const NextDayButton = styled(CaretRight).attrs(() => ({}))`
+  cursor: pointer;
+`;
 
-    try {
-      const str = itemObj!.completed ? 'Yes' : 'No';
-    } catch (err) {
-      console.log(id);
-    }
-    return itemObj!.completed ? 'Yes' : 'No';
-  };
+const DisabledPreviousDayButton = styled(CaretLeft).attrs(() => ({
+  className: 'text-muted',
+}))``;
 
-  return (
-    <ul>
-      <li key="actions/default/shortotpass">Read Short OT Passage: {stringForItem('actions/default/shortotpass')}</li>
-      <li key="actions/default/rsntpass">Read Short NT Passage: {stringForItem('actions/default/rsntpass')}</li>
-      <li key="actions/default/rlotpass">Read Long OT Passage: {stringForItem('actions/default/rlotpass')}</li>
-      <li key="actions/default/rlntpass">Read Long NT Passage: {stringForItem('actions/default/rlntpass')}</li>
-      <li key="actions/default/journ">Journalled: {stringForItem('actions/default/journ')}</li>
-      <li key="actions/default/pray">Prayed: {stringForItem('actions/default/pray')}</li>
-      <li key="actions/default/create">Did Something Creative for God: {stringForItem('actions/default/create')}</li>
-      <li key="actions/default/converse">Had a Spiritual Conversation: {stringForItem('actions/default/converse')}</li>
-      {customItems}
-    </ul>
-  );
-};
+const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
+  className: 'text-muted',
+}))``;
 
 export function ActionsWidget() {
   const dateToShow = new Date(useSelector(getDateForActions));
@@ -69,14 +50,14 @@ export function ActionsWidget() {
   };
 
   return (
-    <Card className="m-0">
+    <Card className="m-0 border-0">
       <Card.Body>
         <h4>
-          <CaretLeft onClick={() => handleDateScroll(false)} />
+          <PreviousDayButton onClick={() => handleDateScroll(false)} />
           {dateToShow.toISOString().split('T')[0]}
-          <CaretRight onClick={() => handleDateScroll(true)} />
+          <NextDayButton onClick={() => handleDateScroll(true)} />
         </h4>
-        {generateBoxesForActionDay(data!)}
+        <ActionWidgetForm day={data as ActionsForDay} />
       </Card.Body>
     </Card>
   );
