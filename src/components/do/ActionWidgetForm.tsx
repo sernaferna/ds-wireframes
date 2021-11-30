@@ -14,6 +14,7 @@ export function ActionWidgetForm(data: ActionWidgetFormInterface) {
     markReadUnread({
       idForDay: data.day.id,
       idForItem: id,
+      dataForDay: data.day,
     }).catch((err) => {
       console.log(err);
     });

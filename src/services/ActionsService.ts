@@ -4,6 +4,7 @@ import { ActionsForDay } from '../datamodel/Action';
 interface MarkItemReadForDayServiceInterface {
   idForDay: string;
   idForItem: string;
+  dataForDay: ActionsForDay;
 }
 export const actionsApi = createApi({
   reducerPath: 'actions',
@@ -31,6 +32,7 @@ export const actionsApi = createApi({
         return {
           url: `${data.idForDay}/mark/${data.idForItem}`,
           method: 'PUT',
+          body: data.dataForDay,
         };
       },
       invalidatesTags: ['actions'],

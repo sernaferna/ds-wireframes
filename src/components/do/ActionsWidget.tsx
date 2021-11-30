@@ -17,13 +17,13 @@ const NextDayButton = styled(CaretRight).attrs(() => ({}))`
   cursor: pointer;
 `;
 
-const DisabledPreviousDayButton = styled(CaretLeft).attrs(() => ({
-  className: 'text-muted',
-}))``;
+// const DisabledPreviousDayButton = styled(CaretLeft).attrs(() => ({
+//   className: 'text-muted',
+// }))``;
 
-const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
-  className: 'text-muted',
-}))``;
+// const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
+//   className: 'text-muted',
+// }))``;
 
 export function ActionsWidget() {
   const dateToShow = new Date(useSelector(getDateForActions));
