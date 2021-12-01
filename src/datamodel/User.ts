@@ -8,6 +8,7 @@ export interface UserAttributes {
     showSizeIndicator: boolean;
     actions: {
       showSettings: boolean;
+      showPrayerEntry: boolean;
     };
     home: {
       showSettings: boolean;
