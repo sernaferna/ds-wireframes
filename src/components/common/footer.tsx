@@ -17,17 +17,17 @@ export function Footer() {
       </NavLink>
       <Nav className="col-md-4 justify-content-end">
         <Nav.Item>
-          <NavLink activeClassName="active" className="text-muted" to="/">
+          <NavLink activeClassName="active" className="nav-link text-muted" to="/">
             Home
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink className="text-muted" to="/faq" activeClassName="active">
+          <NavLink className="nav-link text-muted" to="/faq" activeClassName="active">
             FAQs
           </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <NavLink className="text-muted" activeClassName="active" to="/about">
+          <NavLink className="nav-link text-muted" activeClassName="active" to="/about">
             About
           </NavLink>
         </Nav.Item>
