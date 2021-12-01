@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { selectShowSettings, showSettingsPanel } from '../../stores/UISlice';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const PointerGear = styled(Gear).attrs(() => ({
   className: 'text-light m-0',
@@ -22,24 +23,28 @@ export function Header() {
     {
       label: 'Home',
       href: '/',
+      exact: true,
     },
     {
       label: 'Prayer',
       href: '/prayer',
+      exact: false,
     },
     {
       label: 'Read',
       href: '/read',
+      exact: false,
     },
     {
       label: 'Do',
       href: '/do',
+      exact: false,
     },
-  ].map(({ label, href }) => {
+  ].map(({ label, href, exact }) => {
     return (
-      <Nav.Link key={href} href={href}>
+      <NavLink exact={exact} className="nav-link" to={href} activeClassName="active">
         {label}
-      </Nav.Link>
+      </NavLink>
     );
   });
 
