@@ -8,6 +8,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ActionsForDay } from '../../datamodel/Action';
 import { ActionWidgetForm } from './ActionWidgetForm';
 import styled from 'styled-components';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 
 const PreviousDayButton = styled(CaretLeft).attrs(() => ({}))`
   cursor: pointer;
@@ -17,13 +18,13 @@ const NextDayButton = styled(CaretRight).attrs(() => ({}))`
   cursor: pointer;
 `;
 
-// const DisabledPreviousDayButton = styled(CaretLeft).attrs(() => ({
-//   className: 'text-muted',
-// }))``;
+const DisabledPreviousDayButton = styled(CaretLeft).attrs(() => ({
+  className: 'text-muted',
+}))``;
 
-// const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
-//   className: 'text-muted',
-// }))``;
+const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
+  className: 'text-muted',
+}))``;
 
 export function ActionsWidget() {
   const dateToShow = new Date(useSelector(getDateForActions));
@@ -31,10 +32,13 @@ export function ActionsWidget() {
 
   const { data, error, isLoading } = useGetActionByDateQuery(dateToShow.toISOString().split('T')[0]);
 
-  if (isLoading) {
+  const userApiObject = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const userData = userApiObject.data;
+
+  if (isLoading || userApiObject.isLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
+  if (error || userApiObject.error) {
     return <ErrorLoadingDataMessage />;
   }
 
@@ -53,9 +57,17 @@ export function ActionsWidget() {
     <Card className="m-0 border-0">
       <Card.Body>
         <h4>
-          <PreviousDayButton onClick={() => handleDateScroll(false)} />
-          {dateToShow.toISOString().split('T')[0]}
-          <NextDayButton onClick={() => handleDateScroll(true)} />
+          {dateToShow < new Date(userData!.signupDate) ? (
+            <DisabledPreviousDayButton />
+          ) : (
+            <PreviousDayButton onClick={() => handleDateScroll(false)} />
+          )}
+          <span className="user-select-none">{dateToShow.toISOString().split('T')[0]}</span>
+          {dateToShow > new Date(Date.now()) ? (
+            <DisabledNextDayButton />
+          ) : (
+            <NextDayButton onClick={() => handleDateScroll(true)} />
+          )}
         </h4>
         <ActionWidgetForm day={data as ActionsForDay} />
       </Card.Body>

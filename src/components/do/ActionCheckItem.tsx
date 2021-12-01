@@ -26,7 +26,7 @@ export function ActionCheckItem(data: ActionCheckItemInterface) {
       }}
     >
       {icon}
-      <div>{data.item.displayName}</div>
+      <div className="user-select-none">{data.item.displayName}</div>
     </StyledStack>
   );
 }
