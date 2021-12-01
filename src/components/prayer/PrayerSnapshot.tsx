@@ -4,6 +4,8 @@ import Form from 'react-bootstrap/Form';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
 import { useGetAllItemsQuery, useMarkReadMutation } from '../../services/PrayerService';
+import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
+import { PrayerTypes } from '../../datamodel/PrayerListItem';
 
 const ItemText = styled.p.attrs(() => ({}))`
   height: 1.2em;
@@ -48,13 +50,34 @@ export function PrayerSnapshot() {
   };
 
   const renderedItems = unreadItems.map((item) => {
-    const itemBody = <ItemText>{item.text}</ItemText>;
-
     const itemTitle = <ItemTitle>{item.title}</ItemTitle>;
+
+    let icon;
+    if (item.type === PrayerTypes.praise) {
+      icon = <ShieldPlus className="d-inline me-1 text-primary" />;
+    } else if (item.type === PrayerTypes.request) {
+      icon = <Tsunami className="d-inline me-1 text-primary" />;
+    } else if (item.type === PrayerTypes.confession) {
+      icon = <EyeFill className="d-inline me-1 text-primary" />;
+    }
+
+    const itemBody = (
+      <ItemText>
+        {icon ? icon : ''}
+        {item.text}
+      </ItemText>
+    );
 
     return (
       <>
-        <Form.Check key={item.id} label={itemTitle} type="checkbox" id={item.id} checked={item.completed} onChange={() => handleCheck(item.id)} />
+        <Form.Check
+          key={item.id}
+          label={itemTitle}
+          type="checkbox"
+          id={item.id}
+          checked={item.completed}
+          onChange={() => handleCheck(item.id)}
+        />
         <Form.Label htmlFor={item.id}>{itemBody}</Form.Label>
       </>
     );

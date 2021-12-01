@@ -18,6 +18,12 @@ export interface UserAttributes {
     prayer: {
       showSettings: boolean;
       showAllItems: boolean;
+      filters: {
+        showAll: boolean;
+        showRequests: boolean;
+        showPraise: boolean;
+        showConfessions: boolean;
+      };
     };
   };
 }

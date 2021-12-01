@@ -34,11 +34,54 @@ export function PrayerSettings() {
     });
   };
 
+  const filterCheckClicked = (filterCheck: string) => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    const filters = newUser.settings.prayer.filters;
+
+    switch (filterCheck) {
+      case 'all':
+        if (filters.showAll) {
+          filters.showAll = false;
+        } else {
+          filters.showAll = true;
+          filters.showConfessions = true;
+          filters.showPraise = true;
+          filters.showRequests = true;
+        }
+        break;
+      case 'requests':
+        filters.showRequests = !filters.showRequests;
+        break;
+      case 'praise':
+        filters.showPraise = !filters.showPraise;
+        break;
+      case 'confessions':
+        filters.showConfessions = !filters.showConfessions;
+        break;
+    }
+
+    update(newUser);
+  };
+
   return (
     <Form>
       <div key="prayerFilterOptions">
-        <Form.Check type="radio" id="showAllPrayerItemsRadio" label="Show All Prayer Items" name="prayerFilter" checked={showAll} onClick={changeFilterOption} />
-        <Form.Check type="radio" id="showActivePrayerItemsRadio" label="Show Active Prayer Items" name="prayerFilter" checked={!showAll} onClick={changeFilterOption} />
+        <Form.Check
+          type="radio"
+          id="showAllPrayerItemsRadio"
+          label="Show All Prayer Items"
+          name="prayerFilter"
+          checked={showAll}
+          onClick={changeFilterOption}
+        />
+        <Form.Check
+          type="radio"
+          id="showActivePrayerItemsRadio"
+          label="Show Active Prayer Items"
+          name="prayerFilter"
+          checked={!showAll}
+          onClick={changeFilterOption}
+        />
       </div>
       <FloatingLabel controlId="sortBySelect" label="Sort By?">
         <Form.Select aria-label="Sort By?" onChange={changeSortOption}>
@@ -46,6 +89,40 @@ export function PrayerSettings() {
           <option value="dateDesc">Date Descending</option>
         </Form.Select>
       </FloatingLabel>
+      <Form.Group>
+        <Form.Text>Filter Prayer Types?</Form.Text>
+        <Form.Check
+          type="checkbox"
+          id="showAllTypesCheck"
+          label="Any"
+          checked={data!.settings.prayer.filters.showAll}
+          onClick={() => filterCheckClicked('all')}
+        />
+        <Form.Check
+          type="checkbox"
+          id="showRequestsCheck"
+          label="Requests"
+          checked={data!.settings.prayer.filters.showRequests}
+          disabled={data!.settings.prayer.filters.showAll}
+          onClick={() => filterCheckClicked('requests')}
+        />
+        <Form.Check
+          type="checkbox"
+          id="showPraiseCheck"
+          label="Praise"
+          checked={data!.settings.prayer.filters.showPraise}
+          disabled={data!.settings.prayer.filters.showAll}
+          onClick={() => filterCheckClicked('praise')}
+        />
+        <Form.Check
+          type="checkbox"
+          id="showConfessionsCheck"
+          label="Confessions"
+          checked={data!.settings.prayer.filters.showConfessions}
+          disabled={data!.settings.prayer.filters.showAll}
+          onClick={() => filterCheckClicked('confessions')}
+        />
+      </Form.Group>
     </Form>
   );
 }

@@ -9,6 +9,8 @@ import styled from 'styled-components';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import { useGetAllItemsQuery, useMarkReadMutation, useMarkUnreadMutation } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { PrayerTypes } from '../../datamodel/PrayerListItem';
+import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto flex-grow-1',
@@ -87,7 +89,22 @@ export function PrayerCards() {
     }
   };
 
-  const rawItems = userData!.settings.prayer.showAllItems ? data!.slice() : data!.filter((item) => !item.completed);
+  const showAll = userData!.settings.prayer.showAllItems;
+  const showAllTypes = userData!.settings.prayer.filters.showAll;
+  const showRequestTypes = userData!.settings.prayer.filters.showRequests;
+  const showPraiseTypes = userData!.settings.prayer.filters.showPraise;
+  const showConfessionTypes = userData!.settings.prayer.filters.showConfessions;
+
+  const rawItems = data!.filter((item) => {
+    const completenessCheck: boolean = showAll || !item.completed;
+    const filterCheck: boolean =
+      showAllTypes ||
+      (showRequestTypes && item.type === PrayerTypes.request) ||
+      (showPraiseTypes && item.type === PrayerTypes.praise) ||
+      (showConfessionTypes && item.type === PrayerTypes.confession);
+
+    return completenessCheck && filterCheck;
+  });
   const items = rawItems.map((item) => {
     const submitButton = item.completed ? (
       <Button
@@ -111,11 +128,22 @@ export function PrayerCards() {
       </Button>
     );
 
+    let icon;
+    if (item.type === PrayerTypes.praise) {
+      icon = <ShieldPlus className="float-end" />;
+    } else if (item.type === PrayerTypes.request) {
+      icon = <Tsunami className="float-end" />;
+    } else if (item.type === PrayerTypes.confession) {
+      icon = <EyeFill className="float-end" />;
+    }
+
     return (
       <Col key={item.id} className="mt-2">
         <Card className="h-100 shadow">
           <Card.Body className="d-flex flex-column">
-            <Card.Title>{item.title}</Card.Title>
+            <Card.Title>
+              {item.title} {icon ? icon : ''}
+            </Card.Title>
             <MaxHeightText>{item.text}</MaxHeightText>
             {submitButton}
             <Card.Footer>{item.date}</Card.Footer>
