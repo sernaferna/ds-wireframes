@@ -130,11 +130,11 @@ export function PrayerCards() {
 
     let icon;
     if (item.type === PrayerTypes.praise) {
-      icon = <ShieldPlus className="float-end" />;
+      icon = <ShieldPlus className="float-end text-primary" />;
     } else if (item.type === PrayerTypes.request) {
-      icon = <Tsunami className="float-end" />;
+      icon = <Tsunami className="float-end text-primary" />;
     } else if (item.type === PrayerTypes.confession) {
-      icon = <EyeFill className="float-end" />;
+      icon = <EyeFill className="float-end text-primary" />;
     }
 
     return (

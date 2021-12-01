@@ -26,7 +26,7 @@ export function Header() {
       exact: true,
     },
     {
-      label: 'Prayer',
+      label: 'Pray',
       href: '/prayer',
       exact: false,
     },

@@ -2,20 +2,14 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { useState, ChangeEvent, SyntheticEvent } from 'react';
 import Col from 'react-bootstrap/Col';
-import Stack from 'react-bootstrap/Stack';
 import { useNewItemMutation } from '../../services/PrayerService';
 import Button from 'react-bootstrap/Button';
-import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes } from '../../datamodel/PrayerListItem';
 
-const selectedIconClasses = 'bg-success text-light';
-const unselectedIconClasses = 'text-light bg-secondary';
-
-export function CreatePrayerItem() {
+export function CreateConfessionItem() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [touched, setTouched] = useState(false);
-  const [type, setType] = useState<PrayerTypes | undefined>(undefined);
   const [newPrayer] = useNewItemMutation();
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,23 +23,15 @@ export function CreatePrayerItem() {
   };
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    newPrayer({ title, text: body, completed: false, type });
-  };
-
-  const setPrayerType = (newType: PrayerTypes) => {
-    if (type === newType) {
-      setType(undefined);
-    } else {
-      setType(newType);
-    }
+    newPrayer({ title, text: body, completed: false, type: PrayerTypes.confession });
   };
 
   const titleIsValid = !touched || title.length > 0 ? true : false;
   const bodyIsValid = !touched || body.length > 0 ? true : false;
 
   return (
-    <div className="alert alert-primary">
-      <h1>New Prayer Request</h1>
+    <div className="alert alert-danger">
+      <h1>New Confession</h1>
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group as={Col} xs="12" className="position-relative">
           <Form.Label>Title</Form.Label>
@@ -77,21 +63,7 @@ export function CreatePrayerItem() {
             Please enter some text
           </Form.Control.Feedback>
         </Form.Group>
-        <Stack direction="horizontal" className="h1 m-3" gap={5}>
-          <ShieldPlus
-            className={type === PrayerTypes.praise ? selectedIconClasses : unselectedIconClasses}
-            onClick={() => setPrayerType(PrayerTypes.praise)}
-          />
-          <Tsunami
-            className={type === PrayerTypes.request ? selectedIconClasses : unselectedIconClasses}
-            onClick={() => setPrayerType(PrayerTypes.request)}
-          />
-          <EyeFill
-            className={type === PrayerTypes.confession ? selectedIconClasses : unselectedIconClasses}
-            onClick={() => setPrayerType(PrayerTypes.confession)}
-          />
-        </Stack>
-        <Button variant="primary" type="submit" disabled={!touched || !titleIsValid || !bodyIsValid}>
+        <Button variant="danger" type="submit" disabled={!touched || !titleIsValid || !bodyIsValid}>
           Submit
         </Button>
       </Form>
