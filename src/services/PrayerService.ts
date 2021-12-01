@@ -40,9 +40,15 @@ export const prayerApi = createApi({
           body,
         };
       },
-      invalidatesTags: [{ type: 'prayerItems', id: 'LIST' }],
+      invalidatesTags: ['prayerItems'],
     }),
   }),
 });
 
-export const { useGetItemByIdQuery, useGetAllItemsQuery, useMarkReadMutation, useNewItemMutation, useMarkUnreadMutation } = prayerApi;
+export const {
+  useGetItemByIdQuery,
+  useGetAllItemsQuery,
+  useMarkReadMutation,
+  useNewItemMutation,
+  useMarkUnreadMutation,
+} = prayerApi;

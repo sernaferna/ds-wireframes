@@ -19,8 +19,8 @@ const MaxHeightText = styled(Card.Text).attrs(() => ({
 const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
   md: '2',
-  lg: '3',
-  xxl: '4',
+  lg: '2',
+  xxl: '3',
 }))``;
 
 const createPlaceholderCard = () => {
