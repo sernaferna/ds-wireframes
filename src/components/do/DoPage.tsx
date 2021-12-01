@@ -28,6 +28,9 @@ export function DoPage() {
     return <ErrorLoadingDataMessage />;
   }
 
+  // For some reason the calendar widget seems to want the date to be increased by 1 in order to render/function properly
+  dateToShow.setDate(dateToShow.getDate() + 1);
+
   const dayClickedInCalendar = (value: Date, event: any) => {
     dispatch(updateDateShowingInActions(value.toISOString().split('T')[0]));
   };
