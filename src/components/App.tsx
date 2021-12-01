@@ -1,6 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import history from '../utils/history';
+import { Router, Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Header } from './common/header';
 import { Footer } from './common/footer';
 import { SizeIndicator } from './common/SizeIndicator';
@@ -15,7 +14,7 @@ import { PrayerPage } from './prayer/PrayerPage';
 export function App() {
   return (
     <div>
-      <Router history={history}>
+      <BrowserRouter>
         <div>
           <Header />
           <Switch>
@@ -28,7 +27,7 @@ export function App() {
           </Switch>
           <Footer />
         </div>
-      </Router>
+      </BrowserRouter>
       <div aria-live="polite" aria-atomic="true">
         <ToastContainer position="bottom-end" id="main-toast-container" />
       </div>

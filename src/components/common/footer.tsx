@@ -2,29 +2,34 @@ import React from 'react';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { NavLink } from 'react-router-dom';
 
 export function Footer() {
   return (
     <Navbar className="fixed-bottom container-fluid" variant="dark">
       <p className="d-none d-sm-block col-md-4 mb-0 text-muted">&copy; 2021 Devouring Scripture</p>
-      <a href="/" className="col-md-4 d-flex align-items-center justify-content-center mb-2 mb-md-0 me-md-auto link-dark text-decoration-none">
+      <NavLink
+        to="/"
+        activeClassName="active"
+        className="nav-link col-md-4 d-flex align-items-center justify-content-center mb-2 mb-md-0 me-md-auto link-dark text-decoration-none"
+      >
         <Image src="logo192.png" height="30" width="30" />
-      </a>
+      </NavLink>
       <Nav className="col-md-4 justify-content-end">
         <Nav.Item>
-          <Nav.Link className="text-muted" key="/" href="/">
+          <NavLink activeClassName="active" className="text-muted" to="/">
             Home
-          </Nav.Link>
+          </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="text-muted" key="/faq" href="/faq">
+          <NavLink className="text-muted" to="/faq" activeClassName="active">
             FAQs
-          </Nav.Link>
+          </NavLink>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link className="text-muted" key="/about" href="/about">
+          <NavLink className="text-muted" activeClassName="active" to="/about">
             About
-          </Nav.Link>
+          </NavLink>
         </Nav.Item>
       </Nav>
     </Navbar>
