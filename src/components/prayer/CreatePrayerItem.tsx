@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useState, ChangeEvent, SyntheticEvent } from 'react';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { useNewItemMutation } from '../../services/PrayerService';
 import Button from 'react-bootstrap/Button';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
@@ -11,25 +13,66 @@ import { PrayerTypes } from '../../datamodel/PrayerListItem';
 const selectedIconClasses = 'bg-success text-light';
 const unselectedIconClasses = 'text-light bg-secondary';
 
-export function CreatePrayerItem() {
+export function CreatePrayerItem({ confession = false }) {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [touched, setTouched] = useState(false);
   const [type, setType] = useState<PrayerTypes | undefined>(undefined);
   const [newPrayer] = useNewItemMutation();
+  const [validatedFields, setValidatedFields] = useState({
+    titleIsValid: false,
+    titleIsInvalid: false,
+    bodyIsValid: false,
+    bodyIsInvalid: false,
+  });
+
+  useEffect(() => {
+    if (confession) {
+      setType(PrayerTypes.confession);
+    }
+  }, [confession]);
 
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-    setTouched(true);
   };
 
   const handleBodyChange = (event: ChangeEvent<HTMLInputElement>) => {
     setBody(event.target.value);
-    setTouched(true);
+  };
+
+  const formIsValid = (): boolean => {
+    let isValid = true;
+    const newValidatedFields = JSON.parse(JSON.stringify(validatedFields));
+
+    if (title.length < 1) {
+      newValidatedFields.titleIsInvalid = true;
+      newValidatedFields.titleIsValid = false;
+      isValid = false;
+    } else {
+      newValidatedFields.titleIsInvalid = false;
+      newValidatedFields.titleIsValid = true;
+    }
+
+    if (body.length < 1) {
+      newValidatedFields.bodyIsInvalid = true;
+      newValidatedFields.bodyIsValid = false;
+      isValid = false;
+    } else {
+      newValidatedFields.bodyIsInvalid = false;
+      newValidatedFields.bodyIsValid = true;
+    }
+
+    setValidatedFields(newValidatedFields);
+
+    return isValid;
   };
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    newPrayer({ title, text: body, completed: false, type });
+    if (formIsValid()) {
+      newPrayer({ title, text: body, completed: false, type });
+    } else {
+      event.preventDefault();
+      event.stopPropagation();
+    }
   };
 
   const setPrayerType = (newType: PrayerTypes) => {
@@ -40,12 +83,30 @@ export function CreatePrayerItem() {
     }
   };
 
-  const titleIsValid = !touched || title.length > 0 ? true : false;
-  const bodyIsValid = !touched || body.length > 0 ? true : false;
+  const praisePopover = (
+    <Popover id="praise-popover">
+      <Popover.Header>Praise</Popover.Header>
+      <Popover.Body>This icon indicates a praise request.</Popover.Body>
+    </Popover>
+  );
+
+  const requestPopover = (
+    <Popover id="praise-popover">
+      <Popover.Header>Request</Popover.Header>
+      <Popover.Body>This icon indicates a request for help from God.</Popover.Body>
+    </Popover>
+  );
+
+  const confessionPopover = (
+    <Popover id="praise-popover">
+      <Popover.Header>Confession</Popover.Header>
+      <Popover.Body>This icon indicates a confession being prayed to God.</Popover.Body>
+    </Popover>
+  );
 
   return (
-    <div className="alert alert-primary">
-      <h1>New Prayer Request</h1>
+    <div className={confession ? 'alert alert-danger' : 'alert alert-primary'}>
+      <h1>{confession ? 'Confession' : 'New Prayer Request'}</h1>
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group as={Col} xs="12" className="position-relative">
           <Form.Label>Title</Form.Label>
@@ -55,8 +116,8 @@ export function CreatePrayerItem() {
             type="text"
             placeholder="Title"
             name="title"
-            isValid={titleIsValid && touched}
-            isInvalid={!titleIsValid}
+            isValid={validatedFields.titleIsValid}
+            isInvalid={validatedFields.titleIsInvalid}
           />
           <Form.Control.Feedback type="invalid" tooltip>
             Please enter a valid title
@@ -70,29 +131,38 @@ export function CreatePrayerItem() {
             as="textarea"
             rows={4}
             name="body"
-            isValid={bodyIsValid && touched}
-            isInvalid={!bodyIsValid}
+            isValid={validatedFields.bodyIsValid}
+            isInvalid={validatedFields.bodyIsInvalid}
             placeholder="Prayer request"
           />
           <Form.Control.Feedback type="invalid" tooltip>
             Please enter some text
           </Form.Control.Feedback>
         </Form.Group>
-        <Stack direction="horizontal" className="h1 m-3" gap={5}>
-          <ShieldPlus
-            className={type === PrayerTypes.praise ? selectedIconClasses : unselectedIconClasses}
-            onClick={() => setPrayerType(PrayerTypes.praise)}
-          />
-          <Tsunami
-            className={type === PrayerTypes.request ? selectedIconClasses : unselectedIconClasses}
-            onClick={() => setPrayerType(PrayerTypes.request)}
-          />
-          <EyeFill
-            className={type === PrayerTypes.confession ? selectedIconClasses : unselectedIconClasses}
-            onClick={() => setPrayerType(PrayerTypes.confession)}
-          />
-        </Stack>
-        <Button variant="primary" type="submit" disabled={!touched || !titleIsValid || !bodyIsValid}>
+        {confession ? null : (
+          <Stack direction="horizontal" className="h1 m-3" gap={5}>
+            <OverlayTrigger trigger="hover" placement="bottom" overlay={praisePopover}>
+              <ShieldPlus
+                className={type === PrayerTypes.praise ? selectedIconClasses : unselectedIconClasses}
+                onClick={() => setPrayerType(PrayerTypes.praise)}
+              />
+            </OverlayTrigger>
+            <OverlayTrigger trigger="hover" placement="bottom" overlay={requestPopover}>
+              <Tsunami
+                className={type === PrayerTypes.request ? selectedIconClasses : unselectedIconClasses}
+                onClick={() => setPrayerType(PrayerTypes.request)}
+              />
+            </OverlayTrigger>
+            <OverlayTrigger trigger="hover" placement="bottom" overlay={confessionPopover}>
+              <EyeFill
+                className={type === PrayerTypes.confession ? selectedIconClasses : unselectedIconClasses}
+                onClick={() => setPrayerType(PrayerTypes.confession)}
+              />
+            </OverlayTrigger>
+          </Stack>
+        )}
+
+        <Button variant={confession ? 'danger' : 'primary'} type="submit">
           Submit
         </Button>
       </Form>

@@ -10,7 +10,6 @@ import { PrayerSidebar } from './PrayerSidebar';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { CreatePrayerItem } from './CreatePrayerItem';
-import { CreateConfessionItem } from './CreateConfessionItem';
 
 export function PrayerPage() {
   return (
@@ -26,7 +25,7 @@ export function PrayerPage() {
             </Col>
             <Col className="col-12 col-lg-4">
               <CreatePrayerItem />
-              <CreateConfessionItem />
+              <CreatePrayerItem confession={true} />
             </Col>
           </Row>
         </PageMainContentCol>
