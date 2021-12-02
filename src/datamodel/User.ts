@@ -18,6 +18,7 @@ export interface UserAttributes {
     prayer: {
       showSettings: boolean;
       showAllItems: boolean;
+      sort: string;
       filters: {
         showAll: boolean;
         showRequests: boolean;

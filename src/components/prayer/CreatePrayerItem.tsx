@@ -72,6 +72,7 @@ export function CreatePrayerItem() {
             name="body"
             isValid={bodyIsValid && touched}
             isInvalid={!bodyIsValid}
+            placeholder="Prayer request"
           />
           <Form.Control.Feedback type="invalid" tooltip>
             Please enter some text

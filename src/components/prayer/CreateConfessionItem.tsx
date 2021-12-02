@@ -58,6 +58,7 @@ export function CreateConfessionItem() {
             name="body"
             isValid={bodyIsValid && touched}
             isInvalid={!bodyIsValid}
+            placeholder="Confession"
           />
           <Form.Control.Feedback type="invalid" tooltip>
             Please enter some text

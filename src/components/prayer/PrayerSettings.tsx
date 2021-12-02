@@ -1,10 +1,8 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '../../datamodel/User';
-import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 
 export function PrayerSettings() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -19,6 +17,11 @@ export function PrayerSettings() {
 
   const showAll = data!.settings.prayer.showAllItems;
 
+  let sortOptions = data!.settings.prayer.sort;
+  if (sortOptions !== 'date-asc' && sortOptions !== 'date-desc') {
+    sortOptions = 'date-asc';
+  }
+
   const changeFilterOption = () => {
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
     newUser.settings.prayer.showAllItems = !newUser.settings.prayer.showAllItems;
@@ -26,12 +29,13 @@ export function PrayerSettings() {
   };
 
   const changeSortOption = () => {
-    getToastManager().show({
-      title: 'Not Implemented',
-      content: 'Feature not implemented yet',
-      type: ToastType.Danger,
-      duration: TOAST_FADE_TIME,
-    });
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    if (newUser.settings.prayer.sort === 'date-asc') {
+      newUser.settings.prayer.sort = 'date-desc';
+    } else {
+      newUser.settings.prayer.sort = 'date-asc';
+    }
+    update(newUser);
   };
 
   const filterCheckClicked = (filterCheck: string) => {
@@ -65,7 +69,8 @@ export function PrayerSettings() {
 
   return (
     <Form>
-      <div key="prayerFilterOptions">
+      <Form.Group className="p-2">
+        <Form.Text>Completed/Active Requests?</Form.Text>
         <Form.Check
           type="radio"
           id="showAllPrayerItemsRadio"
@@ -82,14 +87,15 @@ export function PrayerSettings() {
           checked={!showAll}
           onClick={changeFilterOption}
         />
-      </div>
-      <FloatingLabel controlId="sortBySelect" label="Sort By?">
-        <Form.Select aria-label="Sort By?" onChange={changeSortOption}>
-          <option value="dateAsc">Date Ascending</option>
-          <option value="dateDesc">Date Descending</option>
+      </Form.Group>
+      <Form.Group className="p-2">
+        <Form.Text>Sort Order?</Form.Text>
+        <Form.Select aria-label="Sort By?" onChange={changeSortOption} value={sortOptions}>
+          <option value="date-asc">Date Ascending</option>
+          <option value="date-desc">Date Descending</option>
         </Form.Select>
-      </FloatingLabel>
-      <Form.Group>
+      </Form.Group>
+      <Form.Group className="p-2">
         <Form.Text>Filter Prayer Types?</Form.Text>
         <Form.Check
           type="checkbox"

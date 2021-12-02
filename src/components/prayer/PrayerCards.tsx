@@ -105,6 +105,27 @@ export function PrayerCards() {
 
     return completenessCheck && filterCheck;
   });
+
+  const sortOption = userData!.settings.prayer.sort;
+  rawItems.sort((a, b) => {
+    if (a.date < b.date) {
+      if (sortOption === 'date-asc') {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+    if (a.date > b.date) {
+      if (sortOption === 'date-asc') {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+
+    return 0;
+  });
+
   const items = rawItems.map((item) => {
     const submitButton = item.completed ? (
       <Button
