@@ -69,9 +69,8 @@ export function PrayerSnapshot() {
     );
 
     return (
-      <>
+      <Form.Group key={item.id}>
         <Form.Check
-          key={item.id}
           label={itemTitle}
           type="checkbox"
           id={item.id}
@@ -79,7 +78,7 @@ export function PrayerSnapshot() {
           onChange={() => handleCheck(item.id)}
         />
         <Form.Label htmlFor={item.id}>{itemBody}</Form.Label>
-      </>
+      </Form.Group>
     );
   });
 

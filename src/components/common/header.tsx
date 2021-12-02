@@ -42,7 +42,7 @@ export function Header() {
     },
   ].map(({ label, href, exact }) => {
     return (
-      <NavLink exact={exact} className="nav-link" to={href} activeClassName="active">
+      <NavLink key={href} exact={exact} className="nav-link" to={href} activeClassName="active">
         {label}
       </NavLink>
     );

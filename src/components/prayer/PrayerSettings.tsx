@@ -77,7 +77,7 @@ export function PrayerSettings() {
           label="Show All Prayer Items"
           name="prayerFilter"
           checked={showAll}
-          onClick={changeFilterOption}
+          onChange={changeFilterOption}
         />
         <Form.Check
           type="radio"
@@ -85,7 +85,7 @@ export function PrayerSettings() {
           label="Show Active Prayer Items"
           name="prayerFilter"
           checked={!showAll}
-          onClick={changeFilterOption}
+          onChange={changeFilterOption}
         />
       </Form.Group>
       <Form.Group className="p-2">
@@ -102,7 +102,7 @@ export function PrayerSettings() {
           id="showAllTypesCheck"
           label="Any"
           checked={data!.settings.prayer.filters.showAll}
-          onClick={() => filterCheckClicked('all')}
+          onChange={() => filterCheckClicked('all')}
         />
         <Form.Check
           type="checkbox"
@@ -110,7 +110,7 @@ export function PrayerSettings() {
           label="Requests"
           checked={data!.settings.prayer.filters.showRequests}
           disabled={data!.settings.prayer.filters.showAll}
-          onClick={() => filterCheckClicked('requests')}
+          onChange={() => filterCheckClicked('requests')}
         />
         <Form.Check
           type="checkbox"
@@ -118,7 +118,7 @@ export function PrayerSettings() {
           label="Praise"
           checked={data!.settings.prayer.filters.showPraise}
           disabled={data!.settings.prayer.filters.showAll}
-          onClick={() => filterCheckClicked('praise')}
+          onChange={() => filterCheckClicked('praise')}
         />
         <Form.Check
           type="checkbox"
@@ -126,7 +126,7 @@ export function PrayerSettings() {
           label="Confessions"
           checked={data!.settings.prayer.filters.showConfessions}
           disabled={data!.settings.prayer.filters.showAll}
-          onClick={() => filterCheckClicked('confessions')}
+          onChange={() => filterCheckClicked('confessions')}
         />
       </Form.Group>
     </Form>

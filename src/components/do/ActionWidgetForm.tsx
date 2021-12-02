@@ -20,8 +20,12 @@ export function ActionWidgetForm(data: ActionWidgetFormInterface) {
     });
   };
 
-  const defaultItems = data.day.defaultActions.map((item) => <ActionCheckItem item={item} clickFunction={itemClicked} />);
-  const customItems = data.day.customActions.map((item) => <ActionCheckItem item={item} clickFunction={itemClicked} />);
+  const defaultItems = data.day.defaultActions.map((item) => (
+    <ActionCheckItem key={item.id} item={item} clickFunction={itemClicked} />
+  ));
+  const customItems = data.day.customActions.map((item) => (
+    <ActionCheckItem key={item.id} item={item} clickFunction={itemClicked} />
+  ));
 
   return (
     <ul>
