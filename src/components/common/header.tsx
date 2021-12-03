@@ -63,7 +63,7 @@ export function Header() {
       </Navbar.Brand>
       <Container fluid>
         <Navbar.Toggle aria-controls="ds-header-navbar" />
-        <Navbar.Collapse id="ds-header-navbar" className="w-100">
+        <Navbar.Collapse aria-expanded="false" id="ds-header-navbar" className="w-100">
           <Nav className="m-0">{links}</Nav>
           <Navbar.Text className="w-100 m-2 text-end">
             <PointerGear width="25" height="25" onClick={toggleSettings} />
