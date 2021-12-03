@@ -48,10 +48,14 @@ export function PrayerSettings() {
           filters.showAll = false;
         } else {
           filters.showAll = true;
+          filters.showUnLabeled = true;
           filters.showConfessions = true;
           filters.showPraise = true;
           filters.showRequests = true;
         }
+        break;
+      case 'unlabeled':
+        filters.showUnLabeled = !filters.showUnLabeled;
         break;
       case 'requests':
         filters.showRequests = !filters.showRequests;
@@ -103,6 +107,14 @@ export function PrayerSettings() {
           label="Any"
           checked={data!.settings.prayer.filters.showAll}
           onChange={() => filterCheckClicked('all')}
+        />
+        <Form.Check
+          type="checkbox"
+          id="showUnlabeledCheck"
+          label="Un-Labeled"
+          checked={data!.settings.prayer.filters.showUnLabeled}
+          disabled={data?.settings.prayer.filters.showAll}
+          onChange={() => filterCheckClicked('unlabeled')}
         />
         <Form.Check
           type="checkbox"

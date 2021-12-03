@@ -91,6 +91,7 @@ export function PrayerCards() {
 
   const showAll = userData!.settings.prayer.showAllItems;
   const showAllTypes = userData!.settings.prayer.filters.showAll;
+  const showUnlabeledTypes = userData!.settings.prayer.filters.showUnLabeled;
   const showRequestTypes = userData!.settings.prayer.filters.showRequests;
   const showPraiseTypes = userData!.settings.prayer.filters.showPraise;
   const showConfessionTypes = userData!.settings.prayer.filters.showConfessions;
@@ -99,6 +100,7 @@ export function PrayerCards() {
     const completenessCheck: boolean = showAll || !item.completed;
     const filterCheck: boolean =
       showAllTypes ||
+      (showUnlabeledTypes && !item.type) ||
       (showRequestTypes && item.type === PrayerTypes.request) ||
       (showPraiseTypes && item.type === PrayerTypes.praise) ||
       (showConfessionTypes && item.type === PrayerTypes.confession);

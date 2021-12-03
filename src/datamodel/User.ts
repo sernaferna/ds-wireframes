@@ -21,6 +21,7 @@ export interface UserAttributes {
       sort: string;
       filters: {
         showAll: boolean;
+        showUnLabeled: boolean;
         showRequests: boolean;
         showPraise: boolean;
         showConfessions: boolean;
