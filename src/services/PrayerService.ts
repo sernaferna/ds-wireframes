@@ -55,3 +55,26 @@ export const {
   useNewItemMutation,
   useMarkUnreadMutation,
 } = prayerApi;
+
+// other prayer 'helper functions'
+export const sortPrayerItems = (list: PrayerListItem[], asc: boolean): PrayerListItem[] => {
+  return list.sort((a, b) => {
+    if (a.date < b.date) {
+      if (asc) {
+        return -1;
+      } else {
+        return 1;
+      }
+    }
+
+    if (a.date > b.date) {
+      if (asc) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+
+    return 0;
+  });
+};

@@ -7,7 +7,12 @@ import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
 import { ErrorLoadingDataMessage } from '../common/loading';
-import { useGetAllItemsQuery, useMarkReadMutation, useMarkUnreadMutation } from '../../services/PrayerService';
+import {
+  useGetAllItemsQuery,
+  useMarkReadMutation,
+  useMarkUnreadMutation,
+  sortPrayerItems,
+} from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { PrayerTypes } from '../../datamodel/PrayerListItem';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
@@ -108,27 +113,10 @@ export function PrayerCards() {
     return completenessCheck && filterCheck;
   });
 
-  const sortOption = userData!.settings.prayer.sort;
-  rawItems.sort((a, b) => {
-    if (a.date < b.date) {
-      if (sortOption === 'date-asc') {
-        return -1;
-      } else {
-        return 1;
-      }
-    }
-    if (a.date > b.date) {
-      if (sortOption === 'date-asc') {
-        return 1;
-      } else {
-        return -1;
-      }
-    }
+  const sortOption = userData!.settings.prayer.sort === 'date-asc' ? true : false;
+  const sortedItems = sortPrayerItems(rawItems, sortOption);
 
-    return 0;
-  });
-
-  const items = rawItems.map((item) => {
+  const items = sortedItems.map((item) => {
     const submitButton = item.completed ? (
       <Button
         className="mt-auto"

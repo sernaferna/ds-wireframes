@@ -3,9 +3,11 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
-import { useGetAllItemsQuery, useMarkReadMutation } from '../../services/PrayerService';
+import { useGetAllItemsQuery, useMarkReadMutation, sortPrayerItems } from '../../services/PrayerService';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes } from '../../datamodel/PrayerListItem';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { ErrorLoadingDataMessage } from '../common/loading';
 
 const ItemText = styled.p.attrs(() => ({}))`
   height: 1.2em;
@@ -34,22 +36,28 @@ const createPlaceholder = () => {
 export function PrayerSnapshot() {
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
+  const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const userData = tempObj.data;
+  const userError = tempObj.error;
+  const userIsLoading = tempObj.isLoading;
 
-  if (isLoading) {
+  if (isLoading || userIsLoading) {
     return createPlaceholder();
   }
 
-  if (error) {
-    return <div>Error!</div>;
+  if (error || userError) {
+    return <ErrorLoadingDataMessage />;
   }
 
   const unreadItems = data!.filter((item) => !item.completed);
+  const sortPrayerAsc = userData!.settings.prayer.sort === 'date-asc' ? true : false;
+  const sortedItems = sortPrayerItems(unreadItems, sortPrayerAsc);
 
   const handleCheck = (id: string) => {
     markRead(id);
   };
 
-  const renderedItems = unreadItems.map((item) => {
+  const renderedItems = sortedItems.map((item) => {
     const itemTitle = <ItemTitle>{item.title}</ItemTitle>;
 
     let icon;
