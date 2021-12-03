@@ -141,19 +141,19 @@ export function CreatePrayerItem({ confession = false }) {
         </Form.Group>
         {confession ? null : (
           <Stack direction="horizontal" className="h1 m-3" gap={5}>
-            <OverlayTrigger trigger="hover" placement="bottom" overlay={praisePopover}>
+            <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
               <ShieldPlus
                 className={type === PrayerTypes.praise ? selectedIconClasses : unselectedIconClasses}
                 onClick={() => setPrayerType(PrayerTypes.praise)}
               />
             </OverlayTrigger>
-            <OverlayTrigger trigger="hover" placement="bottom" overlay={requestPopover}>
+            <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
               <Tsunami
                 className={type === PrayerTypes.request ? selectedIconClasses : unselectedIconClasses}
                 onClick={() => setPrayerType(PrayerTypes.request)}
               />
             </OverlayTrigger>
-            <OverlayTrigger trigger="hover" placement="bottom" overlay={confessionPopover}>
+            <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={confessionPopover}>
               <EyeFill
                 className={type === PrayerTypes.confession ? selectedIconClasses : unselectedIconClasses}
                 onClick={() => setPrayerType(PrayerTypes.confession)}
@@ -161,10 +161,11 @@ export function CreatePrayerItem({ confession = false }) {
             </OverlayTrigger>
           </Stack>
         )}
-
-        <Button variant={confession ? 'danger' : 'primary'} type="submit">
-          Submit
-        </Button>
+        <Form.Group className="mt-2">
+          <Button variant={confession ? 'danger' : 'primary'} type="submit">
+            Submit
+          </Button>
+        </Form.Group>
       </Form>
     </div>
   );
