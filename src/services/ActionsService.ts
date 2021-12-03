@@ -17,7 +17,7 @@ export const actionsApi = createApi({
           url: 'recent',
         };
       },
-      providesTags: ['actions'],
+      providesTags: (result) => (result ? result.map((item) => ({ type: 'actions', id: item.id })) : []),
     }),
     getActionByDate: builder.query<ActionsForDay, string>({
       query: (date) => {
@@ -25,7 +25,7 @@ export const actionsApi = createApi({
           url: `/byDate/${date}`,
         };
       },
-      providesTags: ['actions'],
+      providesTags: (result) => (result ? [{ type: 'actions', id: result.id }] : []),
     }),
     markItemReadForDay: builder.mutation<ActionsForDay, MarkItemReadForDayServiceInterface>({
       query(data) {
@@ -35,7 +35,7 @@ export const actionsApi = createApi({
           body: data.dataForDay,
         };
       },
-      invalidatesTags: ['actions'],
+      invalidatesTags: (result) => (result ? [{ type: 'actions', id: result.id }] : []),
     }),
   }),
 });

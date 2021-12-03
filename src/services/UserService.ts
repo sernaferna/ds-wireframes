@@ -8,7 +8,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUserById: builder.query<UserAttributes, string>({
       query: (id) => id,
-      providesTags: ['user'],
+      providesTags: (result) => (result ? [{ type: 'user', id: result.id }] : []),
     }),
     updateUser: builder.mutation<UserAttributes, UserAttributes>({
       query(user) {
@@ -18,7 +18,7 @@ export const userApi = createApi({
           body: user,
         };
       },
-      invalidatesTags: ['user'],
+      invalidatesTags: (result) => (result ? [{ type: 'user', id: result.id }] : []),
     }),
   }),
 });

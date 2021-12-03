@@ -8,11 +8,14 @@ export const prayerApi = createApi({
   endpoints: (builder) => ({
     getItemById: builder.query<PrayerListItem, string>({
       query: (id) => id,
-      providesTags: ['prayerItems'],
+      providesTags: (result) => (result ? [{ type: 'prayerItems', id: result.id }] : []),
     }),
     getAllItems: builder.query<PrayerListItem[], void>({
       query: () => '',
-      providesTags: ['prayerItems'],
+      providesTags: (result) =>
+        result
+          ? [...result.map(({ id }) => ({ type: 'prayerItems' as const, id: id })), { type: 'prayerItems', id: 'LIST' }]
+          : [{ type: 'prayerItems', id: 'LIST' }],
     }),
     markRead: builder.mutation<PrayerListItem, string>({
       query(id) {
@@ -21,7 +24,7 @@ export const prayerApi = createApi({
           method: 'PUT',
         };
       },
-      invalidatesTags: ['prayerItems'],
+      invalidatesTags: (result) => (result ? [{ type: 'prayerItems', id: result.id }] : []),
     }),
     markUnread: builder.mutation<PrayerListItem, string>({
       query(id) {
@@ -40,7 +43,7 @@ export const prayerApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['prayerItems'],
+      invalidatesTags: (result) => (result ? [{ type: 'prayerItems', id: result.id }] : []),
     }),
   }),
 });
