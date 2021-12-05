@@ -58,8 +58,6 @@ export function PrayerSnapshot() {
   };
 
   const renderedItems = sortedItems.map((item) => {
-    const itemTitle = <ItemTitle>{item.title}</ItemTitle>;
-
     let icon;
     if (item.type === PrayerTypes.praise) {
       icon = <ShieldPlus className="d-inline me-1 text-primary" />;
@@ -69,11 +67,11 @@ export function PrayerSnapshot() {
       icon = <EyeFill className="d-inline me-1 text-primary" />;
     }
 
-    const itemBody = (
-      <ItemText>
-        {icon ? icon : ''}
-        {item.text}
-      </ItemText>
+    const itemBody = <ItemText>{item.text}</ItemText>;
+    const itemTitle = (
+      <ItemTitle>
+        {icon} {item.title}
+      </ItemTitle>
     );
 
     return (
