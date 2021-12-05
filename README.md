@@ -1,6 +1,6 @@
 # Devouring Scripture Wireframes
 
-This project provides wireframes for what the **Devouring Scripture** website can look like. proper coding practices won't _necessarily_ be followed in all cases; the intent is not to produce "good" code, just workable HTML that shows what the project can look like.
+This project provides wireframes for the **Devouring Scripture** website. Proper coding practices won't necessarily be followed; the intent is not to produce "good" code, just workable HTML that shows what the site could look like.
 
 Leverages the following technologies:
 
