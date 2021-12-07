@@ -34,19 +34,22 @@ export function DoPage() {
   actionsForMonth.data!.forEach((element) => {
     let finishedItems = false;
 
-    element.customActions.forEach((customElement) => {
-      if (customElement.completed) {
+    for (let i = 0; i < element.customActions.length; i++) {
+      if (element.customActions[i].completed) {
         finishedItems = true;
+        break;
       }
-    });
-    element.defaultActions.forEach((defaultElement) => {
-      if (defaultElement.completed) {
-        finishedItems = true;
-      }
-    });
-
+    }
     if (finishedItems) {
       actionsSet.add(element.date);
+      return;
+    }
+
+    for (let i = 0; i < element.defaultActions.length; i++) {
+      if (element.defaultActions[i].completed) {
+        actionsSet.add(element.date);
+        return;
+      }
     }
   });
 
@@ -78,9 +81,9 @@ export function DoPage() {
                 tileClassName={({ date, view }) => {
                   const calDate = date.toISOString().split('T')[0];
                   if (actionsSet.has(calDate)) {
-                    return 'fw-bolder fst-italic';
+                    return 'fw-bolder text-success';
                   }
-                  return 'fw-lighter';
+                  return '';
                 }}
               />
               <ActionsWidget />
