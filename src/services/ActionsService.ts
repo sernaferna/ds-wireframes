@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ActionsForDay } from '../datamodel/Action';
+import { ActionsForDay, ActionType } from '../datamodel/Action';
 
 interface MarkItemReadForDayServiceInterface {
   idForDay: string;
@@ -14,22 +14,30 @@ interface ItemsForMonthInterface {
 
 export const actionsApi = createApi({
   reducerPath: 'actions',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/actions/entries/' }),
-  tagTypes: ['actions'],
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/actions/' }),
+  tagTypes: ['actions', 'customActionTypes'],
   endpoints: (builder) => ({
     getRecentActions: builder.query<ActionsForDay[], void>({
       query: () => {
         return {
-          url: 'recent',
+          url: 'entries/recent',
         };
       },
       providesTags: (result) =>
         result ? result.map((item) => ({ type: 'actions', id: item.id })) : [{ type: 'actions', id: 'List' }],
     }),
+    getCustomActionTypes: builder.query<ActionType[], void>({
+      query: () => {
+        return {
+          url: 'custom/',
+        };
+      },
+      providesTags: ['customActionTypes'],
+    }),
     getActionsForMonth: builder.query<ActionsForDay[], ItemsForMonthInterface>({
       query(data) {
         return {
-          url: `/forMonth/${data.year}/${data.month}`,
+          url: `entries/forMonth/${data.year}/${data.month}`,
         };
       },
       providesTags: (result) =>
@@ -38,7 +46,7 @@ export const actionsApi = createApi({
     getActionByDate: builder.query<ActionsForDay, string>({
       query: (date) => {
         return {
-          url: `/byDate/${date}`,
+          url: `entries/byDate/${date}`,
         };
       },
       providesTags: (result) => (result ? [{ type: 'actions', id: result.id }] : []),
@@ -61,4 +69,5 @@ export const {
   useGetActionByDateQuery,
   useMarkItemReadForDayMutation,
   useGetActionsForMonthQuery,
+  useGetCustomActionTypesQuery,
 } = actionsApi;
