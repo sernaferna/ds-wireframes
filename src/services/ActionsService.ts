@@ -17,7 +17,8 @@ export const actionsApi = createApi({
           url: 'recent',
         };
       },
-      providesTags: (result) => (result ? result.map((item) => ({ type: 'actions', id: item.id })) : []),
+      providesTags: (result) =>
+        result ? result.map((item) => ({ type: 'actions', id: item.id })) : [{ type: 'actions', id: 'List' }],
     }),
     getActionByDate: builder.query<ActionsForDay, string>({
       query: (date) => {
