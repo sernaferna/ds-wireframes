@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { PrayerListItem, BasePrayerListItem } from '../datamodel/PrayerListItem';
+import { DateTime } from 'luxon';
 
 export const prayerApi = createApi({
   reducerPath: 'prayer',
@@ -59,7 +60,9 @@ export const {
 // other prayer 'helper functions'
 export const sortPrayerItems = (list: PrayerListItem[], asc: boolean): PrayerListItem[] => {
   return list.sort((a, b) => {
-    if (a.date < b.date) {
+    const aDate = DateTime.fromISO(a.date);
+    const bDate = DateTime.fromISO(b.date);
+    if (aDate < bDate) {
       if (asc) {
         return -1;
       } else {
@@ -67,7 +70,7 @@ export const sortPrayerItems = (list: PrayerListItem[], asc: boolean): PrayerLis
       }
     }
 
-    if (a.date > b.date) {
+    if (aDate > bDate) {
       if (asc) {
         return 1;
       } else {

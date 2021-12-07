@@ -9,6 +9,7 @@ import { ActionsForDay } from '../../datamodel/Action';
 import { ActionWidgetForm } from './ActionWidgetForm';
 import styled from 'styled-components';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { DateTime } from 'luxon';
 
 const PreviousDayButton = styled(CaretLeft).attrs(() => ({}))`
   cursor: pointer;
@@ -27,10 +28,10 @@ const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
 }))``;
 
 export function ActionsWidget() {
-  const dateToShow = new Date(useSelector(getDateForActions));
+  const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
   const dispatch = useDispatch();
 
-  const { data, error, isLoading } = useGetActionByDateQuery(dateToShow.toISOString().split('T')[0]);
+  const { data, error, isLoading } = useGetActionByDateQuery(dateToShow.toISODate());
 
   const userApiObject = useGetUserByIdQuery(HARDCODED_USER_ID);
   const userData = userApiObject.data;
@@ -43,27 +44,28 @@ export function ActionsWidget() {
   }
 
   const handleDateScroll = (increase: boolean) => {
-    let newDate = new Date(dateToShow);
+    let newDate;
+
     if (increase) {
-      newDate.setDate(dateToShow.getDate() + 1);
+      newDate = dateToShow.plus({ day: 1 });
     } else {
-      newDate.setDate(dateToShow.getDate() - 1);
+      newDate = dateToShow.minus({ day: 1 });
     }
 
-    dispatch(updateDateShowingInActions(newDate.toISOString().split('T')[0]));
+    dispatch(updateDateShowingInActions(newDate.toISODate()));
   };
 
   return (
     <Card className="m-0 border-0">
       <Card.Body>
         <h4>
-          {dateToShow < new Date(userData!.signupDate) ? (
+          {dateToShow < DateTime.fromISO(userData!.signupDate) ? (
             <DisabledPreviousDayButton />
           ) : (
             <PreviousDayButton onClick={() => handleDateScroll(false)} />
           )}
-          <span className="user-select-none">{dateToShow.toISOString().split('T')[0]}</span>
-          {dateToShow > new Date(Date.now()) ? (
+          <span className="user-select-none">{dateToShow.toISODate()}</span>
+          {dateToShow > DateTime.now() ? (
             <DisabledNextDayButton />
           ) : (
             <NextDayButton onClick={() => handleDateScroll(true)} />

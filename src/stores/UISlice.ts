@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './Store';
+import { DateTime } from 'luxon';
 
 export interface IUISlice {
   settingsShowing: boolean;
@@ -26,5 +27,5 @@ export default uiSlice.reducer;
 
 export const selectShowSettings = (state: RootState) => state.ui.settingsShowing;
 export const getDateForActions = (state: RootState) => {
-  return state.ui.dateShowingInActions ? state.ui.dateShowingInActions : new Date().toISOString().split('T')[0];
+  return state.ui.dateShowingInActions ? state.ui.dateShowingInActions : DateTime.now().toISODate();
 };

@@ -6,16 +6,17 @@ import { updateDateShowingInActions } from '../../stores/UISlice';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { DateTime } from 'luxon';
 
 interface CalendarViewInterface {
-  dateToShow: Date;
+  dateToShow: DateTime;
 }
 
 export function CalendarView(props: CalendarViewInterface) {
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetActionsForMonthQuery({
-    year: props.dateToShow.getFullYear(),
-    month: props.dateToShow.getMonth(),
+    year: props.dateToShow.get('year'),
+    month: props.dateToShow.get('month'),
   });
   const userDataObj = useGetUserByIdQuery(HARDCODED_USER_ID);
   const userData = userDataObj.data;
@@ -51,21 +52,22 @@ export function CalendarView(props: CalendarViewInterface) {
   });
 
   const dayClickedInCalendar = (value: Date, event: any) => {
-    dispatch(updateDateShowingInActions(value.toISOString().split('T')[0]));
+    const dateToDispatch = DateTime.fromJSDate(value);
+    dispatch(updateDateShowingInActions(dateToDispatch.toISODate()));
   };
 
-  const tomorrow = new Date();
-  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+  const tomorrow = DateTime.now().plus({ day: 1 });
 
   return (
     <Calendar
-      value={props.dateToShow}
+      value={props.dateToShow.toJSDate()}
       minDate={new Date(userData!.signupDate)}
-      maxDate={tomorrow}
+      maxDate={tomorrow.toJSDate()}
       onClickDay={dayClickedInCalendar}
       returnValue="end"
       tileClassName={({ date, view }) => {
-        const calDate = date.toISOString().split('T')[0];
+        //const calDate = date.toISOString().split('T')[0];
+        const calDate = DateTime.fromJSDate(date).toISODate();
         if (actionsSet.has(calDate)) {
           return 'fw-bolder text-success';
         }
