@@ -6,6 +6,12 @@ interface MarkItemReadForDayServiceInterface {
   idForItem: string;
   dataForDay: ActionsForDay;
 }
+
+interface ItemsForMonthInterface {
+  year: number;
+  month: number;
+}
+
 export const actionsApi = createApi({
   reducerPath: 'actions',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/actions/entries/' }),
@@ -15,6 +21,15 @@ export const actionsApi = createApi({
       query: () => {
         return {
           url: 'recent',
+        };
+      },
+      providesTags: (result) =>
+        result ? result.map((item) => ({ type: 'actions', id: item.id })) : [{ type: 'actions', id: 'List' }],
+    }),
+    getActionsForMonth: builder.query<ActionsForDay[], ItemsForMonthInterface>({
+      query(data) {
+        return {
+          url: `/forMonth/${data.year}/${data.month}`,
         };
       },
       providesTags: (result) =>
@@ -41,4 +56,9 @@ export const actionsApi = createApi({
   }),
 });
 
-export const { useGetRecentActionsQuery, useGetActionByDateQuery, useMarkItemReadForDayMutation } = actionsApi;
+export const {
+  useGetRecentActionsQuery,
+  useGetActionByDateQuery,
+  useMarkItemReadForDayMutation,
+  useGetActionsForMonthQuery,
+} = actionsApi;

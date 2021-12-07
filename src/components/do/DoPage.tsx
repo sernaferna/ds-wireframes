@@ -15,18 +15,40 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDateForActions, updateDateShowingInActions } from '../../stores/UISlice';
+import { useGetActionsForMonthQuery } from '../../services/ActionsService';
 
 export function DoPage() {
   const dateToShow = new Date(useSelector(getDateForActions));
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const actionsForMonth = useGetActionsForMonthQuery({ year: dateToShow.getFullYear(), month: dateToShow.getMonth() });
 
-  if (isLoading) {
+  if (isLoading || actionsForMonth.isLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
+  if (error || actionsForMonth.error) {
     return <ErrorLoadingDataMessage />;
   }
+
+  const actionsSet = new Set();
+  actionsForMonth.data!.forEach((element) => {
+    let finishedItems = false;
+
+    element.customActions.forEach((customElement) => {
+      if (customElement.completed) {
+        finishedItems = true;
+      }
+    });
+    element.defaultActions.forEach((defaultElement) => {
+      if (defaultElement.completed) {
+        finishedItems = true;
+      }
+    });
+
+    if (finishedItems) {
+      actionsSet.add(element.date);
+    }
+  });
 
   // For some reason the calendar widget seems to want the date to be increased by 1 in order to render/function properly
   dateToShow.setDate(dateToShow.getDate() + 1);
@@ -53,6 +75,13 @@ export function DoPage() {
                 maxDate={tomorrow}
                 onClickDay={dayClickedInCalendar}
                 returnValue="end"
+                tileClassName={({ date, view }) => {
+                  const calDate = date.toISOString().split('T')[0];
+                  if (actionsSet.has(calDate)) {
+                    return 'fw-bolder fst-italic';
+                  }
+                  return 'fw-lighter';
+                }}
               />
               <ActionsWidget />
             </Col>
