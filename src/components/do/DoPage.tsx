@@ -13,9 +13,10 @@ import { useSelector } from 'react-redux';
 import { getDateForActions } from '../../stores/UISlice';
 import { CalendarView } from './CalendarView';
 import { CustomActionList } from './CustomActionList';
+import { DateTime } from 'luxon';
 
 export function DoPage() {
-  const dateToShow = new Date(useSelector(getDateForActions));
+  const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
 
   return (
     <PageMainContainer>
