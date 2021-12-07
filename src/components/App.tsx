@@ -29,7 +29,7 @@ export function App() {
         </div>
       </BrowserRouter>
       <div aria-live="polite" aria-atomic="true">
-        <ToastContainer position="bottom-end" id="main-toast-container" />
+        <ToastContainer position="top-end" id="main-toast-container" />
       </div>
       <SizeIndicator />
     </div>
