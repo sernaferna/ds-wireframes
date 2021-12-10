@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, ChangeEvent, SyntheticEvent } from 'react';
 import Form from 'react-bootstrap/Form';
-import { useState, ChangeEvent, SyntheticEvent } from 'react';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Popover from 'react-bootstrap/Popover';

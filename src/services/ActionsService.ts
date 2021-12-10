@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ActionsForDay, ActionType } from '../datamodel/Action';
+import { ActionsForDay, ActionType, BaseActionType } from '../datamodel/Action';
 
 interface MarkItemReadForDayServiceInterface {
   idForDay: string;
@@ -32,7 +32,7 @@ export const actionsApi = createApi({
           url: 'custom/',
         };
       },
-      providesTags: ['customActionTypes'],
+      providesTags: [{ type: 'customActionTypes', id: 'LIST' }],
     }),
     getActionsForMonth: builder.query<ActionsForDay[], ItemsForMonthInterface>({
       query(data) {
@@ -54,12 +54,23 @@ export const actionsApi = createApi({
     markItemReadForDay: builder.mutation<ActionsForDay, MarkItemReadForDayServiceInterface>({
       query(data) {
         return {
-          url: `${data.idForDay}/mark/${data.idForItem}`,
+          url: `entries/${data.idForDay}/mark/${data.idForItem}`,
           method: 'PUT',
           body: data.dataForDay,
         };
       },
       invalidatesTags: (result) => (result ? [{ type: 'actions', id: result.id }] : []),
+    }),
+    newCustomAction: builder.mutation<ActionType, BaseActionType>({
+      query(data) {
+        return {
+          url: 'custom/',
+          method: 'POST',
+          body: data,
+        };
+      },
+      invalidatesTags: (result) =>
+        result ? [{ type: 'customActionTypes', id: result.id }] : [{ type: 'customActionTypes', id: 'LIST' }],
     }),
   }),
 });
@@ -70,4 +81,5 @@ export const {
   useMarkItemReadForDayMutation,
   useGetActionsForMonthQuery,
   useGetCustomActionTypesQuery,
+  useNewCustomActionMutation,
 } = actionsApi;

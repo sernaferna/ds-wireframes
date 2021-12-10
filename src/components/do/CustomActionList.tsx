@@ -1,14 +1,16 @@
-import React from 'react';
-import { useGetCustomActionTypesQuery } from '../../services/ActionsService';
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { useGetCustomActionTypesQuery, useNewCustomActionMutation } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ArchiveFill } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
-import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
+import { BaseActionType } from '../../datamodel/Action';
 
 export function CustomActionList() {
   const { data, error, isLoading } = useGetCustomActionTypesQuery();
+  const [actionType, setActonType] = useState('');
+  const [newItem] = useNewCustomActionMutation();
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -28,31 +30,33 @@ export function CustomActionList() {
     );
   });
 
+  const setText = (event: ChangeEvent<HTMLInputElement>) => {
+    setActonType(event.target.value);
+  };
+
+  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
+    const action: BaseActionType = {
+      displayName: actionType,
+    };
+
+    newItem(action);
+  };
+
   return (
     <>
       <h1>Custom Action List</h1>
+      <p className="lead">
+        Not implemented&mdash;changes here don't impact the Actions functionality in the wireframe.
+      </p>
       <p>You've added the following custom actions to your tracker:</p>
       <ul>{list}</ul>
 
       <h1>Add an Item</h1>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <FloatingLabel controlId="floatingItem" label="Action Type">
-          <Form.Control type="text" placeholder="Action" />
+          <Form.Control type="text" placeholder="Action" value={actionType} onChange={setText} />
         </FloatingLabel>
-        <Button
-          variant="primary"
-          type="submit"
-          onClick={(event) => {
-            getToastManager().show({
-              title: 'Not Implemented',
-              content: 'Not yet implemented',
-              duration: TOAST_FADE_TIME,
-              type: ToastType.Warning,
-            });
-            event.preventDefault();
-            event.stopPropagation();
-          }}
-        >
+        <Button variant="primary" type="submit">
           Send
         </Button>
       </Form>
