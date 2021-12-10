@@ -1,5 +1,9 @@
 import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
-import { useGetCustomActionTypesQuery, useNewCustomActionMutation } from '../../services/ActionsService';
+import {
+  useGetCustomActionTypesQuery,
+  useNewCustomActionMutation,
+  useDeleteCustomActionMutation,
+} from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ArchiveFill } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
@@ -11,6 +15,7 @@ export function CustomActionList() {
   const { data, error, isLoading } = useGetCustomActionTypesQuery();
   const [actionType, setActonType] = useState('');
   const [newItem] = useNewCustomActionMutation();
+  const [deleteItem] = useDeleteCustomActionMutation();
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -23,9 +28,15 @@ export function CustomActionList() {
     return (
       <li key={item.id}>
         {item.displayName}{' '}
-        <span className="text-danger">
-          <ArchiveFill />
-        </span>
+        <Button
+          size="sm"
+          variant="danger"
+          onClick={() => {
+            deleteItem(item.id);
+          }}
+        >
+          Delete
+        </Button>
       </li>
     );
   });

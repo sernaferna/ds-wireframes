@@ -72,6 +72,15 @@ export const actionsApi = createApi({
       invalidatesTags: (result) =>
         result ? [{ type: 'customActionTypes', id: result.id }] : [{ type: 'customActionTypes', id: 'LIST' }],
     }),
+    deleteCustomAction: builder.mutation<string, string>({
+      query(data) {
+        return {
+          url: `custom/${data}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: [{ type: 'customActionTypes', id: 'LIST' }],
+    }),
   }),
 });
 
@@ -82,4 +91,5 @@ export const {
   useGetActionsForMonthQuery,
   useGetCustomActionTypesQuery,
   useNewCustomActionMutation,
+  useDeleteCustomActionMutation,
 } = actionsApi;
