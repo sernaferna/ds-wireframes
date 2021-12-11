@@ -12,10 +12,11 @@ import {
   useMarkReadMutation,
   useMarkUnreadMutation,
   sortPrayerItems,
+  useDeletePrayerItemMutation,
 } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { PrayerTypes } from '../../datamodel/PrayerListItem';
-import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
+import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto flex-grow-1',
@@ -30,7 +31,12 @@ const CardContainerRow = styled(Row).attrs(() => ({
   xxl: '3',
 }))``;
 
-const createPlaceholderCard = () => {
+interface PrayerIconsContainerInterface {
+  itemId: string;
+  children: JSX.Element;
+}
+
+const PlaceholderCard = () => {
   return (
     <Card className="h-100 shadow">
       <Card.Body>
@@ -56,6 +62,7 @@ export function PrayerCards() {
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
   const [markUnread] = useMarkUnreadMutation();
+  const [deleteItem] = useDeletePrayerItemMutation();
 
   const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
   const userData = tempObj.data;
@@ -65,8 +72,8 @@ export function PrayerCards() {
   if (isLoading || userIsLoading) {
     return (
       <CardContainerRow>
-        {createPlaceholderCard()}
-        {createPlaceholderCard()}
+        {PlaceholderCard()}
+        {PlaceholderCard()}
       </CardContainerRow>
     );
   }
@@ -139,13 +146,29 @@ export function PrayerCards() {
       </Button>
     );
 
+    const IconsContainer = ({ itemId, children }: PrayerIconsContainerInterface) => {
+      return (
+        <div className="float-end text-primary">
+          {children}
+          <span
+            onClick={() => {
+              deleteItem(itemId);
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            <TrashFill className="text-danger" />
+          </span>
+        </div>
+      );
+    };
+
     let icon;
     if (item.type === PrayerTypes.praise) {
-      icon = <ShieldPlus className="float-end text-primary" />;
+      icon = <ShieldPlus />;
     } else if (item.type === PrayerTypes.request) {
-      icon = <Tsunami className="float-end text-primary" />;
+      icon = <Tsunami />;
     } else if (item.type === PrayerTypes.confession) {
-      icon = <EyeFill className="float-end text-primary" />;
+      icon = <EyeFill />;
     }
 
     return (
@@ -153,7 +176,7 @@ export function PrayerCards() {
         <Card className="h-100 shadow">
           <Card.Body className="d-flex flex-column">
             <Card.Title>
-              {item.title} {icon ? icon : ''}
+              {item.title} <IconsContainer itemId={item.id}>{icon ? icon : <></>}</IconsContainer>
             </Card.Title>
             <MaxHeightText>{item.text}</MaxHeightText>
             {submitButton}

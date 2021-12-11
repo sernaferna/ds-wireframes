@@ -36,6 +36,15 @@ export const prayerApi = createApi({
       },
       invalidatesTags: ['prayerItems'],
     }),
+    deletePrayerItem: builder.mutation<string, string>({
+      query(id) {
+        return {
+          url: `${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['prayerItems'],
+    }),
     newItem: builder.mutation<PrayerListItem, BasePrayerListItem>({
       query(body) {
         return {
@@ -55,6 +64,7 @@ export const {
   useMarkReadMutation,
   useNewItemMutation,
   useMarkUnreadMutation,
+  useDeletePrayerItemMutation,
 } = prayerApi;
 
 // other prayer 'helper functions'
