@@ -20,10 +20,10 @@ export function PrayerPage() {
         </PageSidebarContainerCol>
         <PageMainContentCol>
           <Row>
-            <Col className="col-12 order-last order-lg-first col-lg-8">
+            <Col className="col-12 order-last order-lg-first col-lg-9">
               <PrayerCards />
             </Col>
-            <Col className="col-12 col-lg-4">
+            <Col className="col-12 col-lg-3">
               <CreatePrayerItem />
               <CreatePrayerItem confession={true} />
             </Col>
