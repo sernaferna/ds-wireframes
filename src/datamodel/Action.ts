@@ -16,3 +16,15 @@ export interface ActionsForDay {
   defaultActions: ActionEntry[];
   customActions: ActionEntry[];
 }
+
+export interface ActionStats {
+  dataSize: number;
+  readShortOT: number;
+  readLongOT: number;
+  readShortNT: number;
+  readLongNT: number;
+  journaled: number;
+  prayed: number;
+  created: number;
+  conversed: number;
+}
