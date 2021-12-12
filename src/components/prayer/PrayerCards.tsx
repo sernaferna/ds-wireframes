@@ -2,7 +2,6 @@ import React from 'react';
 import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/ToastManager';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
@@ -17,19 +16,13 @@ import {
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { PrayerTypes } from '../../datamodel/PrayerListItem';
 import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
+import { CardContainerRow } from '../styled-components/StyledComponents';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto flex-grow-1',
 }))`
   max-height: 8em;
 `;
-
-const CardContainerRow = styled(Row).attrs(() => ({
-  xs: '1',
-  md: '2',
-  lg: '2',
-  xxl: '3',
-}))``;
 
 interface PrayerIconsContainerInterface {
   itemId: string;

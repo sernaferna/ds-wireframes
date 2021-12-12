@@ -11,9 +11,17 @@ export const PageMainContainer = styled(Container).attrs(() => ({
 export const PageMainRow = styled(Row).attrs(() => ({}))``;
 
 export const PageSidebarContainerCol = styled(Col).attrs(() => ({
-  className: 'order-last col-12 order-sm-last col-sm-12 order-md-last col-sm-12 order-lg-first col-lg-3 order-xl-first col-xl-3 order-xxl-first col-xxl-2',
+  className:
+    'order-last col-12 order-sm-last col-sm-12 order-md-last col-sm-12 order-lg-first col-lg-3 order-xl-first col-xl-3 order-xxl-first col-xxl-2',
 }))``;
 
 export const PageMainContentCol = styled(Col).attrs(() => ({
   className: 'col-12 col-lg-9 col-xxl-10',
+}))``;
+
+export const CardContainerRow = styled(Row).attrs(() => ({
+  xs: '1',
+  md: '2',
+  lg: '2',
+  xxl: '3',
 }))``;

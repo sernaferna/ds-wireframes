@@ -4,12 +4,36 @@ import {
   PageMainRow,
   PageMainContentCol,
   PageSidebarContainerCol,
+  CardContainerRow,
 } from '../styled-components/StyledComponents';
 import { HomeSidebar } from './HomeSidebar';
 import { useGetActionStatsQuery } from '../../services/ActionsService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { VictoryPie } from 'victory';
+import { ReadScripture } from './stats/ReadScripture';
+import { DetailedReading } from './stats/DetailedReading';
+import { OldVsNew } from './stats/OldVsNew';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+
+interface VisualizationCardInterface {
+  title: string;
+  children: JSX.Element;
+}
+const VisualizationCard = ({ title, children }: VisualizationCardInterface) => {
+  return (
+    <Col className="mt-2" style={{ maxWidth: '400px' }}>
+      <Card className="h-100 shadow">
+        <Card.Body className="d-flex flex-column">
+          <Card.Title>{title}</Card.Title>
+          <Card.Text className="overflow-auto flex-grow-1" style={{ maxHeight: '50em' }}>
+            {children}
+          </Card.Text>
+        </Card.Body>
+      </Card>
+    </Col>
+  );
+};
 
 export function Home() {
   const userObject = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -23,11 +47,6 @@ export function Home() {
     return <ErrorLoadingDataMessage />;
   }
 
-  const readingStats = [
-    { x: 'Read', y: data!.readLongNT },
-    { x: `Didn't Read`, y: data!.dataSize - data!.readLongNT },
-  ];
-
   return (
     <PageMainContainer>
       <PageMainRow>
@@ -36,7 +55,17 @@ export function Home() {
         </PageSidebarContainerCol>
         <PageMainContentCol>
           <h1>Main Page</h1>
-          <VictoryPie data={readingStats} innerRadius={100} colorScale={['green', 'grey']} />
+          <CardContainerRow>
+            <VisualizationCard title="Read Scripture">
+              <ReadScripture stats={data!} />
+            </VisualizationCard>
+            <VisualizationCard title="Scripture Reading Stats">
+              <DetailedReading stats={data!} />
+            </VisualizationCard>
+            <VisualizationCard title="Old vs. New Testaments">
+              <OldVsNew stats={data!} />
+            </VisualizationCard>
+          </CardContainerRow>
         </PageMainContentCol>
       </PageMainRow>
     </PageMainContainer>

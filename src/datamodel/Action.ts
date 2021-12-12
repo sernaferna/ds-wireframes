@@ -23,6 +23,7 @@ export interface ActionStats {
   readLongOT: number;
   readShortNT: number;
   readLongNT: number;
+  readScripture: number;
   journaled: number;
   prayed: number;
   created: number;
