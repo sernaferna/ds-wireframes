@@ -4,7 +4,6 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useDispatch } from 'react-redux';
 import { updateDateShowingInActions } from '../../stores/UISlice';
 import Calendar from 'react-calendar';
-import './Calendar.css';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
 

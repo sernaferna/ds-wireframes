@@ -22,11 +22,11 @@ interface VisualizationCardInterface {
 }
 const VisualizationCard = ({ title, children }: VisualizationCardInterface) => {
   return (
-    <Col className="mt-2" style={{ maxWidth: '400px' }}>
+    <Col className="mt-2" style={{ width: '375px', height: '375px' }}>
       <Card className="h-100 shadow">
         <Card.Body className="d-flex flex-column">
           <Card.Title>{title}</Card.Title>
-          <Card.Text className="overflow-auto flex-grow-1" style={{ maxHeight: '50em' }}>
+          <Card.Text as="div" className="overflow-auto flex-grow-1">
             {children}
           </Card.Text>
         </Card.Body>
@@ -59,7 +59,7 @@ export function Home() {
             <VisualizationCard title="Read Scripture">
               <ReadScripture stats={data!} />
             </VisualizationCard>
-            <VisualizationCard title="Scripture Reading Stats">
+            <VisualizationCard title="Detailed Reading Stats">
               <DetailedReading stats={data!} />
             </VisualizationCard>
             <VisualizationCard title="Old vs. New Testaments">

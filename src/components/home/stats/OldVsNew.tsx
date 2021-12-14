@@ -1,32 +1,25 @@
 import React from 'react';
 import { ActionStats } from '../../../datamodel/Action';
-import { VictoryPie, VictoryContainer } from 'victory';
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 interface OvNInterface {
   stats: ActionStats;
 }
 export const OldVsNew = (props: OvNInterface) => {
   const data = [
-    { x: 'Old Testament', y: props.stats.readLongOT + props.stats.readShortOT },
-    { x: 'New Testament', y: props.stats.readLongNT + props.stats.readShortNT },
+    { name: 'Old Testament', value: props.stats.readLongOT + props.stats.readShortOT },
+    { name: 'New Testament', value: props.stats.readLongNT + props.stats.readShortNT },
   ];
 
-  const colourScale = ['green', 'gray'];
-
-  const animateSettings = {
-    duration: 2500,
-    onLoad: {
-      duration: 2500,
-    },
-  };
-
   return (
-    <VictoryPie
-      data={data}
-      colorScale={colourScale}
-      innerRadius={100}
-      animate={animateSettings}
-      containerComponent={<VictoryContainer responsive={true} />}
-    />
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie data={data} dataKey="value" innerRadius={60} outerRadius={90} label={(entry) => entry.name}>
+          {data.map((item, index) => (
+            <Cell key={`cell-${index}`} className={`pie-slice-${index}`} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
   );
 };

@@ -1,30 +1,35 @@
 import React from 'react';
 import { ActionStats } from '../../../datamodel/Action';
-import { VictoryBar, VictoryContainer, VictoryChart, VictoryAxis } from 'victory';
+import { ResponsiveContainer, BarChart, Bar, YAxis, XAxis, Tooltip } from 'recharts';
 
 interface DetailedReadingInterface {
   stats: ActionStats;
 }
 export const DetailedReading = (props: DetailedReadingInterface) => {
   const data = [
-    { x: 'Long OT Passages', y: props.stats.readLongNT },
-    { x: 'Short OT Passages', y: props.stats.readShortOT },
-    { x: 'Long NT Passages', y: props.stats.readLongNT },
-    { x: 'Short NT Passages', y: props.stats.readShortNT },
+    {
+      name: 'Long OT',
+      value: props.stats.readLongOT,
+    },
+    {
+      name: 'Short OT',
+      value: props.stats.readShortOT,
+    },
+    { name: 'Long NT', value: props.stats.readLongNT },
+    {
+      name: 'Short NT',
+      value: props.stats.readShortNT,
+    },
   ];
 
   return (
-    <>
-      <VictoryChart domainPadding={20}>
-        <VictoryAxis style={{ tickLabels: { angle: 45, verticalAnchor: 'middle', textAnchor: 'start' } }} />
-        <VictoryBar
-          data={data}
-          style={{ data: { fill: 'green' } }}
-          barRatio={0.75}
-          containerComponent={<VictoryContainer responsive={true} />}
-          animate={{ duration: 500 }}
-        />
-      </VictoryChart>
-    </>
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={data}>
+        <Bar dataKey="value" />
+        <YAxis />
+        <XAxis dataKey="name" angle={-45} height={50} />
+        <Tooltip />
+      </BarChart>
+    </ResponsiveContainer>
   );
 };

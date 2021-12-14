@@ -40,7 +40,7 @@ export function HomeSettings() {
         name="dataFilter"
         checked={dataFilter === '2weeks'}
         onChange={() => {
-          changeDataFilterOption('week');
+          changeDataFilterOption('2weeks');
         }}
       />
       <Form.Check

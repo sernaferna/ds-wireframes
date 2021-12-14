@@ -1,34 +1,30 @@
 import React from 'react';
 import { ActionStats } from '../../../datamodel/Action';
-import { VictoryPie, VictoryContainer } from 'victory';
+import { ResponsiveContainer, PieChart, Pie, Tooltip } from 'recharts';
 
 interface ReadScriptureInterface {
   stats: ActionStats;
 }
 export const ReadScripture = (props: ReadScriptureInterface) => {
-  const data = [
-    { x: 'Read', y: props.stats.readScripture },
-    { x: `Didn't Read`, y: props.stats.dataSize - props.stats.readScripture },
+  const readUnreadData = [
+    { name: 'Read', value: props.stats.readScripture },
+    { name: `Didn't Read`, value: props.stats.dataSize - props.stats.readScripture },
   ];
 
-  const colourScale = ['green', 'gray '];
-
-  const animateSettings = {
-    duration: 2500,
-    onLoad: {
-      duration: 2500,
-    },
-  };
-
   return (
-    <>
-      <VictoryPie
-        data={data}
-        colorScale={colourScale}
-        innerRadius={100}
-        animate={animateSettings}
-        containerComponent={<VictoryContainer responsive={true} />}
-      />
-    </>
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={readUnreadData}
+          dataKey="value"
+          nameKey="name"
+          label={(entry) => entry.name}
+          className="pie-slice-1"
+          innerRadius={60}
+          outerRadius={90}
+        ></Pie>
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
   );
 };
