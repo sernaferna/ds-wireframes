@@ -13,8 +13,11 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ReadScripture } from './stats/ReadScripture';
 import { DetailedReading } from './stats/DetailedReading';
 import { OldVsNew } from './stats/OldVsNew';
+import { AllActivities } from './stats/AllActivities';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { GraphSorter } from './GraphSorter';
 
 interface VisualizationCardInterface {
   title: string;
@@ -22,7 +25,7 @@ interface VisualizationCardInterface {
 }
 const VisualizationCard = ({ title, children }: VisualizationCardInterface) => {
   return (
-    <Col className="mt-2" style={{ width: '375px', height: '375px' }}>
+    <Col className="mt-2" style={{ width: '400px', height: '400px' }}>
       <Card className="h-100 shadow">
         <Card.Body className="d-flex flex-column">
           <Card.Title>{title}</Card.Title>
@@ -47,6 +50,44 @@ export function Home() {
     return <ErrorLoadingDataMessage />;
   }
 
+  const vizualizationList = userData!.settings.home.vizualizationsOrder
+    .filter((item) => item.active)
+    .sort((a, b) => {
+      if (a.order < b.order) {
+        return -1;
+      }
+      if (a.order > b.order) {
+        return 1;
+      }
+
+      return 0;
+    })
+    .map((item) => {
+      let title: string;
+      let control: JSX.Element;
+
+      switch (item.name) {
+        case 'ReadScripture':
+          title = 'Read Scripture';
+          control = <ReadScripture stats={data!} />;
+          break;
+        case 'DetailedReading':
+          title = 'Detailed Reading Stats';
+          control = <DetailedReading stats={data!} />;
+          break;
+        case 'OldVsNew':
+          title = 'Old vs. New Testaments';
+          control = <OldVsNew stats={data!} />;
+          break;
+        case 'AllActivities':
+          title = 'All Activity';
+          control = <AllActivities stats={data!} />;
+          break;
+      }
+
+      return <VisualizationCard title={title!}>{control!}</VisualizationCard>;
+    });
+
   return (
     <PageMainContainer>
       <PageMainRow>
@@ -55,17 +96,14 @@ export function Home() {
         </PageSidebarContainerCol>
         <PageMainContentCol>
           <h1>Main Page</h1>
-          <CardContainerRow>
-            <VisualizationCard title="Read Scripture">
-              <ReadScripture stats={data!} />
-            </VisualizationCard>
-            <VisualizationCard title="Detailed Reading Stats">
-              <DetailedReading stats={data!} />
-            </VisualizationCard>
-            <VisualizationCard title="Old vs. New Testaments">
-              <OldVsNew stats={data!} />
-            </VisualizationCard>
-          </CardContainerRow>
+          <Row>
+            <Col className="col-12">
+              <CardContainerRow>{vizualizationList}</CardContainerRow>
+            </Col>
+            <Col className="col-12">
+              <GraphSorter />
+            </Col>
+          </Row>
         </PageMainContentCol>
       </PageMainRow>
     </PageMainContainer>

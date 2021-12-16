@@ -15,6 +15,7 @@ export interface UserAttributes {
       showActions: boolean;
       showPrayers: boolean;
       statsFilter: string;
+      vizualizationsOrder: { name: string; active: boolean; order: number }[];
     };
     prayer: {
       showSettings: boolean;
