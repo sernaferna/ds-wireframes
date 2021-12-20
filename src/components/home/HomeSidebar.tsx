@@ -6,6 +6,7 @@ import { HomeSettings } from './HomeSettings';
 import { ActionsWidget } from '../do/ActionsWidget';
 import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { ToastTester } from '../common/toasts/ToastTester';
 
 export function HomeSidebar() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -42,6 +43,8 @@ export function HomeSidebar() {
 
   return (
     <>
+      <ToastTester />
+
       <SidebarCollapseWidget title="Actions" visible={showActions} clickFunction={toggleActions}>
         <ActionsWidget />
       </SidebarCollapseWidget>

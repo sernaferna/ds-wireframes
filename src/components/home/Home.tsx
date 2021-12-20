@@ -62,7 +62,7 @@ export function Home() {
 
       return 0;
     })
-    .map((item) => {
+    .map((item, index) => {
       let title: string;
       let control: JSX.Element;
 
@@ -85,7 +85,11 @@ export function Home() {
           break;
       }
 
-      return <VisualizationCard title={title!}>{control!}</VisualizationCard>;
+      return (
+        <VisualizationCard key={`viz-card-${index}`} title={title!}>
+          {control!}
+        </VisualizationCard>
+      );
     });
 
   return (

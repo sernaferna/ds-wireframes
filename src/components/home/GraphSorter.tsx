@@ -6,6 +6,53 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import { UserAttributes } from '../../datamodel/User';
 
+const sortVizList = (
+  list: { name: string; active: boolean; order: number }[]
+): { name: string; active: boolean; order: number }[] => {
+  return list.slice().sort((a, b) => {
+    if (a.order < b.order) {
+      return -1;
+    }
+    if (a.order > b.order) {
+      return 1;
+    }
+    return 0;
+  });
+};
+
+const updateOrderNoInList = (
+  initialList: { name: string; active: boolean; order: number }[]
+): { name: string; active: boolean; order: number }[] => {
+  let listToReturn: { name: string; active: boolean; order: number }[] = [];
+
+  for (let i = 0; i < initialList.length; i++) {
+    const item = { name: initialList[i].name, active: initialList[i].active, order: i };
+    listToReturn.push(item);
+  }
+
+  return listToReturn;
+};
+
+const moveItemUpInList = (initialList: { name: string; active: boolean; order: number }[], name: string) => {
+  const list = sortVizList(initialList);
+  const index = list.findIndex((item) => item.name === name);
+
+  [list[index], list[index - 1]] = [list[index - 1], list[index]];
+  const returnList = updateOrderNoInList(list);
+
+  return returnList;
+};
+
+const moveItemDownInList = (initialList: { name: string; active: boolean; order: number }[], name: string) => {
+  const list = sortVizList(initialList);
+  const index = list.findIndex((item) => item.name === name);
+
+  [list[index], list[index + 1]] = [list[index + 1], list[index]];
+  const returnList = updateOrderNoInList(list);
+
+  return returnList;
+};
+
 export const GraphSorter = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
@@ -17,15 +64,7 @@ export const GraphSorter = () => {
     return <ErrorLoadingDataMessage />;
   }
 
-  const sortedItems = data!.settings.home.vizualizationsOrder.slice().sort((a, b) => {
-    if (a.order < b.order) {
-      return -1;
-    }
-    if (a.order > b.order) {
-      return 1;
-    }
-    return 0;
-  });
+  const sortedItems = sortVizList(data!.settings.home.vizualizationsOrder);
 
   const handleActiveInactive = (itemName: string) => {
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
@@ -37,35 +76,11 @@ export const GraphSorter = () => {
     update(newUser);
   };
 
-  const moveItemUp = (name: string) => {
-    console.log(name);
-    const list = sortedItems.slice();
-    console.log(list);
-    const index = list.findIndex((item) => item.name === name);
-    console.log(index);
-
-    [list[index], list[index - 1]] = [list[index - 1], list[index]];
-    console.log(list);
-
-    return list;
-  };
-
-  const moveItemDown = (name: string) => {
-    const list = sortedItems.slice();
-    console.log(list);
-    const index = list.findIndex((item) => item.name === name);
-
-    [list[index], list[index + 1]] = [list[index + 1], list[index]];
-    console.log(list);
-
-    return list;
-  };
-
   const handleSorterClick = (itemName: string, moveUp: boolean) => {
-    const newList = moveUp ? moveItemUp(itemName) : moveItemDown(itemName);
+    const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
     newUser.settings.home.vizualizationsOrder = newList;
-    //update(newUser);
+    update(newUser);
   };
 
   const vizualizationList = sortedItems.map((item, index) => {
