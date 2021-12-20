@@ -27,7 +27,7 @@ export const DetailedReading = (props: DetailedReadingInterface) => {
       <BarChart data={data}>
         <Bar dataKey="value" />
         <YAxis />
-        <XAxis dataKey="name" angle={-45} height={50} />
+        <XAxis dataKey="name" />
         <Tooltip />
       </BarChart>
     </ResponsiveContainer>

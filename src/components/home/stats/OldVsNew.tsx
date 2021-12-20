@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActionStats } from '../../../datamodel/Action';
-import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 interface OvNInterface {
   stats: ActionStats;
@@ -16,9 +16,10 @@ export const OldVsNew = (props: OvNInterface) => {
       <PieChart>
         <Pie data={data} dataKey="value" innerRadius={60} outerRadius={90} label={(entry) => entry.name}>
           {data.map((item, index) => (
-            <Cell key={`cell-${index}`} className={`pie-slice-${index}`} />
+            <Cell key={`cell-${index}`} className={`pie-slice-${index % 7}`} />
           ))}
         </Pie>
+        <Tooltip />
       </PieChart>
     </ResponsiveContainer>
   );

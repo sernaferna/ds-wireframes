@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActionStats } from '../../../datamodel/Action';
-import { ResponsiveContainer, PieChart, Pie, Tooltip } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 interface ReadScriptureInterface {
   stats: ActionStats;
@@ -22,7 +22,11 @@ export const ReadScripture = (props: ReadScriptureInterface) => {
           className="pie-slice-1"
           innerRadius={60}
           outerRadius={90}
-        ></Pie>
+        >
+          {readUnreadData.map((entry, index) => (
+            <Cell key={`cell-${index}`} className={`pie-slice-${index % 7}`} />
+          ))}
+        </Pie>
         <Tooltip />
       </PieChart>
     </ResponsiveContainer>
