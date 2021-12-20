@@ -11,3 +11,39 @@ Leverages the following technologies:
 - `redux` and `redux-toolkit` (even though it's all just fake state)
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
+
+# Notes to self
+
+Very unprofessional, but the original author kept looking up the following common commands, and figured it would be easier to just write them here.
+
+## Start a Session
+
+From the `ds-wf-be` project:
+
+```bash
+npm run dev
+```
+
+From this project:
+
+```bash
+npm start
+```
+
+## Git Branching
+
+Create branch:
+
+```bash
+git checkout -b newBranchName
+```
+
+Delete branches (local and remote):
+
+```bash
+// delete locally
+git branch -d localBranchName
+
+//delete remote
+git push origin --delete remoteBranchName
+```
