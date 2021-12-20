@@ -55,13 +55,11 @@ export function CalendarView(props: CalendarViewInterface) {
     dispatch(updateDateShowingInActions(dateToDispatch.toISODate()));
   };
 
-  const today = DateTime.now();
-
   return (
     <Calendar
       value={props.dateToShow.toJSDate()}
       minDate={new Date(userData!.signupDate)}
-      maxDate={today.toJSDate()}
+      maxDate={DateTime.now().toJSDate()}
       onClickDay={dayClickedInCalendar}
       returnValue="end"
       tileClassName={({ date, view }) => {

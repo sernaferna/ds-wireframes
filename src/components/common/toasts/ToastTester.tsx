@@ -6,6 +6,43 @@ import { SidebarCollapseWidget } from '../SidebarCollapseWidget';
 import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from './ToastManager';
 
+const executeTest = (toastType: string) => {
+  let tt: ToastType = ToastType.Primary;
+  switch (toastType) {
+    case 'primary':
+      tt = ToastType.Primary;
+      break;
+    case 'secondary':
+      tt = ToastType.Secondary;
+      break;
+    case 'success':
+      tt = ToastType.Success;
+      break;
+    case 'danger':
+      tt = ToastType.Danger;
+      break;
+    case 'warning':
+      tt = ToastType.Warning;
+      break;
+    case 'info':
+      tt = ToastType.Info;
+      break;
+    case 'light':
+      tt = ToastType.Light;
+      break;
+    case 'dark':
+      tt = ToastType.Dark;
+      break;
+  }
+
+  getToastManager().show({
+    title: 'Test',
+    content: 'Testing Toast functionality',
+    duration: TOAST_FADE_TIME,
+    type: tt,
+  });
+};
+
 export const ToastTester = () => {
   const [toastType, setToastType] = useState('primary');
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -20,43 +57,6 @@ export const ToastTester = () => {
   if (!data!.settings.showToastTester) {
     return null;
   }
-
-  const executeTest = () => {
-    let tt: ToastType = ToastType.Primary;
-    switch (toastType) {
-      case 'primary':
-        tt = ToastType.Primary;
-        break;
-      case 'secondary':
-        tt = ToastType.Secondary;
-        break;
-      case 'success':
-        tt = ToastType.Success;
-        break;
-      case 'danger':
-        tt = ToastType.Danger;
-        break;
-      case 'warning':
-        tt = ToastType.Warning;
-        break;
-      case 'info':
-        tt = ToastType.Info;
-        break;
-      case 'light':
-        tt = ToastType.Light;
-        break;
-      case 'dark':
-        tt = ToastType.Dark;
-        break;
-    }
-
-    getToastManager().show({
-      title: 'Test',
-      content: 'Testing Toast functionality',
-      duration: TOAST_FADE_TIME,
-      type: tt,
-    });
-  };
 
   return (
     <SidebarCollapseWidget title="Test Toasts" visible={true} clickFunction={() => {}}>
@@ -141,7 +141,7 @@ export const ToastTester = () => {
             setToastType('light');
           }}
         />
-        <Button className="my-2" variant="primary" onClick={executeTest}>
+        <Button className="my-2" variant="primary" onClick={() => executeTest(toastType)}>
           Test
         </Button>
       </Form>

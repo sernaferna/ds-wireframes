@@ -18,36 +18,36 @@ const PointerGear = styled(Gear).attrs(() => ({
   cursor: pointer;
 `;
 
-export function Header() {
-  const links = [
-    {
-      label: 'Home',
-      href: '/',
-      exact: true,
-    },
-    {
-      label: 'Pray',
-      href: '/prayer',
-      exact: false,
-    },
-    {
-      label: 'Read',
-      href: '/read',
-      exact: false,
-    },
-    {
-      label: 'Do',
-      href: '/do',
-      exact: false,
-    },
-  ].map(({ label, href, exact }) => {
-    return (
-      <NavLink key={href} exact={exact} className="nav-link" to={href} activeClassName="active">
-        {label}
-      </NavLink>
-    );
-  });
+const links = [
+  {
+    label: 'Home',
+    href: '/',
+    exact: true,
+  },
+  {
+    label: 'Pray',
+    href: '/prayer',
+    exact: false,
+  },
+  {
+    label: 'Read',
+    href: '/read',
+    exact: false,
+  },
+  {
+    label: 'Do',
+    href: '/do',
+    exact: false,
+  },
+].map(({ label, href, exact }) => {
+  return (
+    <NavLink key={href} exact={exact} className="nav-link" to={href} activeClassName="active">
+      {label}
+    </NavLink>
+  );
+});
 
+export function Header() {
   const showSettings = useSelector(selectShowSettings);
   const dispatch = useDispatch();
 

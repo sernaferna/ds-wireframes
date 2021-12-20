@@ -20,7 +20,7 @@ const ItemTitle = styled.div.attrs(() => ({
   height: 1.2em;
 `;
 
-const createPlaceholder = () => {
+const PlaceholderList = () => {
   return (
     <Card className="m-0">
       <Card.Body>
@@ -42,7 +42,7 @@ export function PrayerSnapshot() {
   const userIsLoading = tempObj.isLoading;
 
   if (isLoading || userIsLoading) {
-    return createPlaceholder();
+    return <PlaceholderList />;
   }
 
   if (error || userError) {

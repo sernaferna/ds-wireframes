@@ -12,6 +12,27 @@ import { PrayerTypes } from '../../datamodel/PrayerListItem';
 const selectedIconClasses = 'bg-success text-light';
 const unselectedIconClasses = 'text-light bg-secondary';
 
+const praisePopover = (
+  <Popover id="praise-popover">
+    <Popover.Header>Praise</Popover.Header>
+    <Popover.Body>This icon indicates a praise request.</Popover.Body>
+  </Popover>
+);
+
+const requestPopover = (
+  <Popover id="praise-popover">
+    <Popover.Header>Request</Popover.Header>
+    <Popover.Body>This icon indicates a request for help from God.</Popover.Body>
+  </Popover>
+);
+
+const confessionPopover = (
+  <Popover id="praise-popover">
+    <Popover.Header>Confession</Popover.Header>
+    <Popover.Body>This icon indicates a confession being prayed to God.</Popover.Body>
+  </Popover>
+);
+
 export function CreatePrayerItem({ confession = false }) {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -81,27 +102,6 @@ export function CreatePrayerItem({ confession = false }) {
       setType(newType);
     }
   };
-
-  const praisePopover = (
-    <Popover id="praise-popover">
-      <Popover.Header>Praise</Popover.Header>
-      <Popover.Body>This icon indicates a praise request.</Popover.Body>
-    </Popover>
-  );
-
-  const requestPopover = (
-    <Popover id="praise-popover">
-      <Popover.Header>Request</Popover.Header>
-      <Popover.Body>This icon indicates a request for help from God.</Popover.Body>
-    </Popover>
-  );
-
-  const confessionPopover = (
-    <Popover id="praise-popover">
-      <Popover.Header>Confession</Popover.Header>
-      <Popover.Body>This icon indicates a confession being prayed to God.</Popover.Body>
-    </Popover>
-  );
 
   return (
     <div className={confession ? 'alert alert-danger' : 'alert alert-primary'}>
