@@ -173,8 +173,8 @@ export function PrayerCards() {
             </Card.Title>
             <MaxHeightText>{item.text}</MaxHeightText>
             {submitButton}
-            <Card.Footer>{item.date}</Card.Footer>
           </Card.Body>
+          <Card.Footer>{item.date}</Card.Footer>
         </Card>
       </Col>
     );

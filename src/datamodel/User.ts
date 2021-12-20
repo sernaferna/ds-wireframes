@@ -30,5 +30,9 @@ export interface UserAttributes {
         showConfessions: boolean;
       };
     };
+    read: {
+      showSettings: boolean;
+      defaultVersion: string;
+    };
   };
 }

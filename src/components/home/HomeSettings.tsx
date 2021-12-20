@@ -25,6 +25,7 @@ export function HomeSettings() {
 
   return (
     <Form>
+      <Form.Label>Choose Filter Option:</Form.Label>
       <Form.Check
         type="radio"
         label="Last Week"
