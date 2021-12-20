@@ -26,23 +26,23 @@ const DSToast: React.FC<ToastProps> = (props) => {
   }, [destroy, duration]);
 
   let toastIcon: any = null;
-  let bodyStyles = 'bg-opacity-25 ';
+  let bodyStyles = 'bg-opacity-50 fw-bold ';
   let headingStyles = '';
 
   switch (type) {
     case ToastType.Info:
       toastIcon = <InfoCircleFill className="me-1 text-info" />;
-      bodyStyles += 'bg-info text-info';
+      bodyStyles += 'bg-info text-dark';
       headingStyles += 'bg-info text-white';
       break;
     case ToastType.Danger:
       toastIcon = <ExclamationDiamondFill className="me-1 text-danger" />;
-      bodyStyles += 'bg-danger text-danger';
+      bodyStyles += 'bg-danger text-dark';
       headingStyles += 'bg-danger text-white';
       break;
     case ToastType.Dark:
       toastIcon = <InfoCircleFill className="me-1 text-dark" />;
-      bodyStyles += 'bg-dark text-dark';
+      bodyStyles += 'bg-dark text-light';
       headingStyles += 'bg-dark text-light';
       break;
     case ToastType.Light:
@@ -52,17 +52,17 @@ const DSToast: React.FC<ToastProps> = (props) => {
       break;
     case ToastType.Primary:
       toastIcon = <InfoCircleFill className="me-1 text-primary" />;
-      bodyStyles += 'bg-primary text-primary';
+      bodyStyles += 'bg-primary text-dark';
       headingStyles += 'bg-primary text-white';
       break;
     case ToastType.Secondary:
       toastIcon = <InfoCircleFill className="me-1 text-secondary" />;
-      bodyStyles += 'bg-secondary text-secondary';
+      bodyStyles += 'bg-secondary text-dark';
       headingStyles += 'bg-secondary text-white';
       break;
     case ToastType.Success:
       toastIcon = <CheckSquareFill className="me-1 text-success" />;
-      bodyStyles += 'bg-success text-success';
+      bodyStyles += 'bg-success text-dark';
       headingStyles += 'bg-success text-white';
       break;
     case ToastType.Warning:

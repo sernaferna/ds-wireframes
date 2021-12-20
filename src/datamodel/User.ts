@@ -6,6 +6,7 @@ export interface UserAttributes {
   id: string;
   settings: {
     showSizeIndicator: boolean;
+    showToastTester: boolean;
     actions: {
       showSettings: boolean;
       showPrayerEntry: boolean;
@@ -14,6 +15,8 @@ export interface UserAttributes {
       showSettings: boolean;
       showActions: boolean;
       showPrayers: boolean;
+      statsFilter: string;
+      vizualizationsOrder: { name: string; active: boolean; order: number }[];
     };
     prayer: {
       showSettings: boolean;

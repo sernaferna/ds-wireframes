@@ -6,6 +6,7 @@ import { HomeSettings } from './HomeSettings';
 import { ActionsWidget } from '../do/ActionsWidget';
 import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { ToastTester } from '../common/toasts/ToastTester';
 
 export function HomeSidebar() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -42,9 +43,7 @@ export function HomeSidebar() {
 
   return (
     <>
-      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
-        <HomeSettings />
-      </SidebarCollapseWidget>
+      <ToastTester />
 
       <SidebarCollapseWidget title="Actions" visible={showActions} clickFunction={toggleActions}>
         <ActionsWidget />
@@ -52,6 +51,10 @@ export function HomeSidebar() {
 
       <SidebarCollapseWidget title="Prayer Items" visible={showPrayers} clickFunction={togglePrayers}>
         <PrayerSnapshot />
+      </SidebarCollapseWidget>
+
+      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
+        <HomeSettings />
       </SidebarCollapseWidget>
     </>
   );

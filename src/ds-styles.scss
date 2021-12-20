@@ -1,0 +1,212 @@
+@import '../node_modules/bootstrap/scss/functions';
+@import '../node_modules/bootstrap/scss/variables';
+@import '../node_modules/bootstrap/scss/mixins';
+@import '../node_modules/bootstrap/scss/utilities';
+
+// $utilities: map-merge(
+//   $utilities,
+//   (
+//     'background-color':
+//       map-merge(
+//         map-get($utilities, 'color'),
+//         (
+//           values: map-merge(map-get(map-get($utilities, 'color'), 'values'), ($theme-colors)),
+//         )
+//       ),
+//   )
+// );
+
+@import '../node_modules/bootstrap/scss/utilities/api';
+
+// general styles
+body {
+  padding-bottom: 62px;
+}
+
+// calendar styles
+.react-calendar {
+  width: 350px;
+  max-width: 100%;
+  background: $light;
+  border: 1px solid $secondary;
+  //font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+}
+// .react-calendar--doubleView {
+//   width: 700px;
+// }
+// .react-calendar--doubleView .react-calendar__viewContainer {
+//   display: flex;
+//   margin: -0.5em;
+// }
+// .react-calendar--doubleView .react-calendar__viewContainer > * {
+//   width: 50%;
+//   margin: 0.5em;
+// }
+
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.react-calendar button {
+  margin: 0;
+  border: 0;
+  outline: none;
+}
+.react-calendar button:enabled:hover {
+  cursor: pointer;
+}
+.react-calendar__navigation {
+  display: flex;
+  height: 44px;
+  margin-bottom: 1em;
+}
+.react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: $light;
+}
+.react-calendar__navigation button[disabled] {
+  background-color: $light;
+}
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+}
+.react-calendar__month-view__weekdays__weekday {
+  padding: 0.5em;
+}
+.react-calendar__month-view__weekNumbers .react-calendar__tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+  font-weight: bold;
+  padding: calc(0.75em / 0.75) calc(0.5em / 0.75);
+}
+.react-calendar__month-view__days__day--weekend {
+  color: $red-500;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: $dark;
+}
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 2em 0.5em;
+}
+.react-calendar__tile {
+  max-width: 100%;
+  text-align: center;
+  padding: 0.75em 0.5em;
+  background: none;
+}
+.react-calendar__tile:disabled {
+  background-color: $gray-400;
+}
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color: $gray-500;
+}
+.react-calendar__tile--now {
+  background: $yellow-200;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: $yellow-100;
+}
+// .react-calendar__tile--hasActive {
+//   background: #76baff;
+// }
+// .react-calendar__tile--hasActive:enabled:hover,
+// .react-calendar__tile--hasActive:enabled:focus {
+//   background: #a9d4ff;
+// }
+.react-calendar__tile--active {
+  background: $blue-400;
+  color: $white;
+}
+.react-calendar__tile--active:hover {
+  background: $blue-300;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: $blue-300;
+}
+.react-calendar--selectRange .react-calendar__tile--hover {
+  background-color: $blue-300;
+}
+
+// graphing styles
+.recharts-bar-rectangle {
+  fill: $success;
+}
+
+.pie-slice-0 {
+  fill: $primary;
+}
+
+.pie-slice-1 {
+  fill: $success;
+}
+
+.pie-slice-2 {
+  fill: $danger;
+}
+
+.pie-slice-3 {
+  fill: $warning;
+}
+
+.pie-slice-4 {
+  fill: $info;
+}
+
+.pie-slice-5 {
+  fill: $dark;
+}
+
+.pie-slice-6 {
+  fill: $secondary;
+}
+
+/* random styles from various posts/articles */
+
+// .recharts-cartesian-axis-tick {
+//   text {
+//     tspan {
+//       font-family: sans-serif;
+//       color: $danger;
+//     }
+//   }
+// }
+
+// .recharts-cartesian-grid-horizontal {
+//   line {
+//     stroke-dasharray: 2, 2;
+//     stroke: $secondary;
+//   }
+// }
+
+.recharts-cartesian-axis-tick-value {
+  tspan {
+    fill: $secondary;
+    letter-spacing: 0.03em;
+  }
+}
+
+.recharts-pie-label-text {
+  tspan {
+    fill: $secondary;
+    letter-spacing: 0.03em;
+  }
+}

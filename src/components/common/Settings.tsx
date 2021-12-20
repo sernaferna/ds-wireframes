@@ -21,9 +21,28 @@ export function Settings() {
     update(newUser);
   };
 
+  const handleShowTTChange = () => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.showToastTester = !newUser.settings.showToastTester;
+    update(newUser);
+  };
+
   return (
     <Form>
-      <Form.Check type="checkbox" id="showSizeIndicatorSetting" label="Show Size Indicator" checked={data!.settings.showSizeIndicator} onChange={handleShowSIChange} />
+      <Form.Check
+        type="checkbox"
+        id="showSizeIndicatorSetting"
+        label="Show Size Indicator"
+        checked={data!.settings.showSizeIndicator}
+        onChange={handleShowSIChange}
+      />
+      <Form.Check
+        type="checkbox"
+        id="showToastTesterSetting"
+        label="Show Toast Tester"
+        checked={data!.settings.showToastTester}
+        onChange={handleShowTTChange}
+      />
     </Form>
   );
 }

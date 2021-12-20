@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ActionsForDay, ActionType, BaseActionType } from '../datamodel/Action';
+import { ActionsForDay, ActionType, BaseActionType, ActionStats } from '../datamodel/Action';
 
 interface MarkItemReadForDayServiceInterface {
   idForDay: string;
@@ -15,7 +15,7 @@ interface ItemsForMonthInterface {
 export const actionsApi = createApi({
   reducerPath: 'actions',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/actions/' }),
-  tagTypes: ['actions', 'customActionTypes'],
+  tagTypes: ['actions', 'customActionTypes', 'stats'],
   endpoints: (builder) => ({
     getRecentActions: builder.query<ActionsForDay[], void>({
       query: () => {
@@ -25,6 +25,18 @@ export const actionsApi = createApi({
       },
       providesTags: (result) =>
         result ? result.map((item) => ({ type: 'actions', id: item.id })) : [{ type: 'actions', id: 'List' }],
+    }),
+    getActionStats: builder.query<ActionStats, string | void>({
+      query: (filter) => {
+        let theUrl = 'entries/stats';
+        if (filter) {
+          theUrl += '?tf=' + filter;
+        }
+        return {
+          url: theUrl,
+        };
+      },
+      providesTags: ['stats'],
     }),
     getCustomActionTypes: builder.query<ActionType[], void>({
       query: () => {
@@ -92,4 +104,5 @@ export const {
   useGetCustomActionTypesQuery,
   useNewCustomActionMutation,
   useDeleteCustomActionMutation,
+  useGetActionStatsQuery,
 } = actionsApi;
