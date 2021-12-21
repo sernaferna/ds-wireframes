@@ -13,7 +13,7 @@ export interface ToastProps {
 }
 
 const DSToast: React.FC<ToastProps> = (props) => {
-  const { destroy, content, title, duration = 0, id, type = ToastType.None } = props;
+  const { destroy, content, title, duration = 0, type = ToastType.None } = props;
 
   useEffect(() => {
     if (!duration) return;
@@ -81,7 +81,6 @@ const DSToast: React.FC<ToastProps> = (props) => {
       <Toast.Header className={headingStyles}>
         {toastIcon}
         <strong className="me-auto">{title}</strong>
-        <small>{id}</small>
       </Toast.Header>
       <Toast.Body className={bodyStyles}>{content}</Toast.Body>
     </Toast>

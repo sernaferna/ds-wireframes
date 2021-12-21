@@ -9,6 +9,7 @@ Leverages the following technologies:
 - `bootstrap`
 - `react-bootstrap` and `react-bootstrap-icons` (because it's easier), along with `styled-components`
 - `redux` and `redux-toolkit` (even though it's all just fake state)
+- `bible-passage-reference-parser` for parsing out Bible passages entered in the UI
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
 
@@ -36,6 +37,13 @@ Create branch:
 
 ```bash
 git checkout -b newBranchName
+```
+
+Merge code from a changed branch into the current branch:
+
+```bash
+git checkout destinationBranch
+git merge sourceBranch
 ```
 
 Delete branches (local and remote):
