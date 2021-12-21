@@ -11,6 +11,8 @@ import { useSelector } from 'react-redux';
 import { selectShowSettings, showSettingsPanel } from '../../stores/UISlice';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 
 const PointerGear = styled(Gear).attrs(() => ({
   className: 'text-light m-0',
@@ -47,9 +49,31 @@ const links = [
   );
 });
 
+const adminLinks = [
+  {
+    label: 'Reading Plans',
+    href: '/plans',
+    exact: true,
+  },
+].map(({ label, href, exact }) => {
+  return (
+    <NavLink key={href} exact={exact} className="nav-link" to={href} activeClassName="active">
+      {label}
+    </NavLink>
+  );
+});
+
 export function Header() {
   const showSettings = useSelector(selectShowSettings);
   const dispatch = useDispatch();
+  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
+
+  if (isLoading) {
+    return <LoadingMessage />;
+  }
+  if (error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   const toggleSettings = () => {
     dispatch(showSettingsPanel(!showSettings));
@@ -64,7 +88,10 @@ export function Header() {
       <Container fluid>
         <Navbar.Toggle aria-controls="ds-header-navbar" />
         <Navbar.Collapse aria-expanded="false" id="ds-header-navbar" className="w-100">
-          <Nav className="m-0">{links}</Nav>
+          <Nav className="m-0">
+            {links}
+            {data!.isAdmin ? adminLinks : ''}
+          </Nav>
           <Navbar.Text className="w-100 m-2 text-end">
             <PointerGear width="25" height="25" onClick={toggleSettings} />
           </Navbar.Text>

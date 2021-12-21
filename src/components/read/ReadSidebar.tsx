@@ -4,6 +4,7 @@ import { ReadPageSettings } from './ReadPageSettings';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '../../datamodel/User';
+import { CurrentReadingPlan } from './CurrentReadingPlan';
 
 export const ReadSidebar = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -17,6 +18,7 @@ export const ReadSidebar = () => {
   }
 
   const showSettings = data!.settings.read.showSettings;
+  const showReadingPlan = data!.settings.read.showReadingPlan;
 
   const toggleSettings = () => {
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
@@ -24,10 +26,20 @@ export const ReadSidebar = () => {
     update(newUser);
   };
 
+  const togglePlan = () => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.read.showReadingPlan = !newUser.settings.read.showReadingPlan;
+    update(newUser);
+  };
+
   return (
     <>
       <SidebarCollapseWidget title="Settings" visible={showSettings} clickFunction={toggleSettings}>
         <ReadPageSettings />
+      </SidebarCollapseWidget>
+
+      <SidebarCollapseWidget title="Reading Plan" visible={showReadingPlan} clickFunction={togglePlan}>
+        <CurrentReadingPlan />
       </SidebarCollapseWidget>
     </>
   );

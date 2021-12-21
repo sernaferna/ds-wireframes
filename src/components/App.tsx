@@ -10,6 +10,7 @@ import { Help } from './common/Help';
 import { FourOhFour } from './common/FourOhFour';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import { PrayerPage } from './prayer/PrayerPage';
+import { PlansPage } from './plans/PlansPage';
 
 export function App() {
   return (
@@ -22,6 +23,7 @@ export function App() {
             <Route key="/prayer" path="/prayer" component={PrayerPage} />
             <Route key="/read" path="/read" component={ReadPage} />
             <Route key="/do" path="/do" component={DoPage} />
+            <Route key="/plans" path="/plans" component={PlansPage} />
             <Route key="/help" path="/help" component={Help} />
             <Route path="*" component={FourOhFour} />
           </Switch>

@@ -4,6 +4,7 @@ export interface UserAttributes {
   displayName?: string;
   signupDate: string;
   id: string;
+  isAdmin: boolean;
   settings: {
     showSizeIndicator: boolean;
     showToastTester: boolean;
@@ -33,6 +34,7 @@ export interface UserAttributes {
     read: {
       showSettings: boolean;
       defaultVersion: string;
+      showReadingPlan: boolean;
     };
   };
 }

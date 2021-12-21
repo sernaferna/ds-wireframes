@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
 import { updateSelectedReadingItem, getSelectedReadingItem } from '../../stores/UISlice';
+import { PassageLinkBody } from './PassageLinkBody';
 
 export const PlaceholderCard = () => {
   return (
@@ -18,17 +19,9 @@ export const PlaceholderCard = () => {
           </Placeholder>
           <Placeholder as={Card.Text} animation="wave">
             <Placeholder xs="12" />
+            <Placeholder xs="12" />
           </Placeholder>
         </Card.Body>
-        <Card.Footer>
-          <img
-            className="float-end"
-            height={28.5}
-            width={150}
-            src="bg/BibleGateway-Logo-black-350p.png"
-            alt="Bible Gateway logo"
-          />
-        </Card.Footer>
       </Card>
     </Col>
   );
@@ -54,12 +47,6 @@ export const PassageCard = (props: PrayerCardInterface) => {
     }
   };
 
-  const urlForBG =
-    'https://www.biblegateway.com/passage/?search=' +
-    encodeURI(props.passage.reference) +
-    '&version=' +
-    props.passage.version;
-
   return (
     <Col className="mt-2">
       <Card
@@ -76,21 +63,9 @@ export const PassageCard = (props: PrayerCardInterface) => {
             ></Button>
           </Card.Title>
           <Card.Text>
-            Launch{' '}
-            <a href={urlForBG} target="_blank" rel="noreferrer">
-              BibleGateway for {props.passage.reference} in {props.passage.version}
-            </a>
+            <PassageLinkBody passage={props.passage} />
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <img
-            className="float-end"
-            height={28.5}
-            width={150}
-            src="bg/BibleGateway-Logo-black-350p.png"
-            alt="Bible Gateway logo"
-          />
-        </Card.Footer>
       </Card>
     </Col>
   );
