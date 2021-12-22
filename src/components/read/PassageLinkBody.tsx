@@ -12,15 +12,15 @@ export const PassageLinkBody = (props: PassageLinkBodyInterface) => {
     props.passage.version;
 
   return (
-    <div>
-      <p>
+    <>
+      <div>
         Launch{' '}
         <a href={urlForBG} target="_blank" rel="noreferrer">
           BibleGateway for {props.passage.reference} in {props.passage.version}
         </a>
         .
-      </p>
-      <p>
+      </div>
+      <div>
         {' '}
         <img
           className="float-end"
@@ -29,7 +29,7 @@ export const PassageLinkBody = (props: PassageLinkBodyInterface) => {
           src="bg/BibleGateway-Logo-black-350p.png"
           alt="Bible Gateway logo"
         />
-      </p>
-    </div>
+      </div>
+    </>
   );
 };

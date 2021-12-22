@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import { Passage } from '../../datamodel/Passage';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
 import { updateSelectedReadingItem, getSelectedReadingItem } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
@@ -35,11 +35,15 @@ export const PassageCard = (props: PrayerCardInterface) => {
   const dispatch = useDispatch();
   const [deleteItem] = useDeletePassageItemMutation();
 
-  const removeItem = (id: string) => {
-    deleteItem(id);
+  const removeItem = (e: SyntheticEvent) => {
+    console.log('remove item');
+    dispatch(updateSelectedReadingItem(''));
+    deleteItem(props.passage.id);
+    e.stopPropagation();
   };
 
   const titleClicked = (id: string) => {
+    console.log('title clicked');
     if (selectedPrayerID === id) {
       dispatch(updateSelectedReadingItem(''));
     } else {
@@ -56,13 +60,9 @@ export const PassageCard = (props: PrayerCardInterface) => {
         <Card.Body className="d-flex flex-column">
           <Card.Title onClick={() => titleClicked(props.passage.id)}>
             {props.passage.reference}
-            <Button
-              className="btn-close float-end"
-              aria-label="Close"
-              onClick={() => removeItem(props.passage.id)}
-            ></Button>
+            <CloseButton className="float-end" onClick={removeItem} />
           </Card.Title>
-          <Card.Text>
+          <Card.Text as="div">
             <PassageLinkBody passage={props.passage} />
           </Card.Text>
         </Card.Body>

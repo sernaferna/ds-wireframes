@@ -39,6 +39,9 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
 
   const validateForm = () => {
     const osis: string = bcv.parse(reference).osis();
+    if (osis.length > 0) {
+      console.log(osis);
+    }
     if (osis.length < 1) {
       updateRefInvalid({ isInvalid: true, message: `${reference} is not a valid passage` });
     } else {

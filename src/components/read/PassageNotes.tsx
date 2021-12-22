@@ -9,5 +9,10 @@ export const PassageNotes = () => {
     return <p>Please select a passage to take notes.</p>;
   }
 
-  return <h1>Passage Notes</h1>;
+  return (
+    <>
+      <h1>Passage Notes</h1>
+      <p>{selectedReadingItem}</p>
+    </>
+  );
 };
