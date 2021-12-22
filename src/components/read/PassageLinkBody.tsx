@@ -1,8 +1,8 @@
 import React from 'react';
-import { Passage } from '../../datamodel/Passage';
+import { BasePassage } from '../../datamodel/Passage';
 
 interface PassageLinkBodyInterface {
-  passage: Passage;
+  passage: BasePassage;
 }
 export const PassageLinkBody = (props: PassageLinkBodyInterface) => {
   const urlForBG =

@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Passage } from '../../datamodel/Passage';
+import { BasePassage } from '../../datamodel/Passage';
 import { PassageLinkBody } from './PassageLinkBody';
 
 interface ShowPassageModalInterface {
-  passage: Passage;
+  passage: BasePassage;
   closeFunction(): void;
   saveFunction(): void;
   show: boolean;
