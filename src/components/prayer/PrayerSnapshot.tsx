@@ -2,23 +2,11 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Placeholder from 'react-bootstrap/Placeholder';
-import styled from 'styled-components';
 import { useGetAllItemsQuery, useMarkReadMutation, sortPrayerItems } from '../../services/PrayerService';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes } from '../../datamodel/PrayerListItem';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { ErrorLoadingDataMessage } from '../common/loading';
-
-const ItemText = styled.p.attrs(() => ({}))`
-  height: 1.2em;
-`;
-
-const ItemTitle = styled.div.attrs(() => ({
-  className: 'overflow-hidden fw-bold',
-}))`
-  max-width: 100%;
-  height: 1.2em;
-`;
 
 const PlaceholderList = () => {
   return (
@@ -67,23 +55,22 @@ export function PrayerSnapshot() {
       icon = <EyeFill className="d-inline me-1 text-primary" />;
     }
 
-    const itemBody = <ItemText>{item.text}</ItemText>;
-    const itemTitle = (
-      <ItemTitle>
-        {icon} {item.title}
-      </ItemTitle>
+    const itemBody = (
+      <p>
+        {icon}
+        <span className="lead">{item.title}</span> {item.text}
+      </p>
     );
 
     return (
       <Form.Group key={item.id}>
         <Form.Check
-          label={itemTitle}
+          label={itemBody}
           type="checkbox"
           id={item.id}
           checked={item.completed}
           onChange={() => handleCheck(item.id)}
         />
-        <Form.Label htmlFor={item.id}>{itemBody}</Form.Label>
       </Form.Group>
     );
   });
