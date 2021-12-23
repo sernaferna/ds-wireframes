@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionEntry } from '@devouringscripture/common';
+import { ActionEntry } from '../../datamodel/Action';
 import { Check2Circle, Circle } from 'react-bootstrap-icons';
 import Stack from 'react-bootstrap/Stack';
 import styled from 'styled-components';

@@ -5,7 +5,7 @@ import { CaretLeft, CaretRight } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import { useGetActionByDateQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { ActionsForDay } from '@devouringscripture/common';
+import { ActionsForDay } from '../../datamodel/Action';
 import { ActionWidgetForm } from './ActionWidgetForm';
 import styled from 'styled-components';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';

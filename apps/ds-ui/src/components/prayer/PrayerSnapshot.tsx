@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Placeholder from 'react-bootstrap/Placeholder';
 import { useGetAllItemsQuery, useMarkReadMutation, sortPrayerItems } from '../../services/PrayerService';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
-import { PrayerTypes } from '@devouringscripture/common';
+import { PrayerTypes } from '../../datamodel/Prayer';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { ErrorLoadingDataMessage } from '../common/loading';
 

@@ -16,9 +16,7 @@
     "jsx": "react-jsx",
     "paths": {
       "@devouringscripture/ds-ui/*": ["./apps/ds-ui/src/*"],
-      "@devouringscripture/ds-ui": ["./apps/ds-ui/src"],
-      "@devouringscripture/common/*": ["./packages/common/*"],
-      "@devouringscripture/common": ["./packages/common"]
+      "@devouringscripture/ds-ui": ["./apps/ds-ui/src"]
     }
   },
   "include": ["src"]

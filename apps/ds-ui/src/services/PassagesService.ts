@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BasePassage, Passage } from '@devouringscripture/common';
+import { BasePassage, Passage } from '../datamodel/Passage';
 
 export const passageApi = createApi({
   reducerPath: 'passages',

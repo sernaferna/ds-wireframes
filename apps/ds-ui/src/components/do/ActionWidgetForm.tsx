@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionsForDay } from '@devouringscripture/common';
+import { ActionsForDay } from '../../datamodel/Action';
 import { ActionCheckItem } from './ActionCheckItem';
 import { useMarkItemReadForDayMutation } from '../../services/ActionsService';
 
