@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionStats } from '../../../datamodel/Action';
+import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, BarChart, Bar, YAxis, XAxis, Tooltip } from 'recharts';
 
 interface DetailedReadingInterface {

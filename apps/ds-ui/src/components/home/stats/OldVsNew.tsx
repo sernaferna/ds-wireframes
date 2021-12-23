@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionStats } from '../../../datamodel/Action';
+import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
 interface OvNInterface {

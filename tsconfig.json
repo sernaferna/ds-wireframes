@@ -13,11 +13,12 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
       "@devouringscripture/ds-ui/*": ["./apps/ds-ui/src/*"],
-      "@devouringscripture/ds-ui": ["./apps/ds-ui/src"]
+      "@devouringscripture/ds-ui": ["./apps/ds-ui/src"],
+      "@devouringscripture/common/*": ["./packages/common/*"],
+      "@devouringscripture/common": ["./packages/common"]
     }
   },
   "include": ["src"]
