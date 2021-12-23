@@ -1,0 +1,19 @@
+{
+  "name": "ds-ui",
+  "version": "1.0.0",
+  "description": "Wireframe UI",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sernaferna/ds-wireframes.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sernaferna/ds-wireframes/issues"
+  },
+  "homepage": "https://github.com/sernaferna/ds-wireframes#readme"
+}
