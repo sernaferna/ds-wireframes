@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '../../../middleware/validateRequest';
-import { BasePassage, Passage } from '../../../dm/Passages';
+import { BasePassage, Passage } from '@devouringscripture/common/src/dm/Passage';
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 import { db } from '../../../services/db';

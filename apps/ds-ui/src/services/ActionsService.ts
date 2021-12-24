@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ActionsForDay, ActionType, BaseActionType, ActionStats } from '../datamodel/Action';
+import { ActionsForDay, ActionType, BaseActionType, ActionStats } from '@devouringscripture/common/src/dm/Action';
 
 interface MarkItemReadForDayServiceInterface {
   idForDay: string;

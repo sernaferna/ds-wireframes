@@ -1,5 +1,5 @@
 import React from 'react';
-import { BasePassage } from '../../datamodel/Passage';
+import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
 
 interface PassageLinkBodyInterface {
   passage: BasePassage;

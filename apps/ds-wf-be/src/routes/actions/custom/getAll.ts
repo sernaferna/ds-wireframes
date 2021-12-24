@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { db } from '../../../services/db';
-import { ActionType } from '../../../dm/Action';
+import { ActionType } from '@devouringscripture/common/src/dm/Action';
 import { defaultCustomActions } from '../../../dm/Action';
 
 const router = express.Router();
