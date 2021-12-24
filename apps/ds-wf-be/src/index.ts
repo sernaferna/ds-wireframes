@@ -56,7 +56,7 @@ app.use('/api/read/current', [getCurrentlyReadingPassages, newReadingItem, delet
 app.use('/api/plans', [newReadingPlan]);
 
 app.use(errorHandler);
-app.use(notFoundHandler); // @todo this isn't working
+app.use(notFoundHandler); // TODO this isn't working
 
 app.listen(PORT, () => {
   console.log(`App started. Listening on port ${PORT}`);
