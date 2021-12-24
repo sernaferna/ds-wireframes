@@ -24,7 +24,8 @@
     "recharts": "^2.1.6",
     "sass": "^1.45.0",
     "styled-components": "^5.3.3",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "@devouringscripture/common": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts --openssl-legacy-provider start",

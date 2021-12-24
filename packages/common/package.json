@@ -1,0 +1,19 @@
+{
+  "name": "@devouringscripture/common",
+  "version": "1.0.0",
+  "description": "Common utilities and type descriptions for ds-wireframe",
+  "main": "index.js",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "watch": "tsc --build --watch"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "sernaferna",
+  "license": "ISC"
+}

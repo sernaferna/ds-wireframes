@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "CommonJS",
+    "noEmit": true,
+    "sourceMap": true
+  }
+}

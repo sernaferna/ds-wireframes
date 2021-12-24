@@ -15,10 +15,12 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "paths": {
-      "@devouringscripture/ds-ui/*": ["./apps/ds-ui/src/*"],
-      "@devouringscripture/ds-ui": ["./apps/ds-ui/src"],
-      "@devouringscripture/ds-wf-be/*": ["./apps/ds-wf-be/src/*"],
-      "@devouringscripture/ds-wf-be": ["./apps/ds-wf-be/src"]
+      "ds-ui/*": ["./apps/ds-ui/src/*"],
+      "ds-ui": ["./apps/ds-ui/src"],
+      "ds-wf-be/*": ["./apps/ds-wf-be/src/*"],
+      "ds-wf-be": ["./apps/ds-wf-be/src"],
+      "@devouringscripture/common/*": ["./packages/common/src/*"],
+      "@devouringscripture/common": ["./packages/common/src"]
     }
   },
   "include": ["src"]
