@@ -25,9 +25,12 @@ import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { newReadingPlan } from './routes/read/plans/new';
 
+console.log('API starting');
+
 dotenv.config();
 
 if (!process.env.PORT) {
+  console.error('no port environment variable');
   process.exit();
 }
 
