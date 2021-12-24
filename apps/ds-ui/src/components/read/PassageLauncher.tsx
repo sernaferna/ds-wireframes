@@ -7,7 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
-import { BasePassage } from '../../datamodel/Passage';
+import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
 import { getToastManager, TOAST_FADE_TIME, ToastType } from '../common/toasts/ToastManager';
 const bcv_parser = require('bible-passage-reference-parser/js/en_bcv_parser').bcv_parser;
 

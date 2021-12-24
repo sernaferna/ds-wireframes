@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { PassageItems } from '../../../dm/Passages';
+import { PassageItems } from '@devouringscripture/common/src/dm/Passage';
 import { db } from '../../../services/db';
 
 const router = express.Router();

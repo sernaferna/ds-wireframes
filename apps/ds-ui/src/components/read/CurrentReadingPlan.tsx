@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ShowPassageModal } from './ShowPassageModal';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
-import { BasePassage } from '../../datamodel/Passage';
+import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
 import { useNewItemMutation } from '../../services/PassagesService';
 import Alert from 'react-bootstrap/Alert';
 
