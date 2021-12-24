@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { UserAttributes } from '../../dm/UserItems';
+import { UserAttributes } from '@devouringscripture/common/src/dm/User';
 import { db } from '../../services/db';
 import { generateDefaultUser } from '../../helpers/UserHelpers';
 import { param } from 'express-validator';

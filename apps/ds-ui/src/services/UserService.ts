@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { UserAttributes } from '../datamodel/User';
+import { UserAttributes } from '@devouringscripture/common/src/dm/User';
 
 export const userApi = createApi({
   reducerPath: 'user',

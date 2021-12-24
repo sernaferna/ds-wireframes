@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { db } from '../../services/db';
-import { UserAttributes } from '../../dm/UserItems';
+import { UserAttributes } from '@devouringscripture/common/src/dm/User';
 import { body, param } from 'express-validator';
 import { validateRequest } from '../../middleware/validateRequest';
 

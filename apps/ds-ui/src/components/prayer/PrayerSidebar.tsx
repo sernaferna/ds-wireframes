@@ -3,7 +3,7 @@ import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '.
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { PrayerSettings } from './PrayerSettings';
-import { UserAttributes } from '../../datamodel/User';
+import { UserAttributes } from '@devouringscripture/common/src/dm/User';
 
 export function PrayerSidebar() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
