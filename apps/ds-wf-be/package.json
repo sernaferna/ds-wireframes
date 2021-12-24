@@ -16,7 +16,8 @@
     "helmet": "^4.6.0",
     "luxon": "^2.1.1",
     "node-json-db": "^1.4.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "@devouringscripture/common": "^1.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

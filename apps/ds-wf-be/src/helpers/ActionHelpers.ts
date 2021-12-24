@@ -1,4 +1,5 @@
-import { ActionsForDay, ActionEntry, defaultActionTypes, defaultCustomActions } from '../dm/Action';
+import { ActionsForDay, ActionEntry } from '@devouringscripture/common/src/dm/Action';
+import { defaultActionTypes, defaultCustomActions } from '../dm/Action';
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 

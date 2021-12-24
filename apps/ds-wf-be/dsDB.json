@@ -1867,6 +1867,69 @@
                 ],
                 "date": "2021-12-13",
                 "id": "c8fa863d-0641-4664-a4c9-a47803d13223"
+            },
+            {
+                "defaultActions": [
+                    {
+                        "id": "actions|default|shortotpass",
+                        "displayName": "Read Short OT Passage",
+                        "completed": false
+                    },
+                    {
+                        "id": "actions|default|rsntpass",
+                        "displayName": "Read Short NT Passage",
+                        "completed": false
+                    },
+                    {
+                        "id": "actions|default|rlotpass",
+                        "displayName": "Read Long OT Passage",
+                        "completed": false
+                    },
+                    {
+                        "id": "actions|default|rlntpass",
+                        "displayName": "Read Long NT Passage",
+                        "completed": true
+                    },
+                    {
+                        "id": "actions|default|journ",
+                        "displayName": "Journalled",
+                        "completed": false
+                    },
+                    {
+                        "id": "actions|default|pray",
+                        "displayName": "Prayed",
+                        "completed": false
+                    },
+                    {
+                        "id": "actions|default|create",
+                        "displayName": "Did Something Creative for God",
+                        "completed": false
+                    },
+                    {
+                        "id": "actions|default|converse",
+                        "displayName": "Had a Spiritual Conversation",
+                        "completed": false
+                    }
+                ],
+                "customActions": [
+                    {
+                        "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+                        "displayName": "Discipled my kids",
+                        "completed": false
+                    },
+                    {
+                        "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+                        "displayName": "Prepared music for the service",
+                        "completed": false
+                    },
+                    {
+                        "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+                        "displayName": "Led a bible study",
+                        "completed": false
+                    }
+                ],
+                "date": "2021-12-24",
+                "id": "1c062b5d-804c-4460-87bb-bb562e7e6cf1"
             }
         ]
     },

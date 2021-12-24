@@ -1,37 +1,4 @@
-export interface BaseActionType {
-  displayName: string;
-}
-
-export interface ActionType extends BaseActionType {
-  id: string;
-}
-
-export interface ActionEntry extends ActionType {
-  completed: boolean;
-}
-
-export interface BaseActionsForDay {
-  date: string;
-  defaultActions: ActionEntry[];
-  customActions: ActionEntry[];
-}
-
-export interface ActionsForDay extends BaseActionsForDay {
-  id: string;
-}
-
-export interface ActionStats {
-  dataSize: number;
-  readShortOT: number;
-  readLongOT: number;
-  readShortNT: number;
-  readLongNT: number;
-  readScripture: number;
-  journaled: number;
-  prayed: number;
-  created: number;
-  conversed: number;
-}
+import { ActionType } from '@devouringscripture/common/dm/Action';
 
 export const defaultActionTypes: ActionType[] = [
   {

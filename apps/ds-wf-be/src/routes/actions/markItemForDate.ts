@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import { db } from '../../services/db';
-import { getActionByIdInternal, getActionByIdRouter } from './byId';
-import { ActionsForDay } from '../../dm/Action';
+import { getActionByIdInternal } from './byId';
 import { body, param } from 'express-validator';
 import { validateRequest } from '../../middleware/validateRequest';
 

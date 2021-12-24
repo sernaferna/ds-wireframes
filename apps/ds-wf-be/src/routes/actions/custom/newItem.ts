@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ActionType } from '../../../dm/Action';
+import { ActionType } from '@devouringscripture/common/src/dm/Action';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../../services/db';
 import { body } from 'express-validator';

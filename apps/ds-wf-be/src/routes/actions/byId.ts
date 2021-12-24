@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ActionsForDay } from '../../dm/Action';
+import { ActionsForDay } from '@devouringscripture/common/src/dm/Action';
 import { db } from '../../services/db';
 import { param } from 'express-validator';
 import { validateRequest } from '../../middleware/validateRequest';
@@ -13,15 +13,20 @@ export const getActionByIdInternal = (id: string): ActionsForDay => {
   return response;
 };
 
-router.get('/:actionDayId', [param('actionDayID').isUUID().withMessage('Valid ID required')], validateRequest, async (req: Request, res: Response) => {
-  console.log(`Getting action id ${req.params.actionDayId}`);
+router.get(
+  '/:actionDayId',
+  [param('actionDayID').isUUID().withMessage('Valid ID required')],
+  validateRequest,
+  async (req: Request, res: Response) => {
+    console.log(`Getting action id ${req.params.actionDayId}`);
 
-  try {
-    const response: ActionsForDay = getActionByIdInternal(req.params.actionDayId);
-    res.send(response);
-  } catch (err) {
-    res.status(404).send('item not found');
+    try {
+      const response: ActionsForDay = getActionByIdInternal(req.params.actionDayId);
+      res.send(response);
+    } catch (err) {
+      res.status(404).send('item not found');
+    }
   }
-});
+);
 
 export { router as getActionByIdRouter };
