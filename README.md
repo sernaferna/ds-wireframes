@@ -2,6 +2,13 @@
 
 This project provides wireframes for the **Devouring Scripture** website. Proper coding practices won't necessarily be followed; the intent is not to produce "good" code, just workable HTML that shows what the site could look like.
 
+There are a couple of "main" projects (along with libraries just for the sake of reducing code duplication):
+
+- `ds-ui` is the user interface---the actual wireframes
+- `ds-wf-be` (DS wireframe back-end) is a simple, mostly hard-coded API
+
+## ds-ui
+
 Leverages the following technologies:
 
 - `react` (and the other obvious stuff like `react-dom` etc.)
@@ -13,22 +20,29 @@ Leverages the following technologies:
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
 
+## ds-wf-be
+
+This project serves as a back-end API to service the **ts-wireframe** project. Anything that isn't hard-coded might as well be, and coding practices aren't intended to be followed; it's not "real" code.
+
+Uses **node-json-db** under the covers, which reads from a local JSON file (`dsDB.json`). The data file is not checked into source control (_just in case_ sensitive data ever gets added there during testing), but there is a sample file in `src/helpers/dsDB.json` that can be copied to the root directory as a starting point for testing purposes if there is a desire to start from scratch.
+
 # Notes to self
 
 Very unprofessional, but the original author kept looking up the following common commands, and figured it would be easier to just write them here.
 
 ## Start a Session
 
-From the `ds-wf-be` project:
+From the root:
 
 ```bash
-npm run dev
+npm start -workspaces --if-defined
 ```
 
-From this project:
+**Note:** For whatever reason that command isn't working; the API doesn't seem to start. So instead the following commands _both_ need to be run (from separate terminals):
 
 ```bash
-npm start
+npm start -w ds-ui
+npm start -w ds-wf-be
 ```
 
 ## Git Branching
