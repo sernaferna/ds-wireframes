@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ShowPassageModal } from './ShowPassageModal';
-import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
 import { useNewItemMutation } from '../../services/PassagesService';
 import Alert from 'react-bootstrap/Alert';
@@ -21,13 +20,6 @@ export const CurrentReadingPlan = () => {
 
   const saveFunction = () => {
     const { reference, version } = passage;
-
-    getToastManager().show({
-      title: 'Save',
-      content: `${reference} / ${version} would be saved`,
-      type: ToastType.Success,
-      duration: TOAST_FADE_TIME,
-    });
 
     const newPassage: BasePassage = {
       reference,
