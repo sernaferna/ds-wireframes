@@ -26,6 +26,10 @@ This project serves as a back-end API to service the **ts-wireframe** project. A
 
 Uses **node-json-db** under the covers, which reads from a local JSON file (`dsDB.json`). The data file is not checked into source control (_just in case_ sensitive data ever gets added there during testing), but there is a sample file in `src/helpers/dsDB.json` that can be copied to the root directory as a starting point for testing purposes if there is a desire to start from scratch.
 
+## common
+
+This is just a library with common code (e.g. commonly used type definitions that are returned from APIs but also used in the UI app). It is _not_ shared "properly" by other projects, it's a hacked together approach, but at least code doesn't have to be duplicated across projects.
+
 # Notes to self
 
 Very unprofessional, but the original author kept looking up the following common commands, and figured it would be easier to just write them here.
