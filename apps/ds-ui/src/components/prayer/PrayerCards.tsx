@@ -14,7 +14,7 @@ import {
   useDeletePrayerItemMutation,
 } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
-import { PrayerTypes } from '@devouringscripture/common/src/dm/Prayer';
+import { PrayerTypes } from '@devouringscripture/common/src/dm/PrayerTypes';
 import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
 import { CardContainerRow } from '../styled-components/StyledComponents';
 
