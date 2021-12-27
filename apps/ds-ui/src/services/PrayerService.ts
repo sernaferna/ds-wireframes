@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { PrayerListItem, BasePrayerListItem } from '../datamodel/Prayer';
+import { PrayerListItem, BasePrayerListItem } from '@devouringscripture/common/src/dm/Prayer';
 import { DateTime } from 'luxon';
 
 export const prayerApi = createApi({
