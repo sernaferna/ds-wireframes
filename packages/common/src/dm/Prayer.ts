@@ -6,8 +6,8 @@ export interface BasePrayerListItem {
 }
 
 export interface PrayerListItem extends BasePrayerListItem {
-  id: string;
   date: string;
+  id: string;
 }
 
 export interface PrayerListItems {

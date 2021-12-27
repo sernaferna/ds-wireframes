@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { BasePrayerListItem, PrayerListItem } from '../../dm/PrayerItems';
+import { BasePrayerListItem, PrayerListItem } from '@devouringscripture/common/src/dm/Prayer';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../services/db';
 import { body } from 'express-validator';
