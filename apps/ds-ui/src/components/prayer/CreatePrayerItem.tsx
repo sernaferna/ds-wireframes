@@ -7,7 +7,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { useNewItemMutation } from '../../services/PrayerService';
 import Button from 'react-bootstrap/Button';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
-import { PrayerTypes } from '../../datamodel/Prayer';
+import { PrayerTypes } from '@devouringscripture/common/src/dm/Prayer';
 
 const selectedIconClasses = 'bg-success text-light';
 const unselectedIconClasses = 'text-light bg-secondary';

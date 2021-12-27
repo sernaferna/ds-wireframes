@@ -1,8 +1,3 @@
-export const PrayerTypes = {
-  request: 'request',
-  praise: 'praise',
-  confession: 'confession',
-};
 export interface BasePrayerListItem {
   title: string;
   text: string;
