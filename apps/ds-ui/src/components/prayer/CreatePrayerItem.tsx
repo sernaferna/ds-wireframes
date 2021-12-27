@@ -36,7 +36,7 @@ const confessionPopover = (
 export function CreatePrayerItem({ confession = false }) {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [type, setType] = useState<PrayerTypes | undefined>(undefined);
+  const [type, setType] = useState<string | undefined>(undefined);
   const [newPrayer] = useNewItemMutation();
   const [validatedFields, setValidatedFields] = useState({
     titleIsValid: false,
@@ -95,7 +95,7 @@ export function CreatePrayerItem({ confession = false }) {
     }
   };
 
-  const setPrayerType = (newType: PrayerTypes) => {
+  const setPrayerType = (newType: string) => {
     if (type === newType) {
       setType(undefined);
     } else {

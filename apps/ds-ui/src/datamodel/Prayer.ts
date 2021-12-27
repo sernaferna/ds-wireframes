@@ -1,13 +1,13 @@
-export enum PrayerTypes {
-  request,
-  praise,
-  confession,
-}
+export const PrayerTypes = {
+  request: 'request',
+  praise: 'praise',
+  confession: 'confession',
+};
 export interface BasePrayerListItem {
   title: string;
   text: string;
   completed: boolean;
-  type?: PrayerTypes;
+  type?: string;
 }
 
 export interface PrayerListItem extends BasePrayerListItem {
