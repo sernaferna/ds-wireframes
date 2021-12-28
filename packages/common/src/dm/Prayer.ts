@@ -1,5 +1,5 @@
 export interface BasePrayerListItem {
-  title: string;
+  title?: string;
   text: string;
   completed: boolean;
   type?: string;

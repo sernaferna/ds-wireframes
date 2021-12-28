@@ -39,8 +39,6 @@ export function CreatePrayerItem({ confession = false }) {
   const [type, setType] = useState<string | undefined>(undefined);
   const [newPrayer] = useNewItemMutation();
   const [validatedFields, setValidatedFields] = useState({
-    titleIsValid: false,
-    titleIsInvalid: false,
     bodyIsValid: false,
     bodyIsInvalid: false,
   });
@@ -62,15 +60,6 @@ export function CreatePrayerItem({ confession = false }) {
   const formIsValid = (): boolean => {
     let isValid = true;
     const newValidatedFields = JSON.parse(JSON.stringify(validatedFields));
-
-    if (title.length < 1) {
-      newValidatedFields.titleIsInvalid = true;
-      newValidatedFields.titleIsValid = false;
-      isValid = false;
-    } else {
-      newValidatedFields.titleIsInvalid = false;
-      newValidatedFields.titleIsValid = true;
-    }
 
     if (body.length < 1) {
       newValidatedFields.bodyIsInvalid = true;
@@ -109,18 +98,7 @@ export function CreatePrayerItem({ confession = false }) {
       <Form noValidate onSubmit={handleSubmit}>
         <Form.Group as={Col} xs="12" className="position-relative">
           <Form.Label>Title</Form.Label>
-          <Form.Control
-            value={title}
-            onChange={handleTitleChange}
-            type="text"
-            placeholder="Title"
-            name="title"
-            isValid={validatedFields.titleIsValid}
-            isInvalid={validatedFields.titleIsInvalid}
-          />
-          <Form.Control.Feedback type="invalid" tooltip>
-            Please enter a valid title
-          </Form.Control.Feedback>
+          <Form.Control value={title} onChange={handleTitleChange} type="text" placeholder="Title" name="title" />
         </Form.Group>
         <Form.Group as={Col} xs="12" className="position-relative">
           <Form.Label>Text</Form.Label>

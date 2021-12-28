@@ -10,11 +10,15 @@ const router = express.Router();
 
 router.post(
   '/',
-  [body('title').notEmpty().withMessage('Title required')],
+  [body('text').notEmpty().withMessage('Text required')],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log(`newItem API called; title of item is ${req.body.title}`);
     const newBaseItem: BasePrayerListItem = req.body;
+    console.log(
+      `new prayer item API called; text of item is '${newBaseItem.text.substring(0, 20)}${
+        newBaseItem.text.length > 20 ? '...' : ''
+      }'`
+    );
     const newItem: PrayerListItem = {
       ...newBaseItem,
       id: uuidv4(),
