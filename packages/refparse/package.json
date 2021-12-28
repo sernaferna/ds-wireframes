@@ -1,0 +1,23 @@
+{
+  "name": "@devouringscripture/refparse",
+  "version": "1.0.0",
+  "description": "Utility for parsing and working with bible references",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "watch": "tsc --build --watch"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "sernaferna",
+  "license": "ISC",
+  "dependencies": {
+    "bible-passage-reference-parser": "^2.0.1"
+  }
+}
