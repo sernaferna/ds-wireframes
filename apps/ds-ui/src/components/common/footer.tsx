@@ -11,24 +11,26 @@ export function Footer() {
         <p className="d-none d-sm-block col-md-4 mb-0 text-muted">&copy; 2021 Devouring Scripture</p>
         <NavLink
           to="/"
-          activeClassName="active"
-          className="nav-link col-md-4 d-flex align-items-center justify-content-center mb-2 mb-md-0 me-md-auto link-dark text-decoration-none"
+          className={(isActive) =>
+            'nav-link col-md-4 d-flex align-items-center justify-content-center mb-2 mb-md-0 me-md-auto link-dark text-decoration-none' +
+            (isActive ? ' active' : '')
+          }
         >
           <Image src="logo192.png" height="30" width="30" />
         </NavLink>
         <Nav className="col-md-4 justify-content-end">
           <Nav.Item>
-            <NavLink activeClassName="active" className="nav-link text-muted" to="/">
+            <NavLink className={(isActive) => 'nav-link text-muted' + (isActive ? ' active' : '')} to="/">
               Home
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink className="nav-link text-muted" to="/faq" activeClassName="active">
+            <NavLink className={(isActive) => 'nav-link text-muted' + (isActive ? ' active' : '')} to="/faq">
               FAQs
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink className="nav-link text-muted" activeClassName="active" to="/about">
+            <NavLink className={(isActive) => 'nav-link text-muted' + (isActive ? ' active' : '')} to="/about">
               About
             </NavLink>
           </Nav.Item>
