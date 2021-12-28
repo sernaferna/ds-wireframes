@@ -9,7 +9,7 @@ import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
 import { BasePassage } from '@devouringscripture/common';
 import { getToastManager, TOAST_FADE_TIME, ToastType } from '../common/toasts/ToastManager';
-import { isPassageRefValid } from '@devouringscripture/refparse';
+import { isPassageRefValid, getRefForOSIS, getOSISForRef } from '@devouringscripture/refparse';
 
 interface PassageLauncherInterface {
   defaultVersion: string;
@@ -41,6 +41,9 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
       updateRefInvalid({ isInvalid: true, message: `${reference} is not a valid passage` });
     } else {
       updateRefInvalid({ isInvalid: false, message: '' });
+      const osisString = getOSISForRef(reference);
+      const newRef = getRefForOSIS(osisString);
+      updateReference(newRef);
     }
 
     if (version === 'ESV' || version === 'NIV') {

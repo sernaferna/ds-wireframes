@@ -18,6 +18,7 @@
   "author": "sernaferna",
   "license": "ISC",
   "dependencies": {
-    "bible-passage-reference-parser": "^2.0.1"
+    "bible-passage-reference-parser": "^2.0.1",
+    "bible-reference-formatter": "^1.0.1"
   }
 }
