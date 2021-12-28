@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
-import { Passage } from '@devouringscripture/common/src/dm/Passage';
+import { Passage } from '@devouringscripture/common';
 import Col from 'react-bootstrap/Col';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';

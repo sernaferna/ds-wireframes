@@ -7,9 +7,9 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
-import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
+import { BasePassage } from '@devouringscripture/common';
 import { getToastManager, TOAST_FADE_TIME, ToastType } from '../common/toasts/ToastManager';
-import { isPassageRefValid } from '@devouringscripture/refparse/build/imp/isValid';
+import { isPassageRefValid } from '@devouringscripture/refparse';
 
 interface PassageLauncherInterface {
   defaultVersion: string;

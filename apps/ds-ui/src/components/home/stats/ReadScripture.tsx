@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionStats } from '@devouringscripture/common/src/dm/Action';
+import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
 interface ReadScriptureInterface {

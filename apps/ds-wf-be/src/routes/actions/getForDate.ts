@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { db } from '../../services/db';
-import { ActionsForDay } from '@devouringscripture/common/src/dm/Action';
+import { ActionsForDay } from '@devouringscripture/common';
 import { populateActionsForDay } from '../../helpers/ActionHelpers';
 import { param } from 'express-validator';
 import { validateRequest } from '../../middleware/validateRequest';

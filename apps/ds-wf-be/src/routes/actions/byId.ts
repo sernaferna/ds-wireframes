@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { ActionsForDay } from '@devouringscripture/common/src/dm/Action';
+import { ActionsForDay } from '@devouringscripture/common';
 import { db } from '../../services/db';
 import { param } from 'express-validator';
 import { validateRequest } from '../../middleware/validateRequest';

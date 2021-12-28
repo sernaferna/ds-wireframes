@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { ShowPassageModal } from './ShowPassageModal';
-import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
+import { BasePassage } from '@devouringscripture/common';
 import { useNewItemMutation } from '../../services/PassagesService';
 import Alert from 'react-bootstrap/Alert';
 

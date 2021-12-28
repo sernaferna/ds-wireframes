@@ -1,7 +1,7 @@
 import React from 'react';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common/src/dm/User';
+import { UserAttributes } from '@devouringscripture/common';
 import { DoPageSettings } from './DoPageSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { CreatePrayerItem } from '../prayer/CreatePrayerItem';

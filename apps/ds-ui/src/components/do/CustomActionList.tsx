@@ -8,7 +8,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
-import { BaseActionType } from '@devouringscripture/common/src/dm/Action';
+import { BaseActionType } from '@devouringscripture/common';
 
 export function CustomActionList() {
   const { data, error, isLoading } = useGetCustomActionTypesQuery();

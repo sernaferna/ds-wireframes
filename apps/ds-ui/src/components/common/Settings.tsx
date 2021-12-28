@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import Form from 'react-bootstrap/Form';
-import { UserAttributes } from '@devouringscripture/common/src/dm/User';
+import { UserAttributes } from '@devouringscripture/common';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 
 export function Settings() {
