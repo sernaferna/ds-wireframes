@@ -4,8 +4,8 @@ This project provides wireframes for the **Devouring Scripture** website. Proper
 
 There are a couple of "main" projects (along with libraries just for the sake of reducing code duplication):
 
-- `ds-ui` is the user interface---the actual wireframes
-- `ds-wf-be` (DS wireframe back-end) is a simple, mostly hard-coded API
+- `ds-ui` is the user interface -- the actual wireframes
+- `ds-api` is a simple, mostly hard-coded API
 
 ## ds-ui
 
@@ -19,15 +19,15 @@ Leverages the following technologies:
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
 
-## ds-wf-be
+## ds-api
 
-This project serves as a back-end API to service the **ts-wireframe** project. Anything that isn't hard-coded might as well be, and coding practices aren't intended to be followed; it's not "real" code.
+This project serves as a back-end API to service the React project. Anything that isn't hard-coded might as well be, and coding practices aren't intended to be followed; it's not "real" code.
 
 Uses **node-json-db** under the covers, which reads from a local JSON file (`dsDB.json`). The data file is not checked into source control (_just in case_ sensitive data ever gets added there during testing), but there is a sample file in `src/helpers/dsDB.json` that can be copied to the root directory as a starting point for testing purposes if there is a desire to start from scratch.
 
 ## common
 
-This is just a library with common code (e.g. commonly used type definitions that are returned from APIs but also used in the UI app). It is _not_ shared "properly" by other projects, it's a hacked together approach, but at least code doesn't have to be duplicated across projects.
+This is just a library with common code (e.g. commonly used type definitions that are returned from APIs but also used in the UI app).
 
 ## refparse
 
@@ -40,11 +40,6 @@ A library for parsing and working with Bible passage references. It can:
   - `James 7:5` is not because James only has 5 chapters
 - Return an OSIS string for a readable string (e.g. `James 1:19` returns `Jas.1.19`)
 - Return a readable string for an OSIS string (e.g. `Jas.1.19` returns `James 1:19`)
-- Indicate whether one passage is contained **within** another passage (with both ref-to-ref and OSIS-to-OSIS versions); e.g.
-  - `James 1:1-19` **does** contain the passage `James 1:5`
-  - `James 1:1-19` does **not** contain the passage `John 1:5`
-  - `James 1:1-19` **does** contain the passage `James 1:1-5`
-  - `James 1:1-19` does **not** contain the passage `James 1:19-20`
 
 In effect, there are two types of string being worked with, which this library attempts to use consistently:
 
