@@ -65,7 +65,7 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
     }
 
     const newPassage: BasePassage = {
-      reference,
+      reference: getOSISForRef(reference),
       version,
     };
 
