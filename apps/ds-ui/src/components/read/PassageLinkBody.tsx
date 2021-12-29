@@ -16,9 +16,9 @@ export const PassageLinkBody = (props: PassageLinkBodyInterface) => {
       <div>
         Launch{' '}
         <a href={urlForBG} target="_blank" rel="noreferrer">
-          BibleGateway for {props.passage.reference} in {props.passage.version}
-        </a>
-        .
+          BibleGateway for {props.passage.reference}
+        </a>{' '}
+        in <strong>{props.passage.version}</strong>.
       </div>
       <div>
         {' '}
