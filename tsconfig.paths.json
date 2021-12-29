@@ -4,8 +4,8 @@
     "paths": {
       "ds-ui/*": ["./apps/ds-ui/src/*"],
       "ds-ui": ["./apps/ds-ui/src"],
-      "ds-wf-be/*": ["./apps/ds-wf-be/src/*"],
-      "ds-wf-be": ["./apps/ds-wf-be/src"],
+      "ds-api/*": ["./apps/ds-api/src/*"],
+      "ds-api": ["./apps/ds-api/src"],
       "@devouringscripture/common/*": ["./packages/common/src/*"],
       "@devouringscripture/common": ["./packages/common/src"],
       "@devouringscripture/refparse/*": ["./packages/refparse/src/*"],
