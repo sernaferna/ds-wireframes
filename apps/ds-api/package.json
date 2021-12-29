@@ -1,5 +1,5 @@
 {
-  "name": "ds-wf-be",
+  "name": "ds-api",
   "version": "1.0.0",
   "description": "Hard-coded API for ds-wireframe",
   "main": "index.js",
