@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import { Header } from './common/header';
 import { Footer } from './common/footer';
 import { SizeIndicator } from './common/SizeIndicator';
@@ -18,15 +18,15 @@ export function App() {
       <BrowserRouter>
         <div>
           <Header />
-          <Switch>
-            <Route key="/" exact path="/" component={Home} />
-            <Route key="/prayer" path="/prayer" component={PrayerPage} />
-            <Route key="/read" path="/read" component={ReadPage} />
-            <Route key="/do" path="/do" component={DoPage} />
-            <Route key="/plans" path="/plans" component={PlansPage} />
-            <Route key="/help" path="/help" component={Help} />
-            <Route path="*" component={FourOhFour} />
-          </Switch>
+          <Routes>
+            <Route key="/" path="/" element={<Home />} />
+            <Route key="/prayer" path="/prayer" element={<PrayerPage />} />
+            <Route key="/read" path="/read" element={<ReadPage />} />
+            <Route key="/do" path="/do" element={<DoPage />} />
+            <Route key="/plans" path="/plans" element={<PlansPage />} />
+            <Route key="/help" path="/help" element={<Help />} />
+            <Route path="*" element={<FourOhFour />} />
+          </Routes>
           <Footer />
         </div>
       </BrowserRouter>

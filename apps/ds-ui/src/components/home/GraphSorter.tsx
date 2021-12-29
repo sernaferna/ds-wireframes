@@ -4,7 +4,7 @@ import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
 import Stack from 'react-bootstrap/Stack';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
-import { UserAttributes } from '@devouringscripture/common/src/dm/User';
+import { UserAttributes } from '@devouringscripture/common';
 
 const sortVizList = (
   list: { name: string; active: boolean; order: number }[]

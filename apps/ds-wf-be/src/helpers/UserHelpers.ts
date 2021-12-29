@@ -1,4 +1,4 @@
-import { UserAttributes } from '@devouringscripture/common/src/dm/User';
+import { UserAttributes } from '@devouringscripture/common';
 
 export const generateDefaultUser = (): UserAttributes => {
   return {

@@ -1,4 +1,4 @@
-import { PrayerListItems } from '@devouringscripture/common/src/dm/Prayer';
+import { PrayerListItems } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 
 export const generatePrayerItems = (): PrayerListItems => {

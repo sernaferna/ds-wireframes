@@ -16,7 +16,6 @@ Leverages the following technologies:
 - `bootstrap`
 - `react-bootstrap` and `react-bootstrap-icons` (because it's easier), along with `styled-components`
 - `redux` and `redux-toolkit` (even though it's all just fake state)
-- `bible-passage-reference-parser` for parsing out Bible passages entered in the UI
 
 No automated testing, no automated deployments, no automated _anything,_ just the React app.
 
@@ -29,6 +28,32 @@ Uses **node-json-db** under the covers, which reads from a local JSON file (`dsD
 ## common
 
 This is just a library with common code (e.g. commonly used type definitions that are returned from APIs but also used in the UI app). It is _not_ shared "properly" by other projects, it's a hacked together approach, but at least code doesn't have to be duplicated across projects.
+
+## refparse
+
+A library for parsing and working with Bible passage references. It can:
+
+- Determine if a passage is **valid**; e.g.
+  - `James 1:19` is valid
+  - `James 1:1-19` is valid
+  - `blah 53:13` is not because "blah" isn't a passage
+  - `James 7:5` is not because James only has 5 chapters
+- Return an OSIS string for a readable string (e.g. `James 1:19` returns `Jas.1.19`)
+- Return a readable string for an OSIS string (e.g. `Jas.1.19` returns `James 1:19`)
+- Indicate whether one passage is contained **within** another passage (with both ref-to-ref and OSIS-to-OSIS versions); e.g.
+  - `James 1:1-19` **does** contain the passage `James 1:5`
+  - `James 1:1-19` does **not** contain the passage `John 1:5`
+  - `James 1:1-19` **does** contain the passage `James 1:1-5`
+  - `James 1:1-19` does **not** contain the passage `James 1:19-20`
+
+In effect, there are two types of string being worked with, which this library attempts to use consistently:
+
+| Type            | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Example     |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| **OSIS String** | A specially formatted string for labeling a passage of Scripture, used in the **OSIS** XML standard for marking up Bible passages. This library doesn't use the OSIS XML format, it just uses the part of the standard around naming/labeling Bible passages -- mostly because the underlying libraries being leveraged do so, and the format is a handy standard to use. Essentially works out to a three-character description of a book (e.g. `Jas` for `James`), then the book, then the verse, separated by periods. | `Jas.1.1`   |
+| **Reference**   | A human-readable string for labeling a passage of Scripture, following the conventions most English speaking people are used to.                                                                                                                                                                                                                                                                                                                                                                                          | `James 1:1` |
+
+This library makes heavy use of the `bible-passage-reference-parser` and `bible-reference-formatter` libraries under the covers.
 
 # Notes to self
 

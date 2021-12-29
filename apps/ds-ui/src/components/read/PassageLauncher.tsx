@@ -7,9 +7,9 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
-import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
+import { BasePassage } from '@devouringscripture/common';
 import { getToastManager, TOAST_FADE_TIME, ToastType } from '../common/toasts/ToastManager';
-const bcv_parser = require('bible-passage-reference-parser/js/en_bcv_parser').bcv_parser;
+import { isPassageRefValid, getRefForOSIS, getOSISForRef } from '@devouringscripture/refparse';
 
 interface PassageLauncherInterface {
   defaultVersion: string;
@@ -27,8 +27,6 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
   });
   const [newItem] = useNewItemMutation();
 
-  const bcv = new bcv_parser();
-
   const handleReferenceChange = (event: ChangeEvent<HTMLInputElement>) => {
     updateReference(event.target.value);
   };
@@ -38,14 +36,14 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
   };
 
   const validateForm = () => {
-    const osis: string = bcv.parse(reference).osis();
-    if (osis.length > 0) {
-      console.log(osis);
-    }
-    if (osis.length < 1) {
+    const refIsValid = isPassageRefValid(reference);
+    if (!refIsValid) {
       updateRefInvalid({ isInvalid: true, message: `${reference} is not a valid passage` });
     } else {
       updateRefInvalid({ isInvalid: false, message: '' });
+      const osisString = getOSISForRef(reference);
+      const newRef = getRefForOSIS(osisString);
+      updateReference(newRef);
     }
 
     if (version === 'ESV' || version === 'NIV') {
@@ -67,7 +65,7 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
     }
 
     const newPassage: BasePassage = {
-      reference,
+      reference: getOSISForRef(reference),
       version,
     };
 

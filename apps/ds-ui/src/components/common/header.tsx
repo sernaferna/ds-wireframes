@@ -24,26 +24,22 @@ const links = [
   {
     label: 'Home',
     href: '/',
-    exact: true,
   },
   {
     label: 'Pray',
     href: '/prayer',
-    exact: false,
   },
   {
     label: 'Read',
     href: '/read',
-    exact: false,
   },
   {
     label: 'Do',
     href: '/do',
-    exact: false,
   },
-].map(({ label, href, exact }) => {
+].map(({ label, href }) => {
   return (
-    <NavLink key={href} exact={exact} className="nav-link" to={href} activeClassName="active">
+    <NavLink key={href} className={(isActive) => 'nav-link' + (isActive ? ' active' : '')} to={href}>
       {label}
     </NavLink>
   );
@@ -53,11 +49,10 @@ const adminLinks = [
   {
     label: 'Reading Plans',
     href: '/plans',
-    exact: true,
   },
-].map(({ label, href, exact }) => {
+].map(({ label, href }) => {
   return (
-    <NavLink key={href} exact={exact} className="nav-link" to={href} activeClassName="active">
+    <NavLink key={href} className={(isActive) => 'nav-link' + (isActive ? ' active' : '')} to={href}>
       {label}
     </NavLink>
   );

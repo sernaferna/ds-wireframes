@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { BasePassage } from '@devouringscripture/common/src/dm/Passage';
+import { BasePassage } from '@devouringscripture/common';
 import { PassageLinkBody } from './PassageLinkBody';
 
 interface ShowPassageModalInterface {

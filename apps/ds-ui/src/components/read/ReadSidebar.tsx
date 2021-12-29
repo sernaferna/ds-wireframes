@@ -3,7 +3,7 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { ReadPageSettings } from './ReadPageSettings';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { UserAttributes } from '@devouringscripture/common/src/dm/User';
+import { UserAttributes } from '@devouringscripture/common';
 import { CurrentReadingPlan } from './CurrentReadingPlan';
 
 export const ReadSidebar = () => {

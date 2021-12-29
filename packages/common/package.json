@@ -2,7 +2,8 @@
   "name": "@devouringscripture/common",
   "version": "1.0.0",
   "description": "Common utilities and type descriptions for ds-wireframe",
-  "main": "index.js",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
   "devDependencies": {
     "typescript": "^4.5.4"
   },
