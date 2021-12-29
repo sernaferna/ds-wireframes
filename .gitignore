@@ -21,4 +21,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-apps/ds-wf-be/dsDB.json
+apps/ds-api/dsDB.json

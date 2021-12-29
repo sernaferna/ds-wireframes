@@ -66,7 +66,7 @@ npm start -workspaces --if-defined
 
 ```bash
 npm start -w ds-ui
-npm start -w ds-wf-be
+npm start -w ds-api
 ```
 
 ## Git Branching
