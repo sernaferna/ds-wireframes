@@ -52,6 +52,13 @@ export const PassageCard = (props: PrayerCardInterface) => {
     }
   };
 
+  const bibleVersionLogo =
+    props.passage.version === 'NIV' ? (
+      <img src="logos/niv_179x50.png" alt="NIV Logo" height={'25px'} />
+    ) : (
+      <img src="logos/esv_95x50.png" alt="NIV Logo" height={'25px'} />
+    );
+
   return (
     <Col className="mt-2">
       <Card
@@ -67,6 +74,12 @@ export const PassageCard = (props: PrayerCardInterface) => {
             <PassageLinkBody passage={props.passage} />
           </Card.Text>
         </Card.Body>
+        <Card.Footer>
+          <div className="d-flex flex-row-reverse">
+            <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
+            {bibleVersionLogo}
+          </div>
+        </Card.Footer>
       </Card>
     </Col>
   );

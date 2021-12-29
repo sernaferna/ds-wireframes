@@ -19,16 +19,6 @@ export const PassageLinkBody = (props: PassageLinkBodyInterface) => {
         </a>{' '}
         in <strong>{props.passage.version}</strong>.
       </div>
-      <div>
-        {' '}
-        <img
-          className="float-end"
-          height={28.5}
-          width={150}
-          src="bg/BibleGateway-Logo-black-350p.png"
-          alt="Bible Gateway logo"
-        />
-      </div>
     </>
   );
 };
