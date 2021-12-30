@@ -34,7 +34,7 @@ export const prayerApi = createApi({
           method: 'PUT',
         };
       },
-      invalidatesTags: ['prayerItems'],
+      invalidatesTags: (result) => (result ? [{ type: 'prayerItems', id: result.id }] : []),
     }),
     deletePrayerItem: builder.mutation<string, string>({
       query(id) {
@@ -53,7 +53,7 @@ export const prayerApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result) => (result ? [{ type: 'prayerItems', id: result.id }] : []),
+      invalidatesTags: ['prayerItems'],
     }),
   }),
 });
