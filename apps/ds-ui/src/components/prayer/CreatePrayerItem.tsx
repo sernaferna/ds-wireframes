@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes, BasePrayerListItem } from '@devouringscripture/common';
 import * as yup from 'yup';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikProps, FormikHelpers } from 'formik';
 
 const selectedIconClasses = 'bg-success text-light';
 const unselectedIconClasses = 'text-light bg-secondary';
@@ -40,6 +40,7 @@ const schema = yup.object({
   body: yup.string().required('Please enter the text of your prayer'),
   type: yup.string().notRequired(),
 });
+type ValuesSchema = yup.InferType<typeof schema>;
 
 export function CreatePrayerItem({ confession = false }) {
   const [newPrayer] = useNewItemMutation();
@@ -51,7 +52,7 @@ export function CreatePrayerItem({ confession = false }) {
     newPrayer(newItem);
   };
 
-  const initialValues = {
+  const initialValues: ValuesSchema = {
     title: '',
     body: '',
     type: confession ? PrayerTypes.confession : undefined,
@@ -63,16 +64,20 @@ export function CreatePrayerItem({ confession = false }) {
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
-        onSubmit={(values) => {
+        onSubmit={(values: ValuesSchema, { setSubmitting, resetForm }: FormikHelpers<ValuesSchema>) => {
           handleSubmit(values.body, values.title, values.type);
+          setSubmitting(false);
+          resetForm({ values: initialValues });
         }}
-        validateOnBlur={true}
+        validateOnBlur={false}
+        validateOnChange={true}
       >
-        {(formikProps: FormikProps<yup.InferType<typeof schema>>) => (
+        {(formikProps: FormikProps<ValuesSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
             <Form.Group as={Col} xs="12" className="position-relative">
               <Form.Label>Title</Form.Label>
               <Form.Control
+                id="title"
                 value={formikProps.values.title}
                 onChange={formikProps.handleChange}
                 onBlur={formikProps.handleBlur}
@@ -85,9 +90,11 @@ export function CreatePrayerItem({ confession = false }) {
             <Form.Group as={Col} xs="12" className="position-relative">
               <Form.Label>Text</Form.Label>
               <Form.Control
+                id="body"
                 value={formikProps.values.body}
                 onChange={formikProps.handleChange}
                 onBlur={formikProps.handleBlur}
+                onInput={formikProps.handleBlur}
                 as="textarea"
                 rows={4}
                 name="body"
