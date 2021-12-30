@@ -154,7 +154,16 @@ export function CreatePrayerItem({ confession = false }) {
               </Stack>
             )}
             <Form.Group className="mt-2">
-              <Button variant={confession ? 'danger' : 'primary'} type="submit" disabled={!formikProps.touched.body}>
+              <Button
+                variant={confession ? 'danger' : 'primary'}
+                type="submit"
+                disabled={
+                  !formikProps.touched.body ||
+                  !!formikProps.errors.body ||
+                  !!formikProps.errors.title ||
+                  !!formikProps.errors.type
+                }
+              >
                 Submit
               </Button>
             </Form.Group>
