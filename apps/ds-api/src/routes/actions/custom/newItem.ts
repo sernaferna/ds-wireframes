@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-import { ActionType } from '@devouringscripture/common';
+import { ActionType, validateRequest } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../../services/db';
 import { body } from 'express-validator';
-import { validateRequest } from '../../../middleware/validateRequest';
 
 const router = express.Router();
 

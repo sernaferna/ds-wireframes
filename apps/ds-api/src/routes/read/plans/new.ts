@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { validateRequest } from '../../../middleware/validateRequest';
+import { validateRequest } from '@devouringscripture/common';
 
 const router = express.Router();
 
