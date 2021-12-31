@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express';
-import { getAllVerses } from '../../services/db';
+import { getVersesByNum } from '../../services/db';
 
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  getAllVerses()
+  getVersesByNum()
     .then((verses) => res.send(verses))
     .catch((err) => {
       res.status(500).send('error fetching data');

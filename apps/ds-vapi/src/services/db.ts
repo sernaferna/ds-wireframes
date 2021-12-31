@@ -14,21 +14,40 @@ export const getDB = (): Database => {
   return db;
 };
 
-export const getAllVerses = (): Promise<Verse[]> => {
+export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 40000): Promise<Verse[]> => {
   return new Promise<Verse[]>((resolve, reject) => {
     const db: Database = getDB();
 
-    db.all('SELECT versenum, osis, apoc FROM verses', (err, rows) => {
+    db.all(
+      'SELECT versenum, osis, apoc FROM verses WHERE versenum > ? AND versenum < ?',
+      [lowerBound, upperBound],
+      (err, rows) => {
+        if (err) {
+          reject(err);
+        }
+
+        const verses: Verse[] = rows.map((row) => ({
+          versenum: row.versenum,
+          osis: row.osis,
+          apocrypha: row.apoc === 1 ? true : false,
+        }));
+        resolve(verses);
+      }
+    );
+  });
+};
+
+export const getVerseByOSIS = (osis: string): Promise<Verse> => {
+  return new Promise<Verse>((resolve, reject) => {
+    const db: Database = getDB();
+
+    db.get('SELECT versenum, osis, apoc FROM verses WHERE osis = ?', [osis], (err, row) => {
       if (err) {
         reject(err);
       }
 
-      const verses: Verse[] = rows.map((row) => ({
-        versenum: row.versenum,
-        osis: row.osis,
-        apocrypha: row.apoc === 1 ? true : false,
-      }));
-      resolve(verses);
+      const verse: Verse = { versenum: row.versenum, osis: row.osis, apocrypha: row.apoc === 1 ? true : false };
+      resolve(verse);
     });
   });
 };
