@@ -17,6 +17,8 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { PrayerTypes } from '@devouringscripture/common';
 import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
 import { CardContainerRow } from '../styled-components/StyledComponents';
+import { useSelector } from 'react-redux';
+import { getPrayerViewFilter } from '../../stores/UISlice';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto flex-grow-1',
@@ -61,6 +63,8 @@ export function PrayerCards() {
   const userData = tempObj.data;
   const userIsLoading = tempObj.isLoading;
   const userError = tempObj.error;
+
+  const prayerFilterString = useSelector(getPrayerViewFilter);
 
   if (isLoading || userIsLoading) {
     return (
@@ -110,7 +114,22 @@ export function PrayerCards() {
       (showPraiseTypes && item.type === PrayerTypes.praise) ||
       (showConfessionTypes && item.type === PrayerTypes.confession);
 
-    return completenessCheck && filterCheck;
+    let filterTextCheck: boolean = false;
+    if (prayerFilterString.length > 0) {
+      if (item.text.toLocaleLowerCase().includes(prayerFilterString.toLocaleLowerCase())) {
+        filterTextCheck = true;
+      }
+
+      if (item.title) {
+        if (item.title.toLocaleLowerCase().includes(prayerFilterString.toLocaleLowerCase())) {
+          filterTextCheck = true;
+        }
+      }
+    } else {
+      filterTextCheck = true;
+    }
+
+    return completenessCheck && filterCheck && filterTextCheck;
   });
 
   const sortOption = userData!.settings.prayer.sort === 'date-asc' ? true : false;

@@ -3,6 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
+import { PrayerViewFilterComponent } from './PrayerViewFilterComponent';
 
 export function PrayerSettings() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -141,6 +142,8 @@ export function PrayerSettings() {
           onChange={() => filterCheckClicked('confessions')}
         />
       </Form.Group>
+
+      <PrayerViewFilterComponent />
     </Form>
   );
 }
