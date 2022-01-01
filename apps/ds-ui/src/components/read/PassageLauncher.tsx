@@ -65,12 +65,12 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
                     id="reference"
                     aria-label="Passage"
                     placeholder="Rom 1:1"
-                    type="text"
+                    type="search"
                     size="sm"
                     value={formikProps.values.reference}
                     aria-describedby="passageIcon"
                     onChange={formikProps.handleChange}
-                    isInvalid={!!formikProps.errors.reference}
+                    isInvalid={!!formikProps.errors.reference && formikProps.values.reference.length > 0}
                     isValid={formikProps.touched.reference && !formikProps.errors.reference}
                     onBlur={(e) => {
                       if (isPassageRefValid(formikProps.values.reference)) {

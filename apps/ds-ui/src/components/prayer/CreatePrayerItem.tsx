@@ -82,9 +82,8 @@ export function CreatePrayerItem({ confession = false }) {
                 onChange={formikProps.handleChange}
                 onBlur={formikProps.handleBlur}
                 type="text"
-                placeholder="Title"
+                placeholder="Title (optional)"
                 name="title"
-                isInvalid={!!formikProps.errors.title}
               />
             </Form.Group>
             <Form.Group as={Col} xs="12" className="position-relative">
@@ -98,13 +97,8 @@ export function CreatePrayerItem({ confession = false }) {
                 as="textarea"
                 rows={4}
                 name="body"
-                isValid={formikProps.touched.body && !formikProps.errors.body}
-                isInvalid={!!formikProps.errors.body}
-                placeholder="Prayer request"
+                placeholder="Prayer request (mandatory)"
               />
-              <Form.Control.Feedback type="invalid" tooltip>
-                Please enter some text
-              </Form.Control.Feedback>
             </Form.Group>
             {confession ? null : (
               <Stack direction="horizontal" className="h1 m-3" gap={5}>
