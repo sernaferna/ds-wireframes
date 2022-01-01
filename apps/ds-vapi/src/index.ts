@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { getAllVersesRouter } from './routes/verses/getAll';
+import { getRangeOfVersesRouter } from './routes/verses/getRange';
 import { handleFourOhFour } from '@devouringscripture/common';
 import { getDB, populateDB } from './services/db';
 import { Database } from 'sqlite3';
@@ -37,7 +38,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use('/vapi/v', [getAllVersesRouter]);
+app.use('/vapi/v', [getAllVersesRouter, getRangeOfVersesRouter]);
 
 app.use(handleFourOhFour);
 
