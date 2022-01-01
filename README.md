@@ -71,7 +71,7 @@ A script has been defined in the root `package.json` so that the UI (along with 
 npm start
 ```
 
-If desired, the projects can be launched independently -- a separate terminal will be needed for each -- with the following commands (still from the root):
+Of course, this means that the logs from all three applications get mashed into one terminal window. If desired the projects can be launched independently instead, in separate terminals, with the following commands (still from the root):
 
 ```bash
 npm start -w ds-api
