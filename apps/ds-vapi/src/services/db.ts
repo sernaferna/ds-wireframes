@@ -19,7 +19,7 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
     const db: Database = getDB();
 
     db.all(
-      'SELECT versenum, osis, apoc FROM verses WHERE versenum > ? AND versenum < ?',
+      'SELECT versenum, osis, apoc FROM verses WHERE versenum >= ? AND versenum <= ?',
       [lowerBound, upperBound],
       (err, rows) => {
         if (err) {
