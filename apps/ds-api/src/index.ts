@@ -7,8 +7,6 @@ import { getPIById } from './routes/prayer/byId';
 import { markReadRouter } from './routes/prayer/markRead';
 import { newPrayerItemRouter } from './routes/prayer/newItem';
 import { deletePrayerItemRouter } from './routes/prayer/delete';
-import { errorHandler } from './middleware/error.middleware';
-import { notFoundHandler } from './middleware/not-found.middleware';
 import { getUserByIdRouter } from './routes/user/byId';
 import { updateUserRouter } from './routes/user/update';
 import { getAllCustomActionsRouter } from './routes/actions/custom/getAll';
@@ -24,6 +22,7 @@ import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
 import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { newReadingPlan } from './routes/read/plans/new';
+import { handleFourOhFour } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -55,8 +54,7 @@ app.use('/api/actions/custom', [getAllCustomActionsRouter, newCustomActionTypeRo
 app.use('/api/read/current', [getCurrentlyReadingPassages, newReadingItem, deleteCurrentReadItem]);
 app.use('/api/plans', [newReadingPlan]);
 
-app.use(errorHandler);
-app.use(notFoundHandler); // TODO this isn't working
+app.use(handleFourOhFour);
 
 app.listen(PORT, () => {
   console.log(`App started. Listening on port ${PORT}`);

@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-import { BasePrayerListItem, PrayerListItem } from '@devouringscripture/common';
+import { BasePrayerListItem, PrayerListItem, validateRequest } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../services/db';
 import { body } from 'express-validator';
-import { validateRequest } from '../../middleware/validateRequest';
 import { DateTime } from 'luxon';
 
 const router = express.Router();

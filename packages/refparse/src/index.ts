@@ -19,11 +19,3 @@ export const getOSISForRef = (ref: string): string => {
 export const getRefForOSIS = (osisString: string): string => {
   return osisToEn('esv-long', osisString);
 };
-
-// export const isRefInRef = (containingRef: string, containedRef: string): boolean => {
-//   return true;
-// };
-
-// export const isOSISInOSIS = (containingOSIS: string, containedOSIS: string): boolean => {
-//   return true;
-// };

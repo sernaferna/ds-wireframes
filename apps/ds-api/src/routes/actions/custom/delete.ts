@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { db } from '../../../services/db';
 import { param } from 'express-validator';
-import { validateRequest } from '../../../middleware/validateRequest';
+import { validateRequest } from '@devouringscripture/common';
 
 const router = express.Router();
 

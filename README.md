@@ -6,6 +6,7 @@ There are a couple of "main" projects (along with libraries just for the sake of
 
 - `ds-ui` is the user interface -- the actual wireframes
 - `ds-api` is a simple, mostly hard-coded API
+- `ds-vapi` is a separate API specifically for handling verses, created only because it required a better DB than the JSON-based DB used by `ds-api`
 
 ## ds-ui
 
@@ -23,7 +24,13 @@ No automated testing, no automated deployments, no automated _anything,_ just th
 
 This project serves as a back-end API to service the React project. Anything that isn't hard-coded might as well be, and coding practices aren't intended to be followed; it's not "real" code.
 
-Uses **node-json-db** under the covers, which reads from a local JSON file (`dsDB.json`). The data file is not checked into source control (_just in case_ sensitive data ever gets added there during testing), but there is a sample file in `src/helpers/dsDB.json` that can be copied to the root directory as a starting point for testing purposes if there is a desire to start from scratch.
+Uses **node-json-db** under the covers, which reads from a local JSON file (`dsDB.json`). The data file is not checked into source control (_just in case_ sensitive data ever gets added there during testing), but there is a sample file in `src/helpers/dsDB.json` that can be copied to the root directory as a starting point for testing purposes if there is a desire to start from scratch. This won't be the most performant DB around, but it was specifically chosen for hack-ability -- values can easily be inserted into this file manually.
+
+## ds-vapi
+
+This project serves up a separate API, specifically for working with Bible **verses**; it maintains a DB of all of the verses in the Bible (~38k of them), which can be used for determining if one passage falls within another, as well as for creating Reading plans. Uses **sqlite3** under the covers for a relational DB.
+
+The first time this API is launched it will load all of the verses from `data/verses.csv` into the relational DB.
 
 ## common
 

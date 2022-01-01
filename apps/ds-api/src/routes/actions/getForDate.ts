@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
 import { db } from '../../services/db';
-import { ActionsForDay } from '@devouringscripture/common';
+import { ActionsForDay, validateRequest } from '@devouringscripture/common';
 import { populateActionsForDay } from '../../helpers/ActionHelpers';
 import { param } from 'express-validator';
-import { validateRequest } from '../../middleware/validateRequest';
 
 const router = express.Router();
 

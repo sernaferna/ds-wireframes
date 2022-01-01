@@ -16,5 +16,9 @@
     "typescript"
   ],
   "author": "sernaferna",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0"
+  }
 }

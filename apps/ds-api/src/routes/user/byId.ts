@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-import { UserAttributes } from '@devouringscripture/common';
+import { UserAttributes, validateRequest } from '@devouringscripture/common';
 import { db } from '../../services/db';
 import { generateDefaultUser } from '../../helpers/UserHelpers';
 import { param } from 'express-validator';
-import { validateRequest } from '../../middleware/validateRequest';
 
 const router = express.Router();
 
