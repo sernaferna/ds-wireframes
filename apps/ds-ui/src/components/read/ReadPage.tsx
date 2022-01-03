@@ -34,10 +34,10 @@ export const ReadPage = () => {
             <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
           </Row>
           <Row>
-            <Col xs="12" lg="9" xxl="10">
+            <Col xs="12" md="5">
               <PassageCards />
             </Col>
-            <Col xs="12" lg="3" xxl="2">
+            <Col xs="12" md="7">
               <PassageNotes />
             </Col>
           </Row>
