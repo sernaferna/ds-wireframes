@@ -1,4 +1,4 @@
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('sqlite3').verbose();
 import { Database } from 'sqlite3';
 import fs from 'fs';
 import csv from 'csv-parser';
@@ -43,10 +43,16 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
 
     db.get('SELECT versenum, osis, apoc FROM verses WHERE osis = ?', [osis], (err, row) => {
       if (err) {
+        db.close();
         reject(err);
       }
 
+      if (!row) {
+        reject('No data found');
+      }
+
       const verse: Verse = { versenum: row.versenum, osis: row.osis, apocrypha: row.apoc === 1 ? true : false };
+      db.close();
       resolve(verse);
     });
   });
