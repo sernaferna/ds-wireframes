@@ -5,6 +5,7 @@ import { prayerApi } from '../services/PrayerService';
 import { userApi } from '../services/UserService';
 import { actionsApi } from '../services/ActionsService';
 import { passageApi } from '../services/PassagesService';
+import { vapiApi } from '../services/VapiService';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [actionsApi.reducerPath]: actionsApi.reducer,
     [passageApi.reducerPath]: passageApi.reducer,
+    [vapiApi.reducerPath]: vapiApi.reducer,
     ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -19,7 +21,8 @@ const store = configureStore({
       .concat(prayerApi.middleware)
       .concat(userApi.middleware)
       .concat(actionsApi.middleware)
-      .concat(passageApi.middleware),
+      .concat(passageApi.middleware)
+      .concat(vapiApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
