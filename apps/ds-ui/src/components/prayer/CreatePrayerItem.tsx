@@ -101,7 +101,7 @@ export function CreatePrayerItem({ confession = false }) {
               />
             </Form.Group>
             {confession ? null : (
-              <Stack direction="horizontal" className="h1 m-3" gap={5}>
+              <Stack direction="horizontal" className="h1 m-3">
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
                   <ShieldPlus
@@ -119,9 +119,9 @@ export function CreatePrayerItem({ confession = false }) {
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
                   <Tsunami
-                    className={
+                    className={`mx-3 mx-lg-2 mx-xxl-3 ${
                       formikProps.values.type === PrayerTypes.request ? selectedIconClasses : unselectedIconClasses
-                    }
+                    }`}
                     onClick={() => {
                       if (formikProps.values.type === PrayerTypes.request) {
                         formikProps.setFieldValue('type', undefined);
