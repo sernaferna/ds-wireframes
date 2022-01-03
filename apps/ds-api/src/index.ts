@@ -21,8 +21,9 @@ import { deleteCustomActionRouter } from './routes/actions/custom/delete';
 import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
 import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
+import { getPassageByIdRouter } from './routes/read/passages/byId';
 import { newReadingPlan } from './routes/read/plans/new';
-import { handleFourOhFour } from '@devouringscripture/common';
+import { handleFourOhFour, errorHandler } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -51,10 +52,16 @@ app.use('/api/actions/entries', [
   getActionByIdRouter,
 ]);
 app.use('/api/actions/custom', [getAllCustomActionsRouter, newCustomActionTypeRouter, deleteCustomActionRouter]);
-app.use('/api/read/current', [getCurrentlyReadingPassages, newReadingItem, deleteCurrentReadItem]);
+app.use('/api/read/current', [
+  getCurrentlyReadingPassages,
+  newReadingItem,
+  deleteCurrentReadItem,
+  getPassageByIdRouter,
+]);
 app.use('/api/plans', [newReadingPlan]);
 
 app.use(handleFourOhFour);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App started. Listening on port ${PORT}`);

@@ -12,11 +12,11 @@ export const vapiApi = createApi({
   tagTypes: ['notes'],
   endpoints: (builder) => ({
     getNoteById: builder.query<Note, string>({
-      query: (id) => id,
+      query: (id) => `/n/${id}`,
       providesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : []),
     }),
     getAllNotes: builder.query<Note[], void>({
-      query: () => '',
+      query: () => '/n',
       providesTags: (result) =>
         result
           ? [...result.map(({ id }) => ({ type: 'notes' as const, id: id })), { type: 'notes', id: 'LIST' }]
@@ -25,7 +25,7 @@ export const vapiApi = createApi({
     getAllNotesForPassage: builder.query<Note[], string>({
       query: (osis) => {
         return {
-          url: '/notesForPassage',
+          url: '/n/notesForPassage',
           method: 'POST',
           body: { osis: osis },
         };
@@ -38,7 +38,7 @@ export const vapiApi = createApi({
     getAllNotesInRange: builder.query<Note[], Bounds>({
       query: (bounds) => {
         return {
-          url: `/from/${bounds.lowerBound}/to/${bounds.upperBound}`,
+          url: `/n/from/${bounds.lowerBound}/to/${bounds.upperBound}`,
         };
       },
       providesTags: (result) =>
@@ -49,7 +49,7 @@ export const vapiApi = createApi({
     deleteNote: builder.mutation<string, string>({
       query(id) {
         return {
-          url: `${id}`,
+          url: `/n/${id}`,
           method: 'DELETE',
         };
       },
@@ -58,7 +58,7 @@ export const vapiApi = createApi({
     createNote: builder.mutation<Note, BaseNote>({
       query(note) {
         return {
-          url: '/',
+          url: '/n',
           method: 'POST',
           body: note,
         };
@@ -68,7 +68,7 @@ export const vapiApi = createApi({
     updateNote: builder.mutation<Note, Note>({
       query(note) {
         return {
-          url: `/${note.id}`,
+          url: `/n/${note.id}`,
           method: 'PUT',
           body: note,
         };

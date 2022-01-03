@@ -10,6 +10,10 @@ export const passageApi = createApi({
       query: () => '',
       providesTags: ['currentPassages'],
     }),
+    getPassageById: builder.query<Passage, string>({
+      query: (id) => `/${id}`,
+      providesTags: (result) => (result ? [{ type: 'currentPassages', id: result.id }] : []),
+    }),
     newItem: builder.mutation<Passage, BasePassage>({
       query(body) {
         return {
@@ -23,7 +27,7 @@ export const passageApi = createApi({
     deletePassageItem: builder.mutation<string, string>({
       query(id) {
         return {
-          url: `${id}`,
+          url: `/${id}`,
           method: 'DELETE',
         };
       },
@@ -32,4 +36,5 @@ export const passageApi = createApi({
   }),
 });
 
-export const { useGetCurrentItemsQuery, useNewItemMutation, useDeletePassageItemMutation } = passageApi;
+export const { useGetCurrentItemsQuery, useNewItemMutation, useDeletePassageItemMutation, useGetPassageByIdQuery } =
+  passageApi;
