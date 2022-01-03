@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGetActionsForMonthQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useDispatch } from 'react-redux';
@@ -12,10 +12,11 @@ interface CalendarViewInterface {
 }
 
 export function CalendarView(props: CalendarViewInterface) {
+  const [monthToShow, updateMonthToShow] = useState(props.dateToShow);
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useGetActionsForMonthQuery({
-    year: props.dateToShow.get('year'),
-    month: props.dateToShow.get('month'),
+  let { data, error, isLoading } = useGetActionsForMonthQuery({
+    year: monthToShow.get('year'),
+    month: monthToShow.get('month'),
   });
   const userDataObj = useGetUserByIdQuery(HARDCODED_USER_ID);
   const userData = userDataObj.data;
@@ -55,12 +56,23 @@ export function CalendarView(props: CalendarViewInterface) {
     dispatch(updateDateShowingInActions(dateToDispatch.toISODate()));
   };
 
+  interface PrevNextClickInterface {
+    activeStartDate: Date;
+    value: Date;
+    view: string;
+  }
+  const prevNextClickedInCalendar = (props: PrevNextClickInterface) => {
+    const monthDateToShow = DateTime.fromJSDate(props.activeStartDate);
+    updateMonthToShow(monthDateToShow);
+  };
+
   return (
     <Calendar
       value={props.dateToShow.toJSDate()}
       minDate={new Date(userData!.signupDate)}
       maxDate={DateTime.now().toJSDate()}
       onClickDay={dayClickedInCalendar}
+      onActiveStartDateChange={prevNextClickedInCalendar}
       returnValue="end"
       tileClassName={({ date, view }) => {
         //const calDate = date.toISOString().split('T')[0];
