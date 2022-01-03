@@ -4,7 +4,6 @@ import {
   PageMainRow,
   PageMainContentCol,
   PageSidebarContainerCol,
-  CardContainerRow,
 } from '../styled-components/StyledComponents';
 import { HomeSidebar } from './HomeSidebar';
 import { useGetActionStatsQuery } from '../../services/ActionsService';
@@ -18,6 +17,14 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { GraphSorter } from './GraphSorter';
+import styled from 'styled-components';
+
+export const CardContainerRow = styled(Row).attrs(() => ({
+  xs: '1',
+  md: '2',
+  lg: '2',
+  xxl: '3',
+}))``;
 
 interface VisualizationCardInterface {
   title: string;

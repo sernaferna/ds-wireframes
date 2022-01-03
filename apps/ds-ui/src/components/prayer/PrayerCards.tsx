@@ -16,15 +16,22 @@ import {
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { PrayerTypes } from '@devouringscripture/common';
 import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
-import { CardContainerRow } from '../styled-components/StyledComponents';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
+import Row from 'react-bootstrap/Row';
 
 const MaxHeightText = styled(Card.Text).attrs(() => ({
   className: 'overflow-auto flex-grow-1',
 }))`
   max-height: 8em;
 `;
+
+export const CardContainerRow = styled(Row).attrs(() => ({
+  xs: '1',
+  md: '2',
+  lg: '2',
+  xxl: '3',
+}))``;
 
 interface PrayerIconsContainerInterface {
   itemId: string;

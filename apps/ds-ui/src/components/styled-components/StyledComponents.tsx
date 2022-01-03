@@ -18,10 +18,3 @@ export const PageSidebarContainerCol = styled(Col).attrs(() => ({
 export const PageMainContentCol = styled(Col).attrs(() => ({
   className: 'col-12 col-lg-9 col-xxl-10',
 }))``;
-
-export const CardContainerRow = styled(Row).attrs(() => ({
-  xs: '1',
-  md: '2',
-  lg: '2',
-  xxl: '3',
-}))``;
