@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getSelectedReadingItem } from '../../stores/UISlice';
+import { MDNoteTaker } from './MDNoteTaker';
 
 export const PassageNotes = () => {
   const selectedReadingItem = useSelector(getSelectedReadingItem);
@@ -12,7 +13,7 @@ export const PassageNotes = () => {
   return (
     <>
       <h1>Passage Notes</h1>
-      <p>{selectedReadingItem}</p>
+      <MDNoteTaker />
     </>
   );
 };
