@@ -74,11 +74,9 @@ export const PassageCard = (props: PrayerCardInterface) => {
             <PassageLinkBody passage={props.passage} />
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <div className="d-flex flex-row-reverse">
-            <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
-            {bibleVersionLogo}
-          </div>
+        <Card.Footer className="d-flex d-md-none flex-row-reverse">
+          <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
+          {bibleVersionLogo}
         </Card.Footer>
       </Card>
     </Col>
