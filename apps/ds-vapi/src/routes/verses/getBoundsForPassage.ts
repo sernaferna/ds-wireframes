@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { getVerseByOSIS } from '../../services/db';
-import { Verse, validateRequest } from '@devouringscripture/common';
+import { Verse, validateRequest, DatabaseError, CustomError } from '@devouringscripture/common';
 import { check } from 'express-validator';
 
 export interface Bounds {
@@ -38,16 +38,20 @@ router.post(
   '/boundsForPassage',
   [check('osis').exists().withMessage('OSIS string required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`Get bounds for passage called with ${req.body.osis}`);
 
-    getBoundsForPassage(req.body.osis)
-      .then((bounds) => {
-        res.send(bounds);
-      })
-      .catch((err) => {
-        res.status(500).send('Error encountered');
-      });
+    try {
+      getBoundsForPassage(req.body.osis)
+        .then((bounds) => {
+          return res.send(bounds);
+        })
+        .catch((err) => {
+          throw err;
+        });
+    } catch (err) {
+      return next(err instanceof CustomError ? err : new DatabaseError('getBoundsForPassage'));
+    }
   }
 );
 

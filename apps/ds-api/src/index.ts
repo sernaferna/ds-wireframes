@@ -23,7 +23,7 @@ import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { getPassageByIdRouter } from './routes/read/passages/byId';
 import { newReadingPlan } from './routes/read/plans/new';
-import { handleFourOhFour, errorHandler } from '@devouringscripture/common';
+import { handleFourOhFour, errorHandler, NotFoundError } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -37,7 +37,7 @@ if (!process.env.PORT) {
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
@@ -60,7 +60,9 @@ app.use('/api/read/current', [
 ]);
 app.use('/api/plans', [newReadingPlan]);
 
-app.use(handleFourOhFour);
+app.all('*', async (req, res, next) => {
+  return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));
+});
 app.use(errorHandler);
 
 app.listen(PORT, () => {

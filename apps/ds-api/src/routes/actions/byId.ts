@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { ActionsForDay } from '@devouringscripture/common';
+import express, { Request, Response, NextFunction } from 'express';
+import { ActionsForDay, NotFoundError } from '@devouringscripture/common';
 import { db } from '../../services/db';
 import { param } from 'express-validator';
 import { validateRequest } from '@devouringscripture/common';
@@ -15,16 +15,17 @@ export const getActionByIdInternal = (id: string): ActionsForDay => {
 
 router.get(
   '/:actionDayId',
-  [param('actionDayID').isUUID().withMessage('Valid ID required')],
+  [param('actionDayID').isUUID(4).withMessage('Valid ID required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`Getting action id ${req.params.actionDayId}`);
 
     try {
       const response: ActionsForDay = getActionByIdInternal(req.params.actionDayId);
       res.send(response);
     } catch (err) {
-      res.status(404).send('item not found');
+      const error = new NotFoundError('Action');
+      return next(error);
     }
   }
 );

@@ -1,9 +1,11 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
-import { validateRequest } from '@devouringscripture/common';
+import { validateRequest, NotImplementedError } from '@devouringscripture/common';
 
 const router = express.Router();
 
-router.post('/', [body('')], validateRequest, async (req: Request, res: Response) => {});
+router.post('/', [body('')], validateRequest, async (req: Request, res: Response, next: NextFunction) => {
+  return next(new NotImplementedError('newPlan'));
+});
 
 export { router as newReadingPlan };

@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator';
-import { validateRequest } from '@devouringscripture/common';
+import { validateRequest, NotFoundError, DatabaseError, CustomError } from '@devouringscripture/common';
 import { notesDB } from '../../services/notes-db';
 
 const router = express.Router();
@@ -9,15 +9,18 @@ router.delete(
   '/:id',
   [param('id').isUUID().withMessage('ID required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`Calling delete note for ${req.params.id}`);
 
     try {
       const indexOfItem = notesDB.getIndex('/notes', req.params.id);
+      if (indexOfItem < 0) {
+        throw new NotFoundError('Note');
+      }
       notesDB.delete(`/notes[${indexOfItem}]`);
       res.send('Item removed');
     } catch (err) {
-      res.status(500).send('Error removing item');
+      return next(err instanceof CustomError ? err : new DatabaseError('deleteNote'));
     }
   }
 );

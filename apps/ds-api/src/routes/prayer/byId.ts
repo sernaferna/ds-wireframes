@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { PrayerListItem, validateRequest } from '@devouringscripture/common';
+import express, { Request, Response, NextFunction } from 'express';
+import { PrayerListItem, validateRequest, NotFoundError, CustomError, DatabaseError } from '@devouringscripture/common';
 import { db } from '../../services/db';
 import { param } from 'express-validator';
 
@@ -9,16 +9,23 @@ router.get(
   '/:itemId',
   [param('itemId').isUUID().withMessage('Valid ID required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`getItemById called with ${req.params.itemId}`);
     let item: PrayerListItem | null = null;
 
     try {
       const index = db.getIndex('/prayerItems', req.params.itemId);
+      if (index < 0) {
+        throw new NotFoundError('Prayer item');
+      }
       item = db.getData(`/prayerItems[${index}]`);
     } catch (error) {
-      res.status(404).send('item not found');
-      return;
+      if (error instanceof CustomError) {
+        return next(error);
+      }
+
+      const newErr = new DatabaseError('getPrayerById');
+      return next(newErr);
     }
 
     res.send(item);

@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { ActionType, validateRequest } from '@devouringscripture/common';
+import express, { Request, Response, NextFunction } from 'express';
+import { ActionType, validateRequest, DatabaseError } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../../services/db';
 import { body } from 'express-validator';
@@ -10,7 +10,7 @@ router.post(
   '/',
   [body('displayName').notEmpty().withMessage('Must include display name')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`create custom action type called with ${req.body.displayName}`);
 
     const newBaseItem = req.body;
@@ -22,7 +22,7 @@ router.post(
     try {
       db.push('/actions/custom[]', newItem);
     } catch (err) {
-      res.status(500).send('Error receiving item');
+      return next(new DatabaseError('newCustomAction'));
     }
 
     res.send(newItem);

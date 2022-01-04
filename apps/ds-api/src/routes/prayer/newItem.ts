@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { BasePrayerListItem, PrayerListItem, validateRequest } from '@devouringscripture/common';
+import express, { Request, Response, NextFunction } from 'express';
+import { BasePrayerListItem, PrayerListItem, validateRequest, DatabaseError } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../services/db';
 import { body } from 'express-validator';
@@ -11,7 +11,7 @@ router.post(
   '/',
   [body('text').notEmpty().withMessage('Text required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const newBaseItem: BasePrayerListItem = req.body;
     console.log(
       `new prayer item API called; text of item is '${newBaseItem.text.substring(0, 20)}${
@@ -28,7 +28,8 @@ router.post(
     try {
       db.push('/prayerItems[]', newItem);
     } catch (err) {
-      res.status(500).send('Error adding item');
+      const error = new DatabaseError('newPrayerItem');
+      return next(error);
     }
 
     res.send(newItem);

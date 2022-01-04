@@ -1,8 +1,8 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { db } from '../../services/db';
 import { getActionByIdInternal } from './byId';
 import { body, param } from 'express-validator';
-import { validateRequest } from '@devouringscripture/common';
+import { validateRequest, DatabaseError, CustomError } from '@devouringscripture/common';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.put(
     body('defaultActions').notEmpty().withMessage('Missing actions'),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`Marking an item read/unread: ${req.params.actionId} for ${req.params.actionDayId}`);
 
     try {
@@ -34,7 +34,7 @@ router.put(
       }
 
       if (indexOfItem < 0) {
-        res.status(500).send('Error updating item');
+        throw new DatabaseError('markItemForDate');
       }
 
       let fieldValue = db.getObject<boolean>(
@@ -43,7 +43,12 @@ router.put(
       fieldValue = !fieldValue;
       db.push(`/actions/entries[${indexOfDay}]/${actionType}Actions[${indexOfItem}]/completed`, fieldValue);
     } catch (err) {
-      res.status(500).send('Error updating item');
+      if (err instanceof CustomError) {
+        return next(err);
+      }
+
+      const error = new DatabaseError('markItemForDate');
+      return next(error);
     }
 
     const updatedItem = getActionByIdInternal(req.params.actionDayId);

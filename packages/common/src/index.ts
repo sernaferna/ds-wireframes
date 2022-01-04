@@ -9,6 +9,10 @@ export * from './dm/Note';
 export * from './errors/CustomError';
 // TODO export * from './errors/HttpException';
 export * from './errors/RequestValidationError';
+export * from './errors/NotFoundError';
+export * from './errors/DatabaseError';
+export * from './errors/NotImplementedError';
+export * from './errors/InvalidPassageError';
 
 export * from './middlewares/HandleFourOhFour';
 export * from './middlewares/ValidateRequest';

@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator';
 import { db } from '../../services/db';
-import { ActionsForDay, validateRequest } from '@devouringscripture/common';
+import { ActionsForDay, validateRequest, DatabaseError } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 
 const router = express.Router();
@@ -13,7 +13,7 @@ router.get(
     param('month').isInt({ min: 1, max: 12 }).withMessage('Must provide valid month'),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`Calling getActionsForMonth for ${req.params.year}/${req.params.month}`);
     const passedMonth = DateTime.fromISO(`${req.params.year}-${req.params.month}-01`);
     const prevMonth = passedMonth.minus({ month: 1 });
@@ -32,7 +32,8 @@ router.get(
 
       res.send(filteredList);
     } catch (err) {
-      res.status(500).send('Error processing request');
+      const error = new DatabaseError('getActionsForMonth');
+      return next(error);
     }
   }
 );
