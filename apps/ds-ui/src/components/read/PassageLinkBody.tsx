@@ -8,16 +8,22 @@ const getLink = (ref: string, version: string): string => {
 
 interface PassageLinkBodyInterface {
   passage: BasePassage;
+  selected: boolean;
 }
-export const PassageLinkBody = (props: PassageLinkBodyInterface) => {
+export const PassageLinkBody = ({ passage, selected }: PassageLinkBodyInterface) => {
   return (
     <>
       <div>
         Launch{' '}
-        <a href={getLink(props.passage.reference, props.passage.version)} target="_blank" rel="noreferrer">
-          BibleGateway for {getRefForOSIS(props.passage.reference)}
+        <a
+          className={selected ? 'link-light' : 'link-primary'}
+          href={getLink(passage.reference, passage.version)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          BibleGateway for {getRefForOSIS(passage.reference)}
         </a>{' '}
-        in <strong>{props.passage.version}</strong>.
+        in <strong>{passage.version}</strong>.
       </div>
     </>
   );

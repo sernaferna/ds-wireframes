@@ -17,7 +17,7 @@ export const ShowPassageModal = (props: ShowPassageModalInterface) => {
         <Modal.Title id="modal-title">{props.passage.reference}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <PassageLinkBody passage={props.passage} />
+        <PassageLinkBody passage={props.passage} selected={false} />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.closeFunction}>
