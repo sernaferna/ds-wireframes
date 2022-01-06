@@ -16,10 +16,10 @@ export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
     return <ErrorLoadingDataMessage />;
   }
 
-  const noteSnippet = data!.text.substring(0, 99);
+  const noteSnippet = data!.text.length > 99 ? data!.text.substring(0, 99) + '...' : data!.text;
 
   return (
-    <div>
+    <div className="p-2 bg-light my-2 border border-2">
       <MDEditor.Markdown source={noteSnippet} />
     </div>
   );

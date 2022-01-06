@@ -20,7 +20,8 @@ export const NotesForPassage = (props: NotesForPassageInterface) => {
 
   return (
     <>
-      <h1>Notes for passage:</h1>
+      {notesList.length > 0 ? <h1>Notes for passage:</h1> : <p>No notes for selected passage.</p>}
+
       {notesList}
     </>
   );
