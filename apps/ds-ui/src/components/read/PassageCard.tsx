@@ -37,14 +37,12 @@ export const PassageCard = (props: PrayerCardInterface) => {
   const [deleteItem] = useDeletePassageItemMutation();
 
   const removeItem = (e: SyntheticEvent) => {
-    console.log('remove item');
     dispatch(updateSelectedReadingItem(''));
     deleteItem(props.passage.id);
     e.stopPropagation();
   };
 
   const titleClicked = (id: string) => {
-    console.log('title clicked');
     if (selectedPrayerID === id) {
       dispatch(updateSelectedReadingItem(''));
     } else {
@@ -71,7 +69,7 @@ export const PassageCard = (props: PrayerCardInterface) => {
             <CloseButton className="float-end" onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">
-            <PassageLinkBody passage={props.passage} />
+            <PassageLinkBody passage={props.passage} selected={selectedPrayerID === props.passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex d-md-none flex-row-reverse">
