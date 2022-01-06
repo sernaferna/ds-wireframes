@@ -1,6 +1,7 @@
 import React from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useGetAllNotesForPassageQuery } from '../../services/VapiService';
+import { NotesSnippet } from './NotesSnippet';
 
 interface NotesForPassageInterface {
   osis: string;
@@ -15,11 +16,7 @@ export const NotesForPassage = (props: NotesForPassageInterface) => {
     return <ErrorLoadingDataMessage />;
   }
 
-  const notesList = data!.map((item) => (
-    <div key={item.id}>
-      This is an item for id {item.id}: {item.text}
-    </div>
-  ));
+  const notesList = data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 
   return (
     <>
