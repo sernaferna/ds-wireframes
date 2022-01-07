@@ -34,7 +34,7 @@ export function DoSidebar() {
 
   return (
     <>
-      <SidebarCollapseWidget title="settings" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
         <DoPageSettings />
       </SidebarCollapseWidget>
 
