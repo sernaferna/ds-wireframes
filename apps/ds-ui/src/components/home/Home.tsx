@@ -111,7 +111,7 @@ export function Home() {
             <Col className="col-12">
               <CardContainerRow>{vizualizationList}</CardContainerRow>
             </Col>
-            <Col className="col-12">
+            <Col className="col-12 mt-4">
               <GraphSorter />
             </Col>
           </Row>
