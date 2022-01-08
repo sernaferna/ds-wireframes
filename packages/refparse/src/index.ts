@@ -19,3 +19,32 @@ export const getOSISForRef = (ref: string): string => {
 export const getRefForOSIS = (osisString: string): string => {
   return osisToEn('esv-long', osisString);
 };
+
+export interface PassageBounds {
+  startOsisString: string;
+  endOsisString: string;
+}
+export const getPassagesForOSIS = (rawOsisString: string): PassageBounds[] => {
+  if (!isPassageRefValid(rawOsisString)) {
+    return [];
+  }
+
+  const returnArray: PassageBounds[] = [];
+  const passageArray = rawOsisString.split(',');
+  for (let i = 0; i < passageArray.length; i++) {
+    const rawBounds = passageArray[i].split('-');
+    const bounds: PassageBounds = {
+      startOsisString: rawBounds[0],
+      endOsisString: rawBounds[rawBounds.length - 1],
+    };
+    returnArray.push(bounds);
+  }
+
+  return returnArray;
+};
+
+export const getPassagesForPassageRef = (passageRef: string): PassageBounds[] => {
+  const osis = getOSISForRef(passageRef);
+
+  return getPassagesForOSIS(osis);
+};
