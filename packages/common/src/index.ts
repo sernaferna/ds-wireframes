@@ -7,7 +7,6 @@ export * from './dm/Verse';
 export * from './dm/Note';
 
 export * from './errors/CustomError';
-// TODO export * from './errors/HttpException';
 export * from './errors/RequestValidationError';
 export * from './errors/NotFoundError';
 export * from './errors/DatabaseError';
