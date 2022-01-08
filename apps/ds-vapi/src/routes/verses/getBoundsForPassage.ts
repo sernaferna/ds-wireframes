@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { getVerseByOSIS } from '../../services/db';
-import { Verse, validateRequest, DatabaseError, CustomError } from '@devouringscripture/common';
+import { Verse, validateRequest, DatabaseError, CustomError, InvalidPassageError } from '@devouringscripture/common';
+import { PassageBounds, getPassagesForOSIS } from '@devouringscripture/refparse';
 import { check } from 'express-validator';
 
 export interface Bounds {
@@ -42,6 +43,13 @@ router.post(
     console.log(`Get bounds for passage called with ${req.body.osis}`);
 
     try {
+      const passageArray: PassageBounds[] = getPassagesForOSIS(req.body.osis);
+      if (passageArray.length < 1) {
+        throw new InvalidPassageError(req.body.osis);
+      }
+
+      // TODO this should be returning an array of Bounds objects, in case the passages are separated by commas
+
       getBoundsForPassage(req.body.osis)
         .then((bounds) => {
           return res.send(bounds);
