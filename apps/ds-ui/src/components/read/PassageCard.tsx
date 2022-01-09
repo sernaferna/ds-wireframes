@@ -8,7 +8,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
 import { updateSelectedReadingItem, getSelectedReadingItem } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
-import { getRefForOSIS } from '@devouringscripture/refparse';
+import { getRefForOSIS, getOSISForRef } from '@devouringscripture/refparse';
 
 export const PlaceholderCard = () => {
   return (
@@ -31,14 +31,14 @@ export const PlaceholderCard = () => {
 interface PrayerCardInterface {
   passage: Passage;
 }
-export const PassageCard = (props: PrayerCardInterface) => {
+export const PassageCard = ({ passage }: PrayerCardInterface) => {
   const selectedPrayerID = useSelector(getSelectedReadingItem);
   const dispatch = useDispatch();
   const [deleteItem] = useDeletePassageItemMutation();
 
   const removeItem = (e: SyntheticEvent) => {
     dispatch(updateSelectedReadingItem(''));
-    deleteItem(props.passage.id);
+    deleteItem(passage.id);
     e.stopPropagation();
   };
 
@@ -51,7 +51,7 @@ export const PassageCard = (props: PrayerCardInterface) => {
   };
 
   const bibleVersionLogo =
-    props.passage.version === 'NIV' ? (
+    passage.version === 'NIV' ? (
       <img src="logos/niv_179x50.png" alt="NIV Logo" height={'25px'} />
     ) : (
       <img src="logos/esv_95x50.png" alt="NIV Logo" height={'25px'} />
@@ -60,16 +60,16 @@ export const PassageCard = (props: PrayerCardInterface) => {
   return (
     <Col className="mt-2">
       <Card
-        bg={selectedPrayerID === props.passage.id ? 'primary' : ''}
-        className={`h-100 shadow ${selectedPrayerID === props.passage.id ? 'text-white' : ''}`}
+        bg={selectedPrayerID === passage.id ? 'primary' : ''}
+        className={`h-100 shadow ${selectedPrayerID === passage.id ? 'text-white' : ''}`}
       >
         <Card.Body className="d-flex flex-column">
-          <Card.Title onClick={() => titleClicked(props.passage.id)}>
-            {getRefForOSIS(props.passage.reference)}
+          <Card.Title onClick={() => titleClicked(passage.id)}>
+            {getRefForOSIS(getOSISForRef(getRefForOSIS(passage.reference)))}
             <CloseButton className="float-end" onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">
-            <PassageLinkBody passage={props.passage} selected={selectedPrayerID === props.passage.id ? true : false} />
+            <PassageLinkBody passage={passage} selected={selectedPrayerID === passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex d-md-none flex-row-reverse">
