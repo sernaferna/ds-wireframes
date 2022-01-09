@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { useGetAllNotesForPassageQuery } from '../../services/VapiService';
+import { useLazyGetAllNotesForPassageQuery } from '../../services/VapiService';
 import { NotesSnippet } from './NotesSnippet';
 
 interface NotesForPassageInterface {
   osis: string;
 }
-export const NotesForPassage = (props: NotesForPassageInterface) => {
-  const { data, error, isLoading } = useGetAllNotesForPassageQuery(props.osis);
+export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
+  const [trigger, result] = useLazyGetAllNotesForPassageQuery();
 
-  if (isLoading) {
+  useEffect(() => {
+    if (osis && osis.length > 0) {
+      trigger(osis);
+    }
+  });
+
+  if (result.isUninitialized || result.isLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
+  if (result.error) {
     return <ErrorLoadingDataMessage />;
   }
 
-  const notesList = data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
+  const notesList = result.data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 
   return (
     <>

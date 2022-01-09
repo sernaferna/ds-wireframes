@@ -83,8 +83,8 @@ export const {
   useGetAllNotesQuery,
   useDeleteNoteMutation,
   useGetAllNotesForPassageQuery,
+  useLazyGetAllNotesForPassageQuery,
   useGetAllNotesInRangeQuery,
   useCreateNoteMutation,
   useUpdateNoteMutation,
-  useLazyGetAllNotesForPassageQuery,
 } = vapiApi;
