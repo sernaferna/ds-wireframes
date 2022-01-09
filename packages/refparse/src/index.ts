@@ -48,3 +48,7 @@ export const getPassagesForPassageRef = (passageRef: string): PassageBounds[] =>
 
   return getPassagesForOSIS(osis);
 };
+
+export const getFormattedPassageRef = (osisOrRef: string): string => {
+  return getRefForOSIS(getOSISForRef(osisOrRef));
+};

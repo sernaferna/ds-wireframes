@@ -1,6 +1,11 @@
 import React from 'react';
 import { BasePassage } from '@devouringscripture/common';
-import { getRefForOSIS, PassageBounds, getPassagesForPassageRef, getOSISForRef } from '@devouringscripture/refparse';
+import {
+  getRefForOSIS,
+  PassageBounds,
+  getPassagesForPassageRef,
+  getFormattedPassageRef,
+} from '@devouringscripture/refparse';
 
 const getLink = (ref: string, version: string): string => {
   return 'https://www.biblegateway.com/passage/?search=' + encodeURI(ref) + '&version=' + version;
@@ -20,7 +25,7 @@ const PassageLink = ({ bounds, version, selected }: PassageLinkInterface) => {
 
   return (
     <a className={selected ? 'link-light' : 'link-primary'} href={link} target="_blank" rel="noreferrer">
-      {getRefForOSIS(getOSISForRef(passage))}
+      {getFormattedPassageRef(passage)}
     </a>
   );
 };
@@ -30,7 +35,7 @@ interface PassageLinkBodyInterface {
   selected: boolean;
 }
 export const PassageLinkBody = ({ passage, selected }: PassageLinkBodyInterface) => {
-  const readablePassage = getRefForOSIS(passage.reference);
+  const readablePassage = getFormattedPassageRef(passage.reference);
   const passages: PassageBounds[] = getPassagesForPassageRef(readablePassage);
 
   const renderedPassages = passages.map((item, index) => (
