@@ -25,7 +25,7 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
       (err, rows) => {
         if (err) {
           db.close();
-          reject(new DatabaseError('getVersesByNum'));
+          return reject(new DatabaseError('getVersesByNum'));
         }
 
         const verses: Verse[] = rows.map((row) => ({
@@ -34,7 +34,7 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
           apocrypha: row.apoc === 1 ? true : false,
         }));
         db.close();
-        resolve(verses);
+        return resolve(verses);
       }
     );
   });
@@ -47,17 +47,17 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
     db.get('SELECT versenum, osis, apoc FROM verses WHERE osis = ?', [osis], (err, row) => {
       if (err) {
         db.close();
-        reject(new DatabaseError('getVerseByOSIS'));
+        return reject(new DatabaseError('getVerseByOSIS'));
       }
 
-      if (!row) {
+      if (!row || row === undefined || row === null) {
         db.close();
-        reject(new InvalidPassageError(osis));
+        return reject(new InvalidPassageError(osis));
       }
 
       const verse: Verse = { versenum: row.versenum, osis: row.osis, apocrypha: row.apoc === 1 ? true : false };
       db.close();
-      resolve(verse);
+      return resolve(verse);
     });
   });
 };

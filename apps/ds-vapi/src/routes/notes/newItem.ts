@@ -4,25 +4,26 @@ import { validateRequest, BaseNote, Note } from '@devouringscripture/common';
 import { v4 as uuid4 } from 'uuid';
 import { DateTime } from 'luxon';
 import { notesDB } from '../../services/notes-db';
+import { Bounds, getBoundsForPassage } from '../verses/getBoundsForPassage';
 
 const router = express.Router();
 
 router.post(
   '/',
-  [
-    check('passageStart').isInt({ min: 1, max: 40000 }).withMessage('Start index required'),
-    check('passageEnd').isInt({ min: 1, max: 40000 }).withMessage('End index required'),
-    check('text').exists().withMessage('Text required'),
-  ],
+  [check('text').exists().withMessage('Text required'), check('osis').exists().withMessage('OSIS required')],
   validateRequest,
   async (req: Request, res: Response) => {
     const newBaseItem: BaseNote = req.body;
-    console.log(`New note being saved for passage ${newBaseItem.passageStart} to ${newBaseItem.passageEnd}`);
+    console.log(`New note being saved for passage ${newBaseItem.osis}`);
+
+    const bounds: Bounds[] = await getBoundsForPassage(newBaseItem.osis);
 
     const newItem: Note = {
       ...newBaseItem,
       id: uuid4(),
       lastUpdateDate: DateTime.now().toISODate(),
+      passageStart: bounds[0].lowerBound,
+      passageEnd: bounds[0].upperBound,
     };
 
     try {

@@ -23,9 +23,9 @@ export const getBoundsForPassage = async (osis: string): Promise<Bounds[]> => {
         returnValue.push(newBound);
       }
 
-      resolve(returnValue);
+      return resolve(returnValue);
     } catch (err) {
-      reject(err);
+      return reject(err);
     }
   });
 };
