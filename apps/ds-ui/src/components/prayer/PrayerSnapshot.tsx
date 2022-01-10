@@ -34,7 +34,11 @@ export function PrayerSnapshot() {
   }
 
   if (error || userError) {
-    return <ErrorLoadingDataMessage />;
+    if (error) {
+      return <ErrorLoadingDataMessage theError={error} />;
+    } else {
+      return <ErrorLoadingDataMessage theError={userError} />;
+    }
   }
 
   const unreadItems = data!.filter((item) => !item.completed);
