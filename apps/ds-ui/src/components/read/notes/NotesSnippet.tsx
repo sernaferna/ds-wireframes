@@ -1,6 +1,6 @@
 import React from 'react';
-import { useGetNoteByIdQuery } from '../../services/VapiService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useGetNoteByIdQuery } from '../../../services/VapiService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import MDEditor from '@uiw/react-md-editor';
 
 interface NotesSnippetInterface {

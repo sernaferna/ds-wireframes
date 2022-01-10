@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getSelectedReadingItem } from '../../stores/UISlice';
+import { getSelectedReadingItem } from '../../../stores/UISlice';
 import { MDNoteTaker } from './MDNoteTaker';
 import { NotesForPassage } from './NotesForPassage';
-import { useGetPassageByIdQuery } from '../../services/PassagesService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useGetPassageByIdQuery } from '../../../services/PassagesService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 
 export const PassageNotes = () => {
   const selectedReadingItem = useSelector(getSelectedReadingItem);

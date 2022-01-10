@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 import { useSelector } from 'react-redux';
-import { getSelectedReadingItem } from '../../stores/UISlice';
+import { getSelectedReadingItem } from '../../../stores/UISlice';
 
 const lordCommand: ICommand = {
   name: 'LORD',

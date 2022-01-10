@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { useLazyGetAllNotesForPassageQuery } from '../../services/VapiService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
 import { NotesSnippet } from './NotesSnippet';
 
 interface NotesForPassageInterface {

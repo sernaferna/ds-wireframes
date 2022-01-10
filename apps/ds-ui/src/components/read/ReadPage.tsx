@@ -12,7 +12,7 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { PassageNotes } from './PassageNotes';
+import { PassageNotes } from './notes/PassageNotes';
 
 export const ReadPage = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
