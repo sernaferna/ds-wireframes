@@ -9,27 +9,24 @@ export interface Bounds {
   upperBound: number;
 }
 
-export const getBoundsForPassage = (osis: string): Promise<Bounds> => {
-  return new Promise<Bounds>((resolve, reject) => {
-    const bounds: Bounds = { lowerBound: 0, upperBound: 0 };
+export const getBoundsForPassage = async (osis: string): Promise<Bounds[]> => {
+  return new Promise<Bounds[]>(async (resolve, reject) => {
+    const returnValue: Bounds[] = [];
+    const initialValues: PassageBounds[] = getPassagesForOSIS(osis);
 
-    const passageList: string[] = osis.split('-');
+    try {
+      for (let i = 0; i < initialValues.length; i++) {
+        const lowerVerse = await getVerseByOSIS(initialValues[i].startOsisString);
+        const upperVerse = await getVerseByOSIS(initialValues[i].endOsisString);
 
-    getVerseByOSIS(passageList[0])
-      .then((value: Verse) => {
-        bounds.lowerBound = value.versenum;
-        getVerseByOSIS(passageList[passageList.length - 1])
-          .then((value: Verse) => {
-            bounds.upperBound = value.versenum;
-            resolve(bounds);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      })
-      .catch((err) => {
-        reject(err);
-      });
+        const newBound: Bounds = { lowerBound: lowerVerse.versenum, upperBound: upperVerse.versenum };
+        returnValue.push(newBound);
+      }
+
+      resolve(returnValue);
+    } catch (err) {
+      reject(err);
+    }
   });
 };
 
@@ -47,8 +44,6 @@ router.post(
       if (passageArray.length < 1) {
         throw new InvalidPassageError(req.body.osis);
       }
-
-      // TODO this should be returning an array of Bounds objects, in case the passages are separated by commas
 
       getBoundsForPassage(req.body.osis)
         .then((bounds) => {

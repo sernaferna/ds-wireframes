@@ -13,7 +13,7 @@ export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
     if (osis && osis.length > 0) {
       trigger(osis);
     }
-  });
+  }, [osis]);
 
   if (result.isUninitialized || result.isLoading) {
     return <LoadingMessage />;
