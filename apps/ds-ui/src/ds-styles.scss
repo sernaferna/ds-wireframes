@@ -1,22 +1,21 @@
+// first import functions
 @import '~bootstrap/scss/functions';
+
+//overrides of BS variables here
+
+// $font-family-base: '', sans-serif;
+// $headings-font-family: '', sans-serif;
+
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+
 @import '~bootstrap/scss/utilities';
 
-// $utilities: map-merge(
-//   $utilities,
-//   (
-//     'background-color':
-//       map-merge(
-//         map-get($utilities, 'color'),
-//         (
-//           values: map-merge(map-get(map-get($utilities, 'color'), 'values'), ($theme-colors)),
-//         )
-//       ),
-//   )
-// );
+// changes to BS utilities here
 
 @import '~bootstrap/scss/utilities/api';
+
+// all other custom styles below this
 
 // general styles
 body {
