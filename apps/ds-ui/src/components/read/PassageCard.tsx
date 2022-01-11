@@ -6,7 +6,7 @@ import { Passage } from '@devouringscripture/common';
 import Col from 'react-bootstrap/Col';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
-import { updateSelectedReadingItem, getSelectedReadingItem } from '../../stores/UISlice';
+import { updateSelectedReadingItem, getSelectedReadingItem, updateSelectedNote } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
 import { getFormattedPassageRef } from '@devouringscripture/refparse';
 
@@ -45,8 +45,10 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
   const titleClicked = (id: string) => {
     if (selectedPrayerID === id) {
       dispatch(updateSelectedReadingItem(''));
+      dispatch(updateSelectedNote(''));
     } else {
       dispatch(updateSelectedReadingItem(id));
+      dispatch(updateSelectedNote(''));
     }
   };
 

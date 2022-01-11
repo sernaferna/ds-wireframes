@@ -2,15 +2,20 @@ import React, { useState, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import { getSelectedReadingItem, updateSelectedReadingItem } from '../../../stores/UISlice';
-import { useGetPassageByIdQuery } from '../../../services/PassagesService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import {
+  getSelectedReadingItem,
+  updateSelectedReadingItem,
+  getSelectedNote,
+  updateSelectedNote,
+} from '../../../stores/UISlice';
+import { useLazyGetPassageByIdQuery } from '../../../services/PassagesService';
 import { getFormattedPassageRef, getPassagesForOSIS, PassageBounds, getOSISForRef } from '@devouringscripture/refparse';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { BaseNote } from '@devouringscripture/common';
-import { useCreateNoteMutation } from '../../../services/VapiService';
+import { BaseNote, Note } from '@devouringscripture/common';
+import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
+import { getToastManager, TOAST_FADE_TIME, ToastType } from '../../common/toasts/ToastManager';
 
 const lordCommand: ICommand = {
   name: 'LORD',
@@ -41,40 +46,96 @@ export const MDNoteTaker = () => {
   const [startPassage, setStartPassage] = useState('');
   const [endPassage, setEndPassage] = useState('');
   const [showPreview, setShowPreview] = useState(false);
+  const [localSelectedReadingItem, setLocalSelectedReadingItem] = useState('');
+  const [localNoteId, setLocalNoteId] = useState('');
   const selectedReadingItem = useSelector(getSelectedReadingItem);
-  const { data, error, isLoading } = useGetPassageByIdQuery(selectedReadingItem);
+  const selectedNote = useSelector(getSelectedNote);
+  const [passageTrigger, passageResult] = useLazyGetPassageByIdQuery();
   const [submitNote] = useCreateNoteMutation();
+  const [updateNote] = useUpdateNoteMutation();
   const dispatch = useDispatch();
+  const [noteTrigger, noteResult] = useLazyGetNoteByIdQuery();
 
+  /*
+  Initialization of this component is complex, because there could be a 
+  selected note, but if not there could be a selected passage, either of 
+  which should be used to set the start/end passages.
+  */
   useEffect(() => {
-    if (data) {
-      const passages: PassageBounds[] = getPassagesForOSIS(data!.reference);
+    if (selectedNote) {
+      console.log(`useEffect selectedNote ${selectedNote}`);
+      if (selectedNote !== localNoteId) {
+        console.log(`triggering API`);
+        setLocalNoteId(selectedNote);
+        setLocalSelectedReadingItem('');
+        noteTrigger(selectedNote);
+      }
 
-      setStartPassage(getFormattedPassageRef(passages[0].startOsisString));
-      setEndPassage(getFormattedPassageRef(passages[0].endOsisString));
+      if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
+        console.log(`note loading successful; noteResult: ${noteResult.data.osis}`);
+        const bounds: PassageBounds = getPassagesForOSIS(noteResult.data.osis)[0];
+        setStartPassage(getFormattedPassageRef(bounds.startOsisString));
+        setEndPassage(getFormattedPassageRef(bounds.endOsisString));
+        setValue(noteResult.data.text);
+        return;
+      }
+    } else if (selectedReadingItem) {
+      if (selectedReadingItem !== localSelectedReadingItem) {
+        setLocalSelectedReadingItem(selectedReadingItem);
+        passageTrigger(selectedReadingItem);
+      }
+
+      if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
+        const bounds: PassageBounds = getPassagesForOSIS(passageResult.data.reference)[0];
+        setStartPassage(getFormattedPassageRef(bounds.startOsisString));
+        setEndPassage(getFormattedPassageRef(bounds.endOsisString));
+        setValue('');
+        return;
+      }
     }
-  }, [data]);
-
-  if (isLoading) {
-    return <LoadingMessage />;
-  }
-  if (error) {
-    return <ErrorLoadingDataMessage />;
-  }
+  }, [
+    selectedReadingItem,
+    selectedNote,
+    passageResult,
+    noteResult,
+    noteTrigger,
+    passageTrigger,
+    localNoteId,
+    localSelectedReadingItem,
+  ]);
 
   const submitForm = () => {
+    dispatch(updateSelectedReadingItem(''));
+    dispatch(updateSelectedNote(''));
+
+    if (selectedNote) {
+      const newNote: Note = {
+        ...noteResult.data!,
+        text: value,
+        osis: `${getOSISForRef(startPassage)}-${getOSISForRef(endPassage)}`,
+      };
+      updateNote(newNote);
+      return;
+    }
     const note: BaseNote = {
       text: value,
       osis: `${getOSISForRef(startPassage)}-${getOSISForRef(endPassage)}`,
     };
 
     submitNote(note);
-    dispatch(updateSelectedReadingItem(''));
+  };
+
+  const newNoteBtn = () => {
+    getToastManager().show({
+      title: 'New Note',
+      content: 'Not implemented yet',
+      duration: TOAST_FADE_TIME,
+      type: ToastType.Warning,
+    });
   };
 
   return (
     <>
-      <p className="lead">Notes for {getFormattedPassageRef(data!.reference)}</p>
       <Row>
         <Col>
           <Row>
@@ -125,6 +186,9 @@ export const MDNoteTaker = () => {
       {showPreview ? (
         <>
           <div className="m-2 d-flex flex-row-reverse">
+            <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
+              New
+            </Button>
             <Button variant="primary" className="ms-2" onClick={submitForm}>
               Save
             </Button>
@@ -136,6 +200,9 @@ export const MDNoteTaker = () => {
         </>
       ) : (
         <div className="m-2 d-flex flex-row-reverse">
+          <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
+            New
+          </Button>
           <Button variant="primary" className="ms-2" onClick={submitForm}>
             Save
           </Button>

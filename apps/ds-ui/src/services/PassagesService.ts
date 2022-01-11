@@ -8,7 +8,13 @@ export const passageApi = createApi({
   endpoints: (builder) => ({
     getCurrentItems: builder.query<Passage[], void>({
       query: () => '',
-      providesTags: ['currentPassages'],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: 'currentPassages' as const, id: id })),
+              { type: 'currentPassages', id: 'LIST' },
+            ]
+          : [{ type: 'currentPassages', id: 'LIST' }],
     }),
     getPassageById: builder.query<Passage, string>({
       query: (id) => `/${id}`,
@@ -36,5 +42,10 @@ export const passageApi = createApi({
   }),
 });
 
-export const { useGetCurrentItemsQuery, useNewItemMutation, useDeletePassageItemMutation, useGetPassageByIdQuery } =
-  passageApi;
+export const {
+  useGetCurrentItemsQuery,
+  useNewItemMutation,
+  useDeletePassageItemMutation,
+  useGetPassageByIdQuery,
+  useLazyGetPassageByIdQuery,
+} = passageApi;

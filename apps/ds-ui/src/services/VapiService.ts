@@ -80,6 +80,7 @@ export const vapiApi = createApi({
 
 export const {
   useGetNoteByIdQuery,
+  useLazyGetNoteByIdQuery,
   useGetAllNotesQuery,
   useDeleteNoteMutation,
   useGetAllNotesForPassageQuery,
