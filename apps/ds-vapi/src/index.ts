@@ -1,10 +1,17 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import { getAllVersesRouter } from './routes/verses/getAll';
 import { getRangeOfVersesRouter } from './routes/verses/getRange';
-import { handleFourOhFour } from '@devouringscripture/common';
+import { getBoundsForPassageRouter } from './routes/verses/getBoundsForPassage';
+import { createNewNoteRouter } from './routes/notes/newItem';
+import { getAllNotesRouter } from './routes/notes/getAll';
+import { getAllNotesInRangeRouter } from './routes/notes/getAllInRange';
+import { getNoteByIDRouter } from './routes/notes/byId';
+import { updateNoteRouter } from './routes/notes/update';
+import { deleteNoteRouter } from './routes/notes/delete';
+import { getNotesForPassageRouter } from './routes/notes/getAllForPassage';
+import { NotFoundError, errorHandler } from '@devouringscripture/common';
 import { getDB, populateDB } from './services/db';
 import { Database } from 'sqlite3';
 
@@ -26,6 +33,9 @@ db.serialize(() => {
     if (err) {
       populateDB(db);
     }
+    if (!row) {
+      populateDB(db);
+    }
     if (row.c < 1) {
       console.log(`Count returned ${row.c}: creating/populating DB`);
       populateDB(db);
@@ -34,13 +44,25 @@ db.serialize(() => {
 });
 
 const app = express();
-app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use('/vapi/v', [getAllVersesRouter, getRangeOfVersesRouter]);
+app.use('/vapi/v', [getAllVersesRouter, getRangeOfVersesRouter, getBoundsForPassageRouter]);
 
-app.use(handleFourOhFour);
+app.use('/vapi/n', [
+  createNewNoteRouter,
+  getAllNotesRouter,
+  getAllNotesInRangeRouter,
+  getNoteByIDRouter,
+  updateNoteRouter,
+  deleteNoteRouter,
+  getNotesForPassageRouter,
+]);
+
+app.all('*', (req, res, next) => {
+  return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));
+});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`VAPI started listening on port ${PORT}`);

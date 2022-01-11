@@ -1,5 +1,5 @@
-import express, { Request, Response } from 'express';
-import { PrayerListItem, validateRequest } from '@devouringscripture/common';
+import express, { Request, Response, NextFunction } from 'express';
+import { PrayerListItem, validateRequest, DatabaseError, NotFoundError } from '@devouringscripture/common';
 import { db } from '../../services/db';
 import { param } from 'express-validator';
 
@@ -9,16 +9,19 @@ router.put(
   '/:itemId/markRead',
   [param('itemId').isUUID().withMessage('Valid ID required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`markRead called for ${req.params.itemId}`);
     let item: PrayerListItem | null = null;
     try {
       const index = db.getIndex('/prayerItems', req.params.itemId);
+      if (index < 0) {
+        throw new NotFoundError('Prayer item');
+      }
       db.push(`/prayerItems[${index}]/completed`, true);
       item = db.getObject<PrayerListItem>(`/prayerItems[${index}]`);
     } catch (err) {
-      res.status(500).send('Error updating item');
-      return;
+      const error = new DatabaseError('markPrayerRead');
+      next(error);
     }
 
     res.send(item);
@@ -29,16 +32,19 @@ router.put(
   '/:itemId/markUnread',
   [param('itemId').isUUID().withMessage('Valid ID required')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     console.log(`markUnread called for ${req.params.itemId}`);
     let item: PrayerListItem | null = null;
     try {
       const index = db.getIndex('/prayerItems', req.params.itemId);
+      if (index < 0) {
+        throw new NotFoundError('Prayer item');
+      }
       db.push(`/prayerItems[${index}]/completed`, false);
       item = db.getObject<PrayerListItem>(`/prayerItems[${index}]`);
     } catch (err) {
-      res.status(500).send('Error updating item');
-      return;
+      const error = new DatabaseError('markPrayerRead');
+      return next(error);
     }
 
     res.send(item);

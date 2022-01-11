@@ -45,16 +45,16 @@ export function HomeSidebar() {
     <>
       <ToastTester />
 
+      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
+        <HomeSettings />
+      </SidebarCollapseWidget>
+
       <SidebarCollapseWidget title="Actions" visible={showActions} clickFunction={toggleActions}>
         <ActionsWidget />
       </SidebarCollapseWidget>
 
       <SidebarCollapseWidget title="Prayer Items" visible={showPrayers} clickFunction={togglePrayers}>
         <PrayerSnapshot />
-      </SidebarCollapseWidget>
-
-      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
-        <HomeSettings />
       </SidebarCollapseWidget>
     </>
   );

@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { query } from 'express-validator';
 import { db } from '../../services/db';
-import { ActionStats, ActionsForDay, validateRequest } from '@devouringscripture/common';
+import { ActionStats, ActionsForDay, validateRequest, DatabaseError } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 
 const router = express.Router();
@@ -10,7 +10,7 @@ router.get(
   '/stats',
   [query('tf').isIn(['week', '2weeks', 'month', 'year', 'alltime', undefined]).withMessage('Invalid param')],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const timeframe = req.query.tf || 'alltime';
     console.log(`get action stats called for ${timeframe}`);
 
@@ -94,7 +94,8 @@ router.get(
 
       res.send(stats);
     } catch (err) {
-      res.status(500).send('Error retrieving data');
+      const error = new DatabaseError('getStats');
+      return next(error);
     }
   }
 );

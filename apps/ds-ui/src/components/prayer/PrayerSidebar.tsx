@@ -26,7 +26,7 @@ export function PrayerSidebar() {
 
   return (
     <>
-      <SidebarCollapseWidget title="Prayer Page Settings" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
         <PrayerSettings />
       </SidebarCollapseWidget>
     </>

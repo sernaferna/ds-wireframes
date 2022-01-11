@@ -23,9 +23,8 @@ export function PrayerPage() {
             <Col className="col-12 order-last order-lg-first col-lg-9">
               <PrayerCards />
             </Col>
-            <Col className="col-12 col-lg-3">
+            <Col className="d-col-12 col-lg-3">
               <CreatePrayerItem />
-              <CreatePrayerItem confession={true} />
             </Col>
           </Row>
         </PageMainContentCol>

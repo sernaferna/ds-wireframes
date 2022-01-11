@@ -80,9 +80,9 @@ export function Header() {
         <Image src="logo192.png" height="50" width="50" />
         <strong className="ms-2">Devouring Scripture</strong>
       </Navbar.Brand>
+      <Navbar.Toggle aria-controls="ds-header-navbar" />
       <Container fluid>
-        <Navbar.Toggle aria-controls="ds-header-navbar" />
-        <Navbar.Collapse aria-expanded="false" id="ds-header-navbar" className="w-100">
+        <Navbar.Collapse id="ds-header-navbar" className="w-100">
           <Nav className="m-0">
             {links}
             {data!.isAdmin ? adminLinks : ''}

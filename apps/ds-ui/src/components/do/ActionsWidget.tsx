@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDateForActions, updateDateShowingInActions } from '../../stores/UISlice';
-import { CaretLeft, CaretRight } from 'react-bootstrap-icons';
+import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import Card from 'react-bootstrap/Card';
 import { useGetActionByDateQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
@@ -11,19 +11,19 @@ import styled from 'styled-components';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
 
-const PreviousDayButton = styled(CaretLeft).attrs(() => ({}))`
+const PreviousDayButton = styled(CaretLeftFill).attrs(() => ({}))`
   cursor: pointer;
 `;
 
-const NextDayButton = styled(CaretRight).attrs(() => ({}))`
+const NextDayButton = styled(CaretRightFill).attrs(() => ({}))`
   cursor: pointer;
 `;
 
-const DisabledPreviousDayButton = styled(CaretLeft).attrs(() => ({
+const DisabledPreviousDayButton = styled(CaretLeftFill).attrs(() => ({
   className: 'text-muted',
 }))``;
 
-const DisabledNextDayButton = styled(CaretRight).attrs(() => ({
+const DisabledNextDayButton = styled(CaretRightFill).attrs(() => ({
   className: 'text-muted',
 }))``;
 

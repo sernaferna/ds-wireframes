@@ -34,7 +34,7 @@ export const ReadSidebar = () => {
 
   return (
     <>
-      <SidebarCollapseWidget title="Settings" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
         <ReadPageSettings />
       </SidebarCollapseWidget>
 

@@ -1,13 +1,14 @@
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('sqlite3').verbose();
 import { Database } from 'sqlite3';
 import fs from 'fs';
 import csv from 'csv-parser';
-import { Verse } from '@devouringscripture/common';
+import { Verse, DatabaseError, InvalidPassageError } from '@devouringscripture/common';
 
+// TODO need a standard query function, that will standardize error handling and closing connections
 export const getDB = (): Database => {
   const db: Database = new sqlite3.Database('db/verses.db', (err: any) => {
     if (err) {
-      throw err;
+      throw new DatabaseError('getDB');
     }
   });
 
@@ -23,7 +24,8 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
       [lowerBound, upperBound],
       (err, rows) => {
         if (err) {
-          reject(err);
+          db.close();
+          return reject(new DatabaseError('getVersesByNum'));
         }
 
         const verses: Verse[] = rows.map((row) => ({
@@ -31,7 +33,8 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
           osis: row.osis,
           apocrypha: row.apoc === 1 ? true : false,
         }));
-        resolve(verses);
+        db.close();
+        return resolve(verses);
       }
     );
   });
@@ -43,11 +46,18 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
 
     db.get('SELECT versenum, osis, apoc FROM verses WHERE osis = ?', [osis], (err, row) => {
       if (err) {
-        reject(err);
+        db.close();
+        return reject(new DatabaseError('getVerseByOSIS'));
+      }
+
+      if (!row || row === undefined || row === null) {
+        db.close();
+        return reject(new InvalidPassageError(osis));
       }
 
       const verse: Verse = { versenum: row.versenum, osis: row.osis, apocrypha: row.apoc === 1 ? true : false };
-      resolve(verse);
+      db.close();
+      return resolve(verse);
     });
   });
 };
@@ -67,6 +77,7 @@ export const populateDB = (db: Database) => {
             if (err) {
               console.error('error inserting into table');
               console.error(err);
+              throw new DatabaseError('populateDB');
             }
           }
         );
@@ -80,6 +91,7 @@ export const populateDB = (db: Database) => {
             if (err) {
               console.error('Error closing DB');
               console.error(err);
+              throw new DatabaseError('closing DB conn in populateDB');
             }
 
             console.log('DB created');

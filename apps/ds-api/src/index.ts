@@ -21,8 +21,9 @@ import { deleteCustomActionRouter } from './routes/actions/custom/delete';
 import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
 import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
+import { getPassageByIdRouter } from './routes/read/passages/byId';
 import { newReadingPlan } from './routes/read/plans/new';
-import { handleFourOhFour } from '@devouringscripture/common';
+import { handleFourOhFour, errorHandler, NotFoundError } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -36,7 +37,7 @@ if (!process.env.PORT) {
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
-app.use(helmet());
+// app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
@@ -51,10 +52,18 @@ app.use('/api/actions/entries', [
   getActionByIdRouter,
 ]);
 app.use('/api/actions/custom', [getAllCustomActionsRouter, newCustomActionTypeRouter, deleteCustomActionRouter]);
-app.use('/api/read/current', [getCurrentlyReadingPassages, newReadingItem, deleteCurrentReadItem]);
+app.use('/api/read/current', [
+  getCurrentlyReadingPassages,
+  newReadingItem,
+  deleteCurrentReadItem,
+  getPassageByIdRouter,
+]);
 app.use('/api/plans', [newReadingPlan]);
 
-app.use(handleFourOhFour);
+app.all('*', async (req, res, next) => {
+  return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));
+});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`App started. Listening on port ${PORT}`);
