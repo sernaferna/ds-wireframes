@@ -15,7 +15,6 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { BaseNote, Note } from '@devouringscripture/common';
 import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
-import { getToastManager, TOAST_FADE_TIME, ToastType } from '../../common/toasts/ToastManager';
 
 const lordCommand: ICommand = {
   name: 'LORD',
@@ -106,7 +105,6 @@ export const MDNoteTaker = () => {
 
   const submitForm = () => {
     dispatch(updateSelectedReadingItem(''));
-    dispatch(updateSelectedNote(''));
 
     if (selectedNote) {
       const newNote: Note = {
@@ -126,12 +124,7 @@ export const MDNoteTaker = () => {
   };
 
   const newNoteBtn = () => {
-    getToastManager().show({
-      title: 'New Note',
-      content: 'Not implemented yet',
-      duration: TOAST_FADE_TIME,
-      type: ToastType.Warning,
-    });
+    dispatch(updateSelectedNote(''));
   };
 
   return (
@@ -183,34 +176,18 @@ export const MDNoteTaker = () => {
         visiableDragbar={false}
         commandsFilter={commandsFilter}
       />
-      {showPreview ? (
-        <>
-          <div className="m-2 d-flex flex-row-reverse">
-            <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
-              New
-            </Button>
-            <Button variant="primary" className="ms-2" onClick={submitForm}>
-              Save
-            </Button>
-            <Button variant="secondary" onClick={() => setShowPreview(false)}>
-              Hide Preview
-            </Button>
-          </div>
-          <MDEditor.Markdown className="bg-light mx-1 my-2 border" source={value} />
-        </>
-      ) : (
-        <div className="m-2 d-flex flex-row-reverse">
-          <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
-            New
-          </Button>
-          <Button variant="primary" className="ms-2" onClick={submitForm}>
-            Save
-          </Button>
-          <Button variant="secondary" onClick={() => setShowPreview(true)}>
-            Show Preview
-          </Button>
-        </div>
-      )}
+      <div className="m-2 d-flex flex-row-reverse">
+        <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
+          New
+        </Button>
+        <Button variant="primary" className="ms-2" onClick={submitForm}>
+          {selectedNote ? 'Update' : 'Save'}
+        </Button>
+        <Button variant="secondary" onClick={() => setShowPreview(!showPreview)}>
+          {showPreview ? 'Hide Preview' : 'Show Preview'}
+        </Button>
+      </div>
+      {showPreview ? <MDEditor.Markdown className="bg-light mx-1 my-2 border" source={value} /> : ''}
     </>
   );
 };

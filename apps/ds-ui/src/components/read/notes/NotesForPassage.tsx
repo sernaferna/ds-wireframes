@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
 import { NotesSnippet } from './NotesSnippet';
+import { useSelector } from 'react-redux';
+import { getSelectedNote } from '../../../stores/UISlice';
 
 interface NotesForPassageInterface {
   osis: string;
 }
 export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
   const [trigger, result] = useLazyGetAllNotesForPassageQuery();
+  const selectedNote = useSelector(getSelectedNote);
 
   useEffect(() => {
     if (osis && osis.length > 0) {
@@ -22,7 +25,11 @@ export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
     return <ErrorLoadingDataMessage />;
   }
 
-  const notesList = result.data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
+  const notesList = result
+    .data!.filter((item) => {
+      return item.id !== selectedNote;
+    })
+    .map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 
   return (
     <>
