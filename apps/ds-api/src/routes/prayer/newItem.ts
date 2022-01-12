@@ -32,7 +32,7 @@ router.post(
       return next(error);
     }
 
-    res.send(newItem);
+    res.status(201).send(newItem);
   }
 );
 

@@ -25,7 +25,7 @@ router.post(
       return next(new DatabaseError('newCustomAction'));
     }
 
-    res.send(newItem);
+    res.status(201).send(newItem);
   }
 );
 

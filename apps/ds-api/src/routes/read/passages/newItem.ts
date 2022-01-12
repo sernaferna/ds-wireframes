@@ -29,7 +29,7 @@ router.post(
       res.status(500).send('Error saving item');
     }
 
-    res.send(newItem);
+    res.status(201).send(newItem);
   }
 );
 
