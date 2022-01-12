@@ -25,11 +25,7 @@ export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
     return <ErrorLoadingDataMessage />;
   }
 
-  const notesList = result
-    .data!.filter((item) => {
-      return item.id !== selectedNote;
-    })
-    .map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
+  const notesList = result.data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 
   return (
     <>

@@ -13,7 +13,7 @@ import { getFormattedPassageRef } from '@devouringscripture/refparse';
 export const PlaceholderCard = () => {
   return (
     <Col className="mt-2">
-      <Card className="h-100 shadow">
+      <Card className="h-100 shadow reading-text">
         <Card.Body>
           <Placeholder as={Card.Title} animation="wave">
             <Placeholder xs="12" />
@@ -63,7 +63,7 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
     <Col className="mt-2">
       <Card
         bg={selectedPrayerID === passage.id ? 'primary' : ''}
-        className={`h-100 shadow ${selectedPrayerID === passage.id ? 'text-white' : ''}`}
+        className={`h-100 shadow reading-text ${selectedPrayerID === passage.id ? 'text-white' : ''}`}
       >
         <Card.Body className="d-flex flex-column">
           <Card.Title onClick={() => titleClicked(passage.id)}>

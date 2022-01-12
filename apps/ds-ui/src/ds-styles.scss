@@ -3,17 +3,21 @@
 
 //overrides of BS variables here
 
-// $font-family-base: '', sans-serif;
-// $headings-font-family: '', sans-serif;
-
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
+
+$font-family-base: 'Merriweather Sans', sans-serif;
+$font-weight-normal: 300;
+$font-weight-base: $font-weight-normal;
+// $headings-font-family: '', sans-serif;
 
 @import '~bootstrap/scss/utilities';
 
 // changes to BS utilities here
 
 @import '~bootstrap/scss/utilities/api';
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/bootstrap';
 
 // all other custom styles below this
 
@@ -24,6 +28,26 @@ body {
 
 .small-caps-style {
   font-variant: small-caps;
+}
+
+.reading-text {
+  font-family: 'Merriweather', serif;
+}
+
+.note-snippet {
+  @extend .p-2;
+  @extend .bg-light;
+  @extend .my-2;
+  @extend .border;
+  @extend .border-2;
+  cursor: pointer;
+}
+
+.note-snippet-selected {
+  @extend .note-snippet;
+  @extend .text-muted;
+  cursor: auto;
+  @extend .fst-italic;
 }
 
 // calendar styles

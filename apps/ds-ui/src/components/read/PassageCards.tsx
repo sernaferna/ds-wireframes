@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 
 const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
-  xl: '2',
+  xxl: '2',
 }))``;
 
 export const PassageCards = () => {
