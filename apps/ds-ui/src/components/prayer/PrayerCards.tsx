@@ -40,7 +40,7 @@ interface PrayerIconsContainerInterface {
 
 const PlaceholderCard = () => {
   return (
-    <Card className="h-100 shadow">
+    <Card className="h-100 shadow reading-text">
       <Card.Body>
         <Placeholder as={Card.Title} animation="wave">
           <Placeholder xs="12" />
@@ -192,7 +192,7 @@ export function PrayerCards() {
 
     return (
       <Col key={item.id} className="mt-2">
-        <Card className="h-100 shadow">
+        <Card className="h-100 shadow reading-text">
           <Card.Body className="d-flex flex-column">
             <Card.Title>
               {item.title} <IconsContainer itemId={item.id}>{icon ? icon : <></>}</IconsContainer>

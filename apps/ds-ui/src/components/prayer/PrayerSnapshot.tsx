@@ -80,7 +80,7 @@ export function PrayerSnapshot() {
   });
 
   return (
-    <Card className="m-0">
+    <Card className="m-0 reading-text">
       <Card.Body>
         <Form>{renderedItems}</Form>
       </Card.Body>
