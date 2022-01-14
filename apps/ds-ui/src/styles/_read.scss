@@ -1,0 +1,15 @@
+.note-snippet {
+  @extend .p-2;
+  @extend .bg-light;
+  @extend .my-2;
+  @extend .border;
+  @extend .border-2;
+  cursor: pointer;
+}
+
+.note-snippet-selected {
+  @extend .note-snippet;
+  @extend .text-muted;
+  cursor: auto;
+  @extend .fst-italic;
+}

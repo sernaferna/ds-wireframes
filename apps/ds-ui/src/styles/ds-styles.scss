@@ -1,0 +1,39 @@
+// first import functions
+@import '~bootstrap/scss/functions';
+
+//overrides of BS variables here
+
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+$font-family-base: 'Merriweather Sans', sans-serif;
+$font-weight-normal: 300;
+$font-weight-base: $font-weight-normal;
+// $headings-font-family: '', sans-serif;
+
+@import '~bootstrap/scss/utilities';
+
+// changes to BS utilities here
+
+@import '~bootstrap/scss/utilities/api';
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/bootstrap';
+
+// all other custom styles below this
+
+// general styles
+body {
+  padding-bottom: 62px;
+}
+
+.small-caps-style {
+  font-variant: small-caps;
+}
+
+.reading-text {
+  font-family: 'Merriweather', serif;
+}
+
+@import './read';
+@import './calendar';
+@import './graphs';
