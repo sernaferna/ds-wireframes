@@ -13,3 +13,20 @@
   cursor: auto;
   @extend .fst-italic;
 }
+
+.notes-bottom-panel {
+  @extend .m-2;
+  @extend .d-flex;
+  @extend .flex-row-reverse;
+
+  button {
+    @extend .ms-2;
+  }
+}
+
+.notes-preview {
+  @extend .bg-light;
+  @extend .mx-1;
+  @extend .my-2;
+  @extend .border;
+}

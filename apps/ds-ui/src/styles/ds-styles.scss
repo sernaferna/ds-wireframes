@@ -34,6 +34,90 @@ body {
   font-family: 'Merriweather', serif;
 }
 
+.sidebar-header-div {
+  @extend .bg-primary;
+  @extend .bg-opacity-25;
+  @extend .text-primary;
+  @extend .h5;
+  cursor: pointer;
+}
+
+#header-navbar {
+  strong {
+    @extend .ms-2;
+  }
+}
+
+#ds-header-navbar {
+  @extend .w-100;
+
+  div {
+    @extend .m-0;
+  }
+
+  span {
+    @extend .w-100;
+    @extend .m-2;
+    @extend .text-end;
+
+    svg {
+      @extend .text-light;
+      @extend .m-0;
+      cursor: pointer;
+    }
+  }
+}
+
+footer {
+  @extend .fixed-bottom;
+  @extend .bg-light;
+}
+
+.footer-navbar {
+  @extend .container-fluid;
+  @extend .h-auto;
+}
+
+.footer-copyright-text {
+  @extend .d-none;
+  @extend .d-sm-block;
+  @extend .col-md-4;
+  @extend .mb-0;
+  @extend .text-muted;
+}
+
+.footer-link-list {
+  @extend .col-md-4;
+  @extend .justify-content-end;
+}
+
+.footer-navlink {
+  @extend .nav-link;
+  @extend .text-muted;
+}
+
+.footer-navlink-active {
+  @extend .footer-navlink;
+  @extend .active;
+}
+
+.footer-logo-link {
+  @extend .footer-navlink;
+  @extend .col-md-4;
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+  @extend .mb-2;
+  @extend .mb-md-0;
+  @extend .me-md-auto;
+  @extend .link-dark;
+  @extend .text-decoration-none;
+}
+
 @import './read';
 @import './calendar';
 @import './graphs';
+@import './toast';
+@import './do';
+@import './home';
+@import './pray';

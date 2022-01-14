@@ -17,14 +17,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { GraphSorter } from './GraphSorter';
-import styled from 'styled-components';
-
-export const CardContainerRow = styled(Row).attrs(() => ({
-  xs: '1',
-  md: '2',
-  lg: '2',
-  xxl: '3',
-}))``;
 
 interface VisualizationCardInterface {
   title: string;
@@ -32,11 +24,11 @@ interface VisualizationCardInterface {
 }
 const VisualizationCard = ({ title, children }: VisualizationCardInterface) => {
   return (
-    <Col className="mt-2" style={{ width: '400px', height: '400px' }}>
-      <Card className="h-100 shadow">
-        <Card.Body className="d-flex flex-column">
+    <Col className="vizualization-card">
+      <Card className="vizualization-card-content">
+        <Card.Body className="vizualization-card-body">
           <Card.Title>{title}</Card.Title>
-          <Card.Text as="div" className="overflow-auto flex-grow-1">
+          <Card.Text as="div" className="vizualization-card-text">
             {children}
           </Card.Text>
         </Card.Body>
@@ -108,10 +100,12 @@ export function Home() {
         <PageMainContentCol>
           <h1>Main Page</h1>
           <Row>
-            <Col className="col-12">
-              <CardContainerRow>{vizualizationList}</CardContainerRow>
+            <Col xs={12}>
+              <Row xs={1} md={2} lg={2} xxl={3}>
+                {vizualizationList}
+              </Row>
             </Col>
-            <Col className="col-12 mt-4">
+            <Col xs={12} className="mt-4">
               <GraphSorter />
             </Col>
           </Row>

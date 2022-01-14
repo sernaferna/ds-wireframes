@@ -1,0 +1,111 @@
+.toast-header {
+  svg {
+    @extend .me-1;
+  }
+
+  strong {
+    @extend .me-auto;
+  }
+}
+
+%toast-body {
+  @extend .bg-opacity-50;
+  @extend .fw-bold;
+}
+
+.toast-body-info {
+  @extend %toast-body;
+  @extend .bg-info;
+  @extend .text-dark;
+}
+
+.toast-heading-info {
+  @extend .bg-info;
+  @extend .text-white;
+}
+
+.toast-body-danger {
+  @extend %toast-body;
+  @extend .bg-danger;
+  @extend .text-dark;
+}
+
+.toast-heading-danger {
+  @extend .bg-danger;
+  @extend .text-white;
+}
+
+.toast-body-dark {
+  @extend %toast-body;
+  @extend .bg-dark;
+  @extend .text-light;
+}
+
+.toast-heading-dark {
+  @extend .bg-dark;
+  @extend .text-light;
+}
+
+.toast-body-light {
+  @extend %toast-body;
+  @extend .bg-light;
+  @extend .text-dark;
+}
+
+.toast-heading-light {
+  @extend .bg-light;
+  @extend .text-dark;
+}
+
+.toast-body-primary {
+  @extend %toast-body;
+  @extend .bg-primary;
+  @extend .text-dark;
+}
+
+.toast-heading-primary {
+  @extend .bg-primary;
+  @extend .text-white;
+}
+
+.toast-body-secondary {
+  @extend %toast-body;
+  @extend .bg-secondary;
+  @extend .text-dark;
+}
+
+.toast-heading-secondary {
+  @extend .bg-secondary;
+  @extend .text-white;
+}
+
+.toast-body-success {
+  @extend %toast-body;
+  @extend .bg-success;
+  @extend .text-dark;
+}
+
+.toast-heading-success {
+  @extend .bg-success;
+  @extend .text-white;
+}
+
+.toast-body-warning {
+  @extend %toast-body;
+  @extend .bg-warning;
+  @extend .text-dark;
+}
+
+.toast-heading-warning {
+  @extend .bg-warning;
+  @extend .text-white;
+}
+
+.toast-body-normal {
+  @extend %toast-body;
+  @extend .text-body;
+}
+
+.toast-heading-normal {
+  @extend .text-body;
+}

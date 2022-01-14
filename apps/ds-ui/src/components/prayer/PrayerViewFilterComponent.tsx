@@ -13,15 +13,13 @@ export const PrayerViewFilterComponent = () => {
   };
 
   return (
-    <Form>
-      <FloatingLabel controlId="floatingInput" label="Filter prayer requests..." className="mb-3">
-        <Form.Control
-          type="search"
-          value={filterString}
-          onChange={handleTextChange}
-          placeholder="Filter prayer requests..."
-        />
-      </FloatingLabel>
-    </Form>
+    <FloatingLabel controlId="floatingInput" label="Filter prayer requests..." className="mb-3">
+      <Form.Control
+        type="search"
+        value={filterString}
+        onChange={handleTextChange}
+        placeholder="Filter prayer requests..."
+      />
+    </FloatingLabel>
   );
 };

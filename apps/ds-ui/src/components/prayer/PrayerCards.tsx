@@ -20,12 +20,6 @@ import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import Row from 'react-bootstrap/Row';
 
-const MaxHeightText = styled(Card.Text).attrs(() => ({
-  className: 'overflow-auto flex-grow-1',
-}))`
-  max-height: 8em;
-`;
-
 export const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
   md: '2',
@@ -40,8 +34,8 @@ interface PrayerIconsContainerInterface {
 
 const PlaceholderCard = () => {
   return (
-    <Card className="h-100 shadow reading-text">
-      <Card.Body>
+    <Card className="prayer-card">
+      <Card.Body className="pc-body">
         <Placeholder as={Card.Title} animation="wave">
           <Placeholder xs="12" />
         </Placeholder>
@@ -145,7 +139,6 @@ export function PrayerCards() {
   const items = sortedItems.map((item) => {
     const submitButton = item.completed ? (
       <Button
-        className="mt-auto"
         variant="secondary"
         onClick={() => {
           handleCompleteButton(item.id, false);
@@ -155,7 +148,6 @@ export function PrayerCards() {
       </Button>
     ) : (
       <Button
-        className="mt-auto"
         variant="primary"
         onClick={() => {
           handleCompleteButton(item.id, true);
@@ -167,16 +159,14 @@ export function PrayerCards() {
 
     const IconsContainer = ({ itemId, children }: PrayerIconsContainerInterface) => {
       return (
-        <div className="float-end text-primary">
+        <div className="icons-container">
           {children}
-          <span
+          <TrashFill
+            className="delete-icon"
             onClick={() => {
               deleteItem(itemId);
             }}
-            style={{ cursor: 'pointer' }}
-          >
-            <TrashFill className="text-danger" />
-          </span>
+          />
         </div>
       );
     };
@@ -192,12 +182,12 @@ export function PrayerCards() {
 
     return (
       <Col key={item.id} className="mt-2">
-        <Card className="h-100 shadow reading-text">
-          <Card.Body className="d-flex flex-column">
+        <Card className="prayer-card">
+          <Card.Body className="pc-body">
             <Card.Title>
               {item.title} <IconsContainer itemId={item.id}>{icon ? icon : <></>}</IconsContainer>
             </Card.Title>
-            <MaxHeightText>{item.text}</MaxHeightText>
+            <Card.Text className="max-height-text">{item.text}</Card.Text>
             {submitButton}
           </Card.Body>
           <Card.Footer>{item.date}</Card.Footer>

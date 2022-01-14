@@ -4,15 +4,13 @@ import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Alert from 'react-bootstrap/Alert';
 import { useNewItemMutation } from '../../services/PrayerService';
 import Button from 'react-bootstrap/Button';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes, BasePrayerListItem } from '@devouringscripture/common';
 import * as yup from 'yup';
 import { Formik, FormikProps, FormikHelpers } from 'formik';
-
-const selectedIconClasses = 'bg-success text-light';
-const unselectedIconClasses = 'text-light bg-secondary';
 
 const praisePopover = (
   <Popover id="praise-popover">
@@ -59,7 +57,7 @@ export function CreatePrayerItem({ confession = false }) {
   };
 
   return (
-    <div className={confession ? 'alert alert-danger' : 'alert alert-primary'}>
+    <Alert variant={confession ? 'danger' : 'primary'}>
       <h1>{confession ? 'Confession' : 'New Prayer Request'}</h1>
       <Formik
         initialValues={initialValues}
@@ -74,7 +72,7 @@ export function CreatePrayerItem({ confession = false }) {
       >
         {(formikProps: FormikProps<ValuesSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
-            <Form.Group as={Col} xs="12" className="position-relative">
+            <Form.Group as={Col} xs="12">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 id="title"
@@ -86,7 +84,7 @@ export function CreatePrayerItem({ confession = false }) {
                 name="title"
               />
             </Form.Group>
-            <Form.Group as={Col} xs="12" className="position-relative">
+            <Form.Group as={Col} xs="12">
               <Form.Label>Text</Form.Label>
               <Form.Control
                 id="body"
@@ -101,13 +99,11 @@ export function CreatePrayerItem({ confession = false }) {
               />
             </Form.Group>
             {confession ? null : (
-              <Stack direction="horizontal" className="h1 m-3">
+              <Stack direction="horizontal" className="create-prayer-icon-list">
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
                   <ShieldPlus
-                    className={
-                      formikProps.values.type === PrayerTypes.praise ? selectedIconClasses : unselectedIconClasses
-                    }
+                    className={formikProps.values.type === PrayerTypes.praise ? 'icon-selected' : 'icon-unselected'}
                     onClick={() => {
                       if (formikProps.values.type === PrayerTypes.praise) {
                         formikProps.setFieldValue('type', undefined);
@@ -119,8 +115,8 @@ export function CreatePrayerItem({ confession = false }) {
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
                   <Tsunami
-                    className={`mx-3 mx-lg-2 mx-xxl-3 ${
-                      formikProps.values.type === PrayerTypes.request ? selectedIconClasses : unselectedIconClasses
+                    className={`icon-middle ${
+                      formikProps.values.type === PrayerTypes.request ? 'icon-selected' : 'icon-unselected'
                     }`}
                     onClick={() => {
                       if (formikProps.values.type === PrayerTypes.request) {
@@ -133,9 +129,7 @@ export function CreatePrayerItem({ confession = false }) {
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={confessionPopover}>
                   <EyeFill
-                    className={
-                      formikProps.values.type === PrayerTypes.confession ? selectedIconClasses : unselectedIconClasses
-                    }
+                    className={formikProps.values.type === PrayerTypes.confession ? 'icon-selected' : 'icon-unselected'}
                     onClick={() => {
                       if (formikProps.values.type === PrayerTypes.confession) {
                         formikProps.setFieldValue('type', undefined);
@@ -164,6 +158,6 @@ export function CreatePrayerItem({ confession = false }) {
           </Form>
         )}
       </Formik>
-    </div>
+    </Alert>
   );
 }

@@ -1,0 +1,18 @@
+.action-item-stack {
+  cursor: pointer;
+
+  div {
+    @extend .user-select-none;
+  }
+}
+
+.action-widget-card {
+  @extend .m-0;
+  @extend .border-0;
+
+  .card-body {
+    span {
+      @extend .user-select-none;
+    }
+  }
+}

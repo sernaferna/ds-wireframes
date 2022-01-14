@@ -85,11 +85,10 @@ export const GraphSorter = () => {
 
   const vizualizationList = sortedItems.map((item, index) => {
     return (
-      <div className="bg-light border p-2" key={`sort-item-${item.name}`}>
-        {index > 0 ? <CaretLeftFill className="fs-3" onClick={() => handleSorterClick(item.name, true)} /> : ''}
+      <div key={`sort-item-${item.name}`}>
+        {index > 0 ? <CaretLeftFill onClick={() => handleSorterClick(item.name, true)} /> : ''}
         <ToggleButton
           type="checkbox"
-          className="mx-1"
           variant="outline-primary"
           id={item.name}
           value={item.name}
@@ -98,11 +97,7 @@ export const GraphSorter = () => {
         >
           {item.name}
         </ToggleButton>
-        {index < sortedItems.length - 1 ? (
-          <CaretRightFill className="fs-3" onClick={() => handleSorterClick(item.name, false)} />
-        ) : (
-          ''
-        )}
+        {index < sortedItems.length - 1 ? <CaretRightFill onClick={() => handleSorterClick(item.name, false)} /> : ''}
       </div>
     );
   });
@@ -110,7 +105,9 @@ export const GraphSorter = () => {
   return (
     <>
       <h1>Graph Sorter</h1>
-      <Stack direction="horizontal">{vizualizationList}</Stack>
+      <Stack className="graph-sorter-list" direction="horizontal">
+        {vizualizationList}
+      </Stack>
     </>
   );
 };

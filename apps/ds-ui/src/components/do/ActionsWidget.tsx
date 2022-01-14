@@ -56,7 +56,7 @@ export function ActionsWidget() {
   };
 
   return (
-    <Card className="m-0 border-0">
+    <Card className="action-widget-card">
       <Card.Body>
         <h4>
           {dateToShow < DateTime.fromISO(userData!.signupDate) ? (
@@ -64,7 +64,7 @@ export function ActionsWidget() {
           ) : (
             <PreviousDayButton onClick={() => handleDateScroll(false)} />
           )}
-          <span className="user-select-none">{dateToShow.toISODate()}</span>
+          <span>{dateToShow.toISODate()}</span>
           {dateToShow > DateTime.now() ? (
             <DisabledNextDayButton />
           ) : (
