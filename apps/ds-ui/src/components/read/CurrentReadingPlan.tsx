@@ -4,7 +4,7 @@ import { ShowPassageModal } from './ShowPassageModal';
 import { BasePassage } from '@devouringscripture/common';
 import { useNewItemMutation } from '../../services/PassagesService';
 import Alert from 'react-bootstrap/Alert';
-import { getOSISForRef } from '@devouringscripture/refparse';
+import { getOSISForReference } from '@devouringscripture/refparse';
 
 export const CurrentReadingPlan = () => {
   const [showModal, setShowModal] = useState(false);
@@ -23,7 +23,7 @@ export const CurrentReadingPlan = () => {
     const { reference, version } = passage;
 
     const newPassage: BasePassage = {
-      reference: getOSISForRef(reference),
+      reference: getOSISForReference(reference),
       version,
     };
     newItem(newPassage);

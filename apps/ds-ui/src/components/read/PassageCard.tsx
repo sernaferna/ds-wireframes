@@ -8,7 +8,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
 import { updateSelectedReadingItem, getSelectedReadingItem, updateSelectedNote } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
-import { getFormattedPassageRef } from '@devouringscripture/refparse';
+import { getFormattedReference } from '@devouringscripture/refparse';
 
 export const PlaceholderCard = () => {
   return (
@@ -67,7 +67,7 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
       >
         <Card.Body className="card-body">
           <Card.Title onClick={() => titleClicked(passage.id)}>
-            {getFormattedPassageRef(passage.reference)}
+            {getFormattedReference(passage.reference)}
             <CloseButton onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">

@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
 import { BasePassage } from '@devouringscripture/common';
-import { isPassageRefValid, getRefForOSIS, getOSISForRef } from '@devouringscripture/refparse';
+import { isReferenceValid, getReferenceForOSIS, getOSISForReference } from '@devouringscripture/refparse';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 
@@ -20,7 +20,7 @@ const schema = yup.object().shape({
       if (value === undefined) {
         return false;
       }
-      return isPassageRefValid(value as string);
+      return isReferenceValid(value as string);
     }),
   version: yup.string().required().oneOf(['ESV', 'NIV'], 'Version required'),
 });
@@ -33,7 +33,7 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
 
   const addPassage = (reference: string, version: string) => {
     const newPassage: BasePassage = {
-      reference: getOSISForRef(reference),
+      reference: getOSISForReference(reference),
       version,
     };
 
@@ -73,10 +73,10 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
                     isInvalid={!!formikProps.errors.reference && formikProps.values.reference.length > 0}
                     isValid={formikProps.touched.reference && !formikProps.errors.reference}
                     onBlur={(e) => {
-                      if (isPassageRefValid(formikProps.values.reference)) {
+                      if (isReferenceValid(formikProps.values.reference)) {
                         formikProps.setFieldValue(
                           'reference',
-                          getRefForOSIS(getOSISForRef(formikProps.values.reference))
+                          getReferenceForOSIS(getOSISForReference(formikProps.values.reference))
                         );
                       }
                       formikProps.handleBlur(e);

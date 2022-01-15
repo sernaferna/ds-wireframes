@@ -1,10 +1,10 @@
 import React from 'react';
 import { BasePassage } from '@devouringscripture/common';
 import {
-  getRefForOSIS,
-  PassageBounds,
-  getPassagesForPassageRef,
-  getFormattedPassageRef,
+  getReferenceForOSIS,
+  OSISRange,
+  getPassagesForReference,
+  getFormattedReference,
 } from '@devouringscripture/refparse';
 
 const getLink = (ref: string, version: string): string => {
@@ -12,15 +12,15 @@ const getLink = (ref: string, version: string): string => {
 };
 
 interface PassageLinkInterface {
-  bounds: PassageBounds;
+  bounds: OSISRange;
   version: string;
   selected: boolean;
 }
 const PassageLink = ({ bounds, version, selected }: PassageLinkInterface) => {
   const passage =
     bounds.startOsisString === bounds.endOsisString
-      ? getRefForOSIS(bounds.startOsisString)
-      : getRefForOSIS(bounds.startOsisString) + '-' + getRefForOSIS(bounds.endOsisString);
+      ? getReferenceForOSIS(bounds.startOsisString)
+      : getReferenceForOSIS(bounds.startOsisString) + '-' + getReferenceForOSIS(bounds.endOsisString);
   const link = getLink(passage, version);
 
   return (
@@ -30,7 +30,7 @@ const PassageLink = ({ bounds, version, selected }: PassageLinkInterface) => {
       target="_blank"
       rel="noreferrer"
     >
-      {getFormattedPassageRef(passage)}
+      {getFormattedReference(passage)}
     </a>
   );
 };
@@ -40,8 +40,8 @@ interface PassageLinkBodyInterface {
   selected: boolean;
 }
 export const PassageLinkBody = ({ passage, selected }: PassageLinkBodyInterface) => {
-  const readablePassage = getFormattedPassageRef(passage.reference);
-  const passages: PassageBounds[] = getPassagesForPassageRef(readablePassage);
+  const readablePassage = getFormattedReference(passage.reference);
+  const passages: OSISRange[] = getPassagesForReference(readablePassage);
 
   const renderedPassages = passages.map((item, index) => (
     <li key={index}>

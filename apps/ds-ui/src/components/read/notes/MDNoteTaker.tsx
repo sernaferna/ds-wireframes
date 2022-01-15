@@ -9,7 +9,7 @@ import {
   updateSelectedNote,
 } from '../../../stores/UISlice';
 import { useLazyGetPassageByIdQuery } from '../../../services/PassagesService';
-import { getFormattedPassageRef, getPassagesForOSIS, PassageBounds, getOSISForRef } from '@devouringscripture/refparse';
+import { getFormattedReference, getRangesForOSIS, OSISRange, getOSISForReference } from '@devouringscripture/refparse';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -72,9 +72,9 @@ export const MDNoteTaker = () => {
 
       if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
         console.log(`note loading successful; noteResult: ${noteResult.data.osis}`);
-        const bounds: PassageBounds = getPassagesForOSIS(noteResult.data.osis)[0];
-        setStartPassage(getFormattedPassageRef(bounds.startOsisString));
-        setEndPassage(getFormattedPassageRef(bounds.endOsisString));
+        const bounds: OSISRange = getRangesForOSIS(noteResult.data.osis)[0];
+        setStartPassage(getFormattedReference(bounds.startOsisString));
+        setEndPassage(getFormattedReference(bounds.endOsisString));
         setValue(noteResult.data.text);
         return;
       }
@@ -85,9 +85,9 @@ export const MDNoteTaker = () => {
       }
 
       if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
-        const bounds: PassageBounds = getPassagesForOSIS(passageResult.data.reference)[0];
-        setStartPassage(getFormattedPassageRef(bounds.startOsisString));
-        setEndPassage(getFormattedPassageRef(bounds.endOsisString));
+        const bounds: OSISRange = getRangesForOSIS(passageResult.data.reference)[0];
+        setStartPassage(getFormattedReference(bounds.startOsisString));
+        setEndPassage(getFormattedReference(bounds.endOsisString));
         setValue('');
         return;
       }
@@ -110,14 +110,14 @@ export const MDNoteTaker = () => {
       const newNote: Note = {
         ...noteResult.data!,
         text: value,
-        osis: `${getOSISForRef(startPassage)}-${getOSISForRef(endPassage)}`,
+        osis: `${getOSISForReference(startPassage)}-${getOSISForReference(endPassage)}`,
       };
       updateNote(newNote);
       return;
     }
     const note: BaseNote = {
       text: value,
-      osis: `${getOSISForRef(startPassage)}-${getOSISForRef(endPassage)}`,
+      osis: `${getOSISForReference(startPassage)}-${getOSISForReference(endPassage)}`,
     };
 
     submitNote(note);
