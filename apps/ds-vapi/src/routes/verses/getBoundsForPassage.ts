@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { getVerseByOSIS } from '../../services/db';
 import { Verse, validateRequest, DatabaseError, CustomError, InvalidPassageError } from '@devouringscripture/common';
-import { PassageBounds, getPassagesForOSIS } from '@devouringscripture/refparse';
+import { OSISRange, getRangesForOSIS } from '@devouringscripture/refparse';
 import { check } from 'express-validator';
 
 export interface Bounds {
@@ -12,7 +12,7 @@ export interface Bounds {
 export const getBoundsForPassage = async (osis: string): Promise<Bounds[]> => {
   return new Promise<Bounds[]>(async (resolve, reject) => {
     const returnValue: Bounds[] = [];
-    const initialValues: PassageBounds[] = getPassagesForOSIS(osis);
+    const initialValues: OSISRange[] = getRangesForOSIS(osis);
 
     // TODO can Promise.all() apply here?
     try {
@@ -41,7 +41,7 @@ router.post(
     console.log(`Get bounds for passage called with ${req.body.osis}`);
 
     try {
-      const passageArray: PassageBounds[] = getPassagesForOSIS(req.body.osis);
+      const passageArray: OSISRange[] = getRangesForOSIS(req.body.osis);
       if (passageArray.length < 1) {
         throw new InvalidPassageError(req.body.osis);
       }

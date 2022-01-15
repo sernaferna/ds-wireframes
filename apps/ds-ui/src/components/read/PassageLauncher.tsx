@@ -8,11 +8,11 @@ import Button from 'react-bootstrap/Button';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
 import { BasePassage } from '@devouringscripture/common';
-import { isPassageRefValid, getRefForOSIS, getOSISForRef } from '@devouringscripture/refparse';
+import { isReferenceValid, getReferenceForOSIS, getOSISForReference } from '@devouringscripture/refparse';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 
-const schema = yup.object().shape({
+const schema = yup.object({
   reference: yup
     .string()
     .required()
@@ -20,20 +20,26 @@ const schema = yup.object().shape({
       if (value === undefined) {
         return false;
       }
-      return isPassageRefValid(value as string);
+      return isReferenceValid(value as string);
     }),
   version: yup.string().required().oneOf(['ESV', 'NIV'], 'Version required'),
 });
+type LauncherSchema = yup.InferType<typeof schema>;
 
 interface PassageLauncherInterface {
   defaultVersion: string;
 }
-export const PassageLauncher = (props: PassageLauncherInterface) => {
+export const PassageLauncher = ({ defaultVersion }: PassageLauncherInterface) => {
   const [newItem] = useNewItemMutation();
+
+  const initialValues: LauncherSchema = {
+    reference: '',
+    version: defaultVersion,
+  };
 
   const addPassage = (reference: string, version: string) => {
     const newPassage: BasePassage = {
-      reference: getOSISForRef(reference),
+      osis: getOSISForReference(reference),
       version,
     };
 
@@ -45,12 +51,12 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
       <Formik
         validationSchema={schema}
         onSubmit={(values) => {
-          addPassage(values.reference, values.version);
+          addPassage(values.reference || '', values.version);
         }}
-        initialValues={{ reference: '', version: props.defaultVersion }}
+        initialValues={initialValues}
         validateOnBlur={true}
       >
-        {(formikProps: FormikProps<BasePassage>) => (
+        {(formikProps: FormikProps<LauncherSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
             <Row xs="12">
               <Col xs="12" md="2">
@@ -73,10 +79,10 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
                     isInvalid={!!formikProps.errors.reference && formikProps.values.reference.length > 0}
                     isValid={formikProps.touched.reference && !formikProps.errors.reference}
                     onBlur={(e) => {
-                      if (isPassageRefValid(formikProps.values.reference)) {
+                      if (isReferenceValid(formikProps.values.reference)) {
                         formikProps.setFieldValue(
                           'reference',
-                          getRefForOSIS(getOSISForRef(formikProps.values.reference))
+                          getReferenceForOSIS(getOSISForReference(formikProps.values.reference))
                         );
                       }
                       formikProps.handleBlur(e);

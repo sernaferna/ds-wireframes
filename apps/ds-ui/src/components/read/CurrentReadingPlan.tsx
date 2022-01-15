@@ -4,7 +4,6 @@ import { ShowPassageModal } from './ShowPassageModal';
 import { BasePassage } from '@devouringscripture/common';
 import { useNewItemMutation } from '../../services/PassagesService';
 import Alert from 'react-bootstrap/Alert';
-import { getOSISForRef } from '@devouringscripture/refparse';
 
 export const CurrentReadingPlan = () => {
   const [showModal, setShowModal] = useState(false);
@@ -15,15 +14,15 @@ export const CurrentReadingPlan = () => {
   };
 
   const passage: BasePassage = {
-    reference: 'John.1.1',
+    osis: 'John.1.1',
     version: 'ESV',
   };
 
   const saveFunction = () => {
-    const { reference, version } = passage;
+    const { osis, version } = passage;
 
     const newPassage: BasePassage = {
-      reference: getOSISForRef(reference),
+      osis,
       version,
     };
     newItem(newPassage);
@@ -38,7 +37,7 @@ export const CurrentReadingPlan = () => {
       <p className="lead">Not yet implemented</p>
 
       <Button variant="outline-danger" onClick={() => setShowModal(true)}>
-        Launch {passage.reference}/{passage.version}
+        Launch {passage.osis}/{passage.version}
       </Button>
 
       <ShowPassageModal

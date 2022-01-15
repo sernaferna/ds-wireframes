@@ -9,7 +9,7 @@ import {
   updateSelectedNote,
 } from '../../../stores/UISlice';
 import { useLazyGetPassageByIdQuery } from '../../../services/PassagesService';
-import { getFormattedPassageRef, getPassagesForOSIS, PassageBounds, getOSISForRef } from '@devouringscripture/refparse';
+import { getFormattedReference, getRangesForOSIS, OSISRange, getOSISForReference } from '@devouringscripture/refparse';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -42,8 +42,8 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
 
 export const MDNoteTaker = () => {
   const [value, setValue] = useState('');
-  const [startPassage, setStartPassage] = useState('');
-  const [endPassage, setEndPassage] = useState('');
+  const [startReference, setStartReference] = useState('');
+  const [endReference, setEndReference] = useState('');
   const [showPreview, setShowPreview] = useState(false);
   const [localSelectedReadingItem, setLocalSelectedReadingItem] = useState('');
   const [localNoteId, setLocalNoteId] = useState('');
@@ -72,9 +72,9 @@ export const MDNoteTaker = () => {
 
       if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
         console.log(`note loading successful; noteResult: ${noteResult.data.osis}`);
-        const bounds: PassageBounds = getPassagesForOSIS(noteResult.data.osis)[0];
-        setStartPassage(getFormattedPassageRef(bounds.startOsisString));
-        setEndPassage(getFormattedPassageRef(bounds.endOsisString));
+        const range: OSISRange = getRangesForOSIS(noteResult.data.osis)[0];
+        setStartReference(getFormattedReference(range.startOsisString));
+        setEndReference(getFormattedReference(range.endOsisString));
         setValue(noteResult.data.text);
         return;
       }
@@ -85,9 +85,9 @@ export const MDNoteTaker = () => {
       }
 
       if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
-        const bounds: PassageBounds = getPassagesForOSIS(passageResult.data.reference)[0];
-        setStartPassage(getFormattedPassageRef(bounds.startOsisString));
-        setEndPassage(getFormattedPassageRef(bounds.endOsisString));
+        const range: OSISRange = getRangesForOSIS(passageResult.data.osis)[0];
+        setStartReference(getFormattedReference(range.startOsisString));
+        setEndReference(getFormattedReference(range.endOsisString));
         setValue('');
         return;
       }
@@ -110,14 +110,14 @@ export const MDNoteTaker = () => {
       const newNote: Note = {
         ...noteResult.data!,
         text: value,
-        osis: `${getOSISForRef(startPassage)}-${getOSISForRef(endPassage)}`,
+        osis: `${getOSISForReference(startReference)}-${getOSISForReference(endReference)}`,
       };
       updateNote(newNote);
       return;
     }
     const note: BaseNote = {
       text: value,
-      osis: `${getOSISForRef(startPassage)}-${getOSISForRef(endPassage)}`,
+      osis: `${getOSISForReference(startReference)}-${getOSISForReference(endReference)}`,
     };
 
     submitNote(note);
@@ -139,8 +139,8 @@ export const MDNoteTaker = () => {
               <Form.Control
                 type="search"
                 placeholder="From..."
-                value={startPassage}
-                onChange={(value) => setStartPassage(value.target.value)}
+                value={startReference}
+                onChange={(value) => setStartReference(value.target.value)}
               />
             </Col>
           </Row>
@@ -154,8 +154,8 @@ export const MDNoteTaker = () => {
               <Form.Control
                 type="search"
                 placeholder="To..."
-                value={endPassage}
-                onChange={(value) => setEndPassage(value.target.value)}
+                value={endReference}
+                onChange={(value) => setEndReference(value.target.value)}
               />
             </Col>
           </Row>
