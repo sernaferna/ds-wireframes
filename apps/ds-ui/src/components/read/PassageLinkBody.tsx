@@ -24,7 +24,12 @@ const PassageLink = ({ bounds, version, selected }: PassageLinkInterface) => {
   const link = getLink(passage, version);
 
   return (
-    <a className={selected ? 'link-light' : 'link-primary'} href={link} target="_blank" rel="noreferrer">
+    <a
+      className={selected ? 'passage-link-selected' : 'passage-link-unselected'}
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+    >
       {getFormattedPassageRef(passage)}
     </a>
   );

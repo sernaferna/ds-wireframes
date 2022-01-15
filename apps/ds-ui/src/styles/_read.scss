@@ -30,3 +30,44 @@
   @extend .my-2;
   @extend .border;
 }
+
+.passage-card {
+  @extend .h-100;
+  @extend .shadow;
+  @extend .reading-text;
+
+  .card-body {
+    @extend .d-flex;
+    @extend .flex-column;
+  }
+
+  button {
+    @extend .float-end;
+  }
+
+  .card-footer {
+    @extend .d-flex;
+    @extend .d-md-none;
+    @extend .flex-row-reverse;
+
+    img {
+      @extend .ms-3;
+    }
+  }
+}
+
+.passage-link-selected {
+  @extend .link-light;
+}
+
+.passage-link-unselected {
+  @extend .link-primary;
+}
+
+.passage-card-selected {
+  @extend .text-white;
+
+  button {
+    @extend .btn-close-white;
+  }
+}

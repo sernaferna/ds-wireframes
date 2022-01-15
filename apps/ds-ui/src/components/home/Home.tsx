@@ -1,10 +1,4 @@
 import React from 'react';
-import {
-  PageMainContainer,
-  PageMainRow,
-  PageMainContentCol,
-  PageSidebarContainerCol,
-} from '../styled-components/StyledComponents';
 import { HomeSidebar } from './HomeSidebar';
 import { useGetActionStatsQuery } from '../../services/ActionsService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
@@ -16,6 +10,7 @@ import { AllActivities } from './stats/AllActivities';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import { GraphSorter } from './GraphSorter';
 
 interface VisualizationCardInterface {
@@ -92,12 +87,12 @@ export function Home() {
     });
 
   return (
-    <PageMainContainer>
-      <PageMainRow>
-        <PageSidebarContainerCol>
+    <Container fluid={true} className="page-main-container">
+      <Row>
+        <Col className="page-sidebar-container-col">
           <HomeSidebar />
-        </PageSidebarContainerCol>
-        <PageMainContentCol>
+        </Col>
+        <Col className="page-main-content-col">
           <h1>Main Page</h1>
           <Row>
             <Col xs={12}>
@@ -109,8 +104,8 @@ export function Home() {
               <GraphSorter />
             </Col>
           </Row>
-        </PageMainContentCol>
-      </PageMainRow>
-    </PageMainContainer>
+        </Col>
+      </Row>
+    </Container>
   );
 }
