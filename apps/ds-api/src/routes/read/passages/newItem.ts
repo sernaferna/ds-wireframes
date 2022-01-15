@@ -10,13 +10,13 @@ const router = express.Router();
 router.post(
   '/',
   [
-    body('reference').notEmpty().withMessage('Reference required'),
+    body('osis').notEmpty().withMessage('OSIS required'),
     body('version').isAlpha().notEmpty().withMessage('Version required'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
     const newBaseItem: BasePassage = req.body;
-    console.log(`New reading passage called with reference ${newBaseItem.reference}`);
+    console.log(`New reading passage called with OSIS ${newBaseItem.osis}`);
     const newItem: Passage = {
       ...newBaseItem,
       id: uuidv4(),

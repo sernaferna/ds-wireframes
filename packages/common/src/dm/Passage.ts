@@ -1,5 +1,5 @@
 export interface BasePassage {
-  reference: string;
+  osis: string;
   version: string;
 }
 

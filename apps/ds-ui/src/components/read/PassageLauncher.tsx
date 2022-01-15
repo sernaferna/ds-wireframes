@@ -12,7 +12,7 @@ import { isReferenceValid, getReferenceForOSIS, getOSISForReference } from '@dev
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 
-const schema = yup.object().shape({
+const schema = yup.object({
   reference: yup
     .string()
     .required()
@@ -24,16 +24,22 @@ const schema = yup.object().shape({
     }),
   version: yup.string().required().oneOf(['ESV', 'NIV'], 'Version required'),
 });
+type LauncherSchema = yup.InferType<typeof schema>;
 
 interface PassageLauncherInterface {
   defaultVersion: string;
 }
-export const PassageLauncher = (props: PassageLauncherInterface) => {
+export const PassageLauncher = ({ defaultVersion }: PassageLauncherInterface) => {
   const [newItem] = useNewItemMutation();
+
+  const initialValues: LauncherSchema = {
+    reference: '',
+    version: defaultVersion,
+  };
 
   const addPassage = (reference: string, version: string) => {
     const newPassage: BasePassage = {
-      reference: getOSISForReference(reference),
+      osis: getOSISForReference(reference),
       version,
     };
 
@@ -45,12 +51,12 @@ export const PassageLauncher = (props: PassageLauncherInterface) => {
       <Formik
         validationSchema={schema}
         onSubmit={(values) => {
-          addPassage(values.reference, values.version);
+          addPassage(values.reference || '', values.version);
         }}
-        initialValues={{ reference: '', version: props.defaultVersion }}
+        initialValues={initialValues}
         validateOnBlur={true}
       >
-        {(formikProps: FormikProps<BasePassage>) => (
+        {(formikProps: FormikProps<LauncherSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
             <Row xs="12">
               <Col xs="12" md="2">

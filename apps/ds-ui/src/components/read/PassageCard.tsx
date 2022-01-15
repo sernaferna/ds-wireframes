@@ -67,7 +67,7 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
       >
         <Card.Body className="card-body">
           <Card.Title onClick={() => titleClicked(passage.id)}>
-            {getFormattedReference(passage.reference)}
+            {getFormattedReference(passage.osis)}
             <CloseButton onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">

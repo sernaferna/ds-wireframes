@@ -25,7 +25,7 @@ export const PassageNotes = () => {
     <>
       <h1>Passage Notes</h1>
       <MDNoteTaker />
-      <NotesForPassage osis={data!.reference} />
+      <NotesForPassage osis={data!.osis} />
     </>
   );
 };
