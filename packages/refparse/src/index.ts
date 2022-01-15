@@ -1,8 +1,14 @@
 const bcv_parser = require('bible-passage-reference-parser/js/en_bcv_parser').bcv_parser;
 const osisToEn = require('bible-reference-formatter/es6/en');
 
-export const isPassageRefValid = (ref: string): boolean => {
-  const osisString: string = getOSISForRef(ref);
+export interface OSISRange {
+  startOsisString: string;
+  endOsisString: string;
+}
+
+export const isReferenceValid = (ref: string): boolean => {
+  const osisString: string = getOSISForReference(ref);
+
   if (osisString.length > 0) {
     return true;
   }
@@ -10,45 +16,44 @@ export const isPassageRefValid = (ref: string): boolean => {
   return false;
 };
 
-export const getOSISForRef = (ref: string): string => {
+export const getOSISForReference = (ref: string): string => {
   const bcv = new bcv_parser();
   const osisString: string = bcv.parse(ref).osis();
   return osisString;
 };
 
-export const getRefForOSIS = (osisString: string): string => {
+export const getReferenceForOSIS = (osisString: string): string => {
   return osisToEn('esv-long', osisString);
 };
 
-export interface PassageBounds {
-  startOsisString: string;
-  endOsisString: string;
-}
-export const getPassagesForOSIS = (rawOsisString: string): PassageBounds[] => {
-  if (!isPassageRefValid(rawOsisString)) {
+export const getRangesForOSIS = (rawOsisString: string): OSISRange[] => {
+  if (!isReferenceValid(rawOsisString)) {
     return [];
   }
 
-  const returnArray: PassageBounds[] = [];
+  const returnArray: OSISRange[] = [];
   const passageArray = rawOsisString.split(',');
+
   for (let i = 0; i < passageArray.length; i++) {
-    const rawBounds = passageArray[i].split('-');
-    const bounds: PassageBounds = {
-      startOsisString: rawBounds[0],
-      endOsisString: rawBounds[rawBounds.length - 1],
+    const rawRange = passageArray[i].split('-');
+
+    const range: OSISRange = {
+      startOsisString: rawRange[0],
+      endOsisString: rawRange[rawRange.length - 1],
     };
-    returnArray.push(bounds);
+
+    returnArray.push(range);
   }
 
   return returnArray;
 };
 
-export const getPassagesForPassageRef = (passageRef: string): PassageBounds[] => {
-  const osis = getOSISForRef(passageRef);
+export const getPassagesForReference = (reference: string): OSISRange[] => {
+  const osis = getOSISForReference(reference);
 
-  return getPassagesForOSIS(osis);
+  return getRangesForOSIS(osis);
 };
 
-export const getFormattedPassageRef = (osisOrRef: string): string => {
-  return getRefForOSIS(getOSISForRef(osisOrRef));
+export const getFormattedReference = (osisOrRef: string): string => {
+  return getReferenceForOSIS(getOSISForReference(osisOrRef));
 };
