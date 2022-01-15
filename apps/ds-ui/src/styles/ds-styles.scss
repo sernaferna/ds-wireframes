@@ -1,0 +1,151 @@
+// first import functions
+@import '~bootstrap/scss/functions';
+
+//overrides of BS variables here
+
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+$font-family-base: 'Merriweather Sans', sans-serif;
+$font-weight-normal: 300;
+$font-weight-base: $font-weight-normal;
+// $headings-font-family: '', sans-serif;
+
+@import '~bootstrap/scss/utilities';
+
+// changes to BS utilities here
+
+@import '~bootstrap/scss/utilities/api';
+@import '~bootstrap/scss/reboot';
+@import '~bootstrap/scss/bootstrap';
+
+// all other custom styles below this
+
+// general styles
+body {
+  padding-bottom: 62px;
+}
+
+.small-caps-style {
+  font-variant: small-caps;
+}
+
+.reading-text {
+  font-family: 'Merriweather', serif;
+}
+
+.page-main-container {
+  @extend .m-0;
+  @extend .p-1;
+}
+
+.page-main-content-col {
+  @extend .col-12;
+  @extend .col-lg-9;
+  @extend .col-xxl-10;
+}
+
+.page-sidebar-container-col {
+  @extend .order-last;
+  @extend .col-12;
+  @extend .order-sm-last;
+  @extend .col-sm-12;
+  @extend .order-md-last;
+  @extend .col-sm-12;
+  @extend .order-lg-first;
+  @extend .col-lg-3;
+  @extend .order-xl-first;
+  @extend .col-xl-3;
+  @extend .order-xxl-first;
+  @extend .col-xxl-2;
+}
+
+.sidebar-header-div {
+  @extend .bg-primary;
+  @extend .bg-opacity-25;
+  @extend .text-primary;
+  @extend .h5;
+  cursor: pointer;
+}
+
+#header-navbar {
+  strong {
+    @extend .ms-2;
+  }
+}
+
+#ds-header-navbar {
+  @extend .w-100;
+
+  div {
+    @extend .m-0;
+  }
+
+  span {
+    @extend .w-100;
+    @extend .m-2;
+    @extend .text-end;
+
+    svg {
+      @extend .text-light;
+      @extend .m-0;
+      cursor: pointer;
+    }
+  }
+}
+
+footer {
+  @extend .fixed-bottom;
+  @extend .bg-light;
+}
+
+.footer-navbar {
+  @extend .container-fluid;
+  @extend .h-auto;
+}
+
+.footer-copyright-text {
+  @extend .d-none;
+  @extend .d-sm-block;
+  @extend .col-md-4;
+  @extend .mb-0;
+  @extend .text-muted;
+}
+
+.footer-link-list {
+  @extend .col-md-4;
+  @extend .justify-content-end;
+}
+
+.footer-navlink {
+  @extend .nav-link;
+  @extend .text-muted;
+}
+
+.footer-navlink-active {
+  @extend .footer-navlink;
+  @extend .active;
+}
+
+.footer-logo-link {
+  @extend .footer-navlink;
+  @extend .col-md-4;
+  @extend .d-flex;
+  @extend .align-items-center;
+  @extend .justify-content-center;
+  @extend .mb-2;
+  @extend .mb-md-0;
+  @extend .me-md-auto;
+  @extend .link-dark;
+  @extend .text-decoration-none;
+}
+
+@import './read';
+@import './calendar';
+@import './graphs';
+@import './toast';
+@import './do';
+@import './home';
+@import './pray';

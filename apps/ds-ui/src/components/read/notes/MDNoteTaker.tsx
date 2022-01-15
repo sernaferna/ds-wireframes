@@ -176,18 +176,18 @@ export const MDNoteTaker = () => {
         visiableDragbar={false}
         commandsFilter={commandsFilter}
       />
-      <div className="m-2 d-flex flex-row-reverse">
-        <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
+      <div className="notes-bottom-panel">
+        <Button variant="danger" onClick={newNoteBtn}>
           New
         </Button>
-        <Button variant="primary" className="ms-2" onClick={submitForm}>
+        <Button variant="primary" onClick={submitForm}>
           {selectedNote ? 'Update' : 'Save'}
         </Button>
         <Button variant="secondary" onClick={() => setShowPreview(!showPreview)}>
           {showPreview ? 'Hide Preview' : 'Show Preview'}
         </Button>
       </div>
-      {showPreview ? <MDEditor.Markdown className="bg-light mx-1 my-2 border" source={value} /> : ''}
+      {showPreview ? <MDEditor.Markdown className="notes-preview" source={value} /> : ''}
     </>
   );
 };

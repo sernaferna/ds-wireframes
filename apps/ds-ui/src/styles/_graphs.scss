@@ -1,0 +1,45 @@
+.recharts-bar-rectangle {
+  fill: $success;
+}
+
+.pie-slice-0 {
+  fill: $primary;
+}
+
+.pie-slice-1 {
+  fill: $success;
+}
+
+.pie-slice-2 {
+  fill: $danger;
+}
+
+.pie-slice-3 {
+  fill: $warning;
+}
+
+.pie-slice-4 {
+  fill: $info;
+}
+
+.pie-slice-5 {
+  fill: $dark;
+}
+
+.pie-slice-6 {
+  fill: $secondary;
+}
+
+.recharts-cartesian-axis-tick-value {
+  tspan {
+    fill: $secondary;
+    letter-spacing: 0.03em;
+  }
+}
+
+.recharts-pie-label-text {
+  tspan {
+    fill: $secondary;
+    letter-spacing: 0.03em;
+  }
+}

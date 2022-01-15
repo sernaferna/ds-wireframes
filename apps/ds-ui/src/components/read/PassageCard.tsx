@@ -12,8 +12,8 @@ import { getFormattedPassageRef } from '@devouringscripture/refparse';
 
 export const PlaceholderCard = () => {
   return (
-    <Col className="mt-2">
-      <Card className="h-100 shadow reading-text">
+    <Col className="passage-card">
+      <Card className="card-body">
         <Card.Body>
           <Placeholder as={Card.Title} animation="wave">
             <Placeholder xs="12" />
@@ -63,19 +63,19 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
     <Col className="mt-2">
       <Card
         bg={selectedPrayerID === passage.id ? 'primary' : ''}
-        className={`h-100 shadow reading-text ${selectedPrayerID === passage.id ? 'text-white' : ''}`}
+        className={`passage-card ${selectedPrayerID === passage.id ? 'passage-card-selected' : ''}`}
       >
-        <Card.Body className="d-flex flex-column">
+        <Card.Body className="card-body">
           <Card.Title onClick={() => titleClicked(passage.id)}>
             {getFormattedPassageRef(passage.reference)}
-            <CloseButton className="float-end" onClick={removeItem} />
+            <CloseButton onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">
             <PassageLinkBody passage={passage} selected={selectedPrayerID === passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
-        <Card.Footer className="d-flex d-md-none flex-row-reverse">
-          <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
+        <Card.Footer className="card-footer">
+          <img src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
           {bibleVersionLogo}
         </Card.Footer>
       </Card>

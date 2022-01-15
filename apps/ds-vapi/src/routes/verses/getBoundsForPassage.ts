@@ -14,6 +14,7 @@ export const getBoundsForPassage = async (osis: string): Promise<Bounds[]> => {
     const returnValue: Bounds[] = [];
     const initialValues: PassageBounds[] = getPassagesForOSIS(osis);
 
+    // TODO can Promise.all() apply here?
     try {
       for (let i = 0; i < initialValues.length; i++) {
         const lowerVerse = await getVerseByOSIS(initialValues[i].startOsisString);

@@ -1,14 +1,9 @@
 import React from 'react';
-import {
-  PageMainContainer,
-  PageMainRow,
-  PageSidebarContainerCol,
-  PageMainContentCol,
-} from '../styled-components/StyledComponents';
 import { ActionsWidget } from './ActionsWidget';
 import { DoSidebar } from './DoSidebar';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
 import { getDateForActions } from '../../stores/UISlice';
 import { CalendarView } from './CalendarView';
@@ -19,12 +14,12 @@ export function DoPage() {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
 
   return (
-    <PageMainContainer>
-      <PageMainRow>
-        <PageSidebarContainerCol>
+    <Container fluid={true} className="page-main-container">
+      <Row>
+        <Col className="page-sidebar-container-col">
           <DoSidebar />
-        </PageSidebarContainerCol>
-        <PageMainContentCol>
+        </Col>
+        <Col className="page-main-content-col">
           <Row>
             <Col xs="4" className="border">
               <CalendarView dateToShow={dateToShow} />
@@ -34,8 +29,8 @@ export function DoPage() {
               <CustomActionList />
             </Col>
           </Row>
-        </PageMainContentCol>
-      </PageMainRow>
-    </PageMainContainer>
+        </Col>
+      </Row>
+    </Container>
   );
 }

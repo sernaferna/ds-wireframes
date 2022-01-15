@@ -10,7 +10,7 @@ import { ErrorLoadingDataMessage } from '../common/loading';
 
 const PlaceholderList = () => {
   return (
-    <Card className="m-0">
+    <Card className="prayer-snapshot-card">
       <Card.Body>
         <Placeholder as={Form.Check} animation="wave">
           <Placeholder as={Form.Check} xs="12" disabled />
@@ -52,11 +52,11 @@ export function PrayerSnapshot() {
   const renderedItems = sortedItems.map((item) => {
     let icon;
     if (item.type === PrayerTypes.praise) {
-      icon = <ShieldPlus className="d-inline me-1 text-primary" />;
+      icon = <ShieldPlus />;
     } else if (item.type === PrayerTypes.request) {
-      icon = <Tsunami className="d-inline me-1 text-primary" />;
+      icon = <Tsunami />;
     } else if (item.type === PrayerTypes.confession) {
-      icon = <EyeFill className="d-inline me-1 text-primary" />;
+      icon = <EyeFill />;
     }
 
     const itemBody = (
@@ -80,7 +80,7 @@ export function PrayerSnapshot() {
   });
 
   return (
-    <Card className="m-0 reading-text">
+    <Card className="prayer-snapshot-card">
       <Card.Body>
         <Form>{renderedItems}</Form>
       </Card.Body>

@@ -1,10 +1,4 @@
 import React from 'react';
-import {
-  PageMainContainer,
-  PageMainRow,
-  PageSidebarContainerCol,
-  PageMainContentCol,
-} from '../styled-components/StyledComponents';
 import { ReadSidebar } from './ReadSidebar';
 import { PassageCards } from './PassageCards';
 import { PassageLauncher } from './PassageLauncher';
@@ -12,6 +6,7 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import { PassageNotes } from './notes/PassageNotes';
 
 export const ReadPage = () => {
@@ -24,12 +19,12 @@ export const ReadPage = () => {
   }
 
   return (
-    <PageMainContainer>
-      <PageMainRow>
-        <PageSidebarContainerCol>
+    <Container fluid={true} className="page-main-container">
+      <Row>
+        <Col className="page-sidebar-container-col">
           <ReadSidebar />
-        </PageSidebarContainerCol>
-        <PageMainContentCol>
+        </Col>
+        <Col className="page-main-content-col">
           <Row xs="12">
             <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
           </Row>
@@ -41,8 +36,8 @@ export const ReadPage = () => {
               <PassageNotes />
             </Col>
           </Row>
-        </PageMainContentCol>
-      </PageMainRow>
-    </PageMainContainer>
+        </Col>
+      </Row>
+    </Container>
   );
 };

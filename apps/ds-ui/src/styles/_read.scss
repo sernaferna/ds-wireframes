@@ -1,0 +1,73 @@
+.note-snippet {
+  @extend .p-2;
+  @extend .bg-light;
+  @extend .my-2;
+  @extend .border;
+  @extend .border-2;
+  cursor: pointer;
+}
+
+.note-snippet-selected {
+  @extend .note-snippet;
+  @extend .text-muted;
+  cursor: auto;
+  @extend .fst-italic;
+}
+
+.notes-bottom-panel {
+  @extend .m-2;
+  @extend .d-flex;
+  @extend .flex-row-reverse;
+
+  button {
+    @extend .ms-2;
+  }
+}
+
+.notes-preview {
+  @extend .bg-light;
+  @extend .mx-1;
+  @extend .my-2;
+  @extend .border;
+}
+
+.passage-card {
+  @extend .h-100;
+  @extend .shadow;
+  @extend .reading-text;
+
+  .card-body {
+    @extend .d-flex;
+    @extend .flex-column;
+  }
+
+  button {
+    @extend .float-end;
+  }
+
+  .card-footer {
+    @extend .d-flex;
+    @extend .d-md-none;
+    @extend .flex-row-reverse;
+
+    img {
+      @extend .ms-3;
+    }
+  }
+}
+
+.passage-link-selected {
+  @extend .link-light;
+}
+
+.passage-link-unselected {
+  @extend .link-primary;
+}
+
+.passage-card-selected {
+  @extend .text-white;
+
+  button {
+    @extend .btn-close-white;
+  }
+}
