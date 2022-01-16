@@ -4,11 +4,9 @@ import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
 import Stack from 'react-bootstrap/Stack';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
-import { UserAttributes } from '@devouringscripture/common';
+import { UserAttributes, VizualizationListItem } from '@devouringscripture/common';
 
-const sortVizList = (
-  list: { name: string; active: boolean; order: number }[]
-): { name: string; active: boolean; order: number }[] => {
+const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => {
   return list.slice().sort((a, b) => {
     if (a.order < b.order) {
       return -1;
@@ -20,20 +18,18 @@ const sortVizList = (
   });
 };
 
-const updateOrderNoInList = (
-  initialList: { name: string; active: boolean; order: number }[]
-): { name: string; active: boolean; order: number }[] => {
-  let listToReturn: { name: string; active: boolean; order: number }[] = [];
+const updateOrderNoInList = (initialList: VizualizationListItem[]): VizualizationListItem[] => {
+  let listToReturn: VizualizationListItem[] = [];
 
   for (let i = 0; i < initialList.length; i++) {
-    const item = { name: initialList[i].name, active: initialList[i].active, order: i };
+    const item: VizualizationListItem = { name: initialList[i].name, active: initialList[i].active, order: i };
     listToReturn.push(item);
   }
 
   return listToReturn;
 };
 
-const moveItemUpInList = (initialList: { name: string; active: boolean; order: number }[], name: string) => {
+const moveItemUpInList = (initialList: VizualizationListItem[], name: string) => {
   const list = sortVizList(initialList);
   const index = list.findIndex((item) => item.name === name);
 
@@ -43,7 +39,7 @@ const moveItemUpInList = (initialList: { name: string; active: boolean; order: n
   return returnList;
 };
 
-const moveItemDownInList = (initialList: { name: string; active: boolean; order: number }[], name: string) => {
+const moveItemDownInList = (initialList: VizualizationListItem[], name: string) => {
   const list = sortVizList(initialList);
   const index = list.findIndex((item) => item.name === name);
 

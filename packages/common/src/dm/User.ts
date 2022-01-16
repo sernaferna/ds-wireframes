@@ -1,3 +1,9 @@
+export interface VizualizationListItem {
+  name: string;
+  active: boolean;
+  order: number;
+}
+
 export interface UserAttributes {
   firstName?: string;
   lastName?: string;
@@ -17,7 +23,7 @@ export interface UserAttributes {
       showActions: boolean;
       showPrayers: boolean;
       statsFilter: string;
-      vizualizationsOrder: { name: string; active: boolean; order: number }[];
+      vizualizationsOrder: VizualizationListItem[];
     };
     prayer: {
       showSettings: boolean;
