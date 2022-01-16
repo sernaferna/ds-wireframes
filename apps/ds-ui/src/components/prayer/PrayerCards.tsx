@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/ToastManager';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -19,6 +19,7 @@ import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import Row from 'react-bootstrap/Row';
+import { paginateItems } from '../../helpers/pagination';
 
 export const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
@@ -59,6 +60,7 @@ export function PrayerCards() {
   const [markRead] = useMarkReadMutation();
   const [markUnread] = useMarkUnreadMutation();
   const [deleteItem] = useDeletePrayerItemMutation();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
   const userData = tempObj.data;
@@ -196,5 +198,12 @@ export function PrayerCards() {
     );
   });
 
-  return <CardContainerRow>{items}</CardContainerRow>;
+  const [paginatedItems, paginationElement] = paginateItems(items, 6, currentPage, setCurrentPage);
+
+  return (
+    <CardContainerRow>
+      {paginatedItems}
+      {paginationElement}
+    </CardContainerRow>
+  );
 }

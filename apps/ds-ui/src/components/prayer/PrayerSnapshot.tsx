@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Placeholder from 'react-bootstrap/Placeholder';
@@ -7,6 +7,7 @@ import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { ErrorLoadingDataMessage } from '../common/loading';
+import { paginateItems } from '../../helpers/pagination';
 
 const PlaceholderList = () => {
   return (
@@ -22,6 +23,7 @@ const PlaceholderList = () => {
 };
 
 export function PrayerSnapshot() {
+  const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
   const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -79,10 +81,14 @@ export function PrayerSnapshot() {
     );
   });
 
+  const [paginatedItems, paginationElement] = paginateItems(renderedItems, 3, currentPage, setCurrentPage);
+
   return (
     <Card className="prayer-snapshot-card">
       <Card.Body>
-        <Form>{renderedItems}</Form>
+        <Form>{paginatedItems}</Form>
+
+        {paginationElement}
       </Card.Body>
     </Card>
   );
