@@ -14,5 +14,13 @@
     span {
       @extend .user-select-none;
     }
+
+    .active-scroller {
+      cursor: pointer;
+    }
+
+    .inactive-scroller {
+      @extend .text-muted;
+    }
   }
 }

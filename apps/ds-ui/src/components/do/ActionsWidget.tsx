@@ -7,25 +7,8 @@ import { useGetActionByDateQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ActionsForDay } from '@devouringscripture/common';
 import { ActionWidgetForm } from './ActionWidgetForm';
-import styled from 'styled-components';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
-
-const PreviousDayButton = styled(CaretLeftFill).attrs(() => ({}))`
-  cursor: pointer;
-`;
-
-const NextDayButton = styled(CaretRightFill).attrs(() => ({}))`
-  cursor: pointer;
-`;
-
-const DisabledPreviousDayButton = styled(CaretLeftFill).attrs(() => ({
-  className: 'text-muted',
-}))``;
-
-const DisabledNextDayButton = styled(CaretRightFill).attrs(() => ({
-  className: 'text-muted',
-}))``;
 
 export function ActionsWidget() {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
@@ -59,17 +42,15 @@ export function ActionsWidget() {
     <Card className="action-widget-card">
       <Card.Body>
         <h4>
-          {dateToShow < DateTime.fromISO(userData!.signupDate) ? (
-            <DisabledPreviousDayButton />
-          ) : (
-            <PreviousDayButton onClick={() => handleDateScroll(false)} />
-          )}
+          <CaretLeftFill
+            className={dateToShow < DateTime.fromISO(userData!.signupDate) ? 'inactive-scroller' : 'active-scroller'}
+            onClick={dateToShow < DateTime.fromISO(userData!.signupDate) ? undefined : () => handleDateScroll(false)}
+          />
           <span>{dateToShow.toISODate()}</span>
-          {dateToShow > DateTime.now() ? (
-            <DisabledNextDayButton />
-          ) : (
-            <NextDayButton onClick={() => handleDateScroll(true)} />
-          )}
+          <CaretRightFill
+            className={dateToShow > DateTime.now() ? 'inactive-scroller' : 'active-scroller'}
+            onClick={dateToShow > DateTime.now() ? undefined : () => handleDateScroll(true)}
+          />
         </h4>
         <ActionWidgetForm day={data as ActionsForDay} />
       </Card.Body>
