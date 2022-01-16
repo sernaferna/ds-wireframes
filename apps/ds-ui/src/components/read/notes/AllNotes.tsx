@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useGetAllNotesQuery } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { NotesSnippet } from './NotesSnippet';
-import Pagination from 'react-bootstrap/Pagination';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import { paginateItems } from '../../../helpers/pagination';
 
 export const AllNotes = () => {
   const { data, error, isLoading } = useGetAllNotesQuery();
+  const [currentPage, setCurrentPage] = useState(1);
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -17,22 +16,15 @@ export const AllNotes = () => {
   }
 
   const noteList = data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
+  const [paginatedNoteList, paginateElement] = paginateItems(noteList, 5, currentPage, setCurrentPage);
 
   return (
     <div className="notelist-for-all">
       <h1>All Notes</h1>
 
-      {noteList}
+      {paginatedNoteList}
 
-      <OverlayTrigger overlay={<Tooltip>Not implemented</Tooltip>}>
-        <Pagination>
-          <Pagination.First disabled />
-          <Pagination.Prev disabled />
-          <Pagination.Item disabled>{1}</Pagination.Item>
-          <Pagination.Next disabled />
-          <Pagination.Last disabled />
-        </Pagination>
-      </OverlayTrigger>
+      {paginateElement}
     </div>
   );
 };

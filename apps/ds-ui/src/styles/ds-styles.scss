@@ -142,6 +142,11 @@ footer {
   @extend .text-decoration-none;
 }
 
+.pagination-div {
+  @extend .mt-2;
+  @extend .w-100;
+}
+
 @import './read';
 @import './calendar';
 @import './graphs';
