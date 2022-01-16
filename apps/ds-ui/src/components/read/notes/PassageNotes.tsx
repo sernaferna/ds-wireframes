@@ -1,13 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getSelectedReadingItem } from '../../../stores/UISlice';
+import { getSelectedReadingItem, getSelectedNote } from '../../../stores/UISlice';
 import { MDNoteTaker } from './MDNoteTaker';
 import { NotesForPassage } from './NotesForPassage';
 import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import Alert from 'react-bootstrap/Alert';
 
 export const PassageNotes = () => {
   const selectedReadingItem = useSelector(getSelectedReadingItem);
+  const selectedNote = useSelector(getSelectedNote);
   const { data, error, isLoading } = useGetPassageByIdQuery(selectedReadingItem);
 
   if (isLoading) {
@@ -17,15 +19,16 @@ export const PassageNotes = () => {
     return <ErrorLoadingDataMessage />;
   }
 
-  if (selectedReadingItem === '' || null || undefined) {
-    return <p>Please select a passage to take notes.</p>;
+  if (!selectedReadingItem && !selectedNote) {
+    return <Alert variant="primary">Please select a passage or noteto take notes.</Alert>;
   }
 
   return (
     <>
-      <h1>Passage Notes</h1>
+      <h1>Notes</h1>
       <MDNoteTaker />
-      <NotesForPassage osis={data!.osis} />
+
+      {selectedReadingItem ? <NotesForPassage osis={data!.osis} /> : ''}
     </>
   );
 };

@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { PassageNotes } from './notes/PassageNotes';
+import { AllNotes } from './notes/AllNotes';
 
 export const ReadPage = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -25,15 +26,18 @@ export const ReadPage = () => {
           <ReadSidebar />
         </Col>
         <Col className="page-main-content-col">
-          <Row xs="12">
-            <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
-          </Row>
           <Row>
-            <Col xs="12" md="5">
+            <Col className="read-passagelauncher-col">
+              <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
+            </Col>
+            <Col className="read-passagecard-col">
               <PassageCards />
             </Col>
-            <Col xs="12" md="7">
+            <Col className="read-passagenotes-col">
               <PassageNotes />
+            </Col>
+            <Col className="read-all-notes-col">
+              <AllNotes />
             </Col>
           </Row>
         </Col>

@@ -4,6 +4,7 @@ import { ErrorLoadingDataMessage } from '../common/loading';
 import { PlaceholderCard, PassageCard } from './PassageCard';
 import styled from 'styled-components';
 import Row from 'react-bootstrap/Row';
+import Alert from 'react-bootstrap/Alert';
 
 const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
@@ -29,5 +30,9 @@ export const PassageCards = () => {
     return <PassageCard key={item.id} passage={item} />;
   });
 
-  return <CardContainerRow>{items}</CardContainerRow>;
+  return (
+    <CardContainerRow>
+      {items.length > 0 ? items : <Alert variant="primary">No saved passages.</Alert>}
+    </CardContainerRow>
+  );
 };

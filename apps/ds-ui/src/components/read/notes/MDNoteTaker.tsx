@@ -190,7 +190,7 @@ export const MDNoteTaker = () => {
       />
       <div className="notes-bottom-panel">
         <Button variant="danger" onClick={newNoteBtn}>
-          New
+          {selectedReadingItem ? 'New' : 'Close'}
         </Button>
         <Button variant="primary" onClick={submitForm}>
           {selectedNote ? 'Update' : 'Save'}

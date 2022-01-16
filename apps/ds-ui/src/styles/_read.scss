@@ -41,6 +41,9 @@
     @extend .flex-column;
   }
 
+  .card-title {
+    cursor: pointer;
+  }
   button {
     @extend .float-end;
   }
@@ -70,4 +73,33 @@
   button {
     @extend .btn-close-white;
   }
+}
+
+.read-passagelauncher-col {
+  @extend .col-12;
+}
+
+.read-passagecard-col {
+  @extend .col-12;
+  @extend .col-lg-6;
+}
+
+.read-passagenotes-col {
+  @extend .col-12;
+  @extend .col-lg-6;
+}
+
+.read-all-notes-col {
+  @extend .mt-4;
+  @extend .col-12;
+}
+
+.notelist-for-passage {
+  @extend .d-none;
+  @extend .d-lg-inline-block;
+  @extend .w-100;
+}
+
+.notelist-for-all {
+  // anything?
 }

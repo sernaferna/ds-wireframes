@@ -25,10 +25,10 @@ export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
   const notesList = result.data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 
   return (
-    <>
+    <div className="notelist-for-passage">
       {notesList.length > 0 ? <h1>Notes for passage:</h1> : <p>No notes for selected passage.</p>}
 
       {notesList}
-    </>
+    </div>
   );
 };
