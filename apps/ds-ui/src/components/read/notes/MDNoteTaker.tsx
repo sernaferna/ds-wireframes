@@ -15,6 +15,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { BaseNote, Note } from '@devouringscripture/common';
 import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 
 const lordCommand: ICommand = {
   name: 'LORD',
@@ -61,6 +62,10 @@ export const MDNoteTaker = () => {
   which should be used to set the start/end passages.
   */
   useEffect(() => {
+    if (passageResult.isLoading || passageResult.error || noteResult.isLoading || noteResult.error) {
+      return;
+    }
+
     if (selectedNote) {
       console.log(`useEffect selectedNote ${selectedNote}`);
       if (selectedNote !== localNoteId) {
@@ -102,6 +107,13 @@ export const MDNoteTaker = () => {
     localNoteId,
     localSelectedReadingItem,
   ]);
+
+  if (passageResult.isLoading || noteResult.isLoading) {
+    return <LoadingMessage />;
+  }
+  if (passageResult.error || noteResult.error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   const submitForm = () => {
     dispatch(updateSelectedReadingItem(''));
