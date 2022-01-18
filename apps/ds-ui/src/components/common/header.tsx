@@ -86,9 +86,9 @@ export function Header() {
         </Navbar.Collapse>
       </Container>
 
-      <Offcanvas show={showSettings} onHide={toggleSettings} placement="end">
+      <Offcanvas show={showSettings} onHide={toggleSettings} placement="end" aria-labelledby="settingspaneTitle">
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Settings</Offcanvas.Title>
+          <Offcanvas.Title id="settingspaneTitle">Settings</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Settings />
