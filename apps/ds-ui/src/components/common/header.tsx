@@ -40,7 +40,7 @@ const links = [
 
 const adminLinks = [
   {
-    label: 'Reading Plans',
+    label: 'Plans',
     href: '/plans',
   },
 ].map(({ label, href }) => {
