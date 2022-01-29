@@ -40,9 +40,14 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
   return (
     <Alert variant={plan.admin ? 'primary' : 'info'} className="plan-summary-view">
       <Alert.Heading>{plan.name}</Alert.Heading>
-      <p>{plan.description}</p>
       <Row>
-        <Col className="apoc-col">{apocIcon}</Col>
+        <Col xs="1">{apocIcon}</Col>
+        <Col xs="11">
+          <p className="lead">{plan.description}</p>
+        </Col>
+      </Row>
+
+      <Row>
         <Col className="num-weeks-col">{plan.length} weeks</Col>
         <Col className="percent-complete-col">
           {plan.percentageComplete ? (
