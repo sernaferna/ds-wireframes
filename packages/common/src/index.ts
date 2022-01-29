@@ -5,6 +5,7 @@ export * from './dm/Prayer';
 export * from './dm/User';
 export * from './dm/Verse';
 export * from './dm/Note';
+export * from './dm/Plan';
 
 export * from './errors/CustomError';
 export * from './errors/RequestValidationError';
