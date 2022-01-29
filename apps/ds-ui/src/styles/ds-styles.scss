@@ -62,12 +62,16 @@ body {
   @extend .col-xxl-2;
 }
 
-.sidebar-header-div {
-  @extend .bg-primary;
-  @extend .bg-opacity-25;
-  @extend .text-primary;
-  @extend .h5;
-  cursor: pointer;
+.sidebar-collapse-widget {
+  @extend .mb-3;
+
+  .header-div {
+    @extend .bg-primary;
+    @extend .bg-opacity-25;
+    @extend .text-primary;
+    @extend .h5;
+    cursor: pointer;
+  }
 }
 
 #header-navbar {

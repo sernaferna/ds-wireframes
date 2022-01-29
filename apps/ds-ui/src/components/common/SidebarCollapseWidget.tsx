@@ -8,8 +8,8 @@ interface SidebarCollapseWidgetParams {
   children: JSX.Element;
 }
 export const SidebarCollapseWidget = ({ title, visible, clickFunction, children }: SidebarCollapseWidgetParams) => (
-  <div>
-    <div className="sidebar-header-div" aria-expanded={visible} aria-controls="contentDiv" onClick={clickFunction}>
+  <div className="sidebar-collapse-widget">
+    <div className="header-div" aria-expanded={visible} aria-controls="contentDiv" onClick={clickFunction}>
       {title}
     </div>
     <Collapse in={visible}>
