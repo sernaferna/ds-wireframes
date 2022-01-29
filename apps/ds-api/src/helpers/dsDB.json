@@ -79,6 +79,10 @@
           "showSettings": true,
           "defaultVersion": "ESV",
           "showReadingPlan": true
+        },
+        "plans": {
+          "showSettings": true,
+          "showCurrentReadingPlan": true
         }
       }
     }
