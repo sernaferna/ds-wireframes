@@ -11,14 +11,11 @@
 .plan-summary-view {
   @extend .shadow;
 
-  .apoc-col {
-    @extend .col-1;
-  }
   .num-weeks-col {
     @extend .col-2;
   }
   .percent-complete-col {
-    @extend .col-9;
+    @extend .col-10;
   }
   .button-row {
     @extend .mt-3;
@@ -34,5 +31,18 @@
     .delete-col {
       @extend .col-4;
     }
+  }
+}
+
+.plan-edit-details {
+  @extend .col-10;
+}
+
+.plan-edit-sidebar {
+  @extend .col-2;
+
+  .sidebar-content {
+    @extend .sticky-top;
+    @extend .m-0;
   }
 }
