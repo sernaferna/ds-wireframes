@@ -1,0 +1,38 @@
+.plan-list-col {
+  @extend .col-12;
+  @extend .col-lg-9;
+}
+
+.edit-plan-col {
+  @extend .col-12;
+  @extend .col-lg-3;
+}
+
+.plan-summary-view {
+  @extend .shadow;
+
+  .apoc-col {
+    @extend .col-1;
+  }
+  .num-weeks-col {
+    @extend .col-2;
+  }
+  .percent-complete-col {
+    @extend .col-9;
+  }
+  .button-row {
+    @extend .mt-3;
+
+    .edit-col {
+      @extend .col-4;
+    }
+
+    .join-col {
+      @extend .col-4;
+    }
+
+    .delete-col {
+      @extend .col-4;
+    }
+  }
+}
