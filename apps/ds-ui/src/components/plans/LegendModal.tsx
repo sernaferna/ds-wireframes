@@ -27,17 +27,17 @@ export const LegendModal = ({ closeFunction, show }: LegendModalInterface) => {
             <tbody>
               <tr>
                 <th>
-                  <h3>
+                  <h4>
                     <Journal />
-                  </h3>
+                  </h4>
                 </th>
                 <td>Plan includes apocryphal books</td>
               </tr>
               <tr>
                 <th>
-                  <h3>
+                  <h4>
                     <JournalX />
-                  </h3>
+                  </h4>
                 </th>
                 <td>Plan does not include apocryphal books</td>
               </tr>
