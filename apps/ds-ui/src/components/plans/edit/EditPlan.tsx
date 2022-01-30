@@ -7,43 +7,38 @@ import Stack from 'react-bootstrap/Stack';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { CaretUpFill, CaretDownFill } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 export const EditPlan = () => {
   return (
-    <>
+    <Container fluid>
       <h1>Edit Plan</h1>
       <Row>
         <Col className="plan-edit-details">
           <Form>
             <Row className="mb-2">
-              <Col xs="1">
+              <Col xs="2">
                 <Form.Label htmlFor="planName">Name:</Form.Label>
               </Col>
-              <Col xs="4">
-                <Form.Control size="sm" id="planName" placeholder="Plan Name" />
+              <Col xs="6">
+                <Form.Control size="sm" id="planName" placeholder="Plan Name" defaultValue="Genesis in a Year" />
               </Col>
-              <Col xs="1">
+              <Col xs="2">
                 <Form.Label htmlFor="numWeeks">Number of Weeks:</Form.Label>
               </Col>
               <Col xs="1">
-                <Form.Control size="sm" id="numWeeks" placeholder="52" />
+                <Form.Control size="sm" id="numWeeks" placeholder="52" defaultValue="52" />
               </Col>
-              <Col xs="5">
-                <Button className="mx-2" variant="secondary" size="sm">
-                  2 weeks
-                </Button>
-                <Button className="mx-2" variant="secondary" size="sm">
-                  4 weeks
-                </Button>
-                <Button className="mx-2" variant="secondary" size="sm">
-                  26 weeks (6 Months)
-                </Button>
-                <Button className="mx-2" variant="secondary" size="sm">
-                  52 weeks (1 Year)
-                </Button>
-                <Button className="mx-2" variant="secondary" size="sm">
-                  156 weeks (3 Years)
-                </Button>
+              <Col xs="1">
+                <DropdownButton variant="outline-secondary" as={ButtonGroup} title="Presets">
+                  <Dropdown.Item eventKey="1">2 weeks</Dropdown.Item>
+                  <Dropdown.Item eventKey="1">4 weeks</Dropdown.Item>
+                  <Dropdown.Item eventKey="1">26 weeks (6 months)</Dropdown.Item>
+                  <Dropdown.Item eventKey="1">52 weeks (1 year)</Dropdown.Item>
+                  <Dropdown.Item eventKey="1">156 weeks (3 years)</Dropdown.Item>
+                </DropdownButton>
               </Col>
             </Row>
 
@@ -51,28 +46,46 @@ export const EditPlan = () => {
               <Col xs="2">
                 <Form.Label htmlFor="planDescription">Description:</Form.Label>
               </Col>
-              <Col xs="10">
-                <Form.Control id="planDescription" size="sm" as="textarea" placeholder="Plan Description" />
+              <Col xs="8">
+                <Form.Control
+                  id="planDescription"
+                  size="sm"
+                  as="textarea"
+                  placeholder="Plan Description"
+                  defaultValue="The entire book of Genesis in a year"
+                />
               </Col>
-            </Row>
-
-            <Row>
-              <Col xs="6">
-                <Form.Check type="checkbox" label="Admin Plan" />
+              <Col xs="2">
+                <Form.Check type="checkbox" label="Admin Plan" aria-describedby="isPlanAdminHelpText" />
                 <Form.Text id="isPlanAdminHelpText" muted>
-                  Make available to all Devouring Scripture users; when not checked, this is a personal plan for the
-                  current user only
+                  Available to all users
                 </Form.Text>
-              </Col>
-              <Col xs="6">
-                <Form.Check type="checkbox" label="Include Apocrypha" />
-                <Form.Text id="isPlanAdminHelpText" muted>
-                  Include Apocryphal books in the Reading Plan
+                <Form.Check type="checkbox" label="Include Apocrypha" aria-describedby="isApocHelpText" />
+                <Form.Text id="isApocHelpText" muted>
+                  Include Apocryphal books
                 </Form.Text>
               </Col>
             </Row>
 
             <Container className="p-5 bg-light mt-3">
+              <Form.Label htmlFor="reference" className="h2">
+                Passage(s)
+              </Form.Label>
+              <InputGroup>
+                <Form.Control
+                  id="reference"
+                  size="lg"
+                  defaultValue="Genesis 1-50"
+                  aria-describedby="referenceHelpText"
+                />
+                <Button size="lg" variant="outline-primary">
+                  Reset and Load All
+                </Button>
+              </InputGroup>
+              <Form.Text id="referenceHelpText" muted>
+                Changing this value resets all days below
+              </Form.Text>
+
               <h2 className="mt-3">Week 1</h2>
               <InputGroup>
                 <Form.Control defaultValue="Genesis 1:1-31" />
@@ -221,6 +234,6 @@ export const EditPlan = () => {
           </div>
         </Col>
       </Row>
-    </>
+    </Container>
   );
 };
