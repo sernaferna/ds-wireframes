@@ -14,14 +14,15 @@ export const getBoundsForPassage = async (osis: string): Promise<Bounds[]> => {
     const returnValue: Bounds[] = [];
     const initialValues: OSISRange[] = getRangesForOSIS(osis);
 
-    // TODO can Promise.all() apply here?
     try {
       for (let i = 0; i < initialValues.length; i++) {
-        const lowerVerse = await getVerseByOSIS(initialValues[i].startOsisString);
-        const upperVerse = await getVerseByOSIS(initialValues[i].endOsisString);
-
-        const newBound: Bounds = { lowerBound: lowerVerse.versenum, upperBound: upperVerse.versenum };
-        returnValue.push(newBound);
+        await Promise.all([
+          getVerseByOSIS(initialValues[i].startOsisString),
+          getVerseByOSIS(initialValues[i].endOsisString),
+        ]).then((result) => {
+          const newBound: Bounds = { lowerBound: result[0].versenum, upperBound: result[1].versenum };
+          returnValue.push(newBound);
+        });
       }
 
       return resolve(returnValue);
