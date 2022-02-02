@@ -19,10 +19,10 @@ export const EditPlan = () => {
         <Col className="plan-edit-details">
           <Form>
             <Row className="mb-2">
-              <Col xs="2">
+              <Col xs="1">
                 <Form.Label htmlFor="planName">Name:</Form.Label>
               </Col>
-              <Col xs="6">
+              <Col xs="4">
                 <Form.Control size="sm" id="planName" placeholder="Plan Name" defaultValue="Genesis in a Year" />
               </Col>
               <Col xs="2">
@@ -40,13 +40,19 @@ export const EditPlan = () => {
                   <Dropdown.Item eventKey="1">156 weeks (3 years)</Dropdown.Item>
                 </DropdownButton>
               </Col>
+              <Col xs="1">
+                <Form.Label htmlFor="versionField">Version:</Form.Label>
+              </Col>
+              <Col xs="2">
+                <Form.Control size="sm" id="versionField" placeholder="1.0" defaultValue="1.0" />
+              </Col>
             </Row>
 
             <Row className="mb-2">
-              <Col xs="2">
+              <Col xs="1">
                 <Form.Label htmlFor="planDescription">Description:</Form.Label>
               </Col>
-              <Col xs="8">
+              <Col xs="9">
                 <Form.Control
                   id="planDescription"
                   size="sm"
@@ -223,6 +229,7 @@ export const EditPlan = () => {
             <div className="d-grid gap-2">
               <Button variant="primary">Save</Button>
               <Button variant="success">Publish</Button>
+              <Button variant="primary">New</Button>
             </div>
 
             <h2 className="mt-3">History of Changes</h2>
