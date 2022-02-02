@@ -9,6 +9,7 @@ import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
+import Badge from 'react-bootstrap/Badge';
 
 interface PlanSummaryViewAttrs {
   plan: PlanAttributes;
@@ -43,12 +44,17 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
       <Row>
         <Col xs="1">{apocIcon}</Col>
         <Col xs="11">
-          <p className="lead">{plan.description}</p>
+          <p>{plan.description}</p>
         </Col>
       </Row>
 
       <Row>
-        <Col className="num-weeks-col">{plan.length} weeks</Col>
+        <Col className="version-col">
+          <Badge bg={plan.admin ? 'primary' : 'info'}>v{plan.version}</Badge>
+        </Col>
+        <Col className="num-weeks-col">
+          <Badge bg={plan.admin ? 'primary' : 'info'}>{plan.length} weeks</Badge>
+        </Col>
         <Col className="percent-complete-col">
           {plan.percentageComplete ? (
             <ProgressBar

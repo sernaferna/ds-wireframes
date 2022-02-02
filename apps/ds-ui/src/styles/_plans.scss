@@ -11,11 +11,15 @@
 .plan-summary-view {
   @extend .shadow;
 
+  .version-col {
+    @extend .col-1;
+  }
+
   .num-weeks-col {
     @extend .col-2;
   }
   .percent-complete-col {
-    @extend .col-10;
+    @extend .col-9;
   }
   .button-row {
     @extend .mt-3;
