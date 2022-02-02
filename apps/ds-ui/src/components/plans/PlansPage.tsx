@@ -15,6 +15,7 @@ const hcPlanList: PlanAttributes[] = [
     admin: true,
     percentageComplete: 0.5,
     includesApocrypha: false,
+    version: '1.0',
   },
   {
     name: 'New Testament in Chronological Order',
@@ -23,6 +24,7 @@ const hcPlanList: PlanAttributes[] = [
     length: 156,
     admin: false,
     includesApocrypha: true,
+    version: '1.1',
   },
   {
     name: 'Psalms in a year',
@@ -30,6 +32,7 @@ const hcPlanList: PlanAttributes[] = [
     length: 52,
     admin: true,
     includesApocrypha: false,
+    version: '1.0',
   },
   {
     name: "David's life",
@@ -38,6 +41,7 @@ const hcPlanList: PlanAttributes[] = [
     admin: true,
     percentageComplete: 0.71,
     includesApocrypha: false,
+    version: '12.9',
   },
   {
     name: 'Proverbs',
@@ -46,6 +50,7 @@ const hcPlanList: PlanAttributes[] = [
     admin: false,
     percentageComplete: 0.25,
     includesApocrypha: false,
+    version: '0.9',
   },
 ];
 

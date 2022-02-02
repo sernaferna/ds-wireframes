@@ -5,4 +5,5 @@ export interface PlanAttributes {
   admin: boolean;
   percentageComplete?: number;
   includesApocrypha: boolean;
+  version: string;
 }
