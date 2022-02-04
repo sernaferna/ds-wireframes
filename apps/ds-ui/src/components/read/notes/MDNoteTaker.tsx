@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer, Reducer } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 import { useSelector, useDispatch } from 'react-redux';
@@ -41,13 +41,102 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   return command;
 };
 
+interface InternalState {
+  value: string;
+  startReference: string;
+  endReference: string;
+  showPreview: boolean;
+  localSelectedReadingItem: string;
+  localNoteId: string;
+}
+
+const initialInternalState: InternalState = {
+  value: '',
+  startReference: '',
+  endReference: '',
+  showPreview: false,
+  localSelectedReadingItem: '',
+  localNoteId: '',
+};
+
+enum ReducerActionType {
+  SET_VALUE,
+  SET_REFERENCES,
+  SET_START_REF,
+  SET_END_REF,
+  SET_SHOW_PREVIEW,
+  SET_LOCAL_SELECTED_READING_ITEM,
+  SET_LOCAL_NOTE_ID,
+}
+
+type SetValueAction = {
+  type: ReducerActionType.SET_VALUE;
+  payload: string;
+};
+
+type SetReferencesAction = {
+  type: ReducerActionType.SET_REFERENCES;
+  payload: {
+    startReference: string;
+    endReference: string;
+  };
+};
+
+type SetStartRefAction = {
+  type: ReducerActionType.SET_START_REF;
+  payload: string;
+};
+
+type SetEndRefAction = {
+  type: ReducerActionType.SET_END_REF;
+  payload: string;
+};
+
+type SetShowPreviewAction = {
+  type: ReducerActionType.SET_SHOW_PREVIEW;
+  payload: boolean;
+};
+
+type SetLocalSelectedReadingItemAction = {
+  type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM;
+  payload: string;
+};
+
+type SetLocalNoteIdAction = {
+  type: ReducerActionType.SET_LOCAL_NOTE_ID;
+  payload: string;
+};
+
+type ReducerAction =
+  | SetValueAction
+  | SetReferencesAction
+  | SetStartRefAction
+  | SetEndRefAction
+  | SetShowPreviewAction
+  | SetLocalSelectedReadingItemAction
+  | SetLocalNoteIdAction;
+
+const useNoteReducer: Reducer<InternalState, ReducerAction> = (state, action) => {
+  switch (action.type) {
+    case ReducerActionType.SET_VALUE:
+      return { ...state, value: action.payload };
+    case ReducerActionType.SET_REFERENCES:
+      return { ...state, startReference: action.payload.startReference, endReference: action.payload.endReference };
+    case ReducerActionType.SET_START_REF:
+      return { ...state, startReference: action.payload };
+    case ReducerActionType.SET_END_REF:
+      return { ...state, endReference: action.payload };
+    case ReducerActionType.SET_SHOW_PREVIEW:
+      return { ...state, showPreview: action.payload };
+    case ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM:
+      return { ...state, localSelectedReadingItem: action.payload };
+    case ReducerActionType.SET_LOCAL_NOTE_ID:
+      return { ...state, localNoteId: action.payload };
+  }
+};
+
 export const MDNoteTaker = () => {
-  const [value, setValue] = useState('');
-  const [startReference, setStartReference] = useState('');
-  const [endReference, setEndReference] = useState('');
-  const [showPreview, setShowPreview] = useState(false);
-  const [localSelectedReadingItem, setLocalSelectedReadingItem] = useState('');
-  const [localNoteId, setLocalNoteId] = useState('');
+  const [localState, dispatchLocalState] = useReducer(useNoteReducer, initialInternalState);
   const selectedReadingItem = useSelector(getSelectedReadingItem);
   const selectedNote = useSelector(getSelectedNote);
   const [passageTrigger, passageResult] = useLazyGetPassageByIdQuery();
@@ -68,32 +157,42 @@ export const MDNoteTaker = () => {
 
     if (selectedNote) {
       console.log(`useEffect selectedNote ${selectedNote}`);
-      if (selectedNote !== localNoteId) {
+      if (selectedNote !== localState.localNoteId) {
         console.log(`triggering API`);
-        setLocalNoteId(selectedNote);
-        setLocalSelectedReadingItem('');
+        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM, payload: '' });
+        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_NOTE_ID, payload: selectedNote });
         noteTrigger(selectedNote);
       }
 
       if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
         console.log(`note loading successful; noteResult: ${noteResult.data.osis}`);
         const range: OSISRange = getRangesForOSIS(noteResult.data.osis)[0];
-        setStartReference(getFormattedReference(range.startOsisString));
-        setEndReference(getFormattedReference(range.endOsisString));
-        setValue(noteResult.data.text);
+        dispatchLocalState({
+          type: ReducerActionType.SET_REFERENCES,
+          payload: {
+            startReference: getFormattedReference(range.startOsisString),
+            endReference: getFormattedReference(range.endOsisString),
+          },
+        });
+        dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: noteResult.data.text });
         return;
       }
     } else if (selectedReadingItem) {
-      if (selectedReadingItem !== localSelectedReadingItem) {
-        setLocalSelectedReadingItem(selectedReadingItem);
+      if (selectedReadingItem !== localState.localSelectedReadingItem) {
+        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM, payload: selectedReadingItem });
         passageTrigger(selectedReadingItem);
       }
 
       if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
         const range: OSISRange = getRangesForOSIS(passageResult.data.osis)[0];
-        setStartReference(getFormattedReference(range.startOsisString));
-        setEndReference(getFormattedReference(range.endOsisString));
-        setValue('');
+        dispatchLocalState({
+          type: ReducerActionType.SET_REFERENCES,
+          payload: {
+            startReference: getFormattedReference(range.startOsisString),
+            endReference: getFormattedReference(range.endOsisString),
+          },
+        });
+        dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: '' });
         return;
       }
     }
@@ -104,8 +203,8 @@ export const MDNoteTaker = () => {
     noteResult,
     noteTrigger,
     passageTrigger,
-    localNoteId,
-    localSelectedReadingItem,
+    localState.localNoteId,
+    localState.localSelectedReadingItem,
   ]);
 
   if (passageResult.isLoading || noteResult.isLoading) {
@@ -121,15 +220,15 @@ export const MDNoteTaker = () => {
     if (selectedNote) {
       const newNote: Note = {
         ...noteResult.data!,
-        text: value,
-        osis: `${getOSISForReference(startReference)}-${getOSISForReference(endReference)}`,
+        text: localState.value,
+        osis: `${getOSISForReference(localState.startReference)}-${getOSISForReference(localState.endReference)}`,
       };
       updateNote(newNote);
       return;
     }
     const note: BaseNote = {
-      text: value,
-      osis: `${getOSISForReference(startReference)}-${getOSISForReference(endReference)}`,
+      text: localState.value,
+      osis: `${getOSISForReference(localState.startReference)}-${getOSISForReference(localState.endReference)}`,
     };
 
     submitNote(note);
@@ -151,8 +250,10 @@ export const MDNoteTaker = () => {
               <Form.Control
                 type="search"
                 placeholder="From..."
-                value={startReference}
-                onChange={(value) => setStartReference(value.target.value)}
+                value={localState.startReference}
+                onChange={(value) =>
+                  dispatchLocalState({ type: ReducerActionType.SET_START_REF, payload: value.target.value })
+                }
               />
             </Col>
           </Row>
@@ -166,18 +267,20 @@ export const MDNoteTaker = () => {
               <Form.Control
                 type="search"
                 placeholder="To..."
-                value={endReference}
-                onChange={(value) => setEndReference(value.target.value)}
+                value={localState.endReference}
+                onChange={(value) =>
+                  dispatchLocalState({ type: ReducerActionType.SET_END_REF, payload: value.target.value })
+                }
               />
             </Col>
           </Row>
         </Col>
       </Row>
       <MDEditor
-        value={value}
+        value={localState.value}
         onChange={(newValue) => {
           if (newValue) {
-            setValue(newValue);
+            dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: newValue });
           }
         }}
         autoFocus={true}
@@ -195,11 +298,16 @@ export const MDNoteTaker = () => {
         <Button variant="primary" onClick={submitForm}>
           {selectedNote ? 'Update' : 'Save'}
         </Button>
-        <Button variant="secondary" onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? 'Hide Preview' : 'Show Preview'}
+        <Button
+          variant="secondary"
+          onClick={() =>
+            dispatchLocalState({ type: ReducerActionType.SET_SHOW_PREVIEW, payload: !localState.showPreview })
+          }
+        >
+          {localState.showPreview ? 'Hide Preview' : 'Show Preview'}
         </Button>
       </div>
-      {showPreview ? <MDEditor.Markdown className="notes-preview" source={value} /> : ''}
+      {localState.showPreview ? <MDEditor.Markdown className="notes-preview" source={localState.value} /> : ''}
     </>
   );
 };
