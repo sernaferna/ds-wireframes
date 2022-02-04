@@ -155,6 +155,7 @@ export const MDNoteTaker = () => {
       return;
     }
 
+    // TODO more work to do here on simplifying logic
     if (selectedNote) {
       console.log(`useEffect selectedNote ${selectedNote}`);
       if (selectedNote !== localState.localNoteId) {
