@@ -61,25 +61,18 @@ const initialInternalState: InternalState = {
 
 enum ReducerActionType {
   SET_VALUE,
-  SET_REFERENCES,
   SET_START_REF,
   SET_END_REF,
   SET_SHOW_PREVIEW,
   SET_LOCAL_SELECTED_READING_ITEM,
-  SET_LOCAL_NOTE_ID,
+  RESET_FOR_SELECTED_NOTE,
+  RESET_FOR_NOTE_RETRIEVED,
+  RESET_FOR_PASSAGE_NO_NOTE,
 }
 
 type SetValueAction = {
   type: ReducerActionType.SET_VALUE;
   payload: string;
-};
-
-type SetReferencesAction = {
-  type: ReducerActionType.SET_REFERENCES;
-  payload: {
-    startReference: string;
-    endReference: string;
-  };
 };
 
 type SetStartRefAction = {
@@ -102,26 +95,42 @@ type SetLocalSelectedReadingItemAction = {
   payload: string;
 };
 
-type SetLocalNoteIdAction = {
-  type: ReducerActionType.SET_LOCAL_NOTE_ID;
+type ResetForSelectedNoteAction = {
+  type: ReducerActionType.RESET_FOR_SELECTED_NOTE;
   payload: string;
+};
+
+type ResetForNoteRetrievedAction = {
+  type: ReducerActionType.RESET_FOR_NOTE_RETRIEVED;
+  payload: {
+    startReference: string;
+    endReference: string;
+    value: string;
+  };
+};
+
+type ResetForPassageNoNoteAction = {
+  type: ReducerActionType.RESET_FOR_PASSAGE_NO_NOTE;
+  payload: {
+    startReference: string;
+    endReference: string;
+  };
 };
 
 type ReducerAction =
   | SetValueAction
-  | SetReferencesAction
   | SetStartRefAction
   | SetEndRefAction
   | SetShowPreviewAction
   | SetLocalSelectedReadingItemAction
-  | SetLocalNoteIdAction;
+  | ResetForSelectedNoteAction
+  | ResetForNoteRetrievedAction
+  | ResetForPassageNoNoteAction;
 
 const useNoteReducer: Reducer<InternalState, ReducerAction> = (state, action) => {
   switch (action.type) {
     case ReducerActionType.SET_VALUE:
       return { ...state, value: action.payload };
-    case ReducerActionType.SET_REFERENCES:
-      return { ...state, startReference: action.payload.startReference, endReference: action.payload.endReference };
     case ReducerActionType.SET_START_REF:
       return { ...state, startReference: action.payload };
     case ReducerActionType.SET_END_REF:
@@ -130,8 +139,22 @@ const useNoteReducer: Reducer<InternalState, ReducerAction> = (state, action) =>
       return { ...state, showPreview: action.payload };
     case ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM:
       return { ...state, localSelectedReadingItem: action.payload };
-    case ReducerActionType.SET_LOCAL_NOTE_ID:
-      return { ...state, localNoteId: action.payload };
+    case ReducerActionType.RESET_FOR_SELECTED_NOTE:
+      return { ...state, localNoteId: action.payload, localSelectedReadingItem: '' };
+    case ReducerActionType.RESET_FOR_NOTE_RETRIEVED:
+      return {
+        ...state,
+        startReference: action.payload.startReference,
+        endReference: action.payload.endReference,
+        value: action.payload.value,
+      };
+    case ReducerActionType.RESET_FOR_PASSAGE_NO_NOTE:
+      return {
+        ...state,
+        startReference: action.payload.startReference,
+        endReference: action.payload.endReference,
+        payload: '',
+      };
   }
 };
 
@@ -155,13 +178,11 @@ export const MDNoteTaker = () => {
       return;
     }
 
-    // TODO more work to do here on simplifying logic
     if (selectedNote) {
       console.log(`useEffect selectedNote ${selectedNote}`);
       if (selectedNote !== localState.localNoteId) {
         console.log(`triggering API`);
-        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM, payload: '' });
-        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_NOTE_ID, payload: selectedNote });
+        dispatchLocalState({ type: ReducerActionType.RESET_FOR_SELECTED_NOTE, payload: selectedNote });
         noteTrigger(selectedNote);
       }
 
@@ -169,13 +190,13 @@ export const MDNoteTaker = () => {
         console.log(`note loading successful; noteResult: ${noteResult.data.osis}`);
         const range: OSISRange = getRangesForOSIS(noteResult.data.osis)[0];
         dispatchLocalState({
-          type: ReducerActionType.SET_REFERENCES,
+          type: ReducerActionType.RESET_FOR_NOTE_RETRIEVED,
           payload: {
             startReference: getFormattedReference(range.startOsisString),
             endReference: getFormattedReference(range.endOsisString),
+            value: noteResult.data.text,
           },
         });
-        dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: noteResult.data.text });
         return;
       }
     } else if (selectedReadingItem) {
@@ -187,13 +208,12 @@ export const MDNoteTaker = () => {
       if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
         const range: OSISRange = getRangesForOSIS(passageResult.data.osis)[0];
         dispatchLocalState({
-          type: ReducerActionType.SET_REFERENCES,
+          type: ReducerActionType.RESET_FOR_PASSAGE_NO_NOTE,
           payload: {
             startReference: getFormattedReference(range.startOsisString),
             endReference: getFormattedReference(range.endOsisString),
           },
         });
-        dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: '' });
         return;
       }
     }
