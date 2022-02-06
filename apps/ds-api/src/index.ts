@@ -22,7 +22,8 @@ import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
 import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { getPassageByIdRouter } from './routes/read/passages/byId';
-import { newReadingPlan } from './routes/read/plans/new';
+import { newReadingPlan } from './routes/plans/new';
+import { getAllPlansRouter } from './routes/plans/getAll';
 import { handleFourOhFour, errorHandler, NotFoundError } from '@devouringscripture/common';
 
 console.log('API starting');
@@ -58,7 +59,7 @@ app.use('/api/read/current', [
   deleteCurrentReadItem,
   getPassageByIdRouter,
 ]);
-app.use('/api/plans', [newReadingPlan]);
+app.use('/api/plans', [newReadingPlan, getAllPlansRouter]);
 
 app.all('*', async (req, res, next) => {
   return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));
