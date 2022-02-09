@@ -14,6 +14,7 @@ export * from './errors/DatabaseError';
 export * from './errors/NotImplementedError';
 export * from './errors/InvalidPassageError';
 export * from './errors/PlanVersionError';
+export * from './errors/InvalidNewVersionError';
 
 export * from './middlewares/HandleFourOhFour';
 export * from './middlewares/ValidateRequest';

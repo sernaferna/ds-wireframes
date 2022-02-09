@@ -1,16 +1,18 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import { getAllPrayerItemsRouter } from './routes/prayer/getAll';
 import { getPIById } from './routes/prayer/byId';
 import { markReadRouter } from './routes/prayer/markRead';
 import { newPrayerItemRouter } from './routes/prayer/newItem';
 import { deletePrayerItemRouter } from './routes/prayer/delete';
+
 import { getUserByIdRouter } from './routes/user/byId';
 import { updateUserRouter } from './routes/user/update';
+
 import { getAllCustomActionsRouter } from './routes/actions/custom/getAll';
 import { newCustomActionTypeRouter } from './routes/actions/custom/newItem';
+
 import { getRecentActionsRouter } from './routes/actions/getRecent';
 import { getActionForDateRouter } from './routes/actions/getForDate';
 import { markActionItemForDateRouter } from './routes/actions/markItemForDate';
@@ -18,13 +20,25 @@ import { getActionByIdRouter } from './routes/actions/byId';
 import { getActionsForMonthRouter } from './routes/actions/getForMonth';
 import { getActionStatsRouter } from './routes/actions/getStats';
 import { deleteCustomActionRouter } from './routes/actions/custom/delete';
+
 import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
 import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { getPassageByIdRouter } from './routes/read/passages/byId';
+
 import { newReadingPlan } from './routes/plans/new';
+import { updatePlanRouter } from './routes/plans/update';
 import { getAllPlansRouter } from './routes/plans/getAll';
-import { handleFourOhFour, errorHandler, NotFoundError } from '@devouringscripture/common';
+import { deletePlanRouter } from './routes/plans/delete';
+import { getPlanByIdRouter } from './routes/plans/byId';
+
+import { newPublicReadingPlan } from './routes/plans/public/new';
+import { updatePublicPlanRouter } from './routes/plans/public/update';
+import { getAllPublicPlansRouter } from './routes/plans/public/getAll';
+import { deletePublicPlanRouter } from './routes/plans/public/delete';
+import { getPublicPlanByIdRouter } from './routes/plans/public/byId';
+
+import { errorHandler, NotFoundError } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -59,7 +73,14 @@ app.use('/api/read/current', [
   deleteCurrentReadItem,
   getPassageByIdRouter,
 ]);
-app.use('/api/plans', [newReadingPlan, getAllPlansRouter]);
+app.use('/api/plans', [newReadingPlan, getAllPlansRouter, updatePlanRouter, deletePlanRouter, getPlanByIdRouter]);
+app.use('/api/plans/public', [
+  newPublicReadingPlan,
+  getAllPublicPlansRouter,
+  updatePublicPlanRouter,
+  deletePublicPlanRouter,
+  getPublicPlanByIdRouter,
+]);
 
 app.all('*', async (req, res, next) => {
   return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));

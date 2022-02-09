@@ -7,8 +7,8 @@ import {
   CustomError,
 } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
-import { db } from '../../services/db';
-import { basePlanValidationRules } from '../../helpers/planValidationRules';
+import { db } from '../../../services/db';
+import { basePlanValidationRules } from '../../../helpers/planValidationRules';
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ router.post(
         ...newBaseItem,
         id: uuidv4(),
       };
-      db.push('/plans/custom', newItem);
+      db.push('/plans', newItem);
       res.status(201).send(newItem);
     } catch (err) {
       if (err instanceof CustomError) {
@@ -37,4 +37,4 @@ router.post(
   }
 );
 
-export { router as newReadingPlan };
+export { router as newPublicReadingPlan };
