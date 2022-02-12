@@ -1,4 +1,4 @@
-import { Verse } from '..';
+import { Verse } from './Verse';
 
 export interface BasePlanAttributes {
   name: string;
