@@ -21,6 +21,7 @@ router.get(
         throw new NotFoundError('user');
       }
       user = db.getData(`/users[${index}]`);
+      delete user!.plans;
     } catch (err) {
       if (req.params.userId === '2f740108-8596-4a8a-b334-518ab34a8c50') {
         user = generateDefaultUser();

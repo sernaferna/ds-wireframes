@@ -9,12 +9,10 @@ router.get('/', async (req: Request, res: Response) => {
 
   try {
     const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
-    const userPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>(`/plans/custom`);
-    const response: PlanAttributes[] = userPlans.concat(publicPlans);
-    res.send(response);
+    res.send(publicPlans);
   } catch (err) {
     res.send([]);
   }
 });
 
-export { router as getAllPlansRouter };
+export { router as getAllPublicPlansRouter };

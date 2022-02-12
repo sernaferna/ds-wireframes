@@ -13,12 +13,12 @@ router.get(
     console.log(`Get Plan by ID called: ${req.params.id}`);
 
     try {
-      const index = db.getIndex('/plans/custom', req.params.id);
+      const index = db.getIndex('/plans', req.params.id);
       if (index < 0) {
         throw new NotFoundError('Plan not found');
       }
 
-      const item: PlanAttributes = db.getObject<PlanAttributes>(`/plans/custom[${index}]`);
+      const item: PlanAttributes = db.getObject<PlanAttributes>(`/plans[${index}]`);
       res.send(item);
     } catch (err) {
       if (err instanceof CustomError) {
@@ -31,4 +31,4 @@ router.get(
   }
 );
 
-export { router as getPlanByIdRouter };
+export { router as getPublicPlanByIdRouter };

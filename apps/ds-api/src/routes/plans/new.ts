@@ -24,7 +24,7 @@ router.post(
         ...newBaseItem,
         id: uuidv4(),
       };
-      db.push('/plans/custom', newItem);
+      db.push('/plans', newItem);
       res.status(201).send(newItem);
     } catch (err) {
       if (err instanceof CustomError) {
@@ -37,4 +37,4 @@ router.post(
   }
 );
 
-export { router as newReadingPlan };
+export { router as newPublicReadingPlan };

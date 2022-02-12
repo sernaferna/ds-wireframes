@@ -13,11 +13,11 @@ router.delete(
     console.log(`Delete plan called for ${req.params.id}`);
 
     try {
-      const index = db.getIndex(`/plans/custom`, req.params.id);
+      const index = db.getIndex(`/plans`, req.params.id);
       if (index < 0) {
         throw new NotFoundError(`Plan not found: ${req.params.id}`);
       }
-      db.delete(`/plans/custom[${index}]`);
+      db.delete(`/plans[${index}]`);
       res.send('Item removed');
     } catch (err) {
       if (err instanceof CustomError) {
@@ -30,4 +30,4 @@ router.delete(
   }
 );
 
-export { router as deletePlanRouter };
+export { router as deletePublicPlanRouter };

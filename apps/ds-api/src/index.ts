@@ -26,17 +26,17 @@ import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { getPassageByIdRouter } from './routes/read/passages/byId';
 
-import { newReadingPlan } from './routes/plans/new';
-import { updatePlanRouter } from './routes/plans/update';
-import { getAllPlansRouter } from './routes/plans/getAll';
-import { deletePlanRouter } from './routes/plans/delete';
-import { getPlanByIdRouter } from './routes/plans/byId';
+import { newPublicReadingPlan } from './routes/plans/new';
+import { updatePublicPlanRouter } from './routes/plans/update';
+import { getAllPublicPlansRouter } from './routes/plans/getAll';
+import { deletePublicPlanRouter } from './routes/plans/delete';
+import { getPublicPlanByIdRouter } from './routes/plans/byId';
 
-import { newPublicReadingPlan } from './routes/plans/public/new';
-import { updatePublicPlanRouter } from './routes/plans/public/update';
-import { getAllPublicPlansRouter } from './routes/plans/public/getAll';
-import { deletePublicPlanRouter } from './routes/plans/public/delete';
-import { getPublicPlanByIdRouter } from './routes/plans/public/byId';
+import { getUserPlanByIdRouter } from './routes/user/plans/byId';
+import { deleteUserPlanRouter } from './routes/user/plans/delete';
+import { getAllPlansForUserRouter } from './routes/user/plans/getAll';
+import { newUserPlan } from './routes/user/plans/new';
+import { updatePlanForUserRouter } from './routes/user/plans/update';
 
 import { errorHandler, NotFoundError } from '@devouringscripture/common';
 
@@ -57,7 +57,15 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/pi', [getAllPrayerItemsRouter, getPIById, markReadRouter, newPrayerItemRouter, deletePrayerItemRouter]);
-app.use('/api/user', [getUserByIdRouter, updateUserRouter]);
+app.use('/api/user', [
+  getUserByIdRouter,
+  updateUserRouter,
+  getUserPlanByIdRouter,
+  deleteUserPlanRouter,
+  getAllPlansForUserRouter,
+  newUserPlan,
+  updatePlanForUserRouter,
+]);
 app.use('/api/actions/entries', [
   getRecentActionsRouter,
   getActionForDateRouter,
@@ -73,7 +81,6 @@ app.use('/api/read/current', [
   deleteCurrentReadItem,
   getPassageByIdRouter,
 ]);
-app.use('/api/plans', [newReadingPlan, getAllPlansRouter, updatePlanRouter, deletePlanRouter, getPlanByIdRouter]);
 app.use('/api/plans/public', [
   newPublicReadingPlan,
   getAllPublicPlansRouter,

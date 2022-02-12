@@ -21,8 +21,8 @@ router.put(
     try {
       const newPlan: PlanAttributes = req.body;
 
-      const index = db.getIndex('/plans/custom', newPlan.id);
-      const oldPlan: PlanAttributes = db.getObject<PlanAttributes>(`/plans/custom[${index}]`);
+      const index = db.getIndex('/plans', newPlan.id);
+      const oldPlan: PlanAttributes = db.getObject<PlanAttributes>(`/plans[${index}]`);
       if (!oldPlan) {
         throw new NotFoundError(`Plan ID ${newPlan.id}`);
       }
@@ -30,16 +30,16 @@ router.put(
         throw new InvalidNewVersionError(oldPlan.version, newPlan.version);
       }
 
-      db.push(`/plans/custom[${index}]/description`, newPlan.description);
-      db.push(`/plans/custom[${index}]/includeWeekends`, newPlan.includeWeekends);
-      db.push(`/plans/custom[${index}]/includesApocrypha`, newPlan.includesApocrypha);
-      db.push(`/plans/custom[${index}]/length`, newPlan.length);
-      db.push(`/plans/custom[${index}]/name`, newPlan.name);
-      db.push(`/plans/custom[${index}]/osis`, newPlan.osis);
-      db.push(`/plans/custom[${index}]/version`, newPlan.version);
-      db.push(`/plans/custom[${index}]/weeks`, newPlan.weeks);
+      db.push(`/plans[${index}]/description`, newPlan.description);
+      db.push(`/plans[${index}]/includeWeekends`, newPlan.includeWeekends);
+      db.push(`/plans[${index}]/includesApocrypha`, newPlan.includesApocrypha);
+      db.push(`/plans[${index}]/length`, newPlan.length);
+      db.push(`/plans[${index}]/name`, newPlan.name);
+      db.push(`/plans[${index}]/osis`, newPlan.osis);
+      db.push(`/plans[${index}]/version`, newPlan.version);
+      db.push(`/plans[${index}]/weeks`, newPlan.weeks);
 
-      const updatedItem: PlanAttributes = db.getObject<PlanAttributes>(`/plans/custom[${index}]`);
+      const updatedItem: PlanAttributes = db.getObject<PlanAttributes>(`/plans[${index}]`);
       res.send(updatedItem);
     } catch (err) {
       if (err instanceof CustomError) {
@@ -52,4 +52,4 @@ router.put(
   }
 );
 
-export { router as updatePlanRouter };
+export { router as updatePublicPlanRouter };
