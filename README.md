@@ -84,6 +84,31 @@ npm start -w ds-ui
 
 As mentioned above, this code isn't intended to be production-worthy (or even "good"), so not many test cases have been written, so `npm test` commands aren't really stressed at the root level.
 
+## Run a Test
+
+Most applications don't have any unit testing built in, but the ones that _do_ can be run all at once; the root `package.json` has had a `test` script added that calls the individual test scripts.
+
+```bash
+npm run test
+```
+
+## Run a Build
+
+The `common` and `refparse` libraries, being common to the other applications, often need to be built when changes are made. Because it only takes a second or two to run the builds, they can both be run at once:
+
+```bash
+npm run build
+```
+
+If only one of the builds needs to be run they _can_ be run individually, of course.
+
+```bash
+npm run build -w @devouringscripture/common
+npm run build -w @devouringscripture/refparse
+```
+
+Running both at once is just much easier to type than `@devouringscripture/appname`.
+
 ## Git Branching
 
 Some commands for working with source control that the original author kept Googling over and over.
