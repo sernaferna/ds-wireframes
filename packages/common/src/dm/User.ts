@@ -1,3 +1,5 @@
+import { PlanAttributes } from './Plan';
+
 export interface VizualizationListItem {
   name: string;
   active: boolean;
@@ -47,4 +49,5 @@ export interface UserAttributes {
       showCurrentReadingPlan: boolean;
     };
   };
+  plans?: PlanAttributes[];
 }

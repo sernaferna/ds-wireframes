@@ -17,5 +17,14 @@ export interface PlanAttributes extends BasePlanAttributes {
 }
 
 export interface PlanWeek {
-  days: Verse[];
+  days: PlanDay[];
+}
+
+export interface PlanDay {
+  verses: Verse[];
+}
+
+export interface UserPlan {
+  plan: PlanAttributes;
+  percentageComplete?: number;
 }

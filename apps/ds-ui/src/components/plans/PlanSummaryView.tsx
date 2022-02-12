@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlanAttributes } from '@devouringscripture/common';
+import { UserPlan } from '@devouringscripture/common';
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,9 +12,11 @@ import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/To
 import Badge from 'react-bootstrap/Badge';
 
 interface PlanSummaryViewAttrs {
-  plan: PlanAttributes;
+  userPlan: UserPlan;
 }
-export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
+export const PlanSummaryView = ({ userPlan }: PlanSummaryViewAttrs) => {
+  const { plan } = userPlan;
+
   const apocPopover = (
     <Popover id="apocPopover">
       <Popover.Body>
@@ -39,7 +41,7 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
   };
 
   return (
-    <Alert variant={plan.admin ? 'primary' : 'info'} className="plan-summary-view">
+    <Alert variant={plan.isAdmin ? 'primary' : 'info'} className="plan-summary-view">
       <Alert.Heading>{plan.name}</Alert.Heading>
       <Row>
         <Col xs="1">{apocIcon}</Col>
@@ -50,17 +52,17 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
 
       <Row>
         <Col className="version-col">
-          <Badge bg={plan.admin ? 'primary' : 'info'}>v{plan.version}</Badge>
+          <Badge bg={plan.isAdmin ? 'primary' : 'info'}>v{plan.version}</Badge>
         </Col>
         <Col className="num-weeks-col">
-          <Badge bg={plan.admin ? 'primary' : 'info'}>{plan.length} weeks</Badge>
+          <Badge bg={plan.isAdmin ? 'primary' : 'info'}>{plan.length} weeks</Badge>
         </Col>
         <Col className="percent-complete-col">
-          {plan.percentageComplete ? (
+          {userPlan.percentageComplete ? (
             <ProgressBar
-              now={plan.percentageComplete * 100}
-              label={`${plan.percentageComplete * 100}%`}
-              variant={plan.admin ? 'primary' : 'info'}
+              now={userPlan.percentageComplete * 100}
+              label={`${userPlan.percentageComplete * 100}%`}
+              variant={plan.isAdmin ? 'primary' : 'info'}
             />
           ) : (
             <i>Not subscribed</i>
@@ -69,7 +71,7 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
       </Row>
       <Row className="button-row">
         <Col className="edit-col">
-          {plan.admin ? (
+          {plan.isAdmin ? (
             <Button variant="primary" onClick={buttonClicked}>
               Edit
             </Button>
@@ -78,7 +80,7 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
           )}
         </Col>
         <Col className="join-col">
-          {plan.percentageComplete ? (
+          {userPlan.percentageComplete ? (
             <Button variant="danger" onClick={buttonClicked}>
               Leave
             </Button>
@@ -89,7 +91,7 @@ export const PlanSummaryView = ({ plan }: PlanSummaryViewAttrs) => {
           )}
         </Col>
         <Col className="deleteCol">
-          {plan.admin ? (
+          {plan.isAdmin ? (
             ''
           ) : (
             <Button variant="danger" onClick={buttonClicked}>
