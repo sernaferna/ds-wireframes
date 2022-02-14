@@ -6,15 +6,15 @@ import { db } from '../../../services/db';
 const router = express.Router();
 
 router.get(
-  '/:userId/plans/:id',
+  '/:userId/plans/:planInstanceId',
   [
     param('userId').isUUID().withMessage('Valid User ID required'),
-    param('id').isUUID().withMessage('Valid Plan ID required'),
+    param('planInstanceId').isUUID().withMessage('Valid Plan ID required'),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId: string = req.params.userId;
-    const planId: string = req.params.id;
+    const planId: string = req.params.planInstanceId;
     console.log(`Get Plan for User by ID called: ${planId}`);
 
     try {
@@ -25,7 +25,7 @@ router.get(
 
       console.log(`user ${userIndex}`);
 
-      const planIndex = db.getIndex(`/users[${userIndex}]/plans`, planId);
+      const planIndex = db.getIndex(`/users[${userIndex}]/plans`, planId, 'planInstanceId');
       if (planIndex < 0) {
         throw new NotFoundError('Plan not found');
       }
@@ -34,7 +34,7 @@ router.get(
 
       const item: PlanAttributes = db.getObject<PlanAttributes>(`/users[${userIndex}]/plans[${planIndex}]`);
       console.log('got item');
-      console.log(item.id);
+      console.log(item.planInstanceId);
       res.send(item);
     } catch (err) {
       if (err instanceof CustomError) {

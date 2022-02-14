@@ -23,5 +23,8 @@ export const basePlanValidationRules = () => {
 export const planValidationRules = () => {
   const baseRules = basePlanValidationRules();
 
-  return baseRules.concat([body('id').isUUID().withMessage('Valid id required')]);
+  return baseRules.concat([
+    body('planInstanceId').isUUID().withMessage('Valid instance ID required'),
+    body('planId').isUUID().withMessage('Valid plan ID required'),
+  ]);
 };

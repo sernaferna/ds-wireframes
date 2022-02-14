@@ -6,14 +6,14 @@ import { db } from '../../services/db';
 const router = express.Router();
 
 router.get(
-  '/:id',
-  [param('id').isUUID().withMessage('Valid ID required')],
+  '/:planInstanceId',
+  [param('planInstanceId').isUUID().withMessage('Valid Instance ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Get Plan by ID called: ${req.params.id}`);
+    console.log(`Get Plan by ID called: ${req.params.planInstanceId}`);
 
     try {
-      const index = db.getIndex('/plans', req.params.id);
+      const index = db.getIndex('/plans', req.params.id, 'planInstanceId');
       if (index < 0) {
         throw new NotFoundError('Plan not found');
       }

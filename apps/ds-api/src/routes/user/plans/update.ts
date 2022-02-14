@@ -11,21 +11,22 @@ import {
 } from '@devouringscripture/common';
 import { planValidationRules } from '../../../helpers/planValidationRules';
 import { db } from '../../../services/db';
+import { v4 as uuidv4 } from 'uuid';
 
 const router = express.Router();
 
 router.put(
-  '/:userId/plans/:planId',
+  '/:userId/plans/:planInstanceId',
   [
     param('userId').isUUID().withMessage('Valid User ID required'),
-    param('planId').isUUID().withMessage('Valid Plan ID required'),
+    param('planInstanceId').isUUID().withMessage('Valid Plan ID required'),
   ],
   planValidationRules(),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId: string = req.params.userId;
-    const planId: string = req.params.planId;
-    console.log(`Updating plan ${planId}`);
+    const planInstanceId: string = req.params.planInstanceId;
+    console.log(`Updating plan ${planInstanceId}`);
 
     try {
       const newPlan: PlanAttributes = req.body;
@@ -35,26 +36,31 @@ router.put(
         throw new NotFoundError('User not found');
       }
 
-      const planIndex = db.getIndex(`/users[${userIndex}]/plans`, newPlan.id);
+      const planIndex = db.getIndex(`/users[${userIndex}]/plans`, newPlan.planInstanceId, 'planInstanceId');
       const oldPlan: PlanAttributes = db.getObject<PlanAttributes>(`/users[${userIndex}]/plans[${planIndex}]`);
       if (!oldPlan) {
-        throw new NotFoundError(`Plan ID ${newPlan.id}`);
+        throw new NotFoundError(`Plan ID ${newPlan.planInstanceId}`);
       }
       if (!v2GTV1(newPlan.version, oldPlan.version)) {
         throw new InvalidNewVersionError(oldPlan.version, newPlan.version);
       }
 
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/description`, newPlan.description);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/includeWeekends`, newPlan.includeWeekends);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/includesApocrypha`, newPlan.includesApocrypha);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/length`, newPlan.length);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/name`, newPlan.name);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/osis`, newPlan.osis);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/version`, newPlan.version);
-      db.push(`/users[${userIndex}]/plans[${planIndex}]/weeks`, newPlan.weeks);
+      const newPlanForDB: PlanAttributes = {
+        name: newPlan.name,
+        description: newPlan.description,
+        length: newPlan.length,
+        isAdmin: false,
+        includesApocrypha: newPlan.includesApocrypha,
+        includeWeekends: newPlan.includeWeekends,
+        version: newPlan.version,
+        osis: newPlan.osis,
+        weeks: newPlan.weeks.slice(),
+        planId: oldPlan.planId,
+        planInstanceId: uuidv4(),
+      };
+      db.push(`/users[${userIndex}]/plans[]`, newPlanForDB);
 
-      const updatedItem: PlanAttributes = db.getObject<PlanAttributes>(`/users[${userIndex}]/plans[${planIndex}]`);
-      res.send(updatedItem);
+      res.send(newPlanForDB);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

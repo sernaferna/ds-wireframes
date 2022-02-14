@@ -22,9 +22,10 @@ router.post(
       console.log(`Creating new plan named ${newBaseItem.name}`);
       const newItem: PlanAttributes = {
         ...newBaseItem,
-        id: uuidv4(),
+        planId: uuidv4(),
+        planInstanceId: uuidv4(),
       };
-      db.push('/plans', newItem);
+      db.push('/plans[]', newItem);
       res.status(201).send(newItem);
     } catch (err) {
       if (err instanceof CustomError) {

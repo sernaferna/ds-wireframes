@@ -6,16 +6,17 @@ import { db } from '../../services/db';
 const router = express.Router();
 
 router.delete(
-  '/:id',
-  [param('id').isUUID().withMessage('Valid ID required')],
+  '/:planInstanceId',
+  [param('planInstanceId').isUUID().withMessage('Valid Instance ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Delete plan called for ${req.params.id}`);
+    const planInstanceId = req.params.planInstanceId;
+    console.log(`Delete plan called for ${planInstanceId}`);
 
     try {
-      const index = db.getIndex(`/plans`, req.params.id);
+      const index = db.getIndex(`/plans`, planInstanceId, 'planInstanceId');
       if (index < 0) {
-        throw new NotFoundError(`Plan not found: ${req.params.id}`);
+        throw new NotFoundError(`Plan not found: ${planInstanceId}`);
       }
       db.delete(`/plans[${index}]`);
       res.send('Item removed');

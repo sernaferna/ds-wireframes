@@ -6,10 +6,10 @@ import { db } from '../../../services/db';
 const router = express.Router();
 
 router.delete(
-  '/:userId/plans/:id',
+  '/:userId/plans/:planInstanceId',
   [
     param('userId').isUUID().withMessage('Valid User ID required'),
-    param('id').isUUID().withMessage('Valid Plan ID required'),
+    param('planInstanceId').isUUID().withMessage('Valid Plan Instance ID required'),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -23,7 +23,7 @@ router.delete(
         throw new NotFoundError('User not found');
       }
 
-      const planIndex = db.getIndex(`/users[${userIndex}]/plans`, planId);
+      const planIndex = db.getIndex(`/users[${userIndex}]/plans`, planId, 'planInstanceId');
       if (planIndex < 0) {
         throw new NotFoundError(`Plan not found: ${planId}`);
       }

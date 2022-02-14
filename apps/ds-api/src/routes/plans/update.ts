@@ -10,37 +10,43 @@ import {
 } from '@devouringscripture/common';
 import { planValidationRules } from '../../helpers/planValidationRules';
 import { db } from '../../services/db';
-
+import { v4 as uuidv4 } from 'uuid';
 const router = express.Router();
 
 router.put(
-  '/:planId',
+  '/:planInstanceId',
   planValidationRules(),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const newPlan: PlanAttributes = req.body;
 
-      const index = db.getIndex('/plans', newPlan.id);
+      const index = db.getIndex('/plans', newPlan.planInstanceId, 'planInstanceId');
       const oldPlan: PlanAttributes = db.getObject<PlanAttributes>(`/plans[${index}]`);
       if (!oldPlan) {
-        throw new NotFoundError(`Plan ID ${newPlan.id}`);
+        throw new NotFoundError(`Plan ID ${newPlan.planInstanceId}`);
       }
       if (!v2GTV1(newPlan.version, oldPlan.version)) {
         throw new InvalidNewVersionError(oldPlan.version, newPlan.version);
       }
 
-      db.push(`/plans[${index}]/description`, newPlan.description);
-      db.push(`/plans[${index}]/includeWeekends`, newPlan.includeWeekends);
-      db.push(`/plans[${index}]/includesApocrypha`, newPlan.includesApocrypha);
-      db.push(`/plans[${index}]/length`, newPlan.length);
-      db.push(`/plans[${index}]/name`, newPlan.name);
-      db.push(`/plans[${index}]/osis`, newPlan.osis);
-      db.push(`/plans[${index}]/version`, newPlan.version);
-      db.push(`/plans[${index}]/weeks`, newPlan.weeks);
+      const newPlanForDB: PlanAttributes = {
+        name: newPlan.name,
+        description: newPlan.description,
+        length: newPlan.length,
+        isAdmin: true,
+        includesApocrypha: newPlan.includesApocrypha,
+        includeWeekends: newPlan.includeWeekends,
+        version: newPlan.version,
+        osis: newPlan.osis,
+        weeks: newPlan.weeks.slice(),
+        planId: oldPlan.planId,
+        planInstanceId: uuidv4(),
+      };
 
-      const updatedItem: PlanAttributes = db.getObject<PlanAttributes>(`/plans[${index}]`);
-      res.send(updatedItem);
+      db.push(`/plans[]`, newPlanForDB);
+
+      res.send(newPlanForDB);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

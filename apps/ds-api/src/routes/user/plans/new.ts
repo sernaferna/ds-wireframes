@@ -32,7 +32,8 @@ router.post(
 
       const newItem: PlanAttributes = {
         ...newBaseItem,
-        id: uuidv4(),
+        planInstanceId: uuidv4(),
+        planId: uuidv4(),
       };
       db.push(`/users[${userIndex}]/plans[]`, newItem);
       res.status(201).send(newItem);

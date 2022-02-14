@@ -13,7 +13,8 @@ export interface BasePlanAttributes {
 }
 
 export interface PlanAttributes extends BasePlanAttributes {
-  id: string;
+  planId: string;
+  planInstanceId: string;
 }
 
 export interface PlanWeek {
