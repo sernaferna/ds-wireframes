@@ -38,6 +38,11 @@ import { getAllPlansForUserRouter } from './routes/user/plans/getAll';
 import { newUserPlan } from './routes/user/plans/new';
 import { updatePlanForUserRouter } from './routes/user/plans/update';
 
+import { getAllInstantiatedPlansRouter } from './routes/user/instantiatedPlans/getAll';
+import { newIPForUserRouter } from './routes/user/instantiatedPlans/new';
+import { updateInstantiatedPlanForUser } from './routes/user/instantiatedPlans/update';
+import { deleteInstantiatedPlanForUserRouter } from './routes/user/instantiatedPlans/delete';
+
 import { errorHandler, NotFoundError } from '@devouringscripture/common';
 
 console.log('API starting');
@@ -65,6 +70,10 @@ app.use('/api/user', [
   getAllPlansForUserRouter,
   newUserPlan,
   updatePlanForUserRouter,
+  getAllInstantiatedPlansRouter,
+  newIPForUserRouter,
+  updateInstantiatedPlanForUser,
+  deleteInstantiatedPlanForUserRouter,
 ]);
 app.use('/api/actions/entries', [
   getRecentActionsRouter,

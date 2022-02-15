@@ -25,7 +25,11 @@ export interface PlanDay {
   verses: Verse[];
 }
 
-export interface UserPlan {
-  plan: PlanAttributes;
+export interface BaseInstantiatedPlan {
+  planInstanceId: string;
   percentageComplete?: number;
+}
+
+export interface InstantiatedPlan extends BaseInstantiatedPlan {
+  id: string;
 }
