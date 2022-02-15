@@ -11,4 +11,8 @@ export class NotFoundError extends CustomError {
   serializeErrors() {
     return [{ message: 'Resource not found', field: this.resource }];
   }
+
+  serializeErrorsToString(): string {
+    return `Resource not found: ${this.resource}`;
+  }
 }

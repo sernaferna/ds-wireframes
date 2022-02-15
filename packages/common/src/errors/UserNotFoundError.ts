@@ -11,4 +11,8 @@ export class UserNotFoundError extends CustomError {
   serializeErrors() {
     return [{ message: 'User not found', field: this.userId }];
   }
+
+  serializeErrorsToString(): string {
+    return `User ${this.userId} not found`;
+  }
 }

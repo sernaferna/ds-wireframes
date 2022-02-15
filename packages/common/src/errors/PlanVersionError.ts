@@ -12,4 +12,8 @@ export class PlanVersionError extends CustomError {
   serializeErrors() {
     return [{ message: `Invalid version number for plan: ${this.versionNumber}` }];
   }
+
+  serializeErrorsToString(): string {
+    return `${this.versionNumber} is an invalid version number`;
+  }
 }

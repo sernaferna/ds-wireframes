@@ -15,4 +15,14 @@ export class RequestValidationError extends CustomError {
       return { message: err.msg, field: err.param };
     });
   }
+
+  serializeErrorsToString(): string {
+    let message: string = 'Validation errors encountered:';
+
+    for (const err of this.errors) {
+      message += err.msg + ' / ' + err.param;
+    }
+
+    return message;
+  }
 }

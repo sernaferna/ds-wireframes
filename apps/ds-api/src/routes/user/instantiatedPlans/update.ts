@@ -17,7 +17,7 @@ router.put(
   [
     param('userId').isUUID().withMessage('User ID Required'),
     param('ipId').isUUID().withMessage('Instantiated Plan Instance ID required'),
-    body('planInstanceId').withMessage('IP IDs must match'),
+    body('planInstanceId').isUUID().withMessage('IP IDs must match'),
     body('id').isUUID().withMessage('Instantiated Plan ID required'),
   ],
   validateRequest,

@@ -11,4 +11,8 @@ export class NotImplementedError extends CustomError {
   serializeErrors() {
     return [{ message: 'Not implemented', field: this.callingComponent }];
   }
+
+  serializeErrorsToString(): string {
+    return `${this.callingComponent} not implemented`;
+  }
 }

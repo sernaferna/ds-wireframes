@@ -27,13 +27,18 @@ router.get(
         throw new UserNotFoundError(userId);
       }
 
+      console.log(`user index ${userIndex}`);
+
       const existingPlans: InstantiatedPlan[] = db.getObject<InstantiatedPlan[]>(
         `/users[${userIndex}]/instantiatedPlans`
       );
 
+      console.log(`${existingPlans.length} existing plans found`);
+
       const returnArray: BaseInstantiatedPlan[] = existingPlans.slice();
 
       const userPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>(`/users[${userIndex}]/plans`);
+      console.log(`${userPlans.length} user plans found`);
       for (const plan of userPlans) {
         if (existingPlans.filter((p) => p.planInstanceId === plan.planInstanceId).length < 1) {
           const newItem: BaseInstantiatedPlan = { planInstanceId: plan.planInstanceId };
@@ -42,6 +47,7 @@ router.get(
       }
 
       const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
+      console.log(`${publicPlans.length} public plans found`);
       for (const plan of publicPlans) {
         if (existingPlans.filter((p) => p.planInstanceId === plan.planInstanceId).length < 1) {
           const newItem: BaseInstantiatedPlan = { planInstanceId: plan.planInstanceId };
@@ -51,6 +57,7 @@ router.get(
 
       res.send(returnArray);
     } catch (err) {
+      console.log(err);
       if (err instanceof CustomError) {
         return next(err);
       }

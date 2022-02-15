@@ -11,4 +11,8 @@ export class DatabaseError extends CustomError {
   serializeErrors() {
     return [{ message: 'Database error', field: this.callingComponent }];
   }
+
+  serializeErrorsToString(): string {
+    return `Database error; calling component: ${this.callingComponent}`;
+  }
 }

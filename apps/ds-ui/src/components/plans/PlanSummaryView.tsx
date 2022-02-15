@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserPlan } from '@devouringscripture/common';
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,24 +9,36 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 import Badge from 'react-bootstrap/Badge';
+import { useGetPlansByIdQuery } from '../../services/PlanService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 interface PlanSummaryViewAttrs {
-  userPlan: UserPlan;
+  planId: string;
+  percentageComplete?: number;
 }
-export const PlanSummaryView = ({ userPlan }: PlanSummaryViewAttrs) => {
-  const { plan } = userPlan;
+export const PlanSummaryView = ({ planId, percentageComplete = undefined }: PlanSummaryViewAttrs) => {
+  const { data, error, isLoading } = useGetPlansByIdQuery(planId);
+
+  if (isLoading) {
+    return <LoadingMessage />;
+  }
+  if (error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   const apocPopover = (
     <Popover id="apocPopover">
       <Popover.Body>
-        {plan.includesApocrypha ? 'This plan includes apocryphal books' : 'This plan does not include apocryphal books'}
+        {data!.includesApocrypha
+          ? 'This plan includes apocryphal books'
+          : 'This plan does not include apocryphal books'}
       </Popover.Body>
     </Popover>
   );
 
   const apocIcon = (
     <OverlayTrigger trigger={['hover', 'focus']} overlay={apocPopover}>
-      {plan.includesApocrypha ? <Journal /> : <JournalX />}
+      {data!.includesApocrypha ? <Journal /> : <JournalX />}
     </OverlayTrigger>
   );
 
@@ -41,28 +52,28 @@ export const PlanSummaryView = ({ userPlan }: PlanSummaryViewAttrs) => {
   };
 
   return (
-    <Alert variant={plan.isAdmin ? 'primary' : 'info'} className="plan-summary-view">
-      <Alert.Heading>{plan.name}</Alert.Heading>
+    <Alert variant={data!.isAdmin ? 'primary' : 'info'} className="plan-summary-view">
+      <Alert.Heading>{data!.name}</Alert.Heading>
       <Row>
         <Col xs="1">{apocIcon}</Col>
         <Col xs="11">
-          <p>{plan.description}</p>
+          <p>{data!.description}</p>
         </Col>
       </Row>
 
       <Row>
         <Col className="version-col">
-          <Badge bg={plan.isAdmin ? 'primary' : 'info'}>v{plan.version}</Badge>
+          <Badge bg={data!.isAdmin ? 'primary' : 'info'}>v{data!.version}</Badge>
         </Col>
         <Col className="num-weeks-col">
-          <Badge bg={plan.isAdmin ? 'primary' : 'info'}>{plan.length} weeks</Badge>
+          <Badge bg={data!.isAdmin ? 'primary' : 'info'}>{data!.length} weeks</Badge>
         </Col>
         <Col className="percent-complete-col">
-          {userPlan.percentageComplete ? (
+          {percentageComplete ? (
             <ProgressBar
-              now={userPlan.percentageComplete * 100}
-              label={`${userPlan.percentageComplete * 100}%`}
-              variant={plan.isAdmin ? 'primary' : 'info'}
+              now={percentageComplete * 100}
+              label={`${percentageComplete * 100}%`}
+              variant={data!.isAdmin ? 'primary' : 'info'}
             />
           ) : (
             <i>Not subscribed</i>
@@ -71,7 +82,7 @@ export const PlanSummaryView = ({ userPlan }: PlanSummaryViewAttrs) => {
       </Row>
       <Row className="button-row">
         <Col className="edit-col">
-          {plan.isAdmin ? (
+          {data!.isAdmin ? (
             <Button variant="primary" onClick={buttonClicked}>
               Edit
             </Button>
@@ -80,7 +91,7 @@ export const PlanSummaryView = ({ userPlan }: PlanSummaryViewAttrs) => {
           )}
         </Col>
         <Col className="join-col">
-          {userPlan.percentageComplete ? (
+          {percentageComplete ? (
             <Button variant="danger" onClick={buttonClicked}>
               Leave
             </Button>
@@ -91,7 +102,7 @@ export const PlanSummaryView = ({ userPlan }: PlanSummaryViewAttrs) => {
           )}
         </Col>
         <Col className="deleteCol">
-          {plan.isAdmin ? (
+          {data!.isAdmin ? (
             ''
           ) : (
             <Button variant="danger" onClick={buttonClicked}>

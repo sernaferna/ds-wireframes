@@ -16,4 +16,8 @@ export class InvalidNewVersionError extends CustomError {
       },
     ];
   }
+
+  serializeErrorsToString(): string {
+    return `New version number (${this.newVersion} must be greater than old version number (${this.oldVersion}).`;
+  }
 }
