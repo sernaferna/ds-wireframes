@@ -10,12 +10,13 @@ router.get(
   [param('planInstanceId').isUUID().withMessage('Valid Instance ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Get Plan by ID called: ${req.params.planInstanceId}`);
+    const planInstanceId: string = req.params.planInstanceId;
+    console.log(`Get Plan by ID called: ${planInstanceId}`);
 
     try {
-      const index = db.getIndex('/plans', req.params.id, 'planInstanceId');
+      const index = db.getIndex('/plans', planInstanceId, 'planInstanceId');
       if (index < 0) {
-        throw new NotFoundError('Plan not found');
+        throw new NotFoundError(`Plan ${planInstanceId}`);
       }
 
       const item: PlanAttributes = db.getObject<PlanAttributes>(`/plans[${index}]`);
