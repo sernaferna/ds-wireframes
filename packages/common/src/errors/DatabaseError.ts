@@ -9,7 +9,7 @@ export class DatabaseError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ message: 'Database error', field: this.callingComponent }];
+    return [{ message: `Database error from component ${this.callingComponent}` }];
   }
 
   serializeErrorsToString(): string {
