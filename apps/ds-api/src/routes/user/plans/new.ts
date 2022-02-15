@@ -6,7 +6,7 @@ import {
   BasePlanAttributes,
   PlanAttributes,
   CustomError,
-  NotFoundError,
+  UserNotFoundError,
 } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../../services/db';
@@ -27,7 +27,7 @@ router.post(
     try {
       const userIndex = db.getIndex('/users', userId);
       if (userIndex < 0) {
-        throw new NotFoundError('User not found');
+        throw new UserNotFoundError(userId);
       }
 
       const newItem: PlanAttributes = {

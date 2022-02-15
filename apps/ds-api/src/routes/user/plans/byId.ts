@@ -1,6 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator';
-import { validateRequest, NotFoundError, PlanAttributes, CustomError, DatabaseError } from '@devouringscripture/common';
+import {
+  validateRequest,
+  NotFoundError,
+  UserNotFoundError,
+  PlanAttributes,
+  CustomError,
+  DatabaseError,
+} from '@devouringscripture/common';
 import { db } from '../../../services/db';
 
 const router = express.Router();
@@ -20,7 +27,7 @@ router.get(
     try {
       const userIndex = db.getIndex('/users', userId);
       if (userIndex < 0) {
-        throw new NotFoundError('User not found');
+        throw new UserNotFoundError(userId);
       }
 
       console.log(`user ${userIndex}`);

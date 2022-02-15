@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator';
-import { PlanAttributes, validateRequest, NotFoundError, CustomError } from '@devouringscripture/common';
+import { PlanAttributes, validateRequest, UserNotFoundError, CustomError } from '@devouringscripture/common';
 import { db } from '../../../services/db';
 
 const router = express.Router();
@@ -10,12 +10,13 @@ router.get(
   [param('userId').isUUID().withMessage('Valid UserID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('getAll Plans called');
+    const userId: string = req.params.userId;
+    console.log(`getAll Plans called for user ${userId}`);
 
     try {
-      const userIndex = db.getIndex('/users', req.params.userId);
+      const userIndex = db.getIndex('/users', userId);
       if (userIndex < 0) {
-        throw new NotFoundError('User not found');
+        throw new UserNotFoundError(userId);
       }
 
       const plans: PlanAttributes[] = db.getObject<PlanAttributes[]>(`/users[${userIndex}]/plans`);

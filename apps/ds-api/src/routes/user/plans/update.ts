@@ -6,6 +6,7 @@ import {
   CustomError,
   DatabaseError,
   NotFoundError,
+  UserNotFoundError,
   v2GTV1,
   InvalidNewVersionError,
 } from '@devouringscripture/common';
@@ -33,7 +34,7 @@ router.put(
 
       const userIndex = db.getIndex('/users', userId);
       if (userIndex < 0) {
-        throw new NotFoundError('User not found');
+        throw new UserNotFoundError(userId);
       }
 
       const planIndex = db.getIndex(`/users[${userIndex}]/plans`, newPlan.planInstanceId, 'planInstanceId');
