@@ -38,4 +38,10 @@ describe('get formatted test suite', () => {
 
     expect(formatted).toEqual('Genesis 1:1–5');
   });
+
+  it('keeps non-contiguous commas', () => {
+    const formatted = getFormattedReference('Gen.1.1-Gen.1.3,Gen.2.4-Gen.2.5');
+
+    expect(formatted).toEqual('Genesis 1:1–3; 2:4–5');
+  });
 });
