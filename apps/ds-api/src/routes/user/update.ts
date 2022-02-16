@@ -15,15 +15,8 @@ router.put(
     const newUser: UserAttributes = req.body as UserAttributes;
     console.log(`updateUser called for ${newUser.id}`);
 
-    const oldUser = db.getObject<UserAttributes>('/users[0]');
-    if (oldUser.plans) {
-      newUser.plans = oldUser.plans.slice();
-    }
-
     db.delete('/users[0]');
     db.push('/users[]', newUser);
-
-    delete newUser.plans;
 
     res.send(newUser);
   }

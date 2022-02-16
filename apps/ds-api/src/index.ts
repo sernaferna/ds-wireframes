@@ -32,16 +32,10 @@ import { getAllPublicPlansRouter } from './routes/plans/getAll';
 import { deletePublicPlanRouter } from './routes/plans/delete';
 import { getPublicPlanByIdRouter } from './routes/plans/byId';
 
-import { getUserPlanByIdRouter } from './routes/user/plans/byId';
-import { deleteUserPlanRouter } from './routes/user/plans/delete';
-import { getAllPlansForUserRouter } from './routes/user/plans/getAll';
-import { newUserPlan } from './routes/user/plans/new';
-import { updatePlanForUserRouter } from './routes/user/plans/update';
-
-import { getAllInstantiatedPlansRouter } from './routes/user/instantiatedPlans/getAll';
-import { newIPForUserRouter } from './routes/user/instantiatedPlans/new';
-import { updateInstantiatedPlanForUser } from './routes/user/instantiatedPlans/update';
-import { deleteInstantiatedPlanForUserRouter } from './routes/user/instantiatedPlans/delete';
+import { deleteInstantiatedPlanRouter } from './routes/instantiatedPlans/delete';
+import { getAllInstantiatedPlansRouter } from './routes/instantiatedPlans/getAll';
+import { newIPRouter } from './routes/instantiatedPlans/new';
+import { updateInstantiatedPlanRouter } from './routes/instantiatedPlans/update';
 
 import { errorHandler, NotFoundError } from '@devouringscripture/common';
 
@@ -62,19 +56,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/pi', [getAllPrayerItemsRouter, getPIById, markReadRouter, newPrayerItemRouter, deletePrayerItemRouter]);
-app.use('/api/user', [
-  getUserByIdRouter,
-  updateUserRouter,
-  getUserPlanByIdRouter,
-  deleteUserPlanRouter,
-  getAllPlansForUserRouter,
-  newUserPlan,
-  updatePlanForUserRouter,
-  getAllInstantiatedPlansRouter,
-  newIPForUserRouter,
-  updateInstantiatedPlanForUser,
-  deleteInstantiatedPlanForUserRouter,
-]);
+app.use('/api/user', [getUserByIdRouter, updateUserRouter, getAllInstantiatedPlansRouter]);
 app.use('/api/actions/entries', [
   getRecentActionsRouter,
   getActionForDateRouter,
@@ -96,6 +78,12 @@ app.use('/api/plans/public', [
   updatePublicPlanRouter,
   deletePublicPlanRouter,
   getPublicPlanByIdRouter,
+]);
+app.use('/api/ip', [
+  deleteInstantiatedPlanRouter,
+  getAllInstantiatedPlansRouter,
+  newIPRouter,
+  updateInstantiatedPlanRouter,
 ]);
 
 app.all('*', async (req, res, next) => {

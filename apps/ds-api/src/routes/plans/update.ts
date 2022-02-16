@@ -34,7 +34,7 @@ router.put(
         name: newPlan.name,
         description: newPlan.description,
         length: newPlan.length,
-        isAdmin: true,
+        isAdmin: newPlan.isAdmin,
         includesApocrypha: newPlan.includesApocrypha,
         includeWeekends: newPlan.includeWeekends,
         version: newPlan.version,

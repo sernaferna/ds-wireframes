@@ -3,13 +3,13 @@ import { BaseInstantiatedPlan } from '@devouringscripture/common';
 
 export const instantiatedPlanApi = createApi({
   reducerPath: 'instantiatedPlans',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/user' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/ip' }),
   tagTypes: ['instantiatedPlans', 'basePlans'],
   endpoints: (builder) => ({
     getAllInstantiatedPlanItems: builder.query<BaseInstantiatedPlan[], string>({
       query(userId) {
         return {
-          url: `/${userId}/ip`,
+          url: `/`,
         };
       },
       providesTags: (result) =>
