@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -12,6 +12,8 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 export const EditPlan = () => {
+  const [isFreeform, setIsFreeform] = useState(false);
+
   return (
     <Container fluid>
       <h1>Edit Plan</h1>
@@ -74,23 +76,39 @@ export const EditPlan = () => {
             </Row>
 
             <Container className="p-5 bg-light mt-3">
-              <Form.Label htmlFor="reference" className="h2">
-                Passage(s)
-              </Form.Label>
-              <InputGroup>
-                <Form.Control
-                  id="reference"
-                  size="lg"
-                  defaultValue="Genesis 1-50"
-                  aria-describedby="referenceHelpText"
-                />
-                <Button size="lg" variant="outline-primary">
-                  Reset and Load All
-                </Button>
-              </InputGroup>
-              <Form.Text id="referenceHelpText" muted>
-                Changing this value resets all days below
-              </Form.Text>
+              <Form.Check
+                type="switch"
+                id="freeform"
+                label="Free-form entries?"
+                checked={isFreeform}
+                onChange={() => {
+                  setIsFreeform(!isFreeform);
+                }}
+              />
+
+              {!isFreeform ? (
+                <>
+                  <Form.Label htmlFor="reference" className="h2">
+                    Passage(s)
+                  </Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      id="reference"
+                      size="lg"
+                      defaultValue="Genesis 1-50"
+                      aria-describedby="referenceHelpText"
+                    />
+                    <Button size="lg" variant="outline-primary">
+                      Reset and Load All
+                    </Button>
+                  </InputGroup>
+                  <Form.Text id="referenceHelpText" muted>
+                    Changing this value resets all days below
+                  </Form.Text>
+                </>
+              ) : (
+                ''
+              )}
 
               <h2 className="mt-3">Week 1</h2>
               <InputGroup>
