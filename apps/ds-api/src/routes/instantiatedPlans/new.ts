@@ -23,6 +23,7 @@ router.post(
     try {
       const newPlan: InstantiatedPlan = {
         planInstanceId: newBasePlan.planInstanceId,
+        percentageComplete: newBasePlan.percentageComplete,
         id: uuidv4(),
       };
 

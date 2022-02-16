@@ -10,7 +10,12 @@ import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 import Badge from 'react-bootstrap/Badge';
 import { useGetPlansByIdQuery } from '../../services/PlanService';
+import {
+  useNewInstantiatedPlanMutation,
+  useDeleteInstantiatedPlanMutation,
+} from '../../services/InstantiatedPlanService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { BaseInstantiatedPlan } from '@devouringscripture/common';
 
 interface PlanSummaryViewAttrs {
   planId: string;
@@ -18,6 +23,8 @@ interface PlanSummaryViewAttrs {
 }
 export const PlanSummaryView = ({ planId, percentageComplete = undefined }: PlanSummaryViewAttrs) => {
   const { data, error, isLoading } = useGetPlansByIdQuery(planId);
+  const [sendNewPlan] = useNewInstantiatedPlanMutation();
+  const [sendRemovePlan] = useDeleteInstantiatedPlanMutation();
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -51,6 +58,19 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
     });
   };
 
+  const createIP = (planInstanceId: string) => {
+    const newPlan: BaseInstantiatedPlan = {
+      planInstanceId: planInstanceId,
+      percentageComplete: 0,
+    };
+
+    sendNewPlan(newPlan);
+  };
+
+  const deleteIP = (planInstanceId: string) => {
+    sendRemovePlan(planInstanceId);
+  };
+
   return (
     <Alert variant={data!.isAdmin ? 'primary' : 'info'} className="plan-summary-view">
       <Alert.Heading>{data!.name}</Alert.Heading>
@@ -69,7 +89,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
           <Badge bg={data!.isAdmin ? 'primary' : 'info'}>{data!.length} weeks</Badge>
         </Col>
         <Col className="percent-complete-col">
-          {percentageComplete ? (
+          {percentageComplete !== undefined ? (
             <ProgressBar
               now={percentageComplete * 100}
               label={`${percentageComplete * 100}%`}
@@ -91,12 +111,22 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
           )}
         </Col>
         <Col className="join-col">
-          {percentageComplete ? (
-            <Button variant="danger" onClick={buttonClicked}>
+          {percentageComplete !== undefined ? (
+            <Button
+              variant="danger"
+              onClick={() => {
+                deleteIP(data!.planInstanceId);
+              }}
+            >
               Leave
             </Button>
           ) : (
-            <Button variant="primary" onClick={buttonClicked}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                createIP(data!.planInstanceId);
+              }}
+            >
               Start
             </Button>
           )}

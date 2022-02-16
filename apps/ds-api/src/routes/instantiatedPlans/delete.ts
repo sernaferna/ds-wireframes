@@ -14,7 +14,7 @@ router.delete(
     console.log(`Deleting instantiated plan ${ipId}`);
 
     try {
-      const planIndex = db.getIndex(`/instantiatedPlans`, ipId);
+      const planIndex = db.getIndex(`/instantiatedPlans`, ipId, 'planInstanceId');
       if (planIndex < 0) {
         throw new NotFoundError(`Plan ${ipId}`);
       }
