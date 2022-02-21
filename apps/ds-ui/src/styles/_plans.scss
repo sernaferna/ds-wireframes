@@ -1,11 +1,11 @@
 .plan-list-col {
   @extend .col-12;
-  @extend .col-lg-9;
+  @extend .col-lg-7;
 }
 
 .edit-plan-col {
   @extend .col-12;
-  @extend .col-lg-3;
+  @extend .col-lg-5;
 }
 
 .plan-summary-view {
@@ -48,4 +48,12 @@
   .sidebar-content {
     @extend .sticky-top;
   }
+}
+
+.alter-content-field {
+  @extend .text-dark;
+  @extend .border-dark;
+  @extend .bg-warning;
+  @extend .bg-gradient;
+  @extend .fw-bold;
 }
