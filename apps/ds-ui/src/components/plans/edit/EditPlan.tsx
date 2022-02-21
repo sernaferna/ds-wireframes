@@ -14,6 +14,8 @@ import { RenderDay } from './RenderDay';
 import { isVersionValid } from '@devouringscripture/common';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 
 const schema = yup.object({
   name: yup.string().required('Name required'),
@@ -29,19 +31,31 @@ const schema = yup.object({
 
       return isVersionValid(value);
     }),
+  isAdmin: yup.boolean(),
+  includeApocrypha: yup.boolean(),
 });
 type ValuesSchema = yup.InferType<typeof schema>;
+
+const initialValues: ValuesSchema = {
+  name: '',
+  description: '',
+  numWeeks: 0,
+  version: '1.0.0',
+  isAdmin: false,
+  includeApocrypha: false,
+};
 
 export const EditPlan = () => {
   const [isFreeform, setIsFreeform] = useState(false);
   const [showWarning, setShowWarning] = useState(true);
+  const userResponse = useGetUserByIdQuery(HARDCODED_USER_ID);
 
-  const initialValues: ValuesSchema = {
-    name: '',
-    description: '',
-    numWeeks: 52,
-    version: '1.0.0',
-  };
+  if (userResponse.isLoading) {
+    return <LoadingMessage />;
+  }
+  if (userResponse.error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   const incrementorClicked = (dayNum: number) => {
     getToastManager().show({
@@ -214,13 +228,36 @@ export const EditPlan = () => {
                         isValid={!formikProps.errors.description && !!formikProps.touched.description}
                         isInvalid={!!formikProps.errors.description && !!formikProps.touched.description}
                       />
+                      <Form.Control.Feedback type="invalid">{formikProps.errors.description}</Form.Control.Feedback>
                     </Col>
                     <Col xs="2">
-                      <Form.Check type="checkbox" label="Admin Plan" aria-describedby="isPlanAdminHelpText" />
-                      <Form.Text id="isPlanAdminHelpText" muted>
-                        Available to all users
-                      </Form.Text>
-                      <Form.Check type="checkbox" label="Include Apocrypha" aria-describedby="isApocHelpText" />
+                      {userResponse.data!.isAdmin ? (
+                        <>
+                          <Form.Check
+                            name="isAdmin"
+                            type="checkbox"
+                            label="Admin Plan"
+                            aria-describedby="isPlanAdminHelpText"
+                            checked={formikProps.values.isAdmin}
+                            onChange={formikProps.handleChange}
+                            onBlur={formikProps.handleBlur}
+                          />
+                          <Form.Text id="isPlanAdminHelpText" muted>
+                            Available to all users
+                          </Form.Text>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      <Form.Check
+                        name="includeApocrypha"
+                        type="checkbox"
+                        label="Include Apocrypha"
+                        aria-describedby="isApocHelpText"
+                        checked={formikProps.values.includeApocrypha}
+                        onChange={formikProps.handleChange}
+                        onBlur={formikProps.handleBlur}
+                      />
                       <Form.Text id="isApocHelpText" muted>
                         Include Apocryphal books
                       </Form.Text>
@@ -417,9 +454,13 @@ export const EditPlan = () => {
                     <Button variant="primary" type="submit" disabled={!formikProps.isValid || !formikProps.dirty}>
                       Save
                     </Button>
-                    <Button variant="success" disabled={!formikProps.isValid || !formikProps.dirty}>
-                      Publish
-                    </Button>
+                    {userResponse.data!.isAdmin ? (
+                      <Button variant="success" disabled={!formikProps.isValid || !formikProps.dirty}>
+                        Publish
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
                     <Button variant="danger">New</Button>
                   </div>
                 </div>
