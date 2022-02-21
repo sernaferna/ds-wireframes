@@ -32,4 +32,9 @@ export interface BaseInstantiatedPlan {
 
 export interface InstantiatedPlan extends BaseInstantiatedPlan {
   id: string;
+  weeks?: {
+    days: {
+      completed: boolean;
+    }[];
+  }[];
 }
