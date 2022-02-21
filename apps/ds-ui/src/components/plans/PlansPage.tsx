@@ -8,6 +8,7 @@ import { PlanSummaryView } from './PlanSummaryView';
 import { useGetAllInstantiatedPlanItemsQuery } from '../../services/InstantiatedPlanService';
 import { HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { CurrentReadingPlan } from '../read/CurrentReadingPlan';
 
 export const PlansPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +44,7 @@ export const PlansPage = () => {
               {paginationElement}
             </Col>
             <Col className="edit-plan-col">
-              <p>Edit Reading Plan</p>
+              <CurrentReadingPlan />
             </Col>
           </Row>
         </Col>
