@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Stack from 'react-bootstrap/Stack';
 import Alert from 'react-bootstrap/Alert';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
@@ -74,19 +73,19 @@ export const EditPlan = () => {
   return (
     <Container fluid>
       <h1>Edit Plan</h1>
-      <Row>
-        <Col className="plan-edit-details">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={schema}
-            validateOnBlur={true}
-            validateOnChange={true}
-            onSubmit={(values: ValuesSchema) => {
-              handleSubmit(values);
-            }}
-          >
-            {(formikProps: FormikProps<ValuesSchema>) => (
-              <Form noValidate onSubmit={formikProps.handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        validateOnBlur={true}
+        validateOnChange={true}
+        onSubmit={(values: ValuesSchema) => {
+          handleSubmit(values);
+        }}
+      >
+        {(formikProps: FormikProps<ValuesSchema>) => (
+          <Form noValidate onSubmit={formikProps.handleSubmit}>
+            <Row>
+              <Col className="plan-edit-details">
                 <Container className="p-3 bg-light">
                   <Alert variant="warning" dismissible show={showWarning} onClose={() => setShowWarning(false)}>
                     Altering <b>these settings</b> will reset weeks and days set below.
@@ -411,30 +410,24 @@ export const EditPlan = () => {
                     osis="Genesis 7:1-24"
                   />
                 </Container>
-                <Button variant="primary" type="submit" disabled={!formikProps.isValid || !formikProps.dirty}>
-                  Submit
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </Col>
-        <Col className="plan-edit-sidebar">
-          <div className="sidebar-content">
-            <div className="d-grid gap-2">
-              <Button variant="primary">Save</Button>
-              <Button variant="success">Publish</Button>
-              <Button variant="primary">New</Button>
-            </div>
-
-            <h2 className="mt-3">History of Changes</h2>
-            <Stack gap={2}>
-              <div className="bg-light border">Created</div>
-              <div className="bg-light border">Set # Weeks</div>
-              <div className="bg-light border">Adusted week</div>
-            </Stack>
-          </div>
-        </Col>
-      </Row>
+              </Col>
+              <Col className="plan-edit-sidebar">
+                <div className="sidebar-content">
+                  <div className="d-grid gap-2">
+                    <Button variant="primary" type="submit" disabled={!formikProps.isValid || !formikProps.dirty}>
+                      Save
+                    </Button>
+                    <Button variant="success" disabled={!formikProps.isValid || !formikProps.dirty}>
+                      Publish
+                    </Button>
+                    <Button variant="danger">New</Button>
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Form>
+        )}
+      </Formik>
     </Container>
   );
 };
