@@ -2,11 +2,11 @@ import React, { useState, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { NavLink } from 'react-router-dom';
 import { PlanSidebar } from './PlanSidebar';
 import { paginateItems } from '../../helpers/pagination';
 import { PlanSummaryView } from './PlanSummaryView';
 import { useGetAllInstantiatedPlanItemsQuery } from '../../services/InstantiatedPlanService';
-import { HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { CurrentReadingPlan } from '../read/CurrentReadingPlan';
 import { BaseInstantiatedPlan } from '@devouringscripture/common';
@@ -27,7 +27,7 @@ const getItemList = (data: BaseInstantiatedPlan[] | undefined) => {
 
 export const PlansPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data, error, isLoading } = useGetAllInstantiatedPlanItemsQuery(HARDCODED_USER_ID);
+  const { data, error, isLoading } = useGetAllInstantiatedPlanItemsQuery();
 
   const itemList = useMemo(() => getItemList(data), [data]);
 
@@ -47,6 +47,13 @@ export const PlansPage = () => {
           <PlanSidebar />
         </Col>
         <Col className="page-main-content-col">
+          <Row className="mb-3">
+            <Col>
+              <NavLink className="btn btn-primary" key="/plans/edit" to="/plans/edit">
+                New Plan
+              </NavLink>
+            </Col>
+          </Row>
           <Row>
             <Col className="plan-list-col">
               {paginatedItems}
