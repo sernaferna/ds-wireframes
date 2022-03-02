@@ -29,7 +29,7 @@ export const RenderDay = ({
 
   if (osis !== undefined) {
     renderedText = osis;
-  } else {
+  } else if (verses !== undefined) {
     let tempOsis: string = '';
     for (const verse of verses!) {
       tempOsis += verse.osis + ',';
