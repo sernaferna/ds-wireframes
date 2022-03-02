@@ -5,20 +5,20 @@ import { ResponsiveContainer, BarChart, Bar, YAxis, XAxis, Tooltip } from 'recha
 interface DetailedReadingInterface {
   stats: ActionStats;
 }
-export const DetailedReading = (props: DetailedReadingInterface) => {
+export const DetailedReading = ({ stats }: DetailedReadingInterface) => {
   const data = [
     {
       name: 'Long OT',
-      value: props.stats.readLongOT,
+      value: stats.readLongOT,
     },
     {
       name: 'Short OT',
-      value: props.stats.readShortOT,
+      value: stats.readShortOT,
     },
-    { name: 'Long NT', value: props.stats.readLongNT },
+    { name: 'Long NT', value: stats.readLongNT },
     {
       name: 'Short NT',
-      value: props.stats.readShortNT,
+      value: stats.readShortNT,
     },
   ];
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Gear } from 'react-bootstrap-icons';
 import Container from 'react-bootstrap/Container';
@@ -56,16 +56,16 @@ export function Header() {
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
 
+  const toggleSettings = useCallback(() => {
+    dispatch(showSettingsPanel(!showSettings));
+  }, [showSettings, dispatch]);
+
   if (isLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage />;
   }
-
-  const toggleSettings = () => {
-    dispatch(showSettingsPanel(!showSettings));
-  };
 
   return (
     <Navbar id="header-navbar" bg="dark" variant="dark" expand="sm">

@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
@@ -36,21 +36,27 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
   const dispatch = useDispatch();
   const [deleteItem] = useDeletePassageItemMutation();
 
-  const removeItem = (e: SyntheticEvent) => {
-    dispatch(updateSelectedReadingItem(''));
-    deleteItem(passage.id);
-    e.stopPropagation();
-  };
-
-  const titleClicked = (id: string) => {
-    if (selectedPrayerID === id) {
+  const removeItem = useCallback(
+    (e: SyntheticEvent) => {
       dispatch(updateSelectedReadingItem(''));
-      dispatch(updateSelectedNote(''));
-    } else {
-      dispatch(updateSelectedReadingItem(id));
-      dispatch(updateSelectedNote(''));
-    }
-  };
+      deleteItem(passage.id);
+      e.stopPropagation();
+    },
+    [dispatch, deleteItem, passage.id]
+  );
+
+  const titleClicked = useCallback(
+    (id: string) => {
+      if (selectedPrayerID === id) {
+        dispatch(updateSelectedReadingItem(''));
+        dispatch(updateSelectedNote(''));
+      } else {
+        dispatch(updateSelectedReadingItem(id));
+        dispatch(updateSelectedNote(''));
+      }
+    },
+    [selectedPrayerID, dispatch]
+  );
 
   const bibleVersionLogo =
     passage.version === 'NIV' ? (

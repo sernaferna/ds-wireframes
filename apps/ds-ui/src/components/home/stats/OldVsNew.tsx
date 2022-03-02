@@ -5,10 +5,10 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 interface OvNInterface {
   stats: ActionStats;
 }
-export const OldVsNew = (props: OvNInterface) => {
+export const OldVsNew = ({ stats }: OvNInterface) => {
   const data = [
-    { name: 'Old Testament', value: props.stats.readLongOT + props.stats.readShortOT },
-    { name: 'New Testament', value: props.stats.readLongNT + props.stats.readShortNT },
+    { name: 'Old Testament', value: stats.readLongOT + stats.readShortOT },
+    { name: 'New Testament', value: stats.readLongNT + stats.readShortNT },
   ];
 
   return (

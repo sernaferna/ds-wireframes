@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useGetActionsForMonthQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useDispatch } from 'react-redux';
@@ -6,30 +6,20 @@ import { updateDateShowingInActions } from '../../stores/UISlice';
 import Calendar from 'react-calendar';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
+import { ActionsForDay } from '@devouringscripture/common';
 
 interface CalendarViewInterface {
   dateToShow: DateTime;
 }
 
-export function CalendarView(props: CalendarViewInterface) {
-  const [monthToShow, updateMonthToShow] = useState(props.dateToShow);
-  const dispatch = useDispatch();
-  let { data, error, isLoading } = useGetActionsForMonthQuery({
-    year: monthToShow.get('year'),
-    month: monthToShow.get('month'),
-  });
-  const userDataObj = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = userDataObj.data;
+const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
+  const actionsSet = new Set<string>();
 
-  if (isLoading || userDataObj.isLoading) {
-    return <LoadingMessage />;
-  }
-  if (error || userDataObj.error) {
-    return <ErrorLoadingDataMessage />;
+  if (data === undefined) {
+    return actionsSet;
   }
 
-  const actionsSet = new Set();
-  data!.forEach((element) => {
+  data.forEach((element) => {
     let finishedItems = false;
 
     for (let i = 0; i < element.customActions.length; i++) {
@@ -51,24 +41,52 @@ export function CalendarView(props: CalendarViewInterface) {
     }
   });
 
-  const dayClickedInCalendar = (value: Date, event: any) => {
-    const dateToDispatch = DateTime.fromJSDate(value);
-    dispatch(updateDateShowingInActions(dateToDispatch.toISODate()));
-  };
+  return actionsSet;
+};
+
+export function CalendarView({ dateToShow }: CalendarViewInterface) {
+  const [monthToShow, updateMonthToShow] = useState(dateToShow);
+  const dispatch = useDispatch();
+  let { data, error, isLoading } = useGetActionsForMonthQuery({
+    year: monthToShow.get('year'),
+    month: monthToShow.get('month'),
+  });
+  const userDataObj = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const userData = userDataObj.data;
+
+  const dayClickedInCalendar = useCallback(
+    (value: Date, event: any) => {
+      const dateToDispatch = DateTime.fromJSDate(value);
+      dispatch(updateDateShowingInActions(dateToDispatch.toISODate()));
+    },
+    [dispatch]
+  );
 
   interface PrevNextClickInterface {
     activeStartDate: Date;
     value: Date;
     view: string;
   }
-  const prevNextClickedInCalendar = (props: PrevNextClickInterface) => {
-    const monthDateToShow = DateTime.fromJSDate(props.activeStartDate);
-    updateMonthToShow(monthDateToShow);
-  };
+  const prevNextClickedInCalendar = useCallback(
+    (props: PrevNextClickInterface) => {
+      const monthDateToShow = DateTime.fromJSDate(props.activeStartDate);
+      updateMonthToShow(monthDateToShow);
+    },
+    [updateMonthToShow]
+  );
+
+  const actionsSet: Set<string> = useMemo(() => getActionSet(data), [data]);
+
+  if (isLoading || userDataObj.isLoading) {
+    return <LoadingMessage />;
+  }
+  if (error || userDataObj.error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   return (
     <Calendar
-      value={props.dateToShow.toJSDate()}
+      value={dateToShow.toJSDate()}
       minDate={new Date(userData!.signupDate)}
       maxDate={DateTime.now().toJSDate()}
       onClickDay={dayClickedInCalendar}

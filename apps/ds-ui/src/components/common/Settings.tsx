@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import Form from 'react-bootstrap/Form';
 import { UserAttributes } from '@devouringscripture/common';
@@ -8,24 +8,24 @@ export function Settings() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
+  const handleShowSIChange = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.showSizeIndicator = !newUser.settings.showSizeIndicator;
+    update(newUser);
+  }, [data, update]);
+
+  const handleShowTTChange = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.showToastTester = !newUser.settings.showToastTester;
+    update(newUser);
+  }, [data, update]);
+
   if (isLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage />;
   }
-
-  const handleShowSIChange = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.showSizeIndicator = !newUser.settings.showSizeIndicator;
-    update(newUser);
-  };
-
-  const handleShowTTChange = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.showToastTester = !newUser.settings.showToastTester;
-    update(newUser);
-  };
 
   const handleAdminChange = () => {
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
