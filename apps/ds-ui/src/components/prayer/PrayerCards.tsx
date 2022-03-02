@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/ToastManager';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -14,12 +14,13 @@ import {
   useDeletePrayerItemMutation,
 } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
-import { PrayerTypes } from '@devouringscripture/common';
+import { PrayerTypes, UserAttributes } from '@devouringscripture/common';
 import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import Row from 'react-bootstrap/Row';
 import { paginateItems } from '../../helpers/pagination';
+import { PrayerListItem } from '@devouringscripture/common';
 
 export const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
@@ -30,8 +31,22 @@ export const CardContainerRow = styled(Row).attrs(() => ({
 
 interface PrayerIconsContainerInterface {
   itemId: string;
+  deleteItem(id: string): void;
   children: JSX.Element;
 }
+const IconsContainer = ({ itemId, deleteItem, children }: PrayerIconsContainerInterface) => {
+  return (
+    <div className="icons-container">
+      {children}
+      <TrashFill
+        className="delete-icon"
+        onClick={() => {
+          deleteItem(itemId);
+        }}
+      />
+    </div>
+  );
+};
 
 const PlaceholderCard = () => {
   return (
@@ -55,67 +70,42 @@ const PlaceholderCard = () => {
   );
 };
 
-export function PrayerCards() {
-  const { data, error, isLoading } = useGetAllItemsQuery();
-  const [markRead] = useMarkReadMutation();
-  const [markUnread] = useMarkUnreadMutation();
-  const [deleteItem] = useDeletePrayerItemMutation();
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = tempObj.data;
-  const userIsLoading = tempObj.isLoading;
-  const userError = tempObj.error;
-
-  const prayerFilterString = useSelector(getPrayerViewFilter);
-
-  if (isLoading || userIsLoading) {
-    return (
-      <CardContainerRow>
-        {PlaceholderCard()}
-        {PlaceholderCard()}
-      </CardContainerRow>
-    );
+export const getPrayerIcon = (type: string | undefined): JSX.Element => {
+  if (type === undefined) {
+    return <></>;
   }
 
-  if (error || userError) {
-    return <ErrorLoadingDataMessage />;
+  if (type === PrayerTypes.praise) {
+    return <ShieldPlus />;
+  } else if (type === PrayerTypes.request) {
+    return <Tsunami />;
+  } else if (type === PrayerTypes.confession) {
+    return <EyeFill />;
   }
 
-  const handleCompleteButton = (id: string, complete: boolean) => {
-    try {
-      if (complete) {
-        markRead(id);
-      } else {
-        markUnread(id);
-      }
-      const message = complete ? 'Successfully marked complete' : 'Successfully marked incomplete';
-      getToastManager().show({
-        title: 'Success!',
-        content: message,
-        duration: TOAST_FADE_TIME,
-        type: ToastType.Success,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  return <></>;
+};
 
-  const showAll = userData!.settings.prayer.showAllItems;
-  const showAllTypes = userData!.settings.prayer.filters.showAll;
-  const showUnlabeledTypes = userData!.settings.prayer.filters.showUnLabeled;
-  const showRequestTypes = userData!.settings.prayer.filters.showRequests;
-  const showPraiseTypes = userData!.settings.prayer.filters.showPraise;
-  const showConfessionTypes = userData!.settings.prayer.filters.showConfessions;
+interface GetItemListParams {
+  data: PrayerListItem[] | undefined;
+  userData: UserAttributes | undefined;
+  prayerFilterString: string;
+  handleCompleteButton(id: string, complete: boolean): void;
+  deleteItem(id: string): void;
+}
+const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton, deleteItem }: GetItemListParams) => {
+  if (data === undefined || userData === undefined) {
+    return [];
+  }
 
-  const rawItems = data!.filter((item) => {
-    const completenessCheck: boolean = showAll || !item.completed;
+  const rawItems = data.filter((item) => {
+    const completenessCheck: boolean = userData.settings.prayer.showAllItems || !item.completed;
     const filterCheck: boolean =
-      showAllTypes ||
-      (showUnlabeledTypes && !item.type) ||
-      (showRequestTypes && item.type === PrayerTypes.request) ||
-      (showPraiseTypes && item.type === PrayerTypes.praise) ||
-      (showConfessionTypes && item.type === PrayerTypes.confession);
+      userData.settings.prayer.filters.showAll ||
+      (userData.settings.prayer.filters.showUnLabeled && !item.type) ||
+      (userData.settings.prayer.filters.showRequests && item.type === PrayerTypes.request) ||
+      (userData.settings.prayer.filters.showPraise && item.type === PrayerTypes.praise) ||
+      (userData.settings.prayer.filters.showConfessions && item.type === PrayerTypes.confession);
 
     let filterTextCheck: boolean = false;
     if (prayerFilterString.length > 0) {
@@ -135,8 +125,8 @@ export function PrayerCards() {
     return completenessCheck && filterCheck && filterTextCheck;
   });
 
-  const sortOption = userData!.settings.prayer.sort === 'date-asc' ? true : false;
-  const sortedItems = sortPrayerItems(rawItems, sortOption);
+  const sortAscending = userData.settings.prayer.sort === 'date-asc' ? true : false;
+  const sortedItems = sortPrayerItems(rawItems, sortAscending);
 
   const items = sortedItems.map((item) => {
     const submitButton = item.completed ? (
@@ -159,35 +149,17 @@ export function PrayerCards() {
       </Button>
     );
 
-    const IconsContainer = ({ itemId, children }: PrayerIconsContainerInterface) => {
-      return (
-        <div className="icons-container">
-          {children}
-          <TrashFill
-            className="delete-icon"
-            onClick={() => {
-              deleteItem(itemId);
-            }}
-          />
-        </div>
-      );
-    };
-
-    let icon;
-    if (item.type === PrayerTypes.praise) {
-      icon = <ShieldPlus />;
-    } else if (item.type === PrayerTypes.request) {
-      icon = <Tsunami />;
-    } else if (item.type === PrayerTypes.confession) {
-      icon = <EyeFill />;
-    }
+    const icon = getPrayerIcon(item.type);
 
     return (
       <Col key={item.id} className="mt-2">
         <Card className="prayer-card">
           <Card.Body className="pc-body">
             <Card.Title>
-              {item.title} <IconsContainer itemId={item.id}>{icon ? icon : <></>}</IconsContainer>
+              {item.title}{' '}
+              <IconsContainer itemId={item.id} deleteItem={deleteItem}>
+                {icon}
+              </IconsContainer>
             </Card.Title>
             <Card.Text className="max-height-text">{item.text}</Card.Text>
             {submitButton}
@@ -198,7 +170,63 @@ export function PrayerCards() {
     );
   });
 
-  const [paginatedItems, paginationElement] = paginateItems(items, 6, currentPage, setCurrentPage);
+  return items;
+};
+
+export function PrayerCards() {
+  const { data, error, isLoading } = useGetAllItemsQuery();
+  const [markRead] = useMarkReadMutation();
+  const [markUnread] = useMarkUnreadMutation();
+  const [deleteItem] = useDeletePrayerItemMutation();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const userData = tempObj.data;
+  const userIsLoading = tempObj.isLoading;
+  const userError = tempObj.error;
+
+  const prayerFilterString = useSelector(getPrayerViewFilter);
+
+  const handleCompleteButton = useCallback(
+    (id: string, complete: boolean) => {
+      try {
+        if (complete) {
+          markRead(id);
+        } else {
+          markUnread(id);
+        }
+        const message = complete ? 'Successfully marked complete' : 'Successfully marked incomplete';
+        getToastManager().show({
+          title: 'Success!',
+          content: message,
+          duration: TOAST_FADE_TIME,
+          type: ToastType.Success,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [markRead, markUnread]
+  );
+
+  const factoredItemList = useMemo(
+    () => getItemList({ data, userData, prayerFilterString, handleCompleteButton, deleteItem }),
+    [data, userData, prayerFilterString, handleCompleteButton, deleteItem]
+  );
+
+  if (isLoading || userIsLoading) {
+    return (
+      <CardContainerRow>
+        <PlaceholderCard />
+        <PlaceholderCard />
+      </CardContainerRow>
+    );
+  }
+  if (error || userError) {
+    return <ErrorLoadingDataMessage />;
+  }
+
+  const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);
 
   return (
     <CardContainerRow>

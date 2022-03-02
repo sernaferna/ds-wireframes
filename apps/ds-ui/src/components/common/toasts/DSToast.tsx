@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { CheckSquareFill, ExclamationDiamondFill, InfoCircleFill } from 'react-bootstrap-icons';
 import Toast from 'react-bootstrap/Toast';
 import { ToastType } from './ToastManager';
@@ -24,6 +24,29 @@ const getTypeName = (type: ToastType): string => {
   }
 
   return 'normal';
+};
+
+const getIcon = (type: ToastType): JSX.Element => {
+  switch (type) {
+    case ToastType.Info:
+      return <InfoCircleFill />;
+    case ToastType.Danger:
+      return <ExclamationDiamondFill />;
+    case ToastType.Dark:
+      return <InfoCircleFill />;
+    case ToastType.Light:
+      return <InfoCircleFill />;
+    case ToastType.Primary:
+      return <InfoCircleFill />;
+    case ToastType.Secondary:
+      return <InfoCircleFill />;
+    case ToastType.Success:
+      return <CheckSquareFill />;
+    case ToastType.Warning:
+      return <ExclamationDiamondFill />;
+    default:
+      return <InfoCircleFill />;
+  }
 };
 
 export interface ToastProps {
@@ -52,36 +75,7 @@ const DSToast: React.FC<ToastProps> = ({
   }, [destroy, duration]);
 
   const toastStyle = getTypeName(type);
-  let toastIcon: any = null;
-
-  switch (type) {
-    case ToastType.Info:
-      toastIcon = <InfoCircleFill />;
-      break;
-    case ToastType.Danger:
-      toastIcon = <ExclamationDiamondFill />;
-      break;
-    case ToastType.Dark:
-      toastIcon = <InfoCircleFill />;
-      break;
-    case ToastType.Light:
-      toastIcon = <InfoCircleFill />;
-      break;
-    case ToastType.Primary:
-      toastIcon = <InfoCircleFill />;
-      break;
-    case ToastType.Secondary:
-      toastIcon = <InfoCircleFill />;
-      break;
-    case ToastType.Success:
-      toastIcon = <CheckSquareFill />;
-      break;
-    case ToastType.Warning:
-      toastIcon = <ExclamationDiamondFill />;
-      break;
-    default:
-      toastIcon = <InfoCircleFill />;
-  }
+  const toastIcon = useMemo(() => getIcon(type), [type]);
 
   return (
     <Toast autohide delay={duration}>

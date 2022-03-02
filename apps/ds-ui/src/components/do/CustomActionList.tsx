@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import React, { ChangeEvent, SyntheticEvent, useState, useCallback, useMemo } from 'react';
 import {
   useGetCustomActionTypesQuery,
   useNewCustomActionMutation,
@@ -8,22 +8,18 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
-import { BaseActionType } from '@devouringscripture/common';
+import { BaseActionType, ActionType } from '@devouringscripture/common';
 
-export function CustomActionList() {
-  const { data, error, isLoading } = useGetCustomActionTypesQuery();
-  const [actionType, setActonType] = useState('');
-  const [newItem] = useNewCustomActionMutation();
-  const [deleteItem] = useDeleteCustomActionMutation();
-
-  if (isLoading) {
-    return <LoadingMessage />;
-  }
-  if (error) {
-    return <ErrorLoadingDataMessage />;
+interface GenerateListParams {
+  data: ActionType[] | undefined;
+  deleteCallback(id: string): void;
+}
+const generateList = ({ data, deleteCallback }: GenerateListParams) => {
+  if (data === undefined) {
+    return <></>;
   }
 
-  const list = data!.map((item) => {
+  const list = data.map((item) => {
     return (
       <li key={item.id}>
         {item.displayName}{' '}
@@ -31,7 +27,7 @@ export function CustomActionList() {
           size="sm"
           variant="danger"
           onClick={() => {
-            deleteItem(item.id);
+            deleteCallback(item.id);
           }}
         >
           Delete
@@ -40,17 +36,40 @@ export function CustomActionList() {
     );
   });
 
-  const setText = (event: ChangeEvent<HTMLInputElement>) => {
-    setActonType(event.target.value);
-  };
+  return list;
+};
+export function CustomActionList() {
+  const { data, error, isLoading } = useGetCustomActionTypesQuery();
+  const [actionType, setActonType] = useState('');
+  const [newItem] = useNewCustomActionMutation();
+  const [deleteItem] = useDeleteCustomActionMutation();
 
-  const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
-    const action: BaseActionType = {
-      displayName: actionType,
-    };
+  const setText = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      setActonType(event.target.value);
+    },
+    [setActonType]
+  );
 
-    newItem(action);
-  };
+  const handleSubmit = useCallback(
+    (event: SyntheticEvent<HTMLFormElement>) => {
+      const action: BaseActionType = {
+        displayName: actionType,
+      };
+
+      newItem(action);
+    },
+    [newItem, actionType]
+  );
+
+  const list = useMemo(() => generateList({ data, deleteCallback: deleteItem }), [data, deleteItem]);
+
+  if (isLoading) {
+    return <LoadingMessage />;
+  }
+  if (error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   return (
     <>

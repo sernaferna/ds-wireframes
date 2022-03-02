@@ -5,26 +5,26 @@ import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 interface AllActivitiesInterface {
   stats: ActionStats;
 }
-export const AllActivities = (props: AllActivitiesInterface) => {
+export const AllActivities = ({ stats }: AllActivitiesInterface) => {
   const data = [
     {
       name: 'Reading',
       children: [
         {
           name: 'Short OT',
-          value: props.stats.readShortOT,
+          value: stats.readShortOT,
         },
         {
           name: 'Long OT',
-          value: props.stats.readLongOT,
+          value: stats.readLongOT,
         },
         {
           name: 'Short NT',
-          value: props.stats.readShortNT,
+          value: stats.readShortNT,
         },
         {
           name: 'Long NT',
-          value: props.stats.readLongNT,
+          value: stats.readLongNT,
         },
       ],
     },
@@ -33,11 +33,11 @@ export const AllActivities = (props: AllActivitiesInterface) => {
       children: [
         {
           name: 'Convo',
-          value: props.stats.conversed,
+          value: stats.conversed,
         },
         {
           name: 'Pray',
-          value: props.stats.prayed,
+          value: stats.prayed,
         },
       ],
     },
@@ -46,7 +46,7 @@ export const AllActivities = (props: AllActivitiesInterface) => {
       children: [
         {
           name: 'Journal',
-          value: props.stats.journaled,
+          value: stats.journaled,
         },
       ],
     },

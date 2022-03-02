@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import { UserAttributes } from '@devouringscripture/common';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
@@ -12,6 +12,24 @@ export function HomeSidebar() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
+  const toggleSettings = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.home.showSettings = !newUser.settings.home.showSettings;
+    update(newUser);
+  }, [data, update]);
+
+  const toggleActions = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.home.showActions = !newUser.settings.home.showActions;
+    update(newUser);
+  }, [data, update]);
+
+  const togglePrayers = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.home.showPrayers = !newUser.settings.home.showPrayers;
+    update(newUser);
+  }, [data, update]);
+
   if (isLoading) {
     return <LoadingMessage />;
   }
@@ -22,24 +40,6 @@ export function HomeSidebar() {
   const showSettings = data!.settings.home.showSettings;
   const showActions = data!.settings.home.showActions;
   const showPrayers = data!.settings.home.showPrayers;
-
-  const toggleSettings = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.home.showSettings = !newUser.settings.home.showSettings;
-    update(newUser);
-  };
-
-  const toggleActions = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.home.showActions = !newUser.settings.home.showActions;
-    update(newUser);
-  };
-
-  const togglePrayers = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.home.showPrayers = !newUser.settings.home.showPrayers;
-    update(newUser);
-  };
 
   return (
     <>

@@ -5,10 +5,10 @@ import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 interface ReadScriptureInterface {
   stats: ActionStats;
 }
-export const ReadScripture = (props: ReadScriptureInterface) => {
+export const ReadScripture = ({ stats }: ReadScriptureInterface) => {
   const readUnreadData = [
-    { name: 'Read', value: props.stats.readScripture },
-    { name: `Didn't Read`, value: props.stats.dataSize - props.stats.readScripture },
+    { name: 'Read', value: stats.readScripture },
+    { name: `Didn't Read`, value: stats.dataSize - stats.readScripture },
   ];
 
   return (

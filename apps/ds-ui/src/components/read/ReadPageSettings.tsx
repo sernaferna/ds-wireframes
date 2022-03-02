@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import Form from 'react-bootstrap/Form';
@@ -8,6 +8,15 @@ export function ReadPageSettings() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
+  const changeDefaultVersion = useCallback(
+    (newVersion: string) => {
+      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+      newUser.settings.read.defaultVersion = newVersion;
+      update(newUser);
+    },
+    [data, update]
+  );
+
   if (isLoading) {
     return <LoadingMessage />;
   }
@@ -16,12 +25,6 @@ export function ReadPageSettings() {
   }
 
   const versionToUse = data!.settings.read.defaultVersion;
-
-  const changeDefaultVersion = (newVersion: string) => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-    newUser.settings.read.defaultVersion = newVersion;
-    update(newUser);
-  };
 
   return (
     <>
