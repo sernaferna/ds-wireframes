@@ -6,12 +6,8 @@ export const instantiatedPlanApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/ip' }),
   tagTypes: ['instantiatedPlans'],
   endpoints: (builder) => ({
-    getAllInstantiatedPlanItems: builder.query<BaseInstantiatedPlan[], string>({
-      query(userId) {
-        return {
-          url: `/`,
-        };
-      },
+    getAllInstantiatedPlanItems: builder.query<BaseInstantiatedPlan[], void>({
+      query: () => '/',
       providesTags: (result) =>
         result
           ? [
