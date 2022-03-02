@@ -4,7 +4,7 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '.
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
 
-export function HomeSettings() {
+export const HomeSettings = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
@@ -76,4 +76,4 @@ export function HomeSettings() {
       />
     </Form>
   );
-}
+};
