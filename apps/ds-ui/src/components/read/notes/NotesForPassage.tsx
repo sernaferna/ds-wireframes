@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
-import { NotesSnippet } from './NotesSnippet';
+import { getNoteList } from './AllNotes';
 
 interface NotesForPassageInterface {
   osis: string;
@@ -15,14 +15,14 @@ export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
     }
   }, [osis, result, trigger]);
 
+  const notesList = useMemo(() => getNoteList(result.data), [result.data]);
+
   if (result.isUninitialized || result.isLoading) {
     return <LoadingMessage />;
   }
   if (result.error) {
     return <ErrorLoadingDataMessage theError={result.error} />;
   }
-
-  const notesList = result.data!.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 
   return (
     <div className="notelist-for-passage">

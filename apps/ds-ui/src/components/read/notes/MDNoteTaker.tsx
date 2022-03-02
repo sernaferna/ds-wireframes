@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, Reducer } from 'react';
+import React, { useEffect, useReducer, Reducer, useCallback } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 import { useSelector, useDispatch } from 'react-redux';
@@ -179,15 +179,12 @@ export const MDNoteTaker = () => {
     }
 
     if (selectedNote) {
-      console.log(`useEffect selectedNote ${selectedNote}`);
       if (selectedNote !== localState.localNoteId) {
-        console.log(`triggering API`);
         dispatchLocalState({ type: ReducerActionType.RESET_FOR_SELECTED_NOTE, payload: selectedNote });
         noteTrigger(selectedNote);
       }
 
       if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
-        console.log(`note loading successful; noteResult: ${noteResult.data.osis}`);
         const range: OSISRange = getRangesForOSIS(noteResult.data.osis)[0];
         dispatchLocalState({
           type: ReducerActionType.RESET_FOR_NOTE_RETRIEVED,
@@ -228,14 +225,7 @@ export const MDNoteTaker = () => {
     localState.localSelectedReadingItem,
   ]);
 
-  if (passageResult.isLoading || noteResult.isLoading) {
-    return <LoadingMessage />;
-  }
-  if (passageResult.error || noteResult.error) {
-    return <ErrorLoadingDataMessage />;
-  }
-
-  const submitForm = () => {
+  const submitForm = useCallback(() => {
     dispatch(updateSelectedReadingItem(''));
 
     if (selectedNote) {
@@ -253,11 +243,27 @@ export const MDNoteTaker = () => {
     };
 
     submitNote(note);
-  };
+  }, [
+    dispatch,
+    selectedNote,
+    noteResult,
+    localState.value,
+    localState.startReference,
+    localState.endReference,
+    updateNote,
+    submitNote,
+  ]);
 
-  const newNoteBtn = () => {
+  const newNoteBtn = useCallback(() => {
     dispatch(updateSelectedNote(''));
-  };
+  }, [dispatch]);
+
+  if (passageResult.isLoading || noteResult.isLoading) {
+    return <LoadingMessage />;
+  }
+  if (passageResult.error || noteResult.error) {
+    return <ErrorLoadingDataMessage />;
+  }
 
   return (
     <>

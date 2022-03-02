@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDateForActions, updateDateShowingInActions } from '../../stores/UISlice';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
@@ -19,24 +19,27 @@ export function ActionsWidget() {
   const userApiObject = useGetUserByIdQuery(HARDCODED_USER_ID);
   const userData = userApiObject.data;
 
+  const handleDateScroll = useCallback(
+    (increase: boolean) => {
+      let newDate;
+
+      if (increase) {
+        newDate = dateToShow.plus({ day: 1 });
+      } else {
+        newDate = dateToShow.minus({ day: 1 });
+      }
+
+      dispatch(updateDateShowingInActions(newDate.toISODate()));
+    },
+    [dispatch, dateToShow]
+  );
+
   if (isLoading || userApiObject.isLoading) {
     return <LoadingMessage />;
   }
   if (error || userApiObject.error) {
     return <ErrorLoadingDataMessage />;
   }
-
-  const handleDateScroll = (increase: boolean) => {
-    let newDate;
-
-    if (increase) {
-      newDate = dateToShow.plus({ day: 1 });
-    } else {
-      newDate = dateToShow.minus({ day: 1 });
-    }
-
-    dispatch(updateDateShowingInActions(newDate.toISODate()));
-  };
 
   return (
     <Card className="action-widget-card">

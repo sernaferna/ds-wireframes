@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
@@ -8,6 +8,15 @@ export function HomeSettings() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
+  const changeDataFilterOption = useCallback(
+    (option: string) => {
+      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+      newUser.settings.home.statsFilter = option;
+      update(newUser);
+    },
+    [data, update]
+  );
+
   if (isLoading) {
     return <LoadingMessage />;
   }
@@ -16,12 +25,6 @@ export function HomeSettings() {
   }
 
   const dataFilter = data!.settings.home.statsFilter;
-
-  const changeDataFilterOption = (option: string) => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-    newUser.settings.home.statsFilter = option;
-    update(newUser);
-  };
 
   return (
     <Form>

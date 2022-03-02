@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useGetNoteByIdQuery } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import MDEditor from '@uiw/react-md-editor';
@@ -13,6 +13,12 @@ export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
   const { data, error, isLoading } = useGetNoteByIdQuery(noteID);
   const dispatch = useDispatch();
 
+  const selectNote = useCallback(() => {
+    if (noteID !== selectedNote) {
+      dispatch(updateSelectedNote(noteID));
+    }
+  }, [dispatch, selectedNote, noteID]);
+
   if (isLoading) {
     return <LoadingMessage />;
   }
@@ -22,12 +28,6 @@ export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
 
   const textToDisplay = noteID === selectedNote ? '[Editing] ' + data!.text : data!.text;
   const noteSnippet = textToDisplay.length > 99 ? textToDisplay.substring(0, 99) + '...' : textToDisplay;
-
-  const selectNote = () => {
-    if (noteID !== selectedNote) {
-      dispatch(updateSelectedNote(noteID));
-    }
-  };
 
   return (
     <div

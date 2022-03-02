@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
@@ -8,6 +8,58 @@ import { PrayerViewFilterComponent } from './PrayerViewFilterComponent';
 export function PrayerSettings() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
+
+  const changeFilterOption = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.prayer.showAllItems = !newUser.settings.prayer.showAllItems;
+    update(newUser);
+  }, [data, update]);
+
+  const changeSortOption = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    if (newUser.settings.prayer.sort === 'date-asc') {
+      newUser.settings.prayer.sort = 'date-desc';
+    } else {
+      newUser.settings.prayer.sort = 'date-asc';
+    }
+    update(newUser);
+  }, [data, update]);
+
+  const filterCheckClicked = useCallback(
+    (filterCheck: string) => {
+      const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+      const filters = newUser.settings.prayer.filters;
+
+      switch (filterCheck) {
+        case 'all':
+          if (filters.showAll) {
+            filters.showAll = false;
+          } else {
+            filters.showAll = true;
+            filters.showUnLabeled = true;
+            filters.showConfessions = true;
+            filters.showPraise = true;
+            filters.showRequests = true;
+          }
+          break;
+        case 'unlabeled':
+          filters.showUnLabeled = !filters.showUnLabeled;
+          break;
+        case 'requests':
+          filters.showRequests = !filters.showRequests;
+          break;
+        case 'praise':
+          filters.showPraise = !filters.showPraise;
+          break;
+        case 'confessions':
+          filters.showConfessions = !filters.showConfessions;
+          break;
+      }
+
+      update(newUser);
+    },
+    [data, update]
+  );
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -22,55 +74,6 @@ export function PrayerSettings() {
   if (sortOptions !== 'date-asc' && sortOptions !== 'date-desc') {
     sortOptions = 'date-asc';
   }
-
-  const changeFilterOption = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.prayer.showAllItems = !newUser.settings.prayer.showAllItems;
-    update(newUser);
-  };
-
-  const changeSortOption = () => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    if (newUser.settings.prayer.sort === 'date-asc') {
-      newUser.settings.prayer.sort = 'date-desc';
-    } else {
-      newUser.settings.prayer.sort = 'date-asc';
-    }
-    update(newUser);
-  };
-
-  const filterCheckClicked = (filterCheck: string) => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    const filters = newUser.settings.prayer.filters;
-
-    switch (filterCheck) {
-      case 'all':
-        if (filters.showAll) {
-          filters.showAll = false;
-        } else {
-          filters.showAll = true;
-          filters.showUnLabeled = true;
-          filters.showConfessions = true;
-          filters.showPraise = true;
-          filters.showRequests = true;
-        }
-        break;
-      case 'unlabeled':
-        filters.showUnLabeled = !filters.showUnLabeled;
-        break;
-      case 'requests':
-        filters.showRequests = !filters.showRequests;
-        break;
-      case 'praise':
-        filters.showPraise = !filters.showPraise;
-        break;
-      case 'confessions':
-        filters.showConfessions = !filters.showConfessions;
-        break;
-    }
-
-    update(newUser);
-  };
 
   return (
     <Form>

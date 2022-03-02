@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
 import Stack from 'react-bootstrap/Stack';
@@ -19,7 +19,7 @@ const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => 
 };
 
 const updateOrderNoInList = (initialList: VizualizationListItem[]): VizualizationListItem[] => {
-  let listToReturn: VizualizationListItem[] = [];
+  const listToReturn: VizualizationListItem[] = [];
 
   for (let i = 0; i < initialList.length; i++) {
     const item: VizualizationListItem = { name: initialList[i].name, active: initialList[i].active, order: i };
@@ -53,31 +53,37 @@ export const GraphSorter = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
+  const sortedItems = useMemo(() => sortVizList(data!.settings.home.vizualizationsOrder), [data]);
+
+  const handleActiveInactive = useCallback(
+    (itemName: string) => {
+      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+      newUser.settings.home.vizualizationsOrder.forEach((item) => {
+        if (item.name === itemName) {
+          item.active = !item.active;
+        }
+      });
+      update(newUser);
+    },
+    [data, update]
+  );
+
+  const handleSorterClick = useCallback(
+    (itemName: string, moveUp: boolean) => {
+      const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
+      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+      newUser.settings.home.vizualizationsOrder = newList;
+      update(newUser);
+    },
+    [sortedItems, update, data]
+  );
+
   if (isLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage />;
   }
-
-  const sortedItems = sortVizList(data!.settings.home.vizualizationsOrder);
-
-  const handleActiveInactive = (itemName: string) => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-    newUser.settings.home.vizualizationsOrder.forEach((item) => {
-      if (item.name === itemName) {
-        item.active = !item.active;
-      }
-    });
-    update(newUser);
-  };
-
-  const handleSorterClick = (itemName: string, moveUp: boolean) => {
-    const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-    newUser.settings.home.vizualizationsOrder = newList;
-    update(newUser);
-  };
 
   const vizualizationList = sortedItems.map((item, index) => {
     return (

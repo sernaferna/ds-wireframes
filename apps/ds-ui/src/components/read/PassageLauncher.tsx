@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -32,19 +32,25 @@ interface PassageLauncherInterface {
 export const PassageLauncher = ({ defaultVersion }: PassageLauncherInterface) => {
   const [newItem] = useNewItemMutation();
 
-  const initialValues: LauncherSchema = {
-    reference: '',
-    version: defaultVersion,
-  };
+  const initialValues: LauncherSchema = useMemo(
+    () => ({
+      reference: '',
+      version: defaultVersion,
+    }),
+    [defaultVersion]
+  );
 
-  const addPassage = (reference: string, version: string) => {
-    const newPassage: BasePassage = {
-      osis: getOSISForReference(reference),
-      version,
-    };
+  const addPassage = useCallback(
+    (reference: string, version: string) => {
+      const newPassage: BasePassage = {
+        osis: getOSISForReference(reference),
+        version,
+      };
 
-    newItem(newPassage);
-  };
+      newItem(newPassage);
+    },
+    [newItem]
+  );
 
   return (
     <Row>
