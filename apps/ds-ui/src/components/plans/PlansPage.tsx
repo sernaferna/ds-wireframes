@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -9,10 +9,27 @@ import { useGetAllInstantiatedPlanItemsQuery } from '../../services/Instantiated
 import { HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { CurrentReadingPlan } from '../read/CurrentReadingPlan';
+import { BaseInstantiatedPlan } from '@devouringscripture/common';
+
+const getItemList = (data: BaseInstantiatedPlan[] | undefined) => {
+  if (data === undefined) {
+    return [];
+  }
+
+  return data.map((item, index) => (
+    <PlanSummaryView
+      key={`plan-item-${index}`}
+      planId={item.planInstanceId}
+      percentageComplete={item.percentageComplete}
+    />
+  ));
+};
 
 export const PlansPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllInstantiatedPlanItemsQuery(HARDCODED_USER_ID);
+
+  const itemList = useMemo(() => getItemList(data), [data]);
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -20,14 +37,6 @@ export const PlansPage = () => {
   if (error) {
     return <ErrorLoadingDataMessage />;
   }
-
-  const itemList = data!.map((item, index) => (
-    <PlanSummaryView
-      key={`plan-item-${index}`}
-      planId={item.planInstanceId}
-      percentageComplete={item.percentageComplete}
-    />
-  ));
 
   const [paginatedItems, paginationElement] = paginateItems(itemList, 6, currentPage, setCurrentPage);
 

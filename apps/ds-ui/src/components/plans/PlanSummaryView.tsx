@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,6 +17,15 @@ import {
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { BaseInstantiatedPlan } from '@devouringscripture/common';
 
+const buttonClicked = () => {
+  getToastManager().show({
+    title: 'Not implemented',
+    content: 'Feature not yet implemented',
+    duration: TOAST_FADE_TIME,
+    type: ToastType.Danger,
+  });
+};
+
 interface PlanSummaryViewAttrs {
   planId: string;
   percentageComplete?: number;
@@ -25,6 +34,25 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
   const { data, error, isLoading } = useGetPlansByIdQuery(planId);
   const [sendNewPlan] = useNewInstantiatedPlanMutation();
   const [sendRemovePlan] = useDeleteInstantiatedPlanMutation();
+
+  const createIP = useCallback(
+    (planInstanceId: string) => {
+      const newPlan: BaseInstantiatedPlan = {
+        planInstanceId: planInstanceId,
+        percentageComplete: 0,
+      };
+
+      sendNewPlan(newPlan);
+    },
+    [sendNewPlan]
+  );
+
+  const deleteIP = useCallback(
+    (planInstanceId: string) => {
+      sendRemovePlan(planInstanceId);
+    },
+    [sendRemovePlan]
+  );
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -48,28 +76,6 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
       {data!.includesApocrypha ? <Journal /> : <JournalX />}
     </OverlayTrigger>
   );
-
-  const buttonClicked = () => {
-    getToastManager().show({
-      title: 'Not implemented',
-      content: 'Feature not yet implemented',
-      duration: TOAST_FADE_TIME,
-      type: ToastType.Danger,
-    });
-  };
-
-  const createIP = (planInstanceId: string) => {
-    const newPlan: BaseInstantiatedPlan = {
-      planInstanceId: planInstanceId,
-      percentageComplete: 0,
-    };
-
-    sendNewPlan(newPlan);
-  };
-
-  const deleteIP = (planInstanceId: string) => {
-    sendRemovePlan(planInstanceId);
-  };
 
   return (
     <Alert variant={data!.isAdmin ? 'primary' : 'info'} className="plan-summary-view">

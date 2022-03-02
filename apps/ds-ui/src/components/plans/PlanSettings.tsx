@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Button from 'react-bootstrap/Button';
 import { LegendModal } from './LegendModal';
 
 export const PlanSettings = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const closeModalFunction = () => {
+  const closeModalFunction = useCallback(() => {
     setShowModal(false);
-  };
+  }, [setShowModal]);
 
   return (
     <>
