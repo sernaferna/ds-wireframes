@@ -15,7 +15,7 @@ import {
   useDeleteInstantiatedPlanMutation,
 } from '../../services/InstantiatedPlanService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { BaseInstantiatedPlan } from '@devouringscripture/common';
+import { BaseInstantiatedPlan, PlanAttributes, PlanStatus } from '@devouringscripture/common';
 
 const buttonClicked = () => {
   getToastManager().show({
@@ -24,6 +24,32 @@ const buttonClicked = () => {
     duration: TOAST_FADE_TIME,
     type: ToastType.Danger,
   });
+};
+
+interface JLButton {
+  plan: PlanAttributes;
+  percentageComplete?: number;
+  deleteIP(id: string): void;
+  createIP(id: string): void;
+}
+const JoinLeaveButton = ({ plan, percentageComplete, deleteIP, createIP }: JLButton): JSX.Element => {
+  if (plan.status !== PlanStatus.Published) {
+    return <i>Plan not ready for subscription</i>;
+  }
+
+  if (percentageComplete === undefined) {
+    return (
+      <Button variant="primary" onClick={() => createIP(plan.planInstanceId)}>
+        Start
+      </Button>
+    );
+  }
+
+  return (
+    <Button variant="primary" onClick={() => deleteIP(plan.planInstanceId)}>
+      Leave
+    </Button>
+  );
 };
 
 interface PlanSummaryViewAttrs {
@@ -117,25 +143,12 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
           )}
         </Col>
         <Col className="join-col">
-          {percentageComplete !== undefined ? (
-            <Button
-              variant="danger"
-              onClick={() => {
-                deleteIP(data!.planInstanceId);
-              }}
-            >
-              Leave
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={() => {
-                createIP(data!.planInstanceId);
-              }}
-            >
-              Start
-            </Button>
-          )}
+          <JoinLeaveButton
+            plan={data!}
+            percentageComplete={percentageComplete}
+            deleteIP={deleteIP}
+            createIP={createIP}
+          />
         </Col>
         <Col className="deleteCol">
           {data!.isAdmin ? (
