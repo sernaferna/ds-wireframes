@@ -31,6 +31,7 @@ import { updatePublicPlanRouter } from './routes/plans/update';
 import { getAllPublicPlansRouter } from './routes/plans/getAll';
 import { deletePublicPlanRouter } from './routes/plans/delete';
 import { getPublicPlanByIdRouter } from './routes/plans/byId';
+import { publishPlanRouter } from './routes/plans/publish';
 
 import { deleteInstantiatedPlanRouter } from './routes/instantiatedPlans/delete';
 import { getAllInstantiatedPlansRouter } from './routes/instantiatedPlans/getAll';
@@ -78,6 +79,7 @@ app.use('/api/plans/public', [
   updatePublicPlanRouter,
   deletePublicPlanRouter,
   getPublicPlanByIdRouter,
+  publishPlanRouter,
 ]);
 app.use('/api/ip', [
   deleteInstantiatedPlanRouter,

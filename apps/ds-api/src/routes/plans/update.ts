@@ -7,6 +7,7 @@ import {
   NotFoundError,
   v2GTV1,
   InvalidNewVersionError,
+  PlanStatus,
 } from '@devouringscripture/common';
 import { planValidationRules } from '../../helpers/planValidationRules';
 import { db } from '../../services/db';
@@ -42,6 +43,7 @@ router.put(
         weeks: newPlan.weeks.slice(),
         planId: oldPlan.planId,
         planInstanceId: uuidv4(),
+        status: PlanStatus.Saved,
       };
 
       db.push(`/plans[]`, newPlanForDB);

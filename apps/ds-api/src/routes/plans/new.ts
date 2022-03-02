@@ -5,6 +5,7 @@ import {
   BasePlanAttributes,
   PlanAttributes,
   CustomError,
+  PlanStatus,
 } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../services/db';
@@ -24,6 +25,7 @@ router.post(
         ...newBaseItem,
         planId: uuidv4(),
         planInstanceId: uuidv4(),
+        status: PlanStatus.Saved,
       };
       db.push('/plans[]', newItem);
       res.status(201).send(newItem);

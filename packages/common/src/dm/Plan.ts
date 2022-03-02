@@ -12,9 +12,15 @@ export interface BasePlanAttributes {
   weeks: PlanWeek[];
 }
 
+export enum PlanStatus {
+  Saved = 'Saved',
+  Published = 'Published',
+}
+
 export interface PlanAttributes extends BasePlanAttributes {
   planId: string;
   planInstanceId: string;
+  status: PlanStatus;
 }
 
 export interface PlanWeek {
