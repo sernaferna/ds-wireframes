@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, Reducer, useReducer } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,12 +10,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../../common/toasts/ToastManager';
-import { RenderDay } from './RenderDay';
-import { isVersionValid } from '@devouringscripture/common';
+import { isVersionValid, Verse } from '@devouringscripture/common';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import { DayForPlan, generateDayList, RenderedDays } from './Helpers';
 
 const incrementorClicked = (dayNum: number) => {
   getToastManager().show({
@@ -104,49 +104,68 @@ const WeeksDropdown = ({ formikProps, numWeeks }: WeeksDDProps) => {
   );
 };
 
-interface RenderWeeksParams {
+interface DupState {
+  isFreeform: boolean;
   numWeeks: number;
   includeWeekends: boolean;
-  incrementerClicked(day: number): void;
-  decrementerClicked(day: number): void;
+  verses: Verse[] | undefined;
 }
-const RenderWeeks = ({ numWeeks, includeWeekends, incrementerClicked, decrementerClicked }: RenderWeeksParams) => {
-  const weeks: JSX.Element[] = [];
-  const numDays = includeWeekends ? 7 : 5;
-  let currentDay: number = 0;
 
-  for (let i = 0; i < numWeeks; i++) {
-    const heading = <h2 className="mt-3">{`Week ${i + 1}`}</h2>;
+const initialDupState: DupState = {
+  isFreeform: false,
+  numWeeks: 0,
+  includeWeekends: true,
+  verses: undefined,
+};
 
-    const days: JSX.Element[] = [];
-    for (let j = 0; j < numDays; j++) {
-      currentDay++;
-      days.push(
-        <RenderDay
-          key={`day-${j}`}
-          incrementFunction={incrementorClicked}
-          decrementFunction={decrementerClicked}
-          maxDays={numWeeks * numDays}
-          dayNum={currentDay}
-          isFreeform={true}
-        />
-      );
-    }
+enum ReducerActionType {
+  SET_FREEFORM,
+  SET_NUMWEEKS,
+  SET_INCLUDEWEEKENDS,
+  SET_VERSES,
+}
 
-    weeks.push(
-      <div key={`week-${i}`}>
-        {heading}
-        {days}
-      </div>
-    );
+type SetFreeformAction = {
+  type: ReducerActionType.SET_FREEFORM;
+  payload: boolean;
+};
+
+type SetNumweeksAction = {
+  type: ReducerActionType.SET_NUMWEEKS;
+  payload: number;
+};
+
+type SetIncludeweekendsAction = {
+  type: ReducerActionType.SET_INCLUDEWEEKENDS;
+  payload: boolean;
+};
+
+type SetVersesAction = {
+  type: ReducerActionType.SET_VERSES;
+  payload: Verse[];
+};
+
+type ReducerAction = SetFreeformAction | SetNumweeksAction | SetIncludeweekendsAction | SetVersesAction;
+
+const usePlanReducer: Reducer<DupState, ReducerAction> = (state, action) => {
+  switch (action.type) {
+    case ReducerActionType.SET_FREEFORM:
+      return { ...state, isFreeform: action.payload };
+    case ReducerActionType.SET_INCLUDEWEEKENDS:
+      return { ...state, includeWeekends: action.payload };
+    case ReducerActionType.SET_NUMWEEKS:
+      return { ...state, numWeeks: action.payload };
+    case ReducerActionType.SET_VERSES:
+      return { ...state, verses: action.payload };
   }
-
-  return <>{weeks}</>;
 };
 
 export const EditPlan = () => {
   const [showWarning, setShowWarning] = useState(true);
   const userResponse = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const [dupLocalState, dispatchDupLocalState] = useReducer(usePlanReducer, initialDupState);
+
+  const days: DayForPlan[] = useMemo(() => generateDayList(dupLocalState), [dupLocalState]);
 
   if (userResponse.isLoading) {
     return <LoadingMessage />;
@@ -203,7 +222,13 @@ export const EditPlan = () => {
                         name="numWeeks"
                         placeholder="52"
                         value={formikProps.values.numWeeks}
-                        onChange={formikProps.handleChange}
+                        onChange={(e) => {
+                          formikProps.handleChange(e);
+                          dispatchDupLocalState({
+                            type: ReducerActionType.SET_NUMWEEKS,
+                            payload: parseInt(e.currentTarget.value),
+                          });
+                        }}
                         onBlur={formikProps.handleBlur}
                         type="text"
                         isValid={!formikProps.errors.numWeeks && !!formikProps.touched.numWeeks}
@@ -245,7 +270,13 @@ export const EditPlan = () => {
                         type="checkbox"
                         label="Include weekends?"
                         checked={formikProps.values.includeWeekends}
-                        onChange={formikProps.handleChange}
+                        onChange={(e) => {
+                          formikProps.handleChange(e);
+                          dispatchDupLocalState({
+                            type: ReducerActionType.SET_INCLUDEWEEKENDS,
+                            payload: e.currentTarget.value === 'true' ? true : false,
+                          });
+                        }}
                         onBlur={formikProps.handleBlur}
                         className="alter-content-field"
                       />
@@ -313,7 +344,13 @@ export const EditPlan = () => {
                     name="isFreeform"
                     label="Free-form entries?"
                     checked={formikProps.values.isFreeform}
-                    onChange={formikProps.handleChange}
+                    onChange={(e) => {
+                      formikProps.handleChange(e);
+                      dispatchDupLocalState({
+                        type: ReducerActionType.SET_FREEFORM,
+                        payload: e.currentTarget.value === 'true' ? true : false,
+                      });
+                    }}
                     onBlur={formikProps.handleBlur}
                   />
 
@@ -338,11 +375,12 @@ export const EditPlan = () => {
                   ) : (
                     ''
                   )}
-                  <RenderWeeks
-                    numWeeks={formikProps.values.numWeeks}
-                    includeWeekends={formikProps.values.includeWeekends!}
-                    decrementerClicked={decrementerClicked}
-                    incrementerClicked={incrementorClicked}
+                  <RenderedDays
+                    days={days}
+                    includeWeekends={dupLocalState.includeWeekends}
+                    isFreeform={dupLocalState.isFreeform}
+                    inc={incrementorClicked}
+                    dec={decrementerClicked}
                   />
                 </Container>
               </Col>
