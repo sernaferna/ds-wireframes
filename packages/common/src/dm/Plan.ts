@@ -15,6 +15,7 @@ export interface BasePlanAttributes {
 export enum PlanStatus {
   Saved = 'Saved',
   Published = 'Published',
+  Deleted = 'Deleted',
 }
 
 export interface PlanAttributes extends BasePlanAttributes {
