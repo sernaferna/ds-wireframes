@@ -1,3 +1,5 @@
+import { Verse } from '@devouringscripture/common';
+
 const bcv_parser = require('bible-passage-reference-parser/js/en_bcv_parser').bcv_parser;
 const osisToEn = require('bible-reference-formatter/es6/en');
 
@@ -37,6 +39,19 @@ export const getOSISForReference = (ref: string): string => {
 
 export const getReferenceForOSIS = (osisString: string): string => {
   return osisToEn('esv-long', osisString);
+};
+
+export const getRefForVerses = (verses: Verse[] | undefined): string => {
+  if (verses === undefined || verses.length < 1) {
+    return '';
+  }
+
+  let osis = '';
+  for (let i = 0; i < verses.length; i++) {
+    osis += verses[i].osis + ',';
+  }
+
+  return getReferenceForOSIS(getOSISForReference(osis));
 };
 
 export const getRangesForOSIS = (rawOsisString: string): OSISRange[] => {
