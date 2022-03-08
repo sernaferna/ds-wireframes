@@ -42,14 +42,14 @@ export const RenderDay = ({
       <Form.Control readOnly={!isFreeform} value={renderedText} />
       {!isFreeform ? (
         <>
-          {dayNum > 0 ? (
+          {dayNum > 1 ? (
             <Button variant="outline-secondary" onClick={() => incrementFunction(dayNum)}>
               <CaretUpFill />
             </Button>
           ) : (
             <></>
           )}
-          {dayNum < maxDays - 1 ? (
+          {dayNum < maxDays ? (
             <Button variant="outline-secondary" onClick={() => decrementFunction(dayNum)}>
               <CaretDownFill />
             </Button>

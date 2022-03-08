@@ -1,6 +1,5 @@
 import { Verse } from '@devouringscripture/common';
 import { getRefForVerses } from '@devouringscripture/refparse';
-import { boolean, number } from 'yup/lib/locale';
 import { RenderDay } from './RenderDay';
 
 export interface DayForPlan {
@@ -66,14 +65,16 @@ interface IRenderedDays {
 export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec }: IRenderedDays) => {
   const daysPerWeek = includeWeekends ? 7 : 5;
   const returnItems: JSX.Element[] = [];
-  let weekNum = 1;
-
-  returnItems.push(<h2 className="mt-3">Week {weekNum}</h2>);
+  let weekNum = 0;
 
   for (let i = 0; i < days.length; i++) {
-    if (i % daysPerWeek) {
+    if (i % daysPerWeek === 0) {
       weekNum++;
-      returnItems.push(<h2 className="mt-3">Week {weekNum}</h2>);
+      returnItems.push(
+        <h2 className="mt-3" key={`week-key-${weekNum}`}>
+          Week {weekNum}
+        </h2>
+      );
     }
 
     returnItems.push(
@@ -85,6 +86,7 @@ export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec }: IR
         decrementFunction={dec}
         osis={days[i].osis}
         verses={days[i].verses}
+        key={`day-key-${i}`}
       />
     );
   }

@@ -85,25 +85,6 @@ const initialValues: ValuesSchema = {
   isFreeform: true,
 };
 
-interface WeeksDDProps {
-  formikProps: FormikProps<ValuesSchema>;
-  numWeeks: number;
-}
-const WeeksDropdown = ({ formikProps, numWeeks }: WeeksDDProps) => {
-  const displayString = `${numWeeks} weeks`;
-
-  return (
-    <Dropdown.Item
-      eventKey={numWeeks}
-      onClick={() => {
-        formikProps.setFieldValue('numWeeks', numWeeks);
-      }}
-    >
-      {displayString}
-    </Dropdown.Item>
-  );
-};
-
 interface DupState {
   isFreeform: boolean;
   numWeeks: number;
@@ -158,6 +139,27 @@ const usePlanReducer: Reducer<DupState, ReducerAction> = (state, action) => {
     case ReducerActionType.SET_VERSES:
       return { ...state, verses: action.payload };
   }
+};
+
+interface WeeksDDProps {
+  formikProps: FormikProps<ValuesSchema>;
+  numWeeks: number;
+  dispatcher: React.Dispatch<ReducerAction>;
+}
+const WeeksDropdown = ({ formikProps, numWeeks, dispatcher }: WeeksDDProps) => {
+  const displayString = `${numWeeks} weeks`;
+
+  return (
+    <Dropdown.Item
+      eventKey={numWeeks}
+      onClick={() => {
+        formikProps.setFieldValue('numWeeks', numWeeks, true);
+        dispatcher({ type: ReducerActionType.SET_NUMWEEKS, payload: numWeeks });
+      }}
+    >
+      {displayString}
+    </Dropdown.Item>
+  );
 };
 
 export const EditPlan = () => {
@@ -242,11 +244,11 @@ export const EditPlan = () => {
                         title="Presets"
                         size="sm"
                       >
-                        <WeeksDropdown formikProps={formikProps} numWeeks={2} />
-                        <WeeksDropdown formikProps={formikProps} numWeeks={4} />
-                        <WeeksDropdown formikProps={formikProps} numWeeks={26} />
-                        <WeeksDropdown formikProps={formikProps} numWeeks={52} />
-                        <WeeksDropdown formikProps={formikProps} numWeeks={156} />
+                        <WeeksDropdown formikProps={formikProps} numWeeks={2} dispatcher={dispatchDupLocalState} />
+                        <WeeksDropdown formikProps={formikProps} numWeeks={4} dispatcher={dispatchDupLocalState} />
+                        <WeeksDropdown formikProps={formikProps} numWeeks={26} dispatcher={dispatchDupLocalState} />
+                        <WeeksDropdown formikProps={formikProps} numWeeks={52} dispatcher={dispatchDupLocalState} />
+                        <WeeksDropdown formikProps={formikProps} numWeeks={156} dispatcher={dispatchDupLocalState} />
                       </DropdownButton>
                     </Col>
                     <Col xs="2">
