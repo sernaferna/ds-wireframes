@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Reducer, useReducer, useEffect } from 'react';
+import React, { useState, useCallback, Reducer, useReducer, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -99,24 +99,25 @@ interface DupState {
   isFreeform: boolean;
   numWeeks: number;
   includeWeekends: boolean;
-  verses: Verse[];
   osis?: string;
+  days: DayForPlan[];
 }
 
 const initialDupState: DupState = {
   isFreeform: true,
   numWeeks: 0,
   includeWeekends: true,
-  verses: [],
+  days: [],
 };
 
 enum ReducerActionType {
   SET_FREEFORM,
   SET_NUMWEEKS,
   SET_INCLUDEWEEKENDS,
-  SET_VERSES,
   SET_OSIS,
   RESET_TO_FREEFORM,
+  UPDATE_DAY,
+  UPDATE_ALL_DAYS,
 }
 
 type SetFreeformAction = {
@@ -134,11 +135,6 @@ type SetIncludeweekendsAction = {
   payload: boolean;
 };
 
-type SetVersesAction = {
-  type: ReducerActionType.SET_VERSES;
-  payload: Verse[];
-};
-
 type SetOsisAction = {
   type: ReducerActionType.SET_OSIS;
   payload: string;
@@ -148,13 +144,24 @@ type ResetToFreeformAction = {
   type: ReducerActionType.RESET_TO_FREEFORM;
 };
 
+type UpdateDayAction = {
+  type: ReducerActionType.UPDATE_DAY;
+  payload: DayForPlan;
+};
+
+type UpdateAllDaysAction = {
+  type: ReducerActionType.UPDATE_ALL_DAYS;
+  payload: DayForPlan[];
+};
+
 type ReducerAction =
   | SetFreeformAction
   | SetNumweeksAction
   | SetIncludeweekendsAction
-  | SetVersesAction
   | SetOsisAction
-  | ResetToFreeformAction;
+  | ResetToFreeformAction
+  | UpdateDayAction
+  | UpdateAllDaysAction;
 
 const usePlanReducer: Reducer<DupState, ReducerAction> = (state, action) => {
   switch (action.type) {
@@ -164,12 +171,21 @@ const usePlanReducer: Reducer<DupState, ReducerAction> = (state, action) => {
       return { ...state, includeWeekends: action.payload };
     case ReducerActionType.SET_NUMWEEKS:
       return { ...state, numWeeks: action.payload };
-    case ReducerActionType.SET_VERSES:
-      return { ...state, verses: action.payload };
     case ReducerActionType.SET_OSIS:
       return { ...state, osis: action.payload };
     case ReducerActionType.RESET_TO_FREEFORM:
-      return { ...state, osis: '', isFreeform: true, verses: [] };
+      return { ...state, osis: '', isFreeform: true };
+    case ReducerActionType.UPDATE_DAY:
+      const newDays = state.days.map((i) => {
+        if (i.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return i;
+        }
+      });
+      return { ...state, days: newDays };
+    case ReducerActionType.UPDATE_ALL_DAYS:
+      return { ...state, days: action.payload };
   }
 };
 
@@ -200,7 +216,7 @@ export const EditPlan = () => {
   const [dupLocalState, dispatchDupLocalState] = useReducer(usePlanReducer, initialDupState);
   const [versesTrigger, versesResult] = useLazyGetVersesForOSISQuery();
 
-  const days: DayForPlan[] = useMemo(() => {
+  useEffect(() => {
     let verses: Verse[] | undefined = undefined;
 
     if (
@@ -213,19 +229,34 @@ export const EditPlan = () => {
       verses = versesResult.data!.slice();
     }
 
-    return generateDayList({
+    const days = generateDayList({
       includeWeekends: dupLocalState.includeWeekends,
       isFreeform: dupLocalState.isFreeform,
       numWeeks: dupLocalState.numWeeks,
       verses: verses,
     });
-  }, [dupLocalState, versesResult]);
+
+    dispatchDupLocalState({ type: ReducerActionType.UPDATE_ALL_DAYS, payload: days });
+  }, [
+    dupLocalState.includeWeekends,
+    dupLocalState.isFreeform,
+    dupLocalState.numWeeks,
+    dupLocalState.osis,
+    versesResult,
+  ]);
 
   useEffect(() => {
     if (dupLocalState.osis) {
       versesTrigger(dupLocalState.osis);
     }
   }, [dupLocalState.osis, versesTrigger]);
+
+  const updateDay = useCallback(
+    (day: DayForPlan) => {
+      dispatchDupLocalState({ type: ReducerActionType.UPDATE_DAY, payload: day });
+    },
+    [dispatchDupLocalState]
+  );
 
   if (userResponse.isLoading) {
     return <LoadingMessage />;
@@ -462,11 +493,12 @@ export const EditPlan = () => {
                     ''
                   )}
                   <RenderedDays
-                    days={days}
+                    days={dupLocalState.days}
                     includeWeekends={dupLocalState.includeWeekends}
                     isFreeform={dupLocalState.isFreeform}
                     inc={incrementorClicked}
                     dec={decrementerClicked}
+                    update={updateDay}
                   />
                 </Container>
               </Col>

@@ -63,8 +63,9 @@ interface IRenderedDays {
   isFreeform: boolean;
   inc(day: number): void;
   dec(day: number): void;
+  update(day: DayForPlan): void;
 }
-export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec }: IRenderedDays) => {
+export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec, update }: IRenderedDays) => {
   const daysPerWeek = includeWeekends ? 7 : 5;
   const returnItems: JSX.Element[] = [];
   let weekNum = 0;
@@ -86,8 +87,8 @@ export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec }: IR
         isFreeform={isFreeform}
         incrementFunction={inc}
         decrementFunction={dec}
-        osis={days[i].osis}
-        verses={days[i].verses}
+        updateCallback={update}
+        day={days[i]}
         key={days[i].id}
       />
     );
