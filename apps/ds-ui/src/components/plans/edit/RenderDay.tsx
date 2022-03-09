@@ -56,6 +56,7 @@ export const RenderDay = ({
           ) : (
             <></>
           )}
+          {verses ? <b>{`${verses.length} verses`}</b> : <></>}
         </>
       ) : (
         <></>

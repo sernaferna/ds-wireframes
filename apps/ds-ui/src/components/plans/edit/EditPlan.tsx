@@ -1,4 +1,4 @@
-import React, { useState, useMemo, Reducer, useReducer } from 'react';
+import React, { useState, useMemo, Reducer, useReducer, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,11 +11,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../../common/toasts/ToastManager';
 import { isVersionValid, Verse } from '@devouringscripture/common';
+import { isReferenceValid, getFormattedReference } from '@devouringscripture/refparse';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DayForPlan, generateDayList, RenderedDays } from './Helpers';
+import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 
 const incrementorClicked = (dayNum: number) => {
   getToastManager().show({
@@ -71,6 +73,13 @@ const schema = yup.object({
   includeApocrypha: yup.boolean(),
   includeWeekends: yup.boolean(),
   isFreeform: yup.boolean(),
+  reference: yup.string().test('valid-ref', 'Invalid reference', (value) => {
+    if (value === undefined) {
+      return false;
+    }
+
+    return isReferenceValid(value as string);
+  }),
 });
 type ValuesSchema = yup.InferType<typeof schema>;
 
@@ -83,20 +92,22 @@ const initialValues: ValuesSchema = {
   includeApocrypha: false,
   includeWeekends: true,
   isFreeform: true,
+  reference: '',
 };
 
 interface DupState {
   isFreeform: boolean;
   numWeeks: number;
   includeWeekends: boolean;
-  verses: Verse[] | undefined;
+  verses: Verse[];
+  osis?: string;
 }
 
 const initialDupState: DupState = {
-  isFreeform: false,
+  isFreeform: true,
   numWeeks: 0,
   includeWeekends: true,
-  verses: undefined,
+  verses: [],
 };
 
 enum ReducerActionType {
@@ -104,6 +115,8 @@ enum ReducerActionType {
   SET_NUMWEEKS,
   SET_INCLUDEWEEKENDS,
   SET_VERSES,
+  SET_OSIS,
+  RESET_TO_FREEFORM,
 }
 
 type SetFreeformAction = {
@@ -126,7 +139,22 @@ type SetVersesAction = {
   payload: Verse[];
 };
 
-type ReducerAction = SetFreeformAction | SetNumweeksAction | SetIncludeweekendsAction | SetVersesAction;
+type SetOsisAction = {
+  type: ReducerActionType.SET_OSIS;
+  payload: string;
+};
+
+type ResetToFreeformAction = {
+  type: ReducerActionType.RESET_TO_FREEFORM;
+};
+
+type ReducerAction =
+  | SetFreeformAction
+  | SetNumweeksAction
+  | SetIncludeweekendsAction
+  | SetVersesAction
+  | SetOsisAction
+  | ResetToFreeformAction;
 
 const usePlanReducer: Reducer<DupState, ReducerAction> = (state, action) => {
   switch (action.type) {
@@ -138,6 +166,10 @@ const usePlanReducer: Reducer<DupState, ReducerAction> = (state, action) => {
       return { ...state, numWeeks: action.payload };
     case ReducerActionType.SET_VERSES:
       return { ...state, verses: action.payload };
+    case ReducerActionType.SET_OSIS:
+      return { ...state, osis: action.payload };
+    case ReducerActionType.RESET_TO_FREEFORM:
+      return { ...state, osis: '', isFreeform: true, verses: [] };
   }
 };
 
@@ -166,8 +198,34 @@ export const EditPlan = () => {
   const [showWarning, setShowWarning] = useState(true);
   const userResponse = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [dupLocalState, dispatchDupLocalState] = useReducer(usePlanReducer, initialDupState);
+  const [versesTrigger, versesResult] = useLazyGetVersesForOSISQuery();
 
-  const days: DayForPlan[] = useMemo(() => generateDayList(dupLocalState), [dupLocalState]);
+  const days: DayForPlan[] = useMemo(() => {
+    let verses: Verse[] | undefined = undefined;
+
+    if (
+      versesResult &&
+      !versesResult.error &&
+      !versesResult.isLoading &&
+      !versesResult.isUninitialized &&
+      dupLocalState.osis
+    ) {
+      verses = versesResult.data!.slice();
+    }
+
+    return generateDayList({
+      includeWeekends: dupLocalState.includeWeekends,
+      isFreeform: dupLocalState.isFreeform,
+      numWeeks: dupLocalState.numWeeks,
+      verses: verses,
+    });
+  }, [dupLocalState, versesResult]);
+
+  useEffect(() => {
+    if (dupLocalState.osis) {
+      versesTrigger(dupLocalState.osis);
+    }
+  }, [dupLocalState.osis, versesTrigger]);
 
   if (userResponse.isLoading) {
     return <LoadingMessage />;
@@ -348,10 +406,12 @@ export const EditPlan = () => {
                     checked={formikProps.values.isFreeform}
                     onChange={(e) => {
                       formikProps.handleChange(e);
-                      dispatchDupLocalState({
-                        type: ReducerActionType.SET_FREEFORM,
-                        payload: e.currentTarget.value === 'true' ? true : false,
-                      });
+                      if (e.currentTarget.checked) {
+                        dispatchDupLocalState({ type: ReducerActionType.RESET_TO_FREEFORM });
+                        formikProps.setFieldValue('reference', undefined);
+                      } else {
+                        dispatchDupLocalState({ type: ReducerActionType.SET_FREEFORM, payload: false });
+                      }
                     }}
                     onBlur={formikProps.handleBlur}
                   />
@@ -365,13 +425,37 @@ export const EditPlan = () => {
                         <Form.Control
                           className="alter-content-field"
                           id="reference"
+                          name="reference"
                           size="lg"
-                          defaultValue="Genesis 1-50"
-                          aria-describedby="referenceHelpText"
+                          placeholder="Genesis 1-50"
+                          value={formikProps.values.reference}
+                          isValid={!!formikProps.touched.reference && !formikProps.errors.reference}
+                          isInvalid={!!formikProps.touched.reference && !!formikProps.errors.reference}
+                          onBlur={(e) => {
+                            if (isReferenceValid(formikProps.values.reference as string)) {
+                              formikProps.setFieldValue(
+                                'reference',
+                                getFormattedReference(formikProps.values.reference as string)
+                              );
+                            }
+                            formikProps.handleBlur(e);
+                          }}
+                          onChange={formikProps.handleChange}
                         />
-                        <Button size="lg" variant="outline-warning">
+                        <Button
+                          size="lg"
+                          variant="outline-warning"
+                          onClick={() => {
+                            dispatchDupLocalState({
+                              type: ReducerActionType.SET_OSIS,
+                              payload: formikProps.values.reference!,
+                            });
+                          }}
+                          disabled={!formikProps.touched.reference && !!formikProps.errors.reference}
+                        >
                           Reset and Load All
                         </Button>
+                        <Form.Control.Feedback type="invalid">{formikProps.errors.reference}</Form.Control.Feedback>
                       </InputGroup>
                     </>
                   ) : (

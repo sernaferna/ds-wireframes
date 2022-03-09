@@ -1,10 +1,12 @@
 import { Verse } from '@devouringscripture/common';
 import { getRefForVerses } from '@devouringscripture/refparse';
 import { RenderDay } from './RenderDay';
+import { v4 as uuidv4 } from 'uuid';
 
 export interface DayForPlan {
   verses?: Verse[];
   osis?: string;
+  id: string;
 }
 
 const moveVerseToArr = (arr1: Verse[], arr2: Verse[]): void => {
@@ -28,7 +30,7 @@ export const generateDayList = ({ isFreeform, numWeeks, includeWeekends, verses 
   const days: DayForPlan[] = [];
 
   for (let i = 0; i < totalDays; i++) {
-    days.push({});
+    days.push({ id: uuidv4() });
   }
 
   if (isFreeform || verses === undefined || verses.length < 1) {
@@ -86,7 +88,7 @@ export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec }: IR
         decrementFunction={dec}
         osis={days[i].osis}
         verses={days[i].verses}
-        key={`day-key-${i}`}
+        key={days[i].id}
       />
     );
   }
