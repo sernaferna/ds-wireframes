@@ -44,4 +44,16 @@ describe('get formatted test suite', () => {
 
     expect(formatted).toEqual('Genesis 1:1–3; 2:4–5');
   });
+
+  it('properly handles invalid references', () => {
+    const formatted = getFormattedReference('blah blah blah');
+
+    expect(formatted).toEqual('');
+  });
+
+  it('properly handles invalid OSIS strings', () => {
+    const formatted = getFormattedReference('Blah.1.1');
+
+    expect(formatted).toEqual('');
+  });
 });

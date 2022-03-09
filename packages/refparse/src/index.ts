@@ -85,5 +85,9 @@ export const getPassagesForReference = (reference: string): OSISRange[] => {
 };
 
 export const getFormattedReference = (osisOrRef: string): string => {
+  if (!isReferenceValid(osisOrRef)) {
+    return '';
+  }
+
   return getReferenceForOSIS(getOSISForReference(osisOrRef));
 };
