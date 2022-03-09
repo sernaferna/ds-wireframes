@@ -18,6 +18,19 @@ export const userApi = createApi({
           body: user,
         };
       },
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          userApi.util.updateQueryData('getUserById', id, (draft) => {
+            Object.assign(draft, patch);
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: (result) => (result ? [{ type: 'user', id: result.id }] : []),
     }),
   }),
