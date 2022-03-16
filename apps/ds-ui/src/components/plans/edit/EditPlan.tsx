@@ -10,6 +10,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../../common/toasts/ToastManager';
 import { Verse } from '@devouringscripture/common';
+import { getFormattedReference, isReferenceValid } from '@devouringscripture/refparse';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue } from './Helpers';
@@ -18,19 +19,19 @@ import { initialPlanValues, validate } from './EditPlanValidations';
 import { WeeksDropdown } from './WeeksDropdown';
 import { RenderWeeks } from './RenderWeeks';
 
-const incrementorClicked = (dayNum: number) => {
+const incrementorClicked = (dayNum: number, cascade: boolean = false) => {
   getToastManager().show({
     title: 'Not implemented yet',
-    content: `Increment clicked for day ${dayNum}`,
+    content: `Increment clicked for day ${dayNum}; cascade ${cascade}`,
     duration: TOAST_FADE_TIME,
     type: ToastType.Info,
   });
 };
 
-const decrementerClicked = (dayNum: number) => {
+const decrementerClicked = (dayNum: number, cascade: boolean = false) => {
   getToastManager().show({
     title: 'Not implemented yet',
-    content: `Decrement clicked for day ${dayNum}`,
+    content: `Decrement clicked for day ${dayNum}; cascade ${cascade}`,
     duration: TOAST_FADE_TIME,
     type: ToastType.Info,
   });
@@ -69,23 +70,8 @@ export const EditPlan = () => {
     [setValues, setTouched, touched, values]
   );
 
-  const updateWeeks = useCallback(
-    (newValue: number) => {
-      setValues({
-        ...values,
-        numWeeks: newValue,
-      });
-
-      setTouched({
-        ...touched,
-        numWeeks: true,
-      });
-    },
-    [setValues, setTouched, touched, values]
-  );
-
   const handleBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
+    (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = event.currentTarget;
 
       //remove previous errors
@@ -135,7 +121,7 @@ export const EditPlan = () => {
     [values, setErrors, setTouched]
   );
 
-  useEffect(() => {
+  const regenerateDayList = useCallback(() => {
     let verses: Verse[] | undefined = undefined;
 
     if (
@@ -154,14 +140,36 @@ export const EditPlan = () => {
       numWeeks: values.numWeeks,
       verses: verses,
     });
+
     setDays(listOfDays);
   }, [values.includeWeekends, values.isFreeform, values.numWeeks, values.reference, versesResult]);
 
-  useEffect(() => {
-    if (values.reference.trim().length > 0) {
+  const updateWeeks = useCallback(
+    (newValue: number) => {
+      setTouched({
+        ...touched,
+        numWeeks: true,
+      });
+
+      setValues({
+        ...values,
+        numWeeks: newValue,
+      });
+
+      regenerateDayList();
+    },
+    [setValues, setTouched, touched, values, regenerateDayList]
+  );
+
+  const fetchVerses = useCallback(() => {
+    if (values.reference.trim().length > 0 && isReferenceValid(values.reference)) {
       versesTrigger(values.reference);
     }
   }, [values.reference, versesTrigger]);
+
+  useEffect(() => {
+    regenerateDayList();
+  }, [versesResult, regenerateDayList]);
 
   const updateDay = useCallback(
     (update: DayForPlan) => {
@@ -225,7 +233,10 @@ export const EditPlan = () => {
                     placeholder="52"
                     value={values.numWeeks}
                     onChange={handleChange}
-                    onBlur={handleBlur}
+                    onBlur={(e) => {
+                      handleBlur(e);
+                      fetchVerses();
+                    }}
                     type="number"
                     isValid={!errors['numWeeks'] && !!touched['numWeeks']}
                     isInvalid={!!errors['numWeeks'] && !!touched['numWeeks']}
@@ -337,7 +348,12 @@ export const EditPlan = () => {
                 label="Free-form entries?"
                 checked={values.isFreeform}
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(e) => {
+                  handleBlur(e);
+                  if (!e.currentTarget.checked) {
+                    fetchVerses();
+                  }
+                }}
               />
 
               {!values.isFreeform ? (
@@ -355,13 +371,18 @@ export const EditPlan = () => {
                       value={values.reference}
                       isValid={!!touched['reference'] && !errors['reference']}
                       isInvalid={!!touched['reference'] && !!errors['reference']}
-                      onBlur={handleBlur}
+                      onBlur={(e) => {
+                        const newRef = getFormattedReference(e.currentTarget.value);
+                        e.currentTarget.value = newRef;
+                        values.reference = newRef;
+                        handleBlur(e);
+                      }}
                       onChange={handleChange}
                     />
                     <Button
                       size="lg"
                       variant="outline-warning"
-                      onClick={() => {}}
+                      onClick={fetchVerses}
                       disabled={!touched['reference'] && !!errors['reference']}
                     >
                       Reset and Load All

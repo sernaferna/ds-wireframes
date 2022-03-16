@@ -2,17 +2,43 @@ import React, { useState, useMemo } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { CaretUpFill, CaretDownFill } from 'react-bootstrap-icons';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import { ChevronUp, ChevronDoubleUp, ChevronDown, ChevronDoubleDown } from 'react-bootstrap-icons';
 import { getFormattedReference, isReferenceValid, getOSISForReference } from '@devouringscripture/refparse';
 import { DayForPlan } from './Helpers';
+
+const moveUpPopover = (
+  <Popover id="moveUpPopover">
+    <Popover.Body>Move a verse up from below.</Popover.Body>
+  </Popover>
+);
+
+const cascadeMoveUpPopover = (
+  <Popover id="cascadeMoveUpPopover">
+    <Popover.Body>Move a verse up from below, and cascade pulling up from subsequent days.</Popover.Body>
+  </Popover>
+);
+
+const moveDownPopover = (
+  <Popover id="moveDownPopover">
+    <Popover.Body>Move a verse down from above.</Popover.Body>
+  </Popover>
+);
+
+const cascadeMoveDownPopover = (
+  <Popover id="cascadeMoveDownPopover">
+    <Popover.Body>Move a verse down from above, and cascade pulling down from previous days.</Popover.Body>
+  </Popover>
+);
 
 interface RenderDayInterface {
   dayNum: number;
   maxDays: number;
   isFreeform: boolean;
   day: DayForPlan;
-  incrementFunction(day: number): void;
-  decrementFunction(day: number): void;
+  incrementFunction(day: number, cascade?: boolean): void;
+  decrementFunction(day: number, cascade?: boolean): void;
   updateCallback(day: DayForPlan): void;
 }
 
@@ -39,6 +65,15 @@ export const RenderDay = ({
     return getFormattedReference(tempOsis);
   }, [day.verses]);
 
+  let isInvalid: boolean = false;
+  if (refForVerses.trim().length > 0) {
+    isInvalid = !isReferenceValid(refForVerses);
+  } else {
+    if (osis.trim().length > 0) {
+      isInvalid = !isReferenceValid(osis);
+    }
+  }
+
   return (
     <InputGroup>
       <Form.Control
@@ -56,30 +91,52 @@ export const RenderDay = ({
             updateCallback(day);
           }
         }}
-        isInvalid={refForVerses.length > 0 ? isReferenceValid(refForVerses) : isReferenceValid(osis)}
+        isInvalid={isInvalid}
       />
-      <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
       {!isFreeform ? (
         <>
           {dayNum > 1 ? (
-            <Button variant="outline-secondary" onClick={() => incrementFunction(dayNum)}>
-              <CaretUpFill />
-            </Button>
+            <OverlayTrigger trigger={['focus', 'hover']} overlay={moveDownPopover}>
+              <Button variant="outline-secondary" onClick={() => decrementFunction(dayNum)}>
+                <ChevronDown />
+              </Button>
+            </OverlayTrigger>
+          ) : (
+            <></>
+          )}
+          {dayNum > 2 ? (
+            <OverlayTrigger trigger={['focus', 'hover']} overlay={cascadeMoveDownPopover}>
+              <Button variant="outline-secondary" onClick={() => decrementFunction(dayNum, true)}>
+                <ChevronDoubleDown />
+              </Button>
+            </OverlayTrigger>
           ) : (
             <></>
           )}
           {dayNum < maxDays ? (
-            <Button variant="outline-secondary" onClick={() => decrementFunction(dayNum)}>
-              <CaretDownFill />
-            </Button>
+            <OverlayTrigger trigger={['focus', 'hover']} overlay={moveUpPopover}>
+              <Button variant="outline-secondary" onClick={() => incrementFunction(dayNum)}>
+                <ChevronUp />
+              </Button>
+            </OverlayTrigger>
           ) : (
             <></>
           )}
-          {day.verses ? <b>{`${day.verses.length} verses`}</b> : <></>}
+          {dayNum < maxDays - 1 ? (
+            <OverlayTrigger trigger={['focus', 'hover']} overlay={cascadeMoveUpPopover}>
+              <Button variant="outline-secondary" onClick={() => incrementFunction(dayNum, true)}>
+                <ChevronDoubleUp />
+              </Button>
+            </OverlayTrigger>
+          ) : (
+            <></>
+          )}
+          {day.verses ? <b className="ms-2">{`${day.verses.length} verses`}</b> : <></>}
         </>
       ) : (
         <></>
       )}
+      <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
     </InputGroup>
   );
 };

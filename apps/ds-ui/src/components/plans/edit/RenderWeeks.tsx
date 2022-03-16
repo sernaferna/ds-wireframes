@@ -6,8 +6,8 @@ interface IRenderedDays {
   days: DayForPlan[];
   includeWeekends: boolean;
   isFreeform: boolean;
-  inc(day: number): void;
-  dec(day: number): void;
+  inc(day: number, cascade?: boolean): void;
+  dec(day: number, cascade?: boolean): void;
   update(day: DayForPlan): void;
 }
 export const RenderWeeks = ({ days, includeWeekends, isFreeform, inc, dec, update }: IRenderedDays) => {
