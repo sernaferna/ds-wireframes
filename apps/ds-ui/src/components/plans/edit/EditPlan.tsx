@@ -12,10 +12,11 @@ import { getToastManager, ToastType, TOAST_FADE_TIME } from '../../common/toasts
 import { Verse } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { DayForPlan, generateDayList, RenderedDays, getValue } from './Helpers';
+import { DayForPlan, generateDayList, getValue } from './Helpers';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import { initialPlanValues, validate } from './EditPlanValidations';
 import { WeeksDropdown } from './WeeksDropdown';
+import { RenderWeeks } from './RenderWeeks';
 
 const incrementorClicked = (dayNum: number) => {
   getToastManager().show({
@@ -371,7 +372,7 @@ export const EditPlan = () => {
               ) : (
                 ''
               )}
-              <RenderedDays
+              <RenderWeeks
                 days={days}
                 includeWeekends={values.includeWeekends}
                 isFreeform={values.isFreeform}
