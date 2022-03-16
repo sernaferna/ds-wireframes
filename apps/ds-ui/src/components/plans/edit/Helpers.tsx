@@ -96,3 +96,26 @@ export const RenderedDays = ({ days, includeWeekends, isFreeform, inc, dec, upda
 
   return <>{returnItems}</>;
 };
+
+/**
+ * Helper function to get a number, boolean, or (default) string value out of a variable
+ *
+ * @param type The type of input (number and checkbox are currently supported)
+ * @param value The value (initially as a string) to be returned
+ * @returns The value from the `value` attribute, as a number, bool, or string
+ */
+export const getValue = (type: string, value: string): string | number | boolean => {
+  if (type === 'number') {
+    return +value;
+  }
+
+  if (type === 'checkbox') {
+    if (value === 'on') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  return value;
+};

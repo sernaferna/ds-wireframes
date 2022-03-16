@@ -40,7 +40,7 @@ const anyBooleanValidation = (theValue: string | boolean): string | null => {
 // using a dictionary-style notation so that the `validation[name](value)` notation will work
 type ValidationFunction = (value: any) => string | null;
 export const validate: { [id: string]: ValidationFunction } = {
-  name: (nameString: string) => stringValidation('Name', nameString),
+  planName: (nameString: string) => stringValidation('Name', nameString),
   description: (descString: string) => stringValidation('Description', descString),
   numWeeks: numWeeksValidation,
   version: versionValidation,
@@ -48,11 +48,11 @@ export const validate: { [id: string]: ValidationFunction } = {
   includeApocrypha: anyBooleanValidation,
   includeWeekends: anyBooleanValidation,
   isFreeform: anyBooleanValidation,
-  refernence: referenceValidation,
+  reference: referenceValidation,
 };
 
 export const initialPlanValues = {
-  name: '',
+  planName: '',
   description: '',
   numWeeks: 0,
   version: '1.0.0',

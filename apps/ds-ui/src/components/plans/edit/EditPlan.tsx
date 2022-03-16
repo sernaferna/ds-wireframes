@@ -8,15 +8,14 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../../common/toasts/ToastManager';
 import { Verse } from '@devouringscripture/common';
-import { isReferenceValid, getFormattedReference } from '@devouringscripture/refparse';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { DayForPlan, generateDayList, RenderedDays } from './Helpers';
+import { DayForPlan, generateDayList, RenderedDays, getValue } from './Helpers';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import { initialPlanValues, validate } from './EditPlanValidations';
+import { WeeksDropdown } from './WeeksDropdown';
 
 const incrementorClicked = (dayNum: number) => {
   getToastManager().show({
@@ -34,41 +33,6 @@ const decrementerClicked = (dayNum: number) => {
     duration: TOAST_FADE_TIME,
     type: ToastType.Info,
   });
-};
-
-interface WeeksDDProps {
-  numWeeks: number;
-  updateWeeksCallback(newValue: number): void;
-}
-const WeeksDropdown = ({ numWeeks, updateWeeksCallback }: WeeksDDProps) => {
-  const displayString = `${numWeeks} weeks`;
-
-  return (
-    <Dropdown.Item
-      eventKey={numWeeks}
-      onClick={() => {
-        updateWeeksCallback(numWeeks);
-      }}
-    >
-      {displayString}
-    </Dropdown.Item>
-  );
-};
-
-export const getValue = (type: string, value: string): string | number | boolean => {
-  if (type === 'number') {
-    return +value;
-  }
-
-  if (type === 'checkbox') {
-    if (value === 'on') {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  return value;
 };
 
 export const EditPlan = () => {
@@ -116,53 +80,59 @@ export const EditPlan = () => {
         numWeeks: true,
       });
     },
-    [setValues, setTouched]
+    [setValues, setTouched, touched, values]
   );
 
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
+  const handleBlur = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      const { name, value } = event.currentTarget;
 
-    //remove previous errors
-    const { [name]: removedError, ...rest } = errors as any;
+      //remove previous errors
+      const { [name]: removedError, ...rest } = errors as any;
 
-    const error: string | null = validate[name](value);
+      const error: string | null = validate[name](value);
 
-    //validate the field if it has been touched
-    setErrors({
-      ...rest,
-      ...(error && { [name]: touched[name] && error }),
-    });
-  };
+      //validate the field if it has been touched
+      setErrors({
+        ...rest,
+        ...(error && { [name]: touched[name] && error }),
+      });
+    },
+    [errors, setErrors, touched]
+  );
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = useCallback(
+    (event: FormEvent) => {
+      event.preventDefault();
 
-    //validate the form
-    const formValidation: any = Object.keys(values).reduce((acc: any, key): any => {
-      const newError = validate[key]((values as any)[key]);
-      const newTouched = { [key]: true };
-      return {
-        errors: {
-          ...acc.errors,
-          ...(newError && { [key]: newError }),
-        },
-        touched: {
-          ...acc.touched,
-          ...newTouched,
-        },
-      };
-    });
-    setErrors(formValidation.errors);
-    setTouched(formValidation.touched);
+      //validate the form
+      const formValidation: any = Object.keys(values).reduce((acc: any, key): any => {
+        const newError = validate[key]((values as any)[key]);
+        const newTouched = { [key]: true };
+        return {
+          errors: {
+            ...acc.errors,
+            ...(newError && { [key]: newError }),
+          },
+          touched: {
+            ...acc.touched,
+            ...newTouched,
+          },
+        };
+      });
+      setErrors(formValidation.errors);
+      setTouched(formValidation.touched);
 
-    if (
-      !Object.values(formValidation.errors).length && //errors object is empty
-      Object.values(formValidation.touched).length === Object.values(values).length && // all items were touched
-      Object.values(formValidation.touched).every((t) => t === true) //every touched field is true
-    ) {
-      console.log(JSON.stringify(values, null, 2));
-    }
-  };
+      if (
+        !Object.values(formValidation.errors).length && //errors object is empty
+        Object.values(formValidation.touched).length === Object.values(values).length && // all items were touched
+        Object.values(formValidation.touched).every((t) => t === true) //every touched field is true
+      ) {
+        console.log(JSON.stringify(values, null, 2)); // TODO
+      }
+    },
+    [values, setErrors, setTouched]
+  );
 
   useEffect(() => {
     let verses: Verse[] | undefined = undefined;
@@ -192,18 +162,21 @@ export const EditPlan = () => {
     }
   }, [values.reference, versesTrigger]);
 
-  const updateDay = (update: DayForPlan) => {
-    const newList = days.slice();
+  const updateDay = useCallback(
+    (update: DayForPlan) => {
+      const newList = days.slice();
 
-    for (let i = 0; i < newList.length; i++) {
-      if (newList[i].id === update.id) {
-        newList[i].osis = update.osis;
-        newList[i].verses = update.verses;
+      for (let i = 0; i < newList.length; i++) {
+        if (newList[i].id === update.id) {
+          newList[i].osis = update.osis;
+          newList[i].verses = update.verses;
+        }
       }
-    }
 
-    setDays(newList);
-  };
+      setDays(newList);
+    },
+    [days, setDays]
+  );
 
   if (userResponse.isLoading) {
     return <LoadingMessage />;
@@ -225,21 +198,21 @@ export const EditPlan = () => {
 
               <Row className="mb-2">
                 <Col xs="5">
-                  <Form.Label htmlFor="name">Name:</Form.Label>
+                  <Form.Label htmlFor="planName">Name:</Form.Label>
                   <Form.Control
-                    name="name"
+                    name="planName"
                     aria-label="Name"
-                    value={values.name}
+                    value={values.planName}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     size="sm"
-                    id="name"
+                    id="planName"
                     placeholder="Plan Name"
                     type="text"
-                    isValid={!errors['name'] && !!touched['name']}
-                    isInvalid={!!errors['name'] && !!touched['name']}
+                    isValid={!errors['planName'] && !!touched['planName']}
+                    isInvalid={!!errors['planName'] && !!touched['planName']}
                   />
-                  <Form.Control.Feedback type="invalid">{errors['name']}</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">{errors['planName']}</Form.Control.Feedback>
                 </Col>
                 <Col xs="3">
                   <Form.Label htmlFor="numWeeks">Weeks:</Form.Label>
