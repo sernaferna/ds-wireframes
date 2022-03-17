@@ -2,43 +2,17 @@ import React, { useState, useMemo } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import { ChevronUp, ChevronDoubleUp, ChevronDown, ChevronDoubleDown } from 'react-bootstrap-icons';
 import { getFormattedReference, isReferenceValid, getOSISForReference } from '@devouringscripture/refparse';
 import { DayForPlan } from './Helpers';
-
-const moveUpPopover = (
-  <Popover id="moveUpPopover">
-    <Popover.Body>Move a verse up from below.</Popover.Body>
-  </Popover>
-);
-
-const cascadeMoveUpPopover = (
-  <Popover id="cascadeMoveUpPopover">
-    <Popover.Body>Move a verse up from below, and cascade pulling up from subsequent days.</Popover.Body>
-  </Popover>
-);
-
-const moveDownPopover = (
-  <Popover id="moveDownPopover">
-    <Popover.Body>Move a verse down from above.</Popover.Body>
-  </Popover>
-);
-
-const cascadeMoveDownPopover = (
-  <Popover id="cascadeMoveDownPopover">
-    <Popover.Body>Move a verse down from above, and cascade pulling down from previous days.</Popover.Body>
-  </Popover>
-);
 
 interface RenderDayInterface {
   dayNum: number;
   maxDays: number;
   isFreeform: boolean;
   day: DayForPlan;
-  incrementFunction(day: number, cascade?: boolean): void;
-  decrementFunction(day: number, cascade?: boolean): void;
+  upFunction(day: number, cascade?: boolean): void;
+  downFunction(day: number, cascade?: boolean): void;
   updateCallback(day: DayForPlan): void;
 }
 
@@ -47,8 +21,8 @@ export const RenderDay = ({
   maxDays,
   isFreeform,
   day,
-  incrementFunction,
-  decrementFunction,
+  upFunction,
+  downFunction,
   updateCallback,
 }: RenderDayInterface) => {
   const [osis, setOsis] = useState(getFormattedReference(day.osis || ''));
@@ -96,38 +70,30 @@ export const RenderDay = ({
       {!isFreeform ? (
         <>
           {dayNum > 1 ? (
-            <OverlayTrigger trigger={['focus', 'hover']} overlay={moveDownPopover}>
-              <Button variant="outline-secondary" onClick={() => decrementFunction(dayNum)}>
-                <ChevronDown />
-              </Button>
-            </OverlayTrigger>
+            <Button variant="outline-secondary" onClick={() => downFunction(dayNum)}>
+              <ChevronDown />
+            </Button>
           ) : (
             <></>
           )}
           {dayNum > 2 ? (
-            <OverlayTrigger trigger={['focus', 'hover']} overlay={cascadeMoveDownPopover}>
-              <Button variant="outline-secondary" onClick={() => decrementFunction(dayNum, true)}>
-                <ChevronDoubleDown />
-              </Button>
-            </OverlayTrigger>
+            <Button variant="outline-secondary" onClick={() => downFunction(dayNum, true)}>
+              <ChevronDoubleDown />
+            </Button>
           ) : (
             <></>
           )}
           {dayNum < maxDays ? (
-            <OverlayTrigger trigger={['focus', 'hover']} overlay={moveUpPopover}>
-              <Button variant="outline-secondary" onClick={() => incrementFunction(dayNum)}>
-                <ChevronUp />
-              </Button>
-            </OverlayTrigger>
+            <Button variant="outline-secondary" onClick={() => upFunction(dayNum)}>
+              <ChevronUp />
+            </Button>
           ) : (
             <></>
           )}
           {dayNum < maxDays - 1 ? (
-            <OverlayTrigger trigger={['focus', 'hover']} overlay={cascadeMoveUpPopover}>
-              <Button variant="outline-secondary" onClick={() => incrementFunction(dayNum, true)}>
-                <ChevronDoubleUp />
-              </Button>
-            </OverlayTrigger>
+            <Button variant="outline-secondary" onClick={() => upFunction(dayNum, true)}>
+              <ChevronDoubleUp />
+            </Button>
           ) : (
             <></>
           )}

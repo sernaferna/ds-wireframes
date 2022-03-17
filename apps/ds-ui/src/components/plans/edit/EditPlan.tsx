@@ -8,9 +8,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Container from 'react-bootstrap/Container';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { getToastManager, ToastType, TOAST_FADE_TIME } from '../../common/toasts/ToastManager';
 import { Verse } from '@devouringscripture/common';
-import { getFormattedReference, isReferenceValid } from '@devouringscripture/refparse';
+import {
+  getFormattedReference,
+  isReferenceValid,
+  getRefForVerses,
+  getOSISForReference,
+} from '@devouringscripture/refparse';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue } from './Helpers';
@@ -18,24 +22,7 @@ import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import { initialPlanValues, validate } from './EditPlanValidations';
 import { WeeksDropdown } from './WeeksDropdown';
 import { RenderWeeks } from './RenderWeeks';
-
-const incrementorClicked = (dayNum: number, cascade: boolean = false) => {
-  getToastManager().show({
-    title: 'Not implemented yet',
-    content: `Increment clicked for day ${dayNum}; cascade ${cascade}`,
-    duration: TOAST_FADE_TIME,
-    type: ToastType.Info,
-  });
-};
-
-const decrementerClicked = (dayNum: number, cascade: boolean = false) => {
-  getToastManager().show({
-    title: 'Not implemented yet',
-    content: `Decrement clicked for day ${dayNum}; cascade ${cascade}`,
-    duration: TOAST_FADE_TIME,
-    type: ToastType.Info,
-  });
-};
+import { v4 as uuidv4 } from 'uuid';
 
 export const EditPlan = () => {
   const [showWarning, setShowWarning] = useState(true);
@@ -56,16 +43,10 @@ export const EditPlan = () => {
       }
 
       //update value; keep number fields as number
-      setValues({
-        ...values,
-        [name]: getValue(type, value),
-      });
+      setValues({ ...values, [name]: getValue(type, value) });
 
       //indicate the field was touched
-      setTouched({
-        ...touched,
-        [name]: true,
-      });
+      setTouched({ ...touched, [name]: true });
     },
     [setValues, setTouched, touched, values]
   );
@@ -179,6 +160,63 @@ export const EditPlan = () => {
         if (newList[i].id === update.id) {
           newList[i].osis = update.osis;
           newList[i].verses = update.verses;
+        }
+      }
+
+      setDays(newList);
+    },
+    [days, setDays]
+  );
+
+  const moveVerseUp = useCallback(
+    (dayNum: number, cascade: boolean = false) => {
+      const newList = days.slice();
+      const currentDay = dayNum - 1;
+
+      for (let i = days.length - 1; i >= currentDay; i--) {
+        if (newList[i].verses === undefined) {
+          continue;
+        }
+
+        if (cascade || i === currentDay + 1) {
+          if (newList[i - 1].verses === undefined) {
+            newList[i - 1].verses = [];
+          }
+          newList[i - 1].verses!.push(newList[i].verses![0]);
+          newList[i - 1].id = uuidv4();
+          newList[i - 1].osis = getOSISForReference(getRefForVerses(newList[i - 1].verses));
+          newList[i].verses!.splice(0, 1);
+          newList[i].id = uuidv4();
+          newList[i].osis = getOSISForReference(getRefForVerses(newList[i].verses));
+        }
+      }
+
+      setDays(newList);
+    },
+    [days, setDays]
+  );
+
+  const moveVerseDown = useCallback(
+    (dayNum: number, cascade: boolean = false) => {
+      const newList = days.slice();
+      const currentDay = dayNum - 1;
+
+      for (let i = currentDay; i > 0; i--) {
+        if (cascade || i === currentDay) {
+          if (newList[i - 1].verses === undefined || newList[i - 1].verses!.length < 1) {
+            return;
+          }
+          if (newList[i].verses === undefined) {
+            newList[i].verses = [];
+          }
+          newList[i].verses!.unshift(newList[i - 1].verses!.pop() as Verse);
+          console.log('popped', newList[i].verses!.length);
+          newList[i].osis = getOSISForReference(getRefForVerses(newList[i].verses));
+          console.log('set osis', newList[i].osis);
+          newList[i].id = uuidv4();
+          newList[i - 1].osis = getOSISForReference(getRefForVerses(newList[i - 1].verses));
+          console.log('set upper osis', newList[i - 1].osis);
+          newList[i - 1].id = uuidv4();
         }
       }
 
@@ -397,8 +435,8 @@ export const EditPlan = () => {
                 days={days}
                 includeWeekends={values.includeWeekends}
                 isFreeform={values.isFreeform}
-                inc={incrementorClicked}
-                dec={decrementerClicked}
+                upFunc={moveVerseUp}
+                downFunc={moveVerseDown}
                 update={updateDay}
               />
             </Container>

@@ -6,11 +6,11 @@ interface IRenderedDays {
   days: DayForPlan[];
   includeWeekends: boolean;
   isFreeform: boolean;
-  inc(day: number, cascade?: boolean): void;
-  dec(day: number, cascade?: boolean): void;
+  upFunc(day: number, cascade?: boolean): void;
+  downFunc(day: number, cascade?: boolean): void;
   update(day: DayForPlan): void;
 }
-export const RenderWeeks = ({ days, includeWeekends, isFreeform, inc, dec, update }: IRenderedDays) => {
+export const RenderWeeks = ({ days, includeWeekends, isFreeform, upFunc, downFunc, update }: IRenderedDays) => {
   const daysPerWeek = includeWeekends ? 7 : 5;
   const returnItems: JSX.Element[] = [];
   let weekNum = 0;
@@ -30,8 +30,8 @@ export const RenderWeeks = ({ days, includeWeekends, isFreeform, inc, dec, updat
         dayNum={i + 1}
         maxDays={days.length}
         isFreeform={isFreeform}
-        incrementFunction={inc}
-        decrementFunction={dec}
+        upFunction={upFunc}
+        downFunction={downFunc}
         updateCallback={update}
         day={days[i]}
         key={days[i].id}
