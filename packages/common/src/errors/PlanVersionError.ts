@@ -1,7 +1,8 @@
-import { CustomError } from './CustomError';
+import { CustomError, StandardErrorCodes } from './CustomError';
 
 export class PlanVersionError extends CustomError {
   statusCode = 400;
+  errorCode = StandardErrorCodes.InvalidPlanVersion;
 
   constructor(public versionNumber: string) {
     super('Invalid version number for plan');
@@ -10,10 +11,13 @@ export class PlanVersionError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ message: `Invalid version number for plan: ${this.versionNumber}` }];
+    return {
+      errorCode: this.errorCode,
+      errors: [{ message: `Invalid version number for plan: ${this.versionNumber}` }],
+    };
   }
 
-  serializeErrorsToString(): string {
+  serializeInternalError(): string {
     return `${this.versionNumber} is an invalid version number`;
   }
 }

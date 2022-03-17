@@ -1,7 +1,8 @@
-import { CustomError } from './CustomError';
+import { CustomError, StandardErrorCodes } from './CustomError';
 
 export class InvalidPassageError extends CustomError {
   statusCode = 400;
+  errorCode = StandardErrorCodes.InvalidPassage;
 
   constructor(public passage: string) {
     super('Invalid Bible passage');
@@ -9,10 +10,13 @@ export class InvalidPassageError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ message: this.message, field: this.passage }];
+    return {
+      errorCode: this.errorCode,
+      errors: [{ message: this.message, field: this.passage }],
+    };
   }
 
-  serializeErrorsToString(): string {
+  serializeInternalError(): string {
     return `'${this.passage}' is an invalid passage`;
   }
 }

@@ -1,7 +1,8 @@
-import { CustomError } from './CustomError';
+import { CustomError, StandardErrorCodes } from './CustomError';
 
 export class DatabaseError extends CustomError {
   statusCode = 500;
+  errorCode = StandardErrorCodes.DatabaseProblem;
   private msg: string;
 
   constructor(public callingComponent: string, public details?: string) {
@@ -16,10 +17,10 @@ export class DatabaseError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ message: this.msg }];
+    return { errorCode: this.errorCode, errors: [{ message: this.msg }] };
   }
 
-  serializeErrorsToString(): string {
-    return this.msg;
+  serializeInternalError(): string {
+    return `Database error; ${this.msg}`;
   }
 }
