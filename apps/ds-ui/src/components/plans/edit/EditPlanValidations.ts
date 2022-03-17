@@ -51,7 +51,18 @@ export const validate: { [id: string]: ValidationFunction } = {
   reference: referenceValidation,
 };
 
-export const initialPlanValues = {
+export interface PlanValues {
+  planName: string;
+  description: string;
+  numWeeks: number;
+  version: string;
+  isAdmin: boolean;
+  includeApocrypha: boolean;
+  includeWeekends: boolean;
+  isFreeform: boolean;
+  reference: string;
+}
+export const initialPlanValues: PlanValues = {
   planName: '',
   description: '',
   numWeeks: 0,
