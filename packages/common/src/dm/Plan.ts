@@ -13,6 +13,7 @@ export interface BasePlanAttributes {
 }
 
 export enum PlanStatus {
+  Unsaved = 'Unsaved',
   Saved = 'Saved',
   Published = 'Published',
   Deleted = 'Deleted',

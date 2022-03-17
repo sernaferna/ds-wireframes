@@ -17,6 +17,7 @@ export * from './errors/PlanVersionError';
 export * from './errors/InvalidNewVersionError';
 export * from './errors/UserNotFoundError';
 export * from './errors/InvalidPlanStatusError';
+export * from './errors/InvalidPlanError';
 
 export * from './middlewares/HandleFourOhFour';
 export * from './middlewares/ValidateRequest';

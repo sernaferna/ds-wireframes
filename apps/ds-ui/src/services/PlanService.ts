@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { PlanAttributes } from '@devouringscripture/common';
+import { PlanAttributes, BasePlanAttributes } from '@devouringscripture/common';
 
 export const planApi = createApi({
   reducerPath: 'plans',
@@ -10,7 +10,27 @@ export const planApi = createApi({
       query: (id) => `/${id}`,
       providesTags: (result) => (result ? [{ type: 'plans', id: result.planInstanceId }] : []),
     }),
+    savePlan: builder.mutation<PlanAttributes, PlanAttributes | BasePlanAttributes>({
+      query(body) {
+        return {
+          url: '/save',
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: ['plans'],
+    }),
+    publishPlan: builder.mutation<PlanAttributes, PlanAttributes | BasePlanAttributes>({
+      query(body) {
+        return {
+          url: '/publish',
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: (result) => (result ? [{ type: 'plans', id: result.planInstanceId }] : []),
+    }),
   }),
 });
 
-export const { useGetPlansByIdQuery } = planApi;
+export const { useGetPlansByIdQuery, useSavePlanMutation, usePublishPlanMutation } = planApi;

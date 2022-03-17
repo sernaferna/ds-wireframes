@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import { Verse } from '@devouringscripture/common';
+import { Verse, BasePlanAttributes, PlanWeek } from '@devouringscripture/common';
 import { isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/refparse';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue } from './Helpers';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
+import { useSavePlanMutation, usePublishPlanMutation } from '../../../services/PlanService';
 import { initialPlanValues, validate } from './EditPlanValidations';
 import { EditPlanForm } from './EditPlanForm';
 import { getToastManager, TOAST_FADE_TIME, ToastType } from '../../common/toasts/ToastManager';
@@ -18,6 +20,9 @@ export const EditPlan = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [days, setDays] = useState<DayForPlan[]>([]);
+  const navigate = useNavigate();
+  const [savePlan] = useSavePlanMutation();
+  const [publishPlan] = usePublishPlanMutation();
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -91,29 +96,68 @@ export const EditPlan = () => {
       return;
     }
 
-    getToastManager().show({
-      title: 'Not implemented',
-      content: 'Submit/Publish not implemented',
-      duration: TOAST_FADE_TIME,
-      type: ToastType.Danger,
-    });
+    const weeks: PlanWeek[] = [];
+    const plan: BasePlanAttributes = {
+      name: values.planName,
+      description: values.description,
+      includeWeekends: values.includeWeekends,
+      includesApocrypha: values.includeApocrypha,
+      isAdmin: values.isAdmin,
+      length: values.numWeeks,
+      osis: values.reference,
+      version: values.version,
+      weeks: weeks,
+    };
+    publishPlan(plan)
+      .unwrap()
+      .then((payload) => {
+        navigate('/plans');
+      })
+      .catch((error) => {
+        console.table(error);
+        getToastManager().show({
+          title: 'Save error',
+          content: 'Error saving plan' + JSON.stringify(error),
+          type: ToastType.Danger,
+          duration: TOAST_FADE_TIME,
+        });
+      });
   }, [validateForm, errors]);
 
   const handleSave = useCallback(() => {
     const isFormValid = validateForm();
     if (!isFormValid) {
       console.log('Form is invalid');
-      console.log(errors);
       return;
     }
 
-    getToastManager().show({
-      title: 'Not implemented',
-      content: 'Save not implemented',
-      duration: TOAST_FADE_TIME,
-      type: ToastType.Danger,
-    });
-  }, [validateForm, errors]);
+    const weeks: PlanWeek[] = [];
+    const plan: BasePlanAttributes = {
+      name: values.planName,
+      description: values.description,
+      includeWeekends: values.includeWeekends,
+      includesApocrypha: values.includeApocrypha,
+      isAdmin: values.isAdmin,
+      length: values.numWeeks,
+      osis: values.reference,
+      version: values.version,
+      weeks: weeks,
+    };
+    savePlan(plan)
+      .unwrap()
+      .then((payload) => {
+        navigate('/plans');
+      })
+      .catch((error) => {
+        console.table(error);
+        getToastManager().show({
+          title: 'Save error',
+          content: 'Error saving plan' + JSON.stringify(error),
+          type: ToastType.Danger,
+          duration: TOAST_FADE_TIME,
+        });
+      });
+  }, [validateForm, savePlan]);
 
   const handleReset = useCallback(() => {
     setValues(initialPlanValues);
