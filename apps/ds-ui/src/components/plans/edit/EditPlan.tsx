@@ -173,21 +173,20 @@ export const EditPlan = () => {
       const newList = days.slice();
       const currentDay = dayNum - 1;
 
-      for (let i = days.length - 1; i >= currentDay; i--) {
-        if (newList[i].verses === undefined) {
-          continue;
-        }
-
-        if (cascade || i === currentDay + 1) {
-          if (newList[i - 1].verses === undefined) {
-            newList[i - 1].verses = [];
+      for (let i = currentDay; i < newList.length; i++) {
+        if (cascade || i === currentDay) {
+          if (newList[i + 1].verses === undefined || newList[i + 1].verses!.length < 1) {
+            break;
           }
-          newList[i - 1].verses!.push(newList[i].verses![0]);
-          newList[i - 1].id = uuidv4();
-          newList[i - 1].osis = getOSISForReference(getRefForVerses(newList[i - 1].verses));
-          newList[i].verses!.splice(0, 1);
-          newList[i].id = uuidv4();
+          if (newList[i].verses === undefined) {
+            newList[i].verses = [];
+          }
+          newList[i].verses!.push(newList[i + 1].verses![0]);
           newList[i].osis = getOSISForReference(getRefForVerses(newList[i].verses));
+          newList[i].id = uuidv4();
+          newList[i + 1].verses!.splice(0, 1);
+          newList[i + 1].osis = getOSISForReference(getRefForVerses(newList[i + 1].verses));
+          newList[i + 1].id = uuidv4();
         }
       }
 
@@ -204,18 +203,15 @@ export const EditPlan = () => {
       for (let i = currentDay; i > 0; i--) {
         if (cascade || i === currentDay) {
           if (newList[i - 1].verses === undefined || newList[i - 1].verses!.length < 1) {
-            return;
+            break;
           }
           if (newList[i].verses === undefined) {
             newList[i].verses = [];
           }
           newList[i].verses!.unshift(newList[i - 1].verses!.pop() as Verse);
-          console.log('popped', newList[i].verses!.length);
           newList[i].osis = getOSISForReference(getRefForVerses(newList[i].verses));
-          console.log('set osis', newList[i].osis);
           newList[i].id = uuidv4();
           newList[i - 1].osis = getOSISForReference(getRefForVerses(newList[i - 1].verses));
-          console.log('set upper osis', newList[i - 1].osis);
           newList[i - 1].id = uuidv4();
         }
       }
