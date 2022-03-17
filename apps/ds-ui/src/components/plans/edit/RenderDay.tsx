@@ -25,7 +25,16 @@ export const RenderDay = ({
   downFunction,
   updateCallback,
 }: RenderDayInterface) => {
-  const [osis, setOsis] = useState(getFormattedReference(day.osis || ''));
+  const [reference, setReference] = useState(day.osis || '');
+  const [dirty, setDirty] = useState(false);
+
+  const formattedReference = useMemo(() => {
+    if (dirty || !isReferenceValid(reference)) {
+      return reference;
+    }
+
+    return getFormattedReference(reference);
+  }, [reference, dirty]);
 
   const refForVerses = useMemo(() => {
     if (day.verses === undefined || day.verses.length === 0) {
@@ -43,8 +52,8 @@ export const RenderDay = ({
   if (refForVerses.trim().length > 0) {
     isInvalid = !isReferenceValid(refForVerses);
   } else {
-    if (osis.trim().length > 0) {
-      isInvalid = !isReferenceValid(osis);
+    if (formattedReference.trim().length > 0) {
+      isInvalid = !isReferenceValid(formattedReference);
     }
   }
 
@@ -52,18 +61,22 @@ export const RenderDay = ({
     <InputGroup>
       <Form.Control
         readOnly={!isFreeform}
-        value={refForVerses.length > 0 ? refForVerses : osis}
+        value={refForVerses.length > 0 ? refForVerses : formattedReference}
         type="text"
         name={day.id}
         id={day.id}
         onChange={(e) => {
-          setOsis(e.currentTarget.value);
+          setReference(e.currentTarget.value);
+          setDirty(true);
         }}
         onBlur={(e) => {
           if (isReferenceValid(e.currentTarget.value)) {
             day.osis = getOSISForReference(e.currentTarget.value);
-            updateCallback(day);
+          } else {
+            day.osis = e.currentTarget.value;
           }
+          setDirty(true);
+          updateCallback(day);
         }}
         isInvalid={isInvalid}
       />

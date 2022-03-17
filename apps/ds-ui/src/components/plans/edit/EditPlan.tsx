@@ -158,8 +158,14 @@ export const EditPlan = () => {
 
       for (let i = 0; i < newList.length; i++) {
         if (newList[i].id === update.id) {
-          newList[i].osis = update.osis;
+          if (newList[i].osis && isReferenceValid(newList[i].osis!)) {
+            newList[i].osis = getOSISForReference(update.osis || '');
+          } else {
+            newList[i].osis = update.osis;
+          }
           newList[i].verses = update.verses;
+          newList[i].id = uuidv4();
+          break;
         }
       }
 
