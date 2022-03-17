@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, ChangeEvent, FocusEvent } from 'react';
+import React, { useState, ChangeEvent, FocusEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -21,7 +21,9 @@ interface EPFInterface {
   errors: Record<string, string>;
   touched: Record<string, boolean>;
   days: DayForPlan[];
-  handleSubmit(event: FormEvent): void;
+  handleSubmit(): void;
+  handleSave(): void;
+  handleReset(): void;
   handleChange(event: ChangeEvent<HTMLInputElement>): void;
   handleBlur(event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>): void;
   fetchVerses(): void;
@@ -37,6 +39,8 @@ export const EditPlanForm = ({
   touched,
   days,
   handleSubmit,
+  handleSave,
+  handleReset,
   handleChange,
   handleBlur,
   fetchVerses,
@@ -48,7 +52,7 @@ export const EditPlanForm = ({
   const [showWarning, setShowWarning] = useState(true);
 
   return (
-    <Form noValidate onSubmit={handleSubmit}>
+    <Form noValidate>
       <Row>
         <Col className="plan-edit-details">
           <Container className="p-3 bg-light">
@@ -257,17 +261,17 @@ export const EditPlanForm = ({
         <Col className="plan-edit-sidebar">
           <div className="sidebar-content">
             <div className="d-grid gap-2">
-              <Button variant="primary" type="submit">
+              <Button variant="primary" onClick={handleSave}>
                 Save
               </Button>
               {user.isAdmin ? (
-                <Button onClick={() => {}} variant="success">
+                <Button onClick={handleSubmit} variant="success">
                   Publish
                 </Button>
               ) : (
                 <></>
               )}
-              <Button onClick={() => {}} variant="danger">
+              <Button onClick={handleReset} variant="danger">
                 New
               </Button>
             </div>

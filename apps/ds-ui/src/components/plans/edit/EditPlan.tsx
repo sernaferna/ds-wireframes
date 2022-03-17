@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, ChangeEvent, FormEvent, FocusEvent } from 'react';
+import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Verse } from '@devouringscripture/common';
 import { isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/refparse';
@@ -7,8 +7,8 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue } from './Helpers';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import { initialPlanValues, validate } from './EditPlanValidations';
-
 import { EditPlanForm } from './EditPlanForm';
+import { getToastManager, TOAST_FADE_TIME, ToastType } from '../../common/toasts/ToastManager';
 import { v4 as uuidv4 } from 'uuid';
 
 export const EditPlan = () => {
@@ -55,38 +55,72 @@ export const EditPlan = () => {
     [errors, setErrors, touched]
   );
 
-  const handleSubmit = useCallback(
-    (event: FormEvent) => {
-      event.preventDefault();
+  const validateForm = useCallback((): boolean => {
+    //validate the form
+    const formValidation: any = Object.keys(values).reduce((acc: any, key): any => {
+      const newError = validate[key]((values as any)[key]);
+      const newTouched = { [key]: true };
+      return {
+        errors: {
+          ...acc.errors,
+          ...(newError && { [key]: newError }),
+        },
+        touched: {
+          ...acc.touched,
+          ...newTouched,
+        },
+      };
+    });
+    setErrors(formValidation.errors);
+    setTouched(formValidation.touched);
 
-      //validate the form
-      const formValidation: any = Object.keys(values).reduce((acc: any, key): any => {
-        const newError = validate[key]((values as any)[key]);
-        const newTouched = { [key]: true };
-        return {
-          errors: {
-            ...acc.errors,
-            ...(newError && { [key]: newError }),
-          },
-          touched: {
-            ...acc.touched,
-            ...newTouched,
-          },
-        };
-      });
-      setErrors(formValidation.errors);
-      setTouched(formValidation.touched);
+    if (
+      !Object.values(formValidation.errors).length //errors object is empty
+    ) {
+      return true;
+    }
 
-      if (
-        !Object.values(formValidation.errors).length && //errors object is empty
-        Object.values(formValidation.touched).length === Object.values(values).length && // all items were touched
-        Object.values(formValidation.touched).every((t) => t === true) //every touched field is true
-      ) {
-        console.log(JSON.stringify(values, null, 2)); // TODO
-      }
-    },
-    [values, setErrors, setTouched]
-  );
+    return false;
+  }, [values, setErrors, setTouched]);
+
+  const handleSubmit = useCallback(() => {
+    const isFormValid = validateForm();
+    if (!isFormValid) {
+      console.log('form is invalid');
+      console.log(errors);
+      return;
+    }
+
+    getToastManager().show({
+      title: 'Not implemented',
+      content: 'Submit/Publish not implemented',
+      duration: TOAST_FADE_TIME,
+      type: ToastType.Danger,
+    });
+  }, [validateForm, errors]);
+
+  const handleSave = useCallback(() => {
+    const isFormValid = validateForm();
+    if (!isFormValid) {
+      console.log('Form is invalid');
+      console.log(errors);
+      return;
+    }
+
+    getToastManager().show({
+      title: 'Not implemented',
+      content: 'Save not implemented',
+      duration: TOAST_FADE_TIME,
+      type: ToastType.Danger,
+    });
+  }, [validateForm, errors]);
+
+  const handleReset = useCallback(() => {
+    setValues(initialPlanValues);
+    setDays([]);
+    setErrors({});
+    setTouched({});
+  }, [setValues, setDays, setErrors, setTouched]);
 
   const regenerateDayList = useCallback(() => {
     let verses: Verse[] | undefined = undefined;
@@ -233,6 +267,8 @@ export const EditPlan = () => {
         handleBlur={handleBlur}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        handleSave={handleSave}
+        handleReset={handleReset}
         moveVerseDown={moveVerseDown}
         moveVerseUp={moveVerseUp}
         updateDay={updateDay}
