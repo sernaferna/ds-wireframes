@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
-import { Verse, BasePlanAttributes, PlanWeek, ErrorResponse } from '@devouringscripture/common';
+import { Verse, BasePlanAttributes, ErrorResponse } from '@devouringscripture/common';
 import { isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/refparse';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
@@ -11,8 +11,21 @@ import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import { useSavePlanMutation, usePublishPlanMutation } from '../../../services/PlanService';
 import { initialPlanValues, validate } from './EditPlanValidations';
 import { EditPlanForm } from './EditPlanForm';
-import { getToastManager, TOAST_FADE_TIME, ToastType } from '../../common/toasts/ToastManager';
 import { v4 as uuidv4 } from 'uuid';
+
+const generateDaysForUpload = (days: DayForPlan[]) => {
+  return days.map((day) => {
+    if (day.osis) {
+      return { osis: day.osis };
+    }
+
+    if (day.verses) {
+      return { osis: getOSISForReference(getRefForVerses(day.verses)) };
+    }
+
+    throw 'Error generating day for upload';
+  });
+};
 
 export const EditPlan = () => {
   const userResponse = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -96,7 +109,14 @@ export const EditPlan = () => {
       return;
     }
 
-    const weeks: PlanWeek[] = [];
+    let uploadableDays: any;
+    try {
+      uploadableDays = generateDaysForUpload(days);
+    } catch {
+      const errs = errorMessages.slice();
+      errs.push(<p>Error uploading data. Check that all days in the plan are valid.</p>);
+      updateErrorMessages(errs);
+    }
     const plan: BasePlanAttributes = {
       name: values.planName,
       description: values.description,
@@ -106,7 +126,7 @@ export const EditPlan = () => {
       length: values.numWeeks,
       osis: values.reference,
       version: values.version,
-      weeks: weeks,
+      days: uploadableDays,
     };
     publishPlan(plan)
       .unwrap()
@@ -132,7 +152,6 @@ export const EditPlan = () => {
       return;
     }
 
-    const weeks: PlanWeek[] = [];
     const plan: BasePlanAttributes = {
       name: values.planName,
       description: values.description,
@@ -142,7 +161,7 @@ export const EditPlan = () => {
       length: values.numWeeks,
       osis: values.reference,
       version: values.version,
-      weeks: weeks,
+      days: [],
     };
     savePlan(plan)
       .unwrap()
