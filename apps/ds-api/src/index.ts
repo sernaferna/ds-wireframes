@@ -26,8 +26,6 @@ import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { getPassageByIdRouter } from './routes/read/passages/byId';
 
-import { newPublicReadingPlan } from './routes/plans/new';
-import { updatePublicPlanRouter } from './routes/plans/update';
 import { getAllPublicPlansRouter } from './routes/plans/getAll';
 import { deletePublicPlanRouter } from './routes/plans/delete';
 import { getPublicPlanByIdRouter } from './routes/plans/byId';
@@ -75,9 +73,7 @@ app.use('/api/read/current', [
   getPassageByIdRouter,
 ]);
 app.use('/api/plans/public', [
-  newPublicReadingPlan,
   getAllPublicPlansRouter,
-  updatePublicPlanRouter,
   deletePublicPlanRouter,
   getPublicPlanByIdRouter,
   publishPlanRouter,
