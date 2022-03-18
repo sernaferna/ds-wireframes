@@ -12,6 +12,14 @@ export enum StandardErrorCodes {
   SomethingWentWrong,
 }
 
+export interface ErrorResponse {
+  errorCode: StandardErrorCodes;
+  errors: {
+    message: string;
+    field?: string;
+  }[];
+}
+
 export abstract class CustomError extends Error {
   abstract statusCode: number;
   abstract errorCode: StandardErrorCodes;
@@ -21,7 +29,7 @@ export abstract class CustomError extends Error {
     Object.setPrototypeOf(this, CustomError.prototype);
   }
 
-  abstract serializeErrors(): { errorCode: StandardErrorCodes; errors: { message: string; field?: string }[] };
+  abstract serializeErrors(): ErrorResponse;
 
   serializeErrorsToString(): string {
     return `Error code ${this.errorCode}. ` + this.serializeInternalError();
