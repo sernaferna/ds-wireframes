@@ -114,13 +114,11 @@ export const EditPlan = () => {
         navigate('/plans');
       })
       .catch((error) => {
+        const newErrors = errorMessages.slice();
         if ('data' in error) {
           const errorResponse: ErrorResponse = error.data;
-          const newErrors = errorMessages.slice();
           newErrors.push(generateErrorStringFromError(errorResponse));
-          updateErrorMessages(newErrors);
         } else {
-          const newErrors = errorMessages.slice();
           newErrors.push(<p>Unanticipated error saving data</p>);
           updateErrorMessages(newErrors);
         }
@@ -152,15 +150,16 @@ export const EditPlan = () => {
         navigate('/plans');
       })
       .catch((error) => {
-        console.table(error);
-        getToastManager().show({
-          title: 'Save error',
-          content: 'Error saving plan' + JSON.stringify(error),
-          type: ToastType.Danger,
-          duration: TOAST_FADE_TIME,
-        });
+        const newErrors = errorMessages.slice();
+        if ('data' in error) {
+          const errorResponse: ErrorResponse = error.data;
+          newErrors.push(generateErrorStringFromError(errorResponse));
+        } else {
+          newErrors.push(<p>Unanticipated error saving data</p>);
+        }
+        updateErrorMessages(newErrors);
       });
-  }, [validateForm, savePlan, navigate, values]);
+  }, [validateForm, savePlan, navigate, values, errorMessages, updateErrorMessages]);
 
   const handleReset = useCallback(() => {
     setValues(initialPlanValues);
