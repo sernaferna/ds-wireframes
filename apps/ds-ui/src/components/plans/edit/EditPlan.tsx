@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import { Verse, BasePlanAttributes, PlanWeek } from '@devouringscripture/common';
+import Alert from 'react-bootstrap/Alert';
+import { Verse, BasePlanAttributes, PlanWeek, ErrorResponse } from '@devouringscripture/common';
 import { isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/refparse';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue } from './Helpers';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import { useSavePlanMutation, usePublishPlanMutation } from '../../../services/PlanService';
@@ -23,6 +24,7 @@ export const EditPlan = () => {
   const navigate = useNavigate();
   const [savePlan] = useSavePlanMutation();
   const [publishPlan] = usePublishPlanMutation();
+  const [errorMessages, updateErrorMessages] = useState<JSX.Element[]>([]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -91,8 +93,6 @@ export const EditPlan = () => {
   const handleSubmit = useCallback(() => {
     const isFormValid = validateForm();
     if (!isFormValid) {
-      console.log('form is invalid');
-      console.log(errors);
       return;
     }
 
@@ -114,15 +114,18 @@ export const EditPlan = () => {
         navigate('/plans');
       })
       .catch((error) => {
-        console.table(error);
-        getToastManager().show({
-          title: 'Save error',
-          content: 'Error saving plan' + JSON.stringify(error),
-          type: ToastType.Danger,
-          duration: TOAST_FADE_TIME,
-        });
+        if ('data' in error) {
+          const errorResponse: ErrorResponse = error.data;
+          const newErrors = errorMessages.slice();
+          newErrors.push(generateErrorStringFromError(errorResponse));
+          updateErrorMessages(newErrors);
+        } else {
+          const newErrors = errorMessages.slice();
+          newErrors.push(<p>Unanticipated error saving data</p>);
+          updateErrorMessages(newErrors);
+        }
       });
-  }, [validateForm, errors]);
+  }, [validateForm, publishPlan, values, updateErrorMessages, navigate, errorMessages]);
 
   const handleSave = useCallback(() => {
     const isFormValid = validateForm();
@@ -157,7 +160,7 @@ export const EditPlan = () => {
           duration: TOAST_FADE_TIME,
         });
       });
-  }, [validateForm, savePlan]);
+  }, [validateForm, savePlan, navigate, values]);
 
   const handleReset = useCallback(() => {
     setValues(initialPlanValues);
@@ -295,12 +298,22 @@ export const EditPlan = () => {
     return <LoadingMessage />;
   }
   if (userResponse.error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={userResponse.error} />;
   }
 
   return (
     <Container fluid>
       <h1>Edit Plan</h1>
+      <Alert
+        variant="danger"
+        dismissible
+        show={errorMessages.length > 0}
+        onClose={() => {
+          updateErrorMessages([]);
+        }}
+      >
+        {errorMessages}
+      </Alert>
       <EditPlanForm
         days={days}
         errors={errors}
