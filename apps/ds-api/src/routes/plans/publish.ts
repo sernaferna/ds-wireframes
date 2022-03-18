@@ -45,7 +45,8 @@ router.post(
         throw new InvalidPlanError(`Name: ${req.body.name || ''}; description: ${req.body.description || ''}`);
       }
 
-      if (plan.weeks.length !== plan.length) {
+      const numExpectedDays = plan.length * (plan.includeWeekends ? 7 : 5);
+      if (!plan.days || plan.days.length !== numExpectedDays) {
         console.error('Invalid # of weeks');
         throw new InvalidPlanError("Week/day data doesn't match length attribute");
       }
@@ -72,7 +73,7 @@ router.post(
         db.push(`/plans[${oldIndex}]/osis`, plan.osis);
         db.push(`/plans[${oldIndex}]/status`, plan.status);
         db.push(`/plans[${oldIndex}]/version`, plan.version);
-        db.push(`/plans[${oldIndex}]/weeks`, plan.weeks);
+        db.push(`/plans[${oldIndex}]/days`, plan.days);
         console.log('plan updated');
         return res.send(plan);
       }

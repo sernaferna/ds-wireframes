@@ -1,5 +1,3 @@
-import { Verse } from './Verse';
-
 export interface BasePlanAttributes {
   name: string;
   description: string;
@@ -9,7 +7,9 @@ export interface BasePlanAttributes {
   includeWeekends: boolean;
   version: string;
   osis: string;
-  weeks: PlanWeek[];
+  days?: {
+    osis: string;
+  }[];
 }
 
 export enum PlanStatus {
@@ -25,14 +25,6 @@ export interface PlanAttributes extends BasePlanAttributes {
   status: PlanStatus;
 }
 
-export interface PlanWeek {
-  days: PlanDay[];
-}
-
-export interface PlanDay {
-  verses: Verse[];
-}
-
 export interface BaseInstantiatedPlan {
   planInstanceId: string;
   percentageComplete?: number;
@@ -40,9 +32,7 @@ export interface BaseInstantiatedPlan {
 
 export interface InstantiatedPlan extends BaseInstantiatedPlan {
   id: string;
-  weeks?: {
-    days: {
-      completed: boolean;
-    }[];
+  days?: {
+    completed: boolean;
   }[];
 }

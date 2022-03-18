@@ -60,7 +60,7 @@ router.post(
         db.push(`/plans[${oldIndex}]/osis`, plan.osis);
         db.push(`/plans[${oldIndex}]/status`, plan.status);
         db.push(`/plans[${oldIndex}]/version`, plan.version);
-        db.push(`/plans[${oldIndex}]/weeks`, plan.weeks);
+        db.push(`/plans[${oldIndex}]/days`, plan.days);
         return res.send(plan);
       }
 
