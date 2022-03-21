@@ -15,10 +15,15 @@ export class InvalidPlanDaysError extends CustomError {
     const response: ErrorResponse = {
       errorCode: this.errorCode,
       errors: this.days
-        .filter((day) => !isReferenceValid(day.osis))
-        .map((day, index) => {
+        .map((day, index) => ({
+          invalid: !isReferenceValid(day.osis),
+          dayNum: index + 1,
+          osis: day.osis,
+        }))
+        .filter((day) => day.invalid)
+        .map((day) => {
           return {
-            message: `Day ${index + 1} reference not valid`,
+            message: `Day ${day.dayNum} reference not valid`,
             field: day.osis,
           };
         }),
