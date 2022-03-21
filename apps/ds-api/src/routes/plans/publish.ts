@@ -10,6 +10,8 @@ import {
   v2GTV1,
   PlanVersionError,
   InvalidPlanStatusError,
+  isReferenceValid,
+  InvalidPlanDaysError,
 } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { basePlanValidationRules } from '../../helpers/planValidationRules';
@@ -49,6 +51,11 @@ router.post(
       if (!plan.days || plan.days.length !== numExpectedDays) {
         console.error('Invalid # of weeks');
         throw new InvalidPlanError("Week/day data doesn't match length attribute");
+      }
+
+      const invalidDays = plan.days.filter((day) => !isReferenceValid(day.osis));
+      if (invalidDays.length > 0) {
+        throw new InvalidPlanDaysError(plan.days);
       }
 
       if (plan.status === PlanStatus.Unsaved) {
