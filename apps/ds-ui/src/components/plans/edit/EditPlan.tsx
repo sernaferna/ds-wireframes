@@ -2,8 +2,15 @@ import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
-import { Verse, BasePlanAttributes, ErrorResponse } from '@devouringscripture/common';
-import { isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/refparse';
+import {
+  Verse,
+  BasePlanAttributes,
+  ErrorResponse,
+  PlanDay,
+  isReferenceValid,
+  getRefForVerses,
+  getOSISForReference,
+} from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue } from './Helpers';
@@ -13,7 +20,15 @@ import { initialPlanValues, validate } from './EditPlanValidations';
 import { EditPlanForm } from './EditPlanForm';
 import { v4 as uuidv4 } from 'uuid';
 
-const generateDaysForUpload = (days: DayForPlan[]) => {
+/**
+ * Helper function to take the list of `DayforPlan` objects and convert them to
+ * uploadable `PlanDay` data. Doesn't validate any of the data, because the rules
+ * are different for Saving vs. Publishing; let the server-side API do that.
+ *
+ * @param days Array of days as captured by the UI
+ * @returns Array of days to be uploaded to the API
+ */
+const generateDaysForUpload = (days: DayForPlan[]): PlanDay[] => {
   return days.map((day) => {
     if (day.osis) {
       return { osis: day.osis };
@@ -23,7 +38,7 @@ const generateDaysForUpload = (days: DayForPlan[]) => {
       return { osis: getOSISForReference(getRefForVerses(day.verses)) };
     }
 
-    throw 'Error generating day for upload';
+    return { osis: '' };
   });
 };
 
@@ -143,7 +158,7 @@ export const EditPlan = () => {
           updateErrorMessages(newErrors);
         }
       });
-  }, [validateForm, publishPlan, values, updateErrorMessages, navigate, errorMessages]);
+  }, [validateForm, publishPlan, values, updateErrorMessages, navigate, errorMessages, days]);
 
   const handleSave = useCallback(() => {
     const isFormValid = validateForm();
