@@ -34,6 +34,8 @@
   "dependencies": {
     "express": "^4.17.2",
     "express-validator": "^6.14.0",
-    "semver": "^7.3.5"
+    "semver": "^7.3.5",
+    "bible-passage-reference-parser": "^2.0.1",
+    "bible-reference-formatter": "^1.0.1"
   }
 }

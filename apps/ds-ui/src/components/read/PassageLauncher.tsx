@@ -7,8 +7,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
-import { BasePassage } from '@devouringscripture/common';
-import { isReferenceValid, getReferenceForOSIS, getOSISForReference } from '@devouringscripture/refparse';
+import { BasePassage, isReferenceValid, getReferenceForOSIS, getOSISForReference } from '@devouringscripture/common';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 

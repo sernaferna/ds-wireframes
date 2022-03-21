@@ -1,4 +1,4 @@
-import { getFormattedReference } from '../index';
+import { getFormattedReference } from '../../helpers/refparse/index';
 
 describe('get formatted test suite', () => {
   it('handles OSIS', () => {

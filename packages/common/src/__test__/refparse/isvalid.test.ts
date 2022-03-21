@@ -1,4 +1,4 @@
-import { isReferenceValid } from '..';
+import { isReferenceValid } from '../../helpers/refparse/index';
 
 describe('isValid test suite', () => {
   it('returns true for valid verse', () => {

@@ -1,5 +1,5 @@
-import { getRangesForOSIS, getRefForVerses } from '../index';
-import { Verse } from '@devouringscripture/common';
+import { getRangesForOSIS, getRefForVerses } from '../../helpers/refparse/index';
+import { Verse } from '../../dm/Verse';
 
 describe('getOSISForVerses tests', () => {
   it('handles undefined', () => {

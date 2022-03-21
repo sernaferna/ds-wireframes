@@ -1,11 +1,11 @@
 import React from 'react';
-import { BasePassage } from '@devouringscripture/common';
 import {
+  BasePassage,
   getReferenceForOSIS,
   OSISRange,
   getPassagesForReference,
   getFormattedReference,
-} from '@devouringscripture/refparse';
+} from '@devouringscripture/common';
 
 const getLink = (ref: string, version: string): string => {
   return 'https://www.biblegateway.com/passage/?search=' + encodeURI(ref) + '&version=' + version;

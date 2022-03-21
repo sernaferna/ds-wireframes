@@ -1,7 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { getVerseByOSIS } from '../../services/db';
-import { Verse, validateRequest, DatabaseError, CustomError, InvalidPassageError } from '@devouringscripture/common';
-import { OSISRange, getRangesForOSIS } from '@devouringscripture/refparse';
+import {
+  validateRequest,
+  DatabaseError,
+  CustomError,
+  InvalidPassageError,
+  OSISRange,
+  getRangesForOSIS,
+} from '@devouringscripture/common';
 import { check } from 'express-validator';
 
 export interface Bounds {

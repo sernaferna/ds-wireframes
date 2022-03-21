@@ -39,11 +39,9 @@ The sqlite DB isn't checked into source control, but the first time this API is 
 
 This is just a library with common code. It exposes commonly used type definitions that are returned from APIs but also used in the UI app, some error handling code that is used by both of the APIs, and anything else that could be refactored out so that the same code wasn't being written multiple times.
 
-Some _very_ basic **Jest** unit cases were added, for some helper functions.
+### Bible Reference/OSIS Parsing
 
-## refparse
-
-A library for parsing and working with Bible passage references. It can:
+Part of the common functionality is a library of functions for parsing and working with Bible passage references. It can:
 
 - Determine if a reference is **valid**; e.g.
   - `James 1:19` is valid
@@ -65,6 +63,8 @@ To clear up some of what was just described, here's some commonly used terminolo
 | Verse | A single verse. |  |
 
 This library makes heavy use of the `bible-passage-reference-parser` and `bible-reference-formatter` libraries under the covers. In fact, in many instances it's nothing more than a light wrapper over those libraries, which do all of the heavy lifting, but helper functions like `isPassageRefValid()` (returning a simple Boolean as opposed to a complicated object or OSIS string) are easier to use in the wireframe.
+
+Some _very_ basic **Jest** unit cases were added, for some helper functions.
 
 # Common Commands
 

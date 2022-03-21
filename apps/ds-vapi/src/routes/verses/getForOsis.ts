@@ -1,7 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
-import { validateRequest, InvalidPassageError, CustomError, DatabaseError, Verse } from '@devouringscripture/common';
-import { isReferenceValid } from '@devouringscripture/refparse';
+import {
+  validateRequest,
+  InvalidPassageError,
+  CustomError,
+  DatabaseError,
+  Verse,
+  isReferenceValid,
+} from '@devouringscripture/common';
 import { getBoundsForPassage, Bounds } from './getBoundsForPassage';
 import { getVersesByNum } from '../../services/db';
 

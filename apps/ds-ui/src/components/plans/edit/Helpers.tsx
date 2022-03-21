@@ -1,5 +1,4 @@
-import { Verse } from '@devouringscripture/common';
-import { getRefForVerses } from '@devouringscripture/refparse';
+import { Verse, getRefForVerses } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface DayForPlan {

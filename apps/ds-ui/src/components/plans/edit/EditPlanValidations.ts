@@ -1,5 +1,4 @@
-import { isVersionValid } from '@devouringscripture/common';
-import { isReferenceValid } from '@devouringscripture/refparse';
+import { isVersionValid, isReferenceValid } from '@devouringscripture/common';
 
 const stringValidation = (fieldName: string, fieldValue: string): string | null => {
   if (fieldValue.trim() === '') {

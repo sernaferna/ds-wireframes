@@ -1,4 +1,4 @@
-import { Verse } from '@devouringscripture/common';
+import { Verse } from '../../dm/Verse';
 
 const bcv_parser = require('bible-passage-reference-parser/js/en_bcv_parser').bcv_parser;
 const osisToEn = require('bible-reference-formatter/es6/en');

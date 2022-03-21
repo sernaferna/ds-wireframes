@@ -12,8 +12,7 @@ import { PlanValues } from './EditPlanValidations';
 import { DayForPlan } from './Helpers';
 import { WeeksDropdown } from './WeeksDropdown';
 import { RenderWeeks } from './RenderWeeks';
-import { UserAttributes } from '@devouringscripture/common';
-import { getFormattedReference } from '@devouringscripture/refparse';
+import { UserAttributes, getFormattedReference } from '@devouringscripture/common';
 
 interface EPFInterface {
   user: UserAttributes;

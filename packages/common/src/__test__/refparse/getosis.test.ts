@@ -1,4 +1,4 @@
-import { getOSISForReference } from '../index';
+import { getOSISForReference } from '../../helpers/refparse/index';
 
 describe('get OSIS test suite', () => {
   it('handles regular verse', () => {

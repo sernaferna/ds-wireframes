@@ -9,9 +9,7 @@
       "ds-vapi/*": ["./apps/ds-vapi/src/*"],
       "ds-vapi": ["./apps/ds-vapi/src"],
       "@devouringscripture/common/*": ["./packages/common/src/*"],
-      "@devouringscripture/common": ["./packages/common/src"],
-      "@devouringscripture/refparse/*": ["./packages/refparse/src/*"],
-      "@devouringscripture/refparse": ["./packages/refparse/src"]
+      "@devouringscripture/common": ["./packages/common/src"]
     }
   }
 }
