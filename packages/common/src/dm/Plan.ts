@@ -1,3 +1,7 @@
+export interface PlanDay {
+  osis: string;
+}
+
 export interface BasePlanAttributes {
   name: string;
   description: string;
@@ -7,9 +11,7 @@ export interface BasePlanAttributes {
   includeWeekends: boolean;
   version: string;
   osis: string;
-  days?: {
-    osis: string;
-  }[];
+  days?: PlanDay[];
 }
 
 export enum PlanStatus {
