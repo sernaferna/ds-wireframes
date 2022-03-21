@@ -10,6 +10,7 @@ export enum StandardErrorCodes {
   InvalidData,
   UserNotFound,
   SomethingWentWrong,
+  InvalidPlanDays,
 }
 
 export interface ErrorResponse {
