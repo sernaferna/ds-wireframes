@@ -155,8 +155,8 @@ export const EditPlan = () => {
           newErrors.push(generateErrorStringFromError(errorResponse));
         } else {
           newErrors.push(<p>Unanticipated error saving data</p>);
-          updateErrorMessages(newErrors);
         }
+        updateErrorMessages(newErrors);
       });
   }, [validateForm, publishPlan, values, updateErrorMessages, navigate, errorMessages, days]);
 
