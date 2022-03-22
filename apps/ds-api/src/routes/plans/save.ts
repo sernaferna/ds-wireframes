@@ -42,7 +42,7 @@ router.post(
 
       if (plan.status === PlanStatus.Unsaved) {
         plan.status = PlanStatus.Saved;
-        db.push('/plans', plan);
+        db.push('/plans[]', plan);
         return res.status(201).send(plan);
       }
 

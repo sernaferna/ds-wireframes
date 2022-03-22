@@ -60,7 +60,7 @@ router.post(
 
       if (plan.status === PlanStatus.Unsaved) {
         plan.status = PlanStatus.Published;
-        db.push('/plans', plan);
+        db.push('/plans[]', plan);
         console.log('brand new plan saved');
         return res.status(201).send(plan);
       }
@@ -91,7 +91,7 @@ router.post(
       }
 
       //anything else means published
-      const oldPlanIndex = db.getIndex('/plans', plan.planInstanceId);
+      const oldPlanIndex = db.getIndex('/plans', plan.planInstanceId, 'planInstanceId');
       if (oldPlanIndex < 0) {
         console.error("plan wasn't found in db");
         throw new InvalidPlanError('Plan not found');
