@@ -16,7 +16,7 @@ router.delete(
     try {
       const index = db.getIndex(`/plans`, planInstanceId, 'planInstanceId');
       if (index < 0) {
-        throw new NotFoundError(`Plan not found: ${planInstanceId}`);
+        throw new NotFoundError(`Plan ${planInstanceId}`);
       }
       db.push(`/plans[${index}]/status`, PlanStatus.Deleted);
       res.send('Item removed');
