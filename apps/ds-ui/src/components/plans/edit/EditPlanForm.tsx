@@ -217,7 +217,6 @@ export const EditPlanForm = ({
                 </Form.Label>
                 <InputGroup>
                   <Form.Control
-                    className="alter-content-field"
                     id="reference"
                     name="reference"
                     size="lg"

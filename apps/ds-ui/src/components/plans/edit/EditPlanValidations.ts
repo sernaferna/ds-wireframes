@@ -25,7 +25,7 @@ const versionValidation = (version: string): string | null => {
 };
 
 const referenceValidation = (ref: string): string | null => {
-  if (!isReferenceValid(ref)) {
+  if (ref && ref.length > 0 && !isReferenceValid(ref)) {
     return 'Invalid reference';
   }
 
