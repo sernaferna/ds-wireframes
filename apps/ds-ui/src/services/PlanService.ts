@@ -30,7 +30,16 @@ export const planApi = createApi({
       },
       invalidatesTags: (result) => (result ? [{ type: 'plans', id: result.planInstanceId }] : []),
     }),
+    deletePlan: builder.mutation<string, string>({
+      query(id) {
+        return {
+          url: `/${id}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['plans'],
+    }),
   }),
 });
 
-export const { useGetPlansByIdQuery, useSavePlanMutation, usePublishPlanMutation } = planApi;
+export const { useGetPlansByIdQuery, useSavePlanMutation, usePublishPlanMutation, useDeletePlanMutation } = planApi;
