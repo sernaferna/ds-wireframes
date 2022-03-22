@@ -16,7 +16,6 @@ export const basePlanValidationRules = () => {
 
       return true;
     }),
-    body('osis').notEmpty().withMessage('Must include OSIS string'),
   ];
 };
 

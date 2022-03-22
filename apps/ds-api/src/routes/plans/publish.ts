@@ -77,7 +77,7 @@ router.post(
         db.push(`/plans[${oldIndex}]/includesApocrypha`, plan.includesApocrypha);
         db.push(`/plans[${oldIndex}]/isAdmin`, plan.isAdmin);
         db.push(`/plans[${oldIndex}]/length`, plan.length);
-        db.push(`/plans[${oldIndex}]/osis`, plan.osis);
+        // db.push(`/plans[${oldIndex}]/osis`, plan.osis); // can save OSIS, but not Publish
         db.push(`/plans[${oldIndex}]/status`, plan.status);
         db.push(`/plans[${oldIndex}]/version`, plan.version);
         db.push(`/plans[${oldIndex}]/days`, plan.days);
@@ -108,6 +108,7 @@ router.post(
         planInstanceId: uuidv4(),
         status: PlanStatus.Published,
       };
+      delete newPlan.osis;
       db.push('/plans[]', newPlan);
       console.log('plan re-published');
       return res.send(plan);
