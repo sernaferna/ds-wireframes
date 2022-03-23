@@ -1,39 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-08T17:43:52.172Z" agent="5.0 (X11; CrOS x86_64 14388.61.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.107 Safari/537.36" etag="UX4Ll3eRNlneB7ga-YHS" version="16.6.8" type="github" pages="4">
-  <diagram id="RKE6ZPy6rxUmlPROnbyP" name="New">
-    <mxGraphModel dx="1168" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="uSH_Y93vJDs7K4eOoGm9-1" value="New Plan" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="1" vertex="1">
-          <mxGeometry x="160" y="50" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uSH_Y93vJDs7K4eOoGm9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="v454WVyOsVpnAevSDN2T-1" target="uSH_Y93vJDs7K4eOoGm9-5" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="uSH_Y93vJDs7K4eOoGm9-4" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="uSH_Y93vJDs7K4eOoGm9-1" target="v454WVyOsVpnAevSDN2T-1" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="400" y="240" as="sourcePoint" />
-            <mxPoint x="450" y="190" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="uSH_Y93vJDs7K4eOoGm9-5" value="Generate Days" style="verticalLabelPosition=middle;verticalAlign=middle;html=1;shape=process;whiteSpace=wrap;rounded=1;size=0.14;arcSize=6;labelPosition=center;align=center;" parent="1" vertex="1">
-          <mxGeometry x="160" y="260" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="uSH_Y93vJDs7K4eOoGm9-6" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="uSH_Y93vJDs7K4eOoGm9-5" target="uSH_Y93vJDs7K4eOoGm9-17" edge="1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="40" y="160" as="sourcePoint" />
-            <mxPoint x="210" y="370" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="uSH_Y93vJDs7K4eOoGm9-17" value="Weeks / Days displayed" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
-          <mxGeometry x="160" y="370" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="v454WVyOsVpnAevSDN2T-1" value="Enter details, including # weeks" style="html=1;strokeWidth=2;shape=manualInput;whiteSpace=wrap;rounded=1;size=26;arcSize=11;" parent="1" vertex="1">
-          <mxGeometry x="160" y="150" width="100" height="60" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="app.diagrams.net" modified="2022-03-23T17:55:16.641Z" agent="5.0 (X11; CrOS x86_64 14469.41.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.57 Safari/537.36" etag="XWNkvkuIdPee-7sbsucW" version="17.1.4" type="github" pages="2">
   <diagram id="xTbBiBU5L92yfy3Ug1yB" name="Generate Days">
     <mxGraphModel dx="1168" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -144,55 +109,8 @@
             <mxPoint x="450" y="370" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mfxFV3NV9BwaKc97fcrB-0" value="List of Days is just an array of Day objects; &lt;br&gt;Weeks aren&#39;t specifically generated, just &lt;br&gt;shown in UI" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_1;align=left;pointerEvents=1;" vertex="1" parent="vVuUprhgBNOLKTenQ0Xi-1">
+        <mxCell id="mfxFV3NV9BwaKc97fcrB-0" value="List of Days is just an array of Day objects; &lt;br&gt;Weeks aren&#39;t specifically generated, just &lt;br&gt;shown in UI" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_1;align=left;pointerEvents=1;" parent="vVuUprhgBNOLKTenQ0Xi-1" vertex="1">
           <mxGeometry x="605" y="40" width="50" height="100" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-  <diagram id="Jf1MEiGcAsSBYwJvY6NJ" name="Move Buttons">
-    <mxGraphModel dx="1168" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
-      <root>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-0" />
-        <mxCell id="ZtY3YivcugCMomE93Mt5-1" parent="ZtY3YivcugCMomE93Mt5-0" />
-        <mxCell id="ZtY3YivcugCMomE93Mt5-2" value="Up button clicked" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="ZtY3YivcugCMomE93Mt5-1">
-          <mxGeometry x="90" y="80" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-3" value="Down button clicked" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="ZtY3YivcugCMomE93Mt5-1">
-          <mxGeometry x="360" y="80" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-4" value="Take Verse[0] from Day+1, add it to end of Day Verses" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ZtY3YivcugCMomE93Mt5-1">
-          <mxGeometry x="80" y="190" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-5" value="Take Verse[end] from Day-1, add it to beginning of Day Verses" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ZtY3YivcugCMomE93Mt5-1">
-          <mxGeometry x="350" y="190" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-6" value="Complete" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="ZtY3YivcugCMomE93Mt5-1">
-          <mxGeometry x="240" y="320" width="100" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-7" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="ZtY3YivcugCMomE93Mt5-1" source="ZtY3YivcugCMomE93Mt5-2" target="ZtY3YivcugCMomE93Mt5-4">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="-20" y="210" as="sourcePoint" />
-            <mxPoint x="30" y="160" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-8" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="ZtY3YivcugCMomE93Mt5-1" source="ZtY3YivcugCMomE93Mt5-3" target="ZtY3YivcugCMomE93Mt5-5">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="530" y="190" as="sourcePoint" />
-            <mxPoint x="580" y="140" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-9" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="ZtY3YivcugCMomE93Mt5-1" source="ZtY3YivcugCMomE93Mt5-4" target="ZtY3YivcugCMomE93Mt5-6">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="130" y="340" as="sourcePoint" />
-            <mxPoint x="180" y="290" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="ZtY3YivcugCMomE93Mt5-10" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="ZtY3YivcugCMomE93Mt5-1" source="ZtY3YivcugCMomE93Mt5-5" target="ZtY3YivcugCMomE93Mt5-6">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="490" y="290" as="sourcePoint" />
-            <mxPoint x="590" y="390" as="targetPoint" />
-          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
@@ -314,19 +232,19 @@
         <mxCell id="T70q_W8Qx-PAql-1G65r-25" value="Undecided if user can directly Publish plan before Saving" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.annotation_2;align=left;labelPosition=right;pointerEvents=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="T70q_W8Qx-PAql-1G65r-1" vertex="1">
           <mxGeometry x="770" y="300" width="50" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="yyoRBg-0-dPwiwhjGOUP-3" value="New instance created" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.stored_data;whiteSpace=wrap;" vertex="1" parent="T70q_W8Qx-PAql-1G65r-1">
+        <mxCell id="yyoRBg-0-dPwiwhjGOUP-3" value="New instance created" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.stored_data;whiteSpace=wrap;" parent="T70q_W8Qx-PAql-1G65r-1" vertex="1">
           <mxGeometry x="460" y="520" width="100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="yyoRBg-0-dPwiwhjGOUP-4" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;" edge="1" parent="T70q_W8Qx-PAql-1G65r-1" source="yyoRBg-0-dPwiwhjGOUP-3" target="T70q_W8Qx-PAql-1G65r-3">
+        <mxCell id="yyoRBg-0-dPwiwhjGOUP-4" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitPerimeter=0;" parent="T70q_W8Qx-PAql-1G65r-1" source="yyoRBg-0-dPwiwhjGOUP-3" target="T70q_W8Qx-PAql-1G65r-3" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="415" y="180" as="sourcePoint" />
             <mxPoint x="150" y="260" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="yyoRBg-0-dPwiwhjGOUP-5" value="New instance created" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.stored_data;whiteSpace=wrap;" vertex="1" parent="T70q_W8Qx-PAql-1G65r-1">
+        <mxCell id="yyoRBg-0-dPwiwhjGOUP-5" value="New instance created" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.stored_data;whiteSpace=wrap;" parent="T70q_W8Qx-PAql-1G65r-1" vertex="1">
           <mxGeometry x="960" y="540" width="100" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="yyoRBg-0-dPwiwhjGOUP-6" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitPerimeter=0;" edge="1" parent="T70q_W8Qx-PAql-1G65r-1" source="yyoRBg-0-dPwiwhjGOUP-5" target="T70q_W8Qx-PAql-1G65r-4">
+        <mxCell id="yyoRBg-0-dPwiwhjGOUP-6" value="" style="endArrow=open;html=1;rounded=0;endFill=0;edgeStyle=orthogonalEdgeStyle;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitPerimeter=0;" parent="T70q_W8Qx-PAql-1G65r-1" source="yyoRBg-0-dPwiwhjGOUP-5" target="T70q_W8Qx-PAql-1G65r-4" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1025" y="270" as="sourcePoint" />
             <mxPoint x="920" y="70" as="targetPoint" />
