@@ -1,41 +1,4 @@
 {
-  "prayerItems": [
-    {
-      "title": "Lorem ipsum",
-      "date": "2021-11-02",
-      "text": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      "completed": true,
-      "id": "ea201173-ce7b-4ca6-9866-26351ff0d311"
-    },
-    {
-      "title": "Interdum et malesuada fames ac ante ipsum primis in faucibus",
-      "date": "2021-11-09",
-      "text": "Mauris massa nisi, scelerisque quis mi at, ornare hendrerit augue. Etiam molestie tellus vel vestibulum pretium.",
-      "completed": true,
-      "id": "cefa4c5f-acb9-401d-aa1e-1304ccba65f5"
-    },
-    {
-      "title": "Quisque",
-      "date": "2021-11-11",
-      "text": "Commodo lacus ac sapien venenatis vestibulum. Pellentesque egestas ex nec purus dapibus sagittis.",
-      "completed": false,
-      "id": "a2acc6b7-d220-44e7-a499-5ccad42f5eb1"
-    },
-    {
-      "title": "Phasellus sit amet sagittis turpis",
-      "date": "2021-11-21",
-      "text": "Etiam id mauris eu lectus fringilla imperdiet.",
-      "completed": true,
-      "id": "e6a5c54b-f6d6-444e-94ed-89b70f6f382d"
-    },
-    {
-      "title": "Integer luctus enim ac neque semper, non porta lorem finibus",
-      "date": "2021-11-23",
-      "text": "Cras id justo a metus semper congue nec quis lorem. Mauris eleifend placerat felis, a finibus dui efficitur eget.",
-      "completed": false,
-      "id": "85fff502-0f65-465a-8646-8ed90c792b2a"
-    }
-  ],
   "users": [
     {
       "firstName": "David",
@@ -57,10 +20,26 @@
           "showPrayers": true,
           "statsFilter": "alltime",
           "vizualizationsOrder": [
-            { "name": "AllActivities", "active": true, "order": 0 },
-            { "name": "OldVsNew", "active": false, "order": 1 },
-            { "name": "ReadScripture", "active": true, "order": 2 },
-            { "name": "DetailedReading", "active": true, "order": 3 }
+            {
+              "name": "AllActivities",
+              "active": true,
+              "order": 0
+            },
+            {
+              "name": "OldVsNew",
+              "active": true,
+              "order": 1
+            },
+            {
+              "name": "ReadScripture",
+              "active": true,
+              "order": 2
+            },
+            {
+              "name": "DetailedReading",
+              "active": true,
+              "order": 3
+            }
           ]
         },
         "prayer": {
@@ -87,6 +66,68 @@
       }
     }
   ],
+  "prayerItems": [
+    {
+      "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+      "date": "2021-11-18",
+      "text": "Sed in odio vel nulla ultricies commodo eget non neque.",
+      "completed": false,
+      "id": "456a0d3c-7006-473e-acde-0d621d3a0ab1"
+    },
+    {
+      "title": "praise",
+      "text": "priase item",
+      "completed": false,
+      "type": "praise",
+      "id": "8a2cbc2c-7bda-40f2-979b-c993eaa18292",
+      "date": "2021-12-27"
+    },
+    {
+      "title": "confession",
+      "text": "confession item",
+      "completed": false,
+      "type": "confession",
+      "id": "91c5392d-5756-42f4-830a-c14e703d65d8",
+      "date": "2021-12-27"
+    },
+    {
+      "title": "",
+      "text": "This is a request",
+      "completed": false,
+      "id": "b5c634a3-12cb-4efe-82a4-b425b5f72f4c",
+      "date": "2021-12-30"
+    },
+    {
+      "title": "Title",
+      "text": "let's create a new request",
+      "type": "praise",
+      "completed": false,
+      "id": "e6d02380-c83d-4e69-a7d9-66143cde8927",
+      "date": "2021-12-30"
+    },
+    {
+      "title": "",
+      "text": "ths  is a confession",
+      "type": "confession",
+      "completed": false,
+      "id": "41d50972-7689-4cd2-b731-d794b850788b",
+      "date": "2021-12-30"
+    },
+    {
+      "date": "2021-12-31",
+      "text": "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam cursus nibh sit amet velit vulputate placerat. Fusce sit amet odio hendrerit diam maximus commodo nec nec felis. Suspendisse potenti. Fusce venenatis orci orci, at mollis magna rhoncus et. Aliquam erat volutpat. Ut convallis ullamcorper nisi, vel mollis nisl bibendum sit amet. Morbi vehicula gravida ipsum nec semper. Aliquam eget erat sit amet metus ullamcorper pretium. Vivamus laoreet purus sed tortor tempor tristique quis eu purus. Ut augue lorem, pellentesque sed pellentesque et, luctus id diam. Suspendisse volutpat nunc ultrices fringilla porttitor.",
+      "id": "23bc6330-aeb5-4882-b14b-9b7849d6a378",
+      "completed": false
+    },
+    {
+      "title": "With a title",
+      "text": "a prayer item",
+      "type": "confession",
+      "completed": false,
+      "id": "2c4c69a0-3c3b-4dc6-88a7-7e19f54cb7b4",
+      "date": "2022-01-12"
+    }
+  ],
   "actions": {
     "custom": [
       {
@@ -98,23 +139,3329 @@
         "displayName": "Prepared music for the service"
       },
       {
-        "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
-        "displayName": "Led a bible study"
+        "displayName": "a new action",
+        "id": "7b10da5b-943c-4bfd-aa74-0ef736fde33b"
+      }
+    ],
+    "entries": [
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": true
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": true
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-02",
+        "id": "f66ee8af-1032-4eb5-8334-6bda67288287"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": true
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-04",
+        "id": "b35ed99c-400b-4424-af0f-10243f9c99c9"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": true
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-06",
+        "id": "f2bdf79f-15fa-4c34-8544-d6922f1b2634"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-07",
+        "id": "2003a9cb-60df-4e02-9c54-559f63694a57"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": true
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-09",
+        "id": "8fc3a63f-0402-4a52-96e6-e290193a4ffc"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": true
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": true
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-11",
+        "id": "4bc182be-de62-4ddd-b17f-cec241b62c51"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": true
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-14",
+        "id": "f2ef3572-645b-4ddf-bb38-cc9a692feb58"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": true
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-15",
+        "id": "c8b45db0-b890-4b61-a499-81b6f7058a4b"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-18",
+        "id": "e420d0d6-5b62-43c3-84d3-4c98dcd23b23"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": true
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-19",
+        "id": "499be7c8-e8a7-4222-a076-a4c9c9d3f8cd"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": true
+          }
+        ],
+        "date": "2021-11-20",
+        "id": "f10652aa-7b7f-40b5-a342-a26d265edae5"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": true
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": true
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": true
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-25",
+        "id": "82577a97-4416-40cc-90c9-1eb348346440"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": true
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-28",
+        "id": "2b0172ba-1bae-4703-b8dc-ee7d94bc0465"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-30",
+        "id": "6de56a5a-996e-4923-a522-e33bed04b682"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-01",
+        "id": "037405c1-61b4-4dba-86ca-18be30e23923"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-03",
+        "id": "d36cc256-2941-4086-842b-e06ecc611885"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-10-31",
+        "id": "fc273afb-9f06-4124-8a83-87d8c87d165b"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-01",
+        "id": "d98ad3a2-6ef2-4635-b5ff-bf0d2e6a5366"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-03",
+        "id": "9077deb7-fee5-4676-9cd4-884d865bcf8e"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-11-05",
+        "id": "887e709f-451b-41aa-a574-1cfb6eaa73b3"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-06",
+        "id": "dd97701d-75d1-40a7-9f7b-2037e7c775b5"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-07",
+        "id": "b8cd1965-84aa-42e0-af1d-01b51479e012"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-08",
+        "id": "2250c25e-cfee-47f5-9396-4092aa0cf135"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-09",
+        "id": "05d38ade-2267-4981-8d0e-7fa7b5181d1b"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-10",
+        "id": "ee0ed669-e29e-4391-a45c-d90e18643775"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-11",
+        "id": "7af84e84-7601-4980-ba84-bd18d7149d6d"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": true
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-12",
+        "id": "9628e5ab-afa7-4eba-9783-2a5ff17da159"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-13",
+        "id": "c8fa863d-0641-4664-a4c9-a47803d13223"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-24",
+        "id": "1c062b5d-804c-4460-87bb-bb562e7e6cf1"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-28",
+        "id": "9a320313-15f1-4cab-935a-c345c8813bd6"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-30",
+        "id": "30a1b331-dd81-4249-907c-c9bbb7ccc9d6"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-22",
+        "id": "1c1471a8-bb98-4054-9e2e-427d5c5ce5a2"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2021-12-19",
+        "id": "1e96dfa2-b386-4c1b-a39b-138c9a8f6e81"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-01-14",
+        "id": "55c2fe93-d944-479f-b2c6-e89f0641002d"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-01-13",
+        "id": "8a0204c6-18a4-4c36-a07e-9d03cae625a2"
       }
     ]
   },
   "passages": [
     {
-      "osis": "Matt.5.5",
+      "osis": "Gen.1.1-Gen.50.26",
       "version": "ESV",
-      "id": "3593f37f-2160-4600-8006-8f5f395b3ce5",
-      "date": "2021-12-20"
+      "id": "6c269262-ad67-4c5d-b669-d24da244a5d9",
+      "date": "2022-01-16"
     },
     {
-      "osis": "Rev.12.1",
+      "osis": "Gen.1.1-Gen.2.25",
       "version": "ESV",
-      "id": "104aa616-8aad-4796-bab0-9ce24d5e8382",
-      "date": "2021-12-20"
+      "id": "91758b5a-93ac-4285-b436-8684e3e39b0d",
+      "date": "2022-01-16"
+    },
+    {
+      "osis": "Rom.1.1-Rom.16.27",
+      "version": "ESV",
+      "id": "4c4ed96f-5c90-4437-b2f6-05aebac95df0",
+      "date": "2022-01-16"
+    },
+    {
+      "osis": "Mark.5.1-Mark.5.43",
+      "version": "ESV",
+      "id": "7e6c4f3a-d0b7-4e97-b4dc-b67da1ece532",
+      "date": "2022-01-16"
+    },
+    {
+      "osis": "John.1.1",
+      "version": "ESV",
+      "id": "ecdaeeda-c181-4bb0-91b4-b3eb64c5b1f7",
+      "date": "2022-01-16"
+    },
+    {
+      "osis": "John.3.16",
+      "version": "ESV",
+      "id": "7da78666-b2d7-409b-b2f7-9e4ba42254e2",
+      "date": "2022-01-16"
+    },
+    {
+      "osis": "Exod.6.5",
+      "version": "ESV",
+      "id": "5c0a2487-6962-45d5-8b2e-1e6728a2e954",
+      "date": "2022-01-16"
+    },
+    {
+      "osis": "1Sam.8.1-1Sam.8.22",
+      "version": "ESV",
+      "id": "9e81dbdc-61ea-48a8-8b80-95692076c5d8",
+      "date": "2022-02-09"
+    }
+  ],
+  "plans": [
+    {
+      "name": "Psalms in a Year",
+      "description": "All 150 Psalms, in a year",
+      "length": 52,
+      "includesApocrypha": false,
+      "version": "1.0.0",
+      "isAdmin": true,
+      "includeWeekends": false,
+      "osis": "Ps.1.1-Ps.150.6",
+      "weeks": [
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        }
+      ],
+      "planInstanceId": "3fddc67e-d24d-4ae1-90b9-5db6aa8b70f5",
+      "planId": "f032dbd5-5475-423d-a370-c093a09dbbeb"
+    },
+    {
+      "name": "Life of David",
+      "description": "Selected passages about the life of David",
+      "length": 2,
+      "includesApocrypha": false,
+      "version": "1.0.0",
+      "isAdmin": true,
+      "includeWeekends": false,
+      "osis": "Ps.1.1-Ps.150.6",
+      "weeks": [
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        },
+        {
+          "days": [
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            },
+            {
+              "verses": []
+            }
+          ]
+        }
+      ],
+      "planInstanceId": "5be6e99d-ddc6-448b-bab3-af26d10da421",
+      "planId": "9e8f923c-6de4-473d-af4e-f7338b8cb04a"
+    }
+  ],
+  "instantiatedPlans": [
+    {
+      "id": "6776e07f-2dee-44f7-bb7c-38a02fa223c5",
+      "planInstanceId": "5be6e99d-ddc6-448b-bab3-af26d10da421",
+      "percentageComplete": 0.25
     }
   ]
 }
