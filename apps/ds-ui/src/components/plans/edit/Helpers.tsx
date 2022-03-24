@@ -1,4 +1,4 @@
-import { Verse, getRefForVerses } from '@devouringscripture/common';
+import { Verse, getRefForVerses, PlanDay, getOSISForReference } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface DayForPlan {
@@ -76,4 +76,26 @@ export const getValue = (type: string, value: string): string | number | boolean
   }
 
   return value;
+};
+
+/**
+ * Helper function to take the list of `DayforPlan` objects and convert them to
+ * uploadable `PlanDay` data. Doesn't validate any of the data, because the rules
+ * are different for Saving vs. Publishing; let the server-side API do that.
+ *
+ * @param days Array of days as captured by the UI
+ * @returns Array of days to be uploaded to the API
+ */
+export const generateDaysForUpload = (days: DayForPlan[]): PlanDay[] => {
+  return days.map((day) => {
+    if (day.osis) {
+      return { osis: day.osis };
+    }
+
+    if (day.verses) {
+      return { osis: getOSISForReference(getRefForVerses(day.verses)) };
+    }
+
+    return { osis: '' };
+  });
 };
