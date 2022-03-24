@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
@@ -6,41 +7,23 @@ import {
   Verse,
   BasePlanAttributes,
   ErrorResponse,
-  PlanDay,
   isReferenceValid,
   getRefForVerses,
   getOSISForReference,
 } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
-import { DayForPlan, generateDayList, getValue } from './Helpers';
+import { DayForPlan, generateDayList, getValue, generateDaysForUpload } from './Helpers';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
-import { useSavePlanMutation, usePublishPlanMutation } from '../../../services/PlanService';
-import { initialPlanValues, validate } from './EditPlanValidations';
+import {
+  useSavePlanMutation,
+  usePublishPlanMutation,
+  useLazyGetPlanByInstanceIdQuery,
+} from '../../../services/PlanService';
+import { getSelectedPlan } from '../../../stores/UISlice';
+import { initialPlanValues, PlanValues, validate } from './EditPlanValidations';
 import { EditPlanForm } from './EditPlanForm';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Helper function to take the list of `DayforPlan` objects and convert them to
- * uploadable `PlanDay` data. Doesn't validate any of the data, because the rules
- * are different for Saving vs. Publishing; let the server-side API do that.
- *
- * @param days Array of days as captured by the UI
- * @returns Array of days to be uploaded to the API
- */
-const generateDaysForUpload = (days: DayForPlan[]): PlanDay[] => {
-  return days.map((day) => {
-    if (day.osis) {
-      return { osis: day.osis };
-    }
-
-    if (day.verses) {
-      return { osis: getOSISForReference(getRefForVerses(day.verses)) };
-    }
-
-    return { osis: '' };
-  });
-};
 
 export const EditPlan = () => {
   const userResponse = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -53,6 +36,36 @@ export const EditPlan = () => {
   const [savePlan] = useSavePlanMutation();
   const [publishPlan] = usePublishPlanMutation();
   const [errorMessages, updateErrorMessages] = useState<JSX.Element[]>([]);
+  const selectedPlan = useSelector(getSelectedPlan);
+  const [planTrigger, planServerResult] = useLazyGetPlanByInstanceIdQuery();
+
+  useEffect(() => {
+    if (planServerResult.isLoading || planServerResult.error) {
+      return;
+    }
+
+    if (selectedPlan.length > 0) {
+      if (selectedPlan !== values.planInstanceId) {
+        planTrigger(selectedPlan);
+      }
+
+      if (planServerResult && planServerResult.isSuccess && !planServerResult.isLoading) {
+        const plan: PlanValues = {
+          planName: planServerResult.data.name,
+          description: planServerResult.data.description,
+          numWeeks: planServerResult.data.length,
+          version: planServerResult.data.version,
+          isAdmin: planServerResult.data.isAdmin,
+          includeApocrypha: planServerResult.data.includesApocrypha,
+          includeWeekends: planServerResult.data.includeWeekends,
+          isFreeform: true,
+          reference: '',
+          planInstanceId: planServerResult.data.planInstanceId,
+        };
+        setValues(plan);
+      }
+    }
+  }, [planServerResult, selectedPlan, setValues, planTrigger, values.planInstanceId]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -223,7 +236,7 @@ export const EditPlan = () => {
     });
 
     setDays(listOfDays);
-  }, [values.includeWeekends, values.isFreeform, values.numWeeks, values.reference, versesResult]);
+  }, [values.includeWeekends, values.isFreeform, values.numWeeks, values.reference, versesResult, setDays]);
 
   const updateWeeks = useCallback(
     (newValue: number) => {
