@@ -60,6 +60,7 @@ export interface PlanValues {
   includeWeekends: boolean;
   isFreeform: boolean;
   reference: string;
+  planInstanceId?: string;
 }
 export const initialPlanValues: PlanValues = {
   planName: '',
