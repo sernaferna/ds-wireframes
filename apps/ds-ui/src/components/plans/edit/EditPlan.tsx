@@ -2,7 +2,6 @@ import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import Alert from 'react-bootstrap/Alert';
 import {
   Verse,
   BasePlanAttributes,
@@ -13,6 +12,7 @@ import {
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue, generateDaysForUpload } from './Helpers';
+import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import {
   useSavePlanMutation,
@@ -34,19 +34,9 @@ export const EditPlan = () => {
   const navigate = useNavigate();
   const [savePlan] = useSavePlanMutation();
   const [publishPlan] = usePublishPlanMutation();
-  const [errorMessages, updateErrorMessages] = useState<JSX.Element[]>([]);
   const selectedPlan = useSelector(getSelectedPlan);
   const [planTrigger, planServerResult] = useLazyGetPlanByInstanceIdQuery();
-
-  const addErrorMessage = useCallback(
-    (errorMessage: string | JSX.Element) => {
-      const err: JSX.Element = typeof errorMessage === 'string' ? <div>{errorMessage}</div> : errorMessage;
-      const errorSlice = errorMessages.slice();
-      errorSlice.push(err);
-      updateErrorMessages(errorSlice);
-    },
-    [errorMessages, updateErrorMessages]
-  );
+  const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
   const regenerateDayList = useCallback(
     (values: PlanValues) => {
@@ -377,16 +367,7 @@ export const EditPlan = () => {
   return (
     <Container fluid>
       <h1>Edit Plan</h1>
-      <Alert
-        variant="danger"
-        dismissible
-        show={errorMessages.length > 0}
-        onClose={() => {
-          updateErrorMessages([]);
-        }}
-      >
-        {errorMessages}
-      </Alert>
+      <AlertUI />
       <EditPlanForm
         days={days}
         errors={errors}
