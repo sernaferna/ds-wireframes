@@ -9,6 +9,7 @@ export const basePlanValidationRules = () => {
     body('isAdmin').isBoolean().withMessage('Must indicate if is admin'),
     body('includesApocrypha').isBoolean().withMessage('Must indicate if includes apocrypha'),
     body('includeWeekends').isBoolean().withMessage('Must indicate if includes weekends'),
+    body('isFreeform').isBoolean().withMessage('Freeform indicator required'),
     body('version').custom((value) => {
       if (!isVersionValid(value)) {
         throw new PlanVersionError(value);

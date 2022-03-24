@@ -10,6 +10,7 @@ export interface BasePlanAttributes {
   includesApocrypha: boolean;
   includeWeekends: boolean;
   version: string;
+  isFreeform: boolean;
   osis?: string;
   days?: PlanDay[];
 }

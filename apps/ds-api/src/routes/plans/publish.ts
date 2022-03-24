@@ -77,7 +77,9 @@ router.post(
         db.push(`/plans[${oldIndex}]/includesApocrypha`, plan.includesApocrypha);
         db.push(`/plans[${oldIndex}]/isAdmin`, plan.isAdmin);
         db.push(`/plans[${oldIndex}]/length`, plan.length);
+        db.push(`/plans[${oldIndex}]/isFreeform`, plan.isFreeform);
         // db.push(`/plans[${oldIndex}]/osis`, plan.osis); // can save OSIS, but not Publish
+        db.delete(`/plans[${oldIndex}]/osis`);
         db.push(`/plans[${oldIndex}]/status`, plan.status);
         db.push(`/plans[${oldIndex}]/version`, plan.version);
         db.push(`/plans[${oldIndex}]/days`, plan.days);
