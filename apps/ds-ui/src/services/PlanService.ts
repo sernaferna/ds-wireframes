@@ -8,7 +8,13 @@ export const planApi = createApi({
   endpoints: (builder) => ({
     getPlansById: builder.query<PlanAttributes, string>({
       query: (id) => `/${id}`,
-      providesTags: (result) => (result ? [{ type: 'plans', id: result.planInstanceId }] : []),
+      providesTags: (result) =>
+        result
+          ? [
+              { type: 'plans', id: result.planInstanceId },
+              { type: 'plans', id: 'LIST' },
+            ]
+          : [],
     }),
     savePlan: builder.mutation<PlanAttributes, PlanAttributes | BasePlanAttributes>({
       query(body) {
@@ -18,7 +24,13 @@ export const planApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['plans'],
+      invalidatesTags: (result) =>
+        result
+          ? [
+              { type: 'plans', id: result.planInstanceId },
+              { type: 'plans', id: 'LIST' },
+            ]
+          : [],
     }),
     publishPlan: builder.mutation<PlanAttributes, PlanAttributes | BasePlanAttributes>({
       query(body) {
@@ -28,7 +40,13 @@ export const planApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result) => (result ? [{ type: 'plans', id: result.planInstanceId }] : []),
+      invalidatesTags: (result) =>
+        result
+          ? [
+              { type: 'plans', id: result.planInstanceId },
+              { type: 'plans', id: 'LIST' },
+            ]
+          : [],
     }),
     deletePlan: builder.mutation<string, string>({
       query(id) {
@@ -37,7 +55,7 @@ export const planApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['plans'],
+      invalidatesTags: (result) => (result ? [{ type: 'plans', id: 'LIST' }] : []),
     }),
   }),
 });
