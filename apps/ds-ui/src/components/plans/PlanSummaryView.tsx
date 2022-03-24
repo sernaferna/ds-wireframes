@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -7,24 +8,16 @@ import { Journal, JournalX } from 'react-bootstrap-icons';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
-import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 import Badge from 'react-bootstrap/Badge';
-import { useGetPlansByIdQuery, useDeletePlanMutation } from '../../services/PlanService';
+import { useGetPlanByInstanceIdQuery, useDeletePlanMutation } from '../../services/PlanService';
+import { updateSelectedPlan } from '../../stores/UISlice';
+import { useDispatch } from 'react-redux';
 import {
   useNewInstantiatedPlanMutation,
   useDeleteInstantiatedPlanMutation,
 } from '../../services/InstantiatedPlanService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { BaseInstantiatedPlan, PlanAttributes, PlanStatus } from '@devouringscripture/common';
-
-const buttonClicked = () => {
-  getToastManager().show({
-    title: 'Not implemented',
-    content: 'Feature not yet implemented',
-    duration: TOAST_FADE_TIME,
-    type: ToastType.Danger,
-  });
-};
 
 interface JLButton {
   plan: PlanAttributes;
@@ -57,10 +50,12 @@ interface PlanSummaryViewAttrs {
   percentageComplete?: number;
 }
 export const PlanSummaryView = ({ planId, percentageComplete = undefined }: PlanSummaryViewAttrs) => {
-  const { data, error, isLoading } = useGetPlansByIdQuery(planId);
+  const { data, error, isLoading } = useGetPlanByInstanceIdQuery(planId);
   const [sendNewPlan] = useNewInstantiatedPlanMutation();
   const [sendRemovePlan] = useDeleteInstantiatedPlanMutation();
   const [deletePlan] = useDeletePlanMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const createIP = useCallback(
     (planInstanceId: string) => {
@@ -86,6 +81,14 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
       deletePlan(planInstanceId);
     },
     [deletePlan]
+  );
+
+  const editPlan = useCallback(
+    (planInstanceId: string) => {
+      dispatch(updateSelectedPlan(planInstanceId));
+      navigate('/plans/edit');
+    },
+    [dispatch, navigate]
   );
 
   if (isLoading) {
@@ -143,7 +146,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
       <Row className="button-row">
         <Col className="edit-col">
           {data!.isAdmin ? (
-            <Button variant="primary" onClick={buttonClicked}>
+            <Button variant="primary" onClick={() => editPlan(planId)}>
               Edit
             </Button>
           ) : (
