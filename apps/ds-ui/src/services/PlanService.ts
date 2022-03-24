@@ -6,7 +6,7 @@ export const planApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/plans/public' }),
   tagTypes: ['plans'],
   endpoints: (builder) => ({
-    getPlansById: builder.query<PlanAttributes, string>({
+    getPlanByInstanceId: builder.query<PlanAttributes, string>({
       query: (id) => `/${id}`,
       providesTags: (result) =>
         result
@@ -60,4 +60,10 @@ export const planApi = createApi({
   }),
 });
 
-export const { useGetPlansByIdQuery, useSavePlanMutation, usePublishPlanMutation, useDeletePlanMutation } = planApi;
+export const {
+  useGetPlanByInstanceIdQuery,
+  useLazyGetPlanByInstanceIdQuery,
+  useSavePlanMutation,
+  usePublishPlanMutation,
+  useDeletePlanMutation,
+} = planApi;
