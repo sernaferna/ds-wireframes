@@ -48,6 +48,7 @@ export const validate: { [id: string]: ValidationFunction } = {
   includeWeekends: anyBooleanValidation,
   isFreeform: anyBooleanValidation,
   reference: referenceValidation,
+  planInstanceId: () => null,
 };
 
 export interface PlanValues {

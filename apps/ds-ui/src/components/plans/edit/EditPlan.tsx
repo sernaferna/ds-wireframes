@@ -63,9 +63,17 @@ export const EditPlan = () => {
           planInstanceId: planServerResult.data.planInstanceId,
         };
         setValues(plan);
+
+        if (planServerResult.data.days) {
+          const days: DayForPlan[] = planServerResult.data.days!.map((day) => ({
+            id: uuidv4(),
+            osis: day.osis,
+          }));
+          setDays(days);
+        }
       }
     }
-  }, [planServerResult, selectedPlan, setValues, planTrigger, values.planInstanceId]);
+  }, [planServerResult, selectedPlan, setValues, planTrigger, values.planInstanceId, setDays]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
