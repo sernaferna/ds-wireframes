@@ -6,7 +6,6 @@ import Alert from 'react-bootstrap/Alert';
 import {
   Verse,
   BasePlanAttributes,
-  ErrorResponse,
   isReferenceValid,
   getRefForVerses,
   getOSISForReference,
@@ -39,6 +38,42 @@ export const EditPlan = () => {
   const selectedPlan = useSelector(getSelectedPlan);
   const [planTrigger, planServerResult] = useLazyGetPlanByInstanceIdQuery();
 
+  const addErrorMessage = useCallback(
+    (errorMessage: string | JSX.Element) => {
+      const err: JSX.Element = typeof errorMessage === 'string' ? <div>{errorMessage}</div> : errorMessage;
+      const errorSlice = errorMessages.slice();
+      errorSlice.push(err);
+      updateErrorMessages(errorSlice);
+    },
+    [errorMessages, updateErrorMessages]
+  );
+
+  const regenerateDayList = useCallback(
+    (values: PlanValues) => {
+      let verses: Verse[] | undefined = undefined;
+
+      if (
+        versesResult &&
+        !versesResult.error &&
+        !versesResult.isLoading &&
+        !versesResult.isUninitialized &&
+        values.reference.trim().length > 0
+      ) {
+        verses = versesResult.data!.slice();
+      }
+
+      const listOfDays = generateDayList({
+        includeWeekends: values.includeWeekends,
+        isFreeform: values.isFreeform,
+        numWeeks: values.numWeeks,
+        verses: verses,
+      });
+
+      setDays(listOfDays);
+    },
+    [versesResult, setDays]
+  );
+
   useEffect(() => {
     if (planServerResult.isLoading || planServerResult.error) {
       return;
@@ -46,34 +81,47 @@ export const EditPlan = () => {
 
     if (selectedPlan.length > 0) {
       if (selectedPlan !== values.planInstanceId) {
-        planTrigger(selectedPlan);
+        planTrigger(selectedPlan)
+          .then((result) => {
+            const plan: PlanValues = {
+              planName: result.data!.name,
+              description: result.data!.description,
+              numWeeks: result.data!.length,
+              version: result.data!.version,
+              isAdmin: result.data!.isAdmin,
+              includeApocrypha: result.data!.includesApocrypha,
+              includeWeekends: result.data!.includeWeekends,
+              isFreeform: true,
+              reference: '',
+              planInstanceId: result.data!.planInstanceId,
+            };
+            setValues(plan);
+
+            if (result.data!.days) {
+              const daysFromServer: DayForPlan[] = result.data!.days!.map((day) => ({
+                id: uuidv4(),
+                osis: day.osis,
+              }));
+              setDays(daysFromServer);
+            }
+          })
+          .catch((error) => {
+            addErrorMessage('Error retrieving plan from server');
+          });
       }
 
-      if (planServerResult && planServerResult.isSuccess && !planServerResult.isLoading) {
-        const plan: PlanValues = {
-          planName: planServerResult.data.name,
-          description: planServerResult.data.description,
-          numWeeks: planServerResult.data.length,
-          version: planServerResult.data.version,
-          isAdmin: planServerResult.data.isAdmin,
-          includeApocrypha: planServerResult.data.includesApocrypha,
-          includeWeekends: planServerResult.data.includeWeekends,
-          isFreeform: true,
-          reference: '',
-          planInstanceId: planServerResult.data.planInstanceId,
-        };
-        setValues(plan);
-
-        if (planServerResult.data.days) {
-          const days: DayForPlan[] = planServerResult.data.days!.map((day) => ({
-            id: uuidv4(),
-            osis: day.osis,
-          }));
-          setDays(days);
-        }
-      }
+      return;
     }
-  }, [planServerResult, selectedPlan, setValues, planTrigger, values.planInstanceId, setDays]);
+  }, [
+    planServerResult,
+    selectedPlan,
+    setValues,
+    planTrigger,
+    values.planInstanceId,
+    setDays,
+    regenerateDayList,
+    addErrorMessage,
+  ]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -149,9 +197,7 @@ export const EditPlan = () => {
     try {
       uploadableDays = generateDaysForUpload(days);
     } catch {
-      const errs = errorMessages.slice();
-      errs.push(<p>Error uploading data. Check that all days in the plan are valid.</p>);
-      updateErrorMessages(errs);
+      addErrorMessage('Error uploading data. check that all days in the plan are valid.');
     }
     const plan: BasePlanAttributes = {
       name: values.planName,
@@ -170,21 +216,18 @@ export const EditPlan = () => {
         navigate('/plans');
       })
       .catch((error) => {
-        const newErrors = errorMessages.slice();
         if ('data' in error) {
-          const errorResponse: ErrorResponse = error.data;
-          newErrors.push(generateErrorStringFromError(errorResponse));
+          addErrorMessage(generateErrorStringFromError(error.data));
         } else {
-          newErrors.push(<p>Unanticipated error saving data</p>);
+          addErrorMessage('Unanticipated error saving data');
         }
-        updateErrorMessages(newErrors);
       });
-  }, [validateForm, publishPlan, values, updateErrorMessages, navigate, errorMessages, days]);
+  }, [validateForm, publishPlan, values, addErrorMessage, navigate, days]);
 
   const handleSave = useCallback(() => {
     const isFormValid = validateForm();
     if (!isFormValid) {
-      console.log('Form is invalid');
+      addErrorMessage('Form is invalid');
       return;
     }
 
@@ -205,16 +248,13 @@ export const EditPlan = () => {
         navigate('/plans');
       })
       .catch((error) => {
-        const newErrors = errorMessages.slice();
         if ('data' in error) {
-          const errorResponse: ErrorResponse = error.data;
-          newErrors.push(generateErrorStringFromError(errorResponse));
+          addErrorMessage(generateErrorStringFromError(error.data));
         } else {
-          newErrors.push(<p>Unanticipated error saving data</p>);
+          addErrorMessage('Unanticipated error saving data');
         }
-        updateErrorMessages(newErrors);
       });
-  }, [validateForm, savePlan, navigate, values, errorMessages, updateErrorMessages]);
+  }, [validateForm, savePlan, navigate, values, addErrorMessage]);
 
   const handleReset = useCallback(() => {
     setValues(initialPlanValues);
@@ -222,29 +262,6 @@ export const EditPlan = () => {
     setErrors({});
     setTouched({});
   }, [setValues, setDays, setErrors, setTouched]);
-
-  const regenerateDayList = useCallback(() => {
-    let verses: Verse[] | undefined = undefined;
-
-    if (
-      versesResult &&
-      !versesResult.error &&
-      !versesResult.isLoading &&
-      !versesResult.isUninitialized &&
-      values.reference.trim().length > 0
-    ) {
-      verses = versesResult.data!.slice();
-    }
-
-    const listOfDays = generateDayList({
-      includeWeekends: values.includeWeekends,
-      isFreeform: values.isFreeform,
-      numWeeks: values.numWeeks,
-      verses: verses,
-    });
-
-    setDays(listOfDays);
-  }, [values.includeWeekends, values.isFreeform, values.numWeeks, values.reference, versesResult, setDays]);
 
   const updateWeeks = useCallback(
     (newValue: number) => {
@@ -258,20 +275,22 @@ export const EditPlan = () => {
         numWeeks: newValue,
       });
 
-      regenerateDayList();
+      regenerateDayList(values);
     },
     [setValues, setTouched, touched, values, regenerateDayList]
   );
 
   const fetchVerses = useCallback(() => {
     if (values.reference.trim().length > 0 && isReferenceValid(values.reference)) {
-      versesTrigger(values.reference);
+      versesTrigger(values.reference)
+        .then((result) => {
+          regenerateDayList(values);
+        })
+        .catch((error) => {
+          addErrorMessage('Error fetching verses');
+        });
     }
-  }, [values.reference, versesTrigger]);
-
-  useEffect(() => {
-    regenerateDayList();
-  }, [versesResult, regenerateDayList]);
+  }, [versesTrigger, regenerateDayList, values, addErrorMessage]);
 
   const updateDay = useCallback(
     (update: DayForPlan) => {
