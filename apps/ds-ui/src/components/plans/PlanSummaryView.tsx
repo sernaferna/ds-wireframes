@@ -9,7 +9,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from '../common/toasts/ToastManager';
 import Badge from 'react-bootstrap/Badge';
-import { useGetPlansByIdQuery } from '../../services/PlanService';
+import { useGetPlansByIdQuery, useDeletePlanMutation } from '../../services/PlanService';
 import {
   useNewInstantiatedPlanMutation,
   useDeleteInstantiatedPlanMutation,
@@ -60,6 +60,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
   const { data, error, isLoading } = useGetPlansByIdQuery(planId);
   const [sendNewPlan] = useNewInstantiatedPlanMutation();
   const [sendRemovePlan] = useDeleteInstantiatedPlanMutation();
+  const [deletePlan] = useDeletePlanMutation();
 
   const createIP = useCallback(
     (planInstanceId: string) => {
@@ -78,6 +79,13 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
       sendRemovePlan(planInstanceId);
     },
     [sendRemovePlan]
+  );
+
+  const deletePlanOnServer = useCallback(
+    (planInstanceId: string) => {
+      deletePlan(planInstanceId);
+    },
+    [deletePlan]
   );
 
   if (isLoading) {
@@ -154,7 +162,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
           {data!.isAdmin ? (
             ''
           ) : (
-            <Button variant="danger" onClick={buttonClicked}>
+            <Button variant="danger" onClick={() => deletePlanOnServer(planId)}>
               Delete
             </Button>
           )}
