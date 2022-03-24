@@ -5,6 +5,7 @@ import {
   DatabaseError,
   InstantiatedPlan,
   BaseInstantiatedPlan,
+  PlanStatus,
 } from '@devouringscripture/common';
 import { db } from '../../services/db';
 
@@ -21,8 +22,10 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
     for (const plan of publicPlans) {
       if (instantiatedPlans.filter((p) => p.planInstanceId === plan.planInstanceId).length < 1) {
-        const newItem: BaseInstantiatedPlan = { planInstanceId: plan.planInstanceId };
-        returnArray.push(newItem);
+        if (plan.status !== PlanStatus.Deleted) {
+          const newItem: BaseInstantiatedPlan = { planInstanceId: plan.planInstanceId };
+          returnArray.push(newItem);
+        }
       }
     }
 
