@@ -56,7 +56,7 @@ export const EditPlanForm = ({
         <Col className="plan-edit-details">
           <Container className="p-3 bg-light">
             <Alert variant="warning" dismissible show={showWarning} onClose={() => setShowWarning(false)}>
-              Altering <b>these settings</b> will reset weeks and days set below.
+              Altering <b>highlighted settings</b> will reset weeks and days below, overwriting previous changes.
             </Alert>
 
             <Row className="mb-2">
