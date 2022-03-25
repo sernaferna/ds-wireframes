@@ -1,4 +1,4 @@
-import { getRangesForOSIS, OSISRange, getPassagesForReference } from '../index';
+import { getRangesForOSIS, OSISRange, getPassagesForReference } from '../../helpers/refparse/index';
 
 describe('Get Passages tests for OSIS strings', () => {
   it('handles a single verse', () => {

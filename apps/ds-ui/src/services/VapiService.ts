@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Note, BaseNote } from '@devouringscripture/common';
+import { Note, BaseNote, Verse } from '@devouringscripture/common';
 
 export interface Bounds {
   lowerBound: number;
@@ -9,7 +9,7 @@ export interface Bounds {
 export const vapiApi = createApi({
   reducerPath: 'vapi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7001/vapi' }),
-  tagTypes: ['notes'],
+  tagTypes: ['notes', 'verses'],
   endpoints: (builder) => ({
     getNoteById: builder.query<Note, string>({
       query: (id) => `/n/${id}`,
@@ -34,6 +34,22 @@ export const vapiApi = createApi({
         result
           ? [...result.map(({ id }) => ({ type: 'notes' as const, id: id })), { type: 'notes', id: 'LIST' }]
           : [{ type: 'notes', id: 'LIST' }],
+    }),
+    getVersesForOSIS: builder.query<Verse[], string>({
+      query: (osis) => {
+        return {
+          url: '/v/versesForOSIS',
+          method: 'POST',
+          body: { osis: osis },
+        };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ versenum }) => ({ type: 'verses' as const, id: versenum })),
+              { type: 'verses', id: 'LIST' },
+            ]
+          : [{ type: 'verses', id: 'LIST' }],
     }),
     getAllNotesInRange: builder.query<Note[], Bounds>({
       query: (bounds) => {
@@ -88,4 +104,6 @@ export const {
   useGetAllNotesInRangeQuery,
   useCreateNoteMutation,
   useUpdateNoteMutation,
+  useGetVersesForOSISQuery,
+  useLazyGetVersesForOSISQuery,
 } = vapiApi;

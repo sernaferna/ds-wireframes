@@ -1,4 +1,4 @@
-import { getOSISForReference } from '../index';
+import { getOSISForReference } from '../../helpers/refparse/index';
 
 describe('get OSIS test suite', () => {
   it('handles regular verse', () => {
@@ -23,5 +23,17 @@ describe('get OSIS test suite', () => {
 
   it('returns nothing for non-existant verse', () => {
     expect(getOSISForReference('Jude 30')).toEqual('');
+  });
+
+  it('collapses commas', () => {
+    expect(getOSISForReference('Matthew 1:1, Matthew 1:2')).toEqual('Matt.1.1-Matt.1.2');
+  });
+
+  it('handles more complex input', () => {
+    expect(getOSISForReference('Gen 1:1, Genesis 1:2–3, Gen 1:4-Gen 1:5')).toEqual('Gen.1.1-Gen.1.5');
+  });
+
+  it('keeps non-contiguous commas', () => {
+    expect(getOSISForReference('Gen 1:1, Genesis 1:2–3, Gen 2:4-Gen 2:5')).toEqual('Gen.1.1-Gen.1.3,Gen.2.4-Gen.2.5');
   });
 });

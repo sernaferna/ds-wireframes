@@ -27,6 +27,12 @@ export function Settings() {
     return <ErrorLoadingDataMessage />;
   }
 
+  const handleAdminChange = () => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.isAdmin = !newUser.isAdmin;
+    update(newUser);
+  };
+
   return (
     <Form>
       <Form.Check
@@ -42,6 +48,13 @@ export function Settings() {
         label="Show Toast Tester"
         checked={data!.settings.showToastTester}
         onChange={handleShowTTChange}
+      />
+      <Form.Check
+        type="checkbox"
+        id="isAdmin"
+        label="Admin User?"
+        checked={data!.isAdmin}
+        onChange={handleAdminChange}
       />
     </Form>
   );

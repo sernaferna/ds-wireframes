@@ -9,11 +9,17 @@ import {
   updateSelectedNote,
 } from '../../../stores/UISlice';
 import { useLazyGetPassageByIdQuery } from '../../../services/PassagesService';
-import { getFormattedReference, getRangesForOSIS, OSISRange, getOSISForReference } from '@devouringscripture/refparse';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { BaseNote, Note } from '@devouringscripture/common';
+import {
+  BaseNote,
+  Note,
+  getFormattedReference,
+  getRangesForOSIS,
+  OSISRange,
+  getOSISForReference,
+} from '@devouringscripture/common';
 import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 

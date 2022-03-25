@@ -1,7 +1,8 @@
-import { CustomError } from '..';
+import { CustomError, StandardErrorCodes } from './CustomError';
 
 export class NotFoundError extends CustomError {
   statusCode = 404;
+  errorCode = StandardErrorCodes.NotFound;
 
   constructor(public resource: string) {
     super('404 Error');
@@ -9,6 +10,10 @@ export class NotFoundError extends CustomError {
   }
 
   serializeErrors() {
-    return [{ message: 'Resource not found', field: this.resource }];
+    return { errorCode: this.errorCode, errors: [{ message: 'Resource not found', field: this.resource }] };
+  }
+
+  serializeInternalError(): string {
+    return `Resource not found: ${this.resource}`;
   }
 }

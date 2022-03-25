@@ -1,16 +1,18 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
 import { getAllPrayerItemsRouter } from './routes/prayer/getAll';
 import { getPIById } from './routes/prayer/byId';
 import { markReadRouter } from './routes/prayer/markRead';
 import { newPrayerItemRouter } from './routes/prayer/newItem';
 import { deletePrayerItemRouter } from './routes/prayer/delete';
+
 import { getUserByIdRouter } from './routes/user/byId';
 import { updateUserRouter } from './routes/user/update';
+
 import { getAllCustomActionsRouter } from './routes/actions/custom/getAll';
 import { newCustomActionTypeRouter } from './routes/actions/custom/newItem';
+
 import { getRecentActionsRouter } from './routes/actions/getRecent';
 import { getActionForDateRouter } from './routes/actions/getForDate';
 import { markActionItemForDateRouter } from './routes/actions/markItemForDate';
@@ -18,12 +20,24 @@ import { getActionByIdRouter } from './routes/actions/byId';
 import { getActionsForMonthRouter } from './routes/actions/getForMonth';
 import { getActionStatsRouter } from './routes/actions/getStats';
 import { deleteCustomActionRouter } from './routes/actions/custom/delete';
+
 import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
 import { newReadingItem } from './routes/read/passages/newItem';
 import { deleteCurrentReadItem } from './routes/read/passages/delete';
 import { getPassageByIdRouter } from './routes/read/passages/byId';
-import { newReadingPlan } from './routes/read/plans/new';
-import { handleFourOhFour, errorHandler, NotFoundError } from '@devouringscripture/common';
+
+import { getAllPublicPlansRouter } from './routes/plans/getAll';
+import { deletePublicPlanRouter } from './routes/plans/delete';
+import { getPublicPlanByIdRouter } from './routes/plans/byId';
+import { publishPlanRouter } from './routes/plans/publish';
+import { savePlanRouter } from './routes/plans/save';
+
+import { deleteInstantiatedPlanRouter } from './routes/instantiatedPlans/delete';
+import { getAllInstantiatedPlansRouter } from './routes/instantiatedPlans/getAll';
+import { newIPRouter } from './routes/instantiatedPlans/new';
+import { updateInstantiatedPlanRouter } from './routes/instantiatedPlans/update';
+
+import { errorHandler, NotFoundError } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -42,7 +56,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/pi', [getAllPrayerItemsRouter, getPIById, markReadRouter, newPrayerItemRouter, deletePrayerItemRouter]);
-app.use('/api/user', [getUserByIdRouter, updateUserRouter]);
+app.use('/api/user', [getUserByIdRouter, updateUserRouter, getAllInstantiatedPlansRouter]);
 app.use('/api/actions/entries', [
   getRecentActionsRouter,
   getActionForDateRouter,
@@ -58,7 +72,19 @@ app.use('/api/read/current', [
   deleteCurrentReadItem,
   getPassageByIdRouter,
 ]);
-app.use('/api/plans', [newReadingPlan]);
+app.use('/api/plans/public', [
+  getAllPublicPlansRouter,
+  deletePublicPlanRouter,
+  getPublicPlanByIdRouter,
+  publishPlanRouter,
+  savePlanRouter,
+]);
+app.use('/api/ip', [
+  deleteInstantiatedPlanRouter,
+  getAllInstantiatedPlansRouter,
+  newIPRouter,
+  updateInstantiatedPlanRouter,
+]);
 
 app.all('*', async (req, res, next) => {
   return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));

@@ -1,4 +1,4 @@
-import { isReferenceValid } from '..';
+import { isReferenceValid } from '../../helpers/refparse/index';
 
 describe('isValid test suite', () => {
   it('returns true for valid verse', () => {
@@ -27,5 +27,9 @@ describe('isValid test suite', () => {
 
   it('returns true for just a book', () => {
     expect(isReferenceValid('Gen')).toBeTruthy();
+  });
+
+  it('returns false for an empty string', () => {
+    expect(isReferenceValid('')).toBeFalsy();
   });
 });

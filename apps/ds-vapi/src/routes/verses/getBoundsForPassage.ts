@@ -1,7 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { getVerseByOSIS } from '../../services/db';
-import { Verse, validateRequest, DatabaseError, CustomError, InvalidPassageError } from '@devouringscripture/common';
-import { OSISRange, getRangesForOSIS } from '@devouringscripture/refparse';
+import {
+  validateRequest,
+  DatabaseError,
+  CustomError,
+  InvalidPassageError,
+  OSISRange,
+  getRangesForOSIS,
+} from '@devouringscripture/common';
 import { check } from 'express-validator';
 
 export interface Bounds {
@@ -14,14 +20,14 @@ export const getBoundsForPassage = async (osis: string): Promise<Bounds[]> => {
     const returnValue: Bounds[] = [];
     const initialValues: OSISRange[] = getRangesForOSIS(osis);
 
-    // TODO can Promise.all() apply here?
     try {
-      for (let i = 0; i < initialValues.length; i++) {
-        const lowerVerse = await getVerseByOSIS(initialValues[i].startOsisString);
-        const upperVerse = await getVerseByOSIS(initialValues[i].endOsisString);
-
-        const newBound: Bounds = { lowerBound: lowerVerse.versenum, upperBound: upperVerse.versenum };
-        returnValue.push(newBound);
+      for (const range of initialValues) {
+        await Promise.all([getVerseByOSIS(range.startOsisString), getVerseByOSIS(range.endOsisString)]).then(
+          (result) => {
+            const newBound: Bounds = { lowerBound: result[0].versenum, upperBound: result[1].versenum };
+            returnValue.push(newBound);
+          }
+        );
       }
 
       return resolve(returnValue);
@@ -46,13 +52,8 @@ router.post(
         throw new InvalidPassageError(req.body.osis);
       }
 
-      getBoundsForPassage(req.body.osis)
-        .then((bounds) => {
-          return res.send(bounds);
-        })
-        .catch((err) => {
-          throw err;
-        });
+      const bounds: Bounds[] = await getBoundsForPassage(req.body.osis);
+      return res.send(bounds);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('getBoundsForPassage'));
     }

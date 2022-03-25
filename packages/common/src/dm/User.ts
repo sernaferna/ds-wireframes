@@ -42,5 +42,9 @@ export interface UserAttributes {
       defaultVersion: string;
       showReadingPlan: boolean;
     };
+    plans: {
+      showSettings: boolean;
+      showCurrentReadingPlan: boolean;
+    };
   };
 }

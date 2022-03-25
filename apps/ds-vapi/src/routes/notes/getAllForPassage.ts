@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { Note, InvalidPassageError, DatabaseError, CustomError } from '@devouringscripture/common';
-import { isReferenceValid } from '@devouringscripture/refparse';
+import { Note, InvalidPassageError, DatabaseError, CustomError, isReferenceValid } from '@devouringscripture/common';
 import { getBoundsForPassage, Bounds } from '../verses/getBoundsForPassage';
 import { getAllNotes } from './getAll';
 

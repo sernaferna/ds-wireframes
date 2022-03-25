@@ -1,7 +1,9 @@
 {
   "name": "monorepo",
   "scripts": {
-    "start": "npm start -w ds-api & npm start -w ds-vapi & npm start -w ds-ui"
+    "start": "npm start -w ds-api & npm start -w ds-vapi & npm start -w ds-ui",
+    "build": "npm run build -w @devouringscripture/common",
+    "test": "npm run test -w @devouringscripture/common"
   },
   "workspaces": [
     "./packages/*",
