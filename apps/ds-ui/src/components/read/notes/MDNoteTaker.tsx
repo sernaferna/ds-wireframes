@@ -1,5 +1,4 @@
 import React, { useEffect, useReducer, Reducer, useCallback } from 'react';
-import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -24,30 +23,7 @@ import {
 import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
 import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
-
-const lordCommand: ICommand = {
-  name: 'LORD',
-  keyCommand: 'LORD',
-  buttonProps: { 'aria-label': 'Insert LORD' },
-  icon: <b style={{ fontVariant: 'small-caps' }}>Lord</b>,
-  execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<span class="small-caps-style">Lord</span>`;
-    api.replaceSelection(modifyText);
-  },
-};
-
-const commandsToFilterOut = ['code', 'image', 'checked-list'];
-const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
-  if (isExtra) {
-    return command;
-  }
-
-  if (new RegExp(commandsToFilterOut.join('|')).test(command.name as string)) {
-    return false;
-  }
-
-  return command;
-};
+import { MarkdownBox } from '../../common/MarkdownBox';
 
 interface InternalState {
   value: string;
@@ -248,6 +224,7 @@ export const MDNoteTaker = () => {
     passageTrigger,
     localState.localNoteId,
     localState.localSelectedReadingItem,
+    addErrorMessage,
   ]);
 
   const submitForm = useCallback(() => {
@@ -333,20 +310,11 @@ export const MDNoteTaker = () => {
           </Row>
         </Col>
       </Row>
-      <MDEditor
-        value={localState.value}
-        onChange={(newValue) => {
-          if (newValue) {
-            dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: newValue });
-          }
+      <MarkdownBox
+        content={localState.value}
+        changeCallback={(content) => {
+          dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: content });
         }}
-        autoFocus={true}
-        highlightEnable={true}
-        preview="edit"
-        defaultTabEnable={true}
-        extraCommands={[lordCommand]}
-        visiableDragbar={false}
-        commandsFilter={commandsFilter}
       />
       <div className="notes-bottom-panel">
         <Button variant="danger" onClick={newNoteBtn}>
@@ -355,16 +323,7 @@ export const MDNoteTaker = () => {
         <Button variant="primary" onClick={submitForm}>
           {selectedNote ? 'Update' : 'Save'}
         </Button>
-        <Button
-          variant="secondary"
-          onClick={() =>
-            dispatchLocalState({ type: ReducerActionType.SET_SHOW_PREVIEW, payload: !localState.showPreview })
-          }
-        >
-          {localState.showPreview ? 'Hide Preview' : 'Show Preview'}
-        </Button>
       </div>
-      {localState.showPreview ? <MDEditor.Markdown className="notes-preview" source={localState.value} /> : ''}
     </>
   );
 };

@@ -1,0 +1,17 @@
+.md-editor-parent {
+  .md-editor-main {
+    @extend .mb-2;
+  }
+
+  .md-editor-preview {
+    @extend .d-grid;
+    @extend .gap-2;
+
+    .md-editor-preview-view {
+      @extend .bg-light;
+      @extend .mx-1;
+      @extend .my-2;
+      @extend .border;
+    }
+  }
+}
