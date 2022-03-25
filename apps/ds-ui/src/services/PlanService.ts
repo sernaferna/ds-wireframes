@@ -4,7 +4,7 @@ import { PlanAttributes, BasePlanAttributes } from '@devouringscripture/common';
 export const planApi = createApi({
   reducerPath: 'plans',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/plans/public' }),
-  tagTypes: ['plans'],
+  tagTypes: ['plans', 'instantiatedPlans'],
   endpoints: (builder) => ({
     getPlanByInstanceId: builder.query<PlanAttributes, string>({
       query: (id) => `/${id}`,
@@ -24,13 +24,7 @@ export const planApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result) =>
-        result
-          ? [
-              { type: 'plans', id: result.planInstanceId },
-              { type: 'plans', id: 'LIST' },
-            ]
-          : [],
+      invalidatesTags: ['plans', 'instantiatedPlans'],
     }),
     publishPlan: builder.mutation<PlanAttributes, PlanAttributes | BasePlanAttributes>({
       query(body) {
@@ -40,13 +34,7 @@ export const planApi = createApi({
           body,
         };
       },
-      invalidatesTags: (result) =>
-        result
-          ? [
-              { type: 'plans', id: result.planInstanceId },
-              { type: 'plans', id: 'LIST' },
-            ]
-          : [],
+      invalidatesTags: ['plans', 'instantiatedPlans'],
     }),
     deletePlan: builder.mutation<string, string>({
       query(id) {
@@ -55,7 +43,7 @@ export const planApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: (result) => (result ? [{ type: 'plans', id: 'LIST' }] : []),
+      invalidatesTags: ['plans', 'instantiatedPlans'],
     }),
   }),
 });
