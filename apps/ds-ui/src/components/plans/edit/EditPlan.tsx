@@ -40,7 +40,7 @@ export const EditPlan = () => {
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
   const regenerateDayList = useCallback(
-    (values: PlanValues) => {
+    (reference: string, includeWeekends: boolean, isFreeform: boolean, numWeeks: number) => {
       let verses: Verse[] | undefined = undefined;
 
       if (
@@ -48,22 +48,26 @@ export const EditPlan = () => {
         !versesResult.error &&
         !versesResult.isLoading &&
         !versesResult.isUninitialized &&
-        values.reference.trim().length > 0
+        reference.trim().length > 0
       ) {
         verses = versesResult.data!.slice();
       }
 
       const listOfDays = generateDayList({
-        includeWeekends: values.includeWeekends,
-        isFreeform: values.isFreeform,
-        numWeeks: values.numWeeks,
-        verses: verses,
+        includeWeekends,
+        isFreeform,
+        numWeeks,
+        verses,
       });
 
       setDays(listOfDays);
     },
     [versesResult, setDays]
   );
+
+  useEffect(() => {
+    regenerateDayList(values.reference, values.includeWeekends, values.isFreeform, values.numWeeks);
+  }, [regenerateDayList, values.reference, values.includeWeekends, values.isFreeform, values.numWeeks]);
 
   useEffect(() => {
     if (planServerResult.isLoading || planServerResult.error) {
@@ -73,39 +77,38 @@ export const EditPlan = () => {
     if (selectedPlan.length > 0) {
       if (selectedPlan !== values.planInstanceId) {
         planTrigger(selectedPlan)
+          .unwrap()
           .then((result) => {
             const plan: PlanValues = {
-              planName: result.data!.name,
-              description: result.data!.description,
-              numWeeks: result.data!.length,
-              version: result.data!.version,
-              isAdmin: result.data!.isAdmin,
-              includeApocrypha: result.data!.includesApocrypha,
-              includeWeekends: result.data!.includeWeekends,
-              isFreeform: result.data!.isFreeform,
+              planName: result.name,
+              description: result.description,
+              numWeeks: result.length,
+              version: result.version,
+              isAdmin: result.isAdmin,
+              includeApocrypha: result.includesApocrypha,
+              includeWeekends: result.includeWeekends,
+              isFreeform: result.isFreeform,
               reference: '',
-              planInstanceId: result.data!.planInstanceId,
-              planId: result.data!.planId,
-              status: result.data!.status,
+              planInstanceId: result.planInstanceId,
+              planId: result.planId,
+              status: result.status,
             };
             setValues(plan);
 
-            if (result.data!.days) {
-              const daysFromServer: DayForPlan[] = result.data!.days!.map((day) => ({
+            if (result.days) {
+              const daysFromServer: DayForPlan[] = result.days!.map((day) => ({
                 id: uuidv4(),
                 osis: day.osis,
               }));
               setDays(daysFromServer);
             } else {
-              regenerateDayList(plan);
+              regenerateDayList(plan.reference, plan.includeWeekends, plan.isFreeform, plan.numWeeks);
             }
           })
           .catch((error) => {
             addErrorMessage('Error retrieving plan from server');
           });
       }
-
-      return;
     }
   }, [
     planServerResult,
@@ -292,23 +295,19 @@ export const EditPlan = () => {
         ...values,
         numWeeks: newValue,
       });
-
-      regenerateDayList(values);
     },
-    [setValues, setTouched, touched, values, regenerateDayList]
+    [setValues, setTouched, touched, values]
   );
 
   const fetchVerses = useCallback(() => {
     if (values.reference.trim().length > 0 && isReferenceValid(values.reference)) {
       versesTrigger(values.reference)
-        .then((result) => {
-          regenerateDayList(values);
-        })
+        .unwrap()
         .catch((error) => {
           addErrorMessage('Error fetching verses');
         });
     }
-  }, [versesTrigger, regenerateDayList, values, addErrorMessage]);
+  }, [versesTrigger, values, addErrorMessage]);
 
   const updateDay = useCallback(
     (update: DayForPlan) => {
