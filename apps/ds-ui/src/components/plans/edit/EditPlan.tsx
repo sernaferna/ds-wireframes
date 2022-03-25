@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import {
   Verse,
   BasePlanAttributes,
+  PlanAttributes,
   isReferenceValid,
   getRefForVerses,
   getOSISForReference,
@@ -84,6 +85,8 @@ export const EditPlan = () => {
               isFreeform: result.data!.isFreeform,
               reference: '',
               planInstanceId: result.data!.planInstanceId,
+              planId: result.data!.planId,
+              status: result.data!.status,
             };
             setValues(plan);
 
@@ -93,6 +96,8 @@ export const EditPlan = () => {
                 osis: day.osis,
               }));
               setDays(daysFromServer);
+            } else {
+              regenerateDayList(plan);
             }
           })
           .catch((error) => {
@@ -201,7 +206,17 @@ export const EditPlan = () => {
       version: values.version,
       days: uploadableDays,
     };
-    publishPlan(plan)
+    let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
+    if ('planInstanceId' in values) {
+      const fullPlan: PlanAttributes = {
+        ...plan,
+        planId: values.planId!,
+        planInstanceId: values.planInstanceId!,
+        status: values.status!,
+      };
+      uploadablePlan = fullPlan;
+    }
+    publishPlan(uploadablePlan)
       .unwrap()
       .then((payload) => {
         navigate('/plans');
@@ -234,7 +249,18 @@ export const EditPlan = () => {
       version: values.version,
       days: [],
     };
-    savePlan(plan)
+
+    let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
+    if ('planInstanceId' in values) {
+      const newPlan: PlanAttributes = {
+        ...plan,
+        planId: values.planId!,
+        planInstanceId: values.planInstanceId!,
+        status: values.status!,
+      };
+      uploadablePlan = newPlan;
+    }
+    savePlan(uploadablePlan)
       .unwrap()
       .then((payload) => {
         navigate('/plans');
