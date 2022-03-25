@@ -14,22 +14,10 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 
 const links = [
-  {
-    label: 'Home',
-    href: '/',
-  },
-  {
-    label: 'Pray',
-    href: '/prayer',
-  },
-  {
-    label: 'Read',
-    href: '/read',
-  },
-  {
-    label: 'Do',
-    href: '/do',
-  },
+  { label: 'Home', href: '/' },
+  { label: 'Pray', href: '/prayer' },
+  { label: 'Read', href: '/read' },
+  { label: 'Do', href: '/do' },
 ].map(({ label, href }) => {
   return (
     <NavLink key={href} className="nav-link" to={href}>
@@ -38,12 +26,7 @@ const links = [
   );
 });
 
-const adminLinks = [
-  {
-    label: 'Plans',
-    href: '/plans',
-  },
-].map(({ label, href }) => {
+const adminLinks = [{ label: 'Plans', href: '/plans' }].map(({ label, href }) => {
   return (
     <NavLink key={href} className="nav-link" to={href}>
       {label}

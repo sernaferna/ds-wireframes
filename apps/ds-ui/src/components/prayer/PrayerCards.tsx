@@ -3,7 +3,6 @@ import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/To
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import Placeholder from 'react-bootstrap/Placeholder';
 import styled from 'styled-components';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import {
@@ -15,13 +14,15 @@ import {
 } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { PrayerTypes, UserAttributes } from '@devouringscripture/common';
-import { ShieldPlus, Tsunami, EyeFill, TrashFill } from 'react-bootstrap-icons';
+import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import Row from 'react-bootstrap/Row';
 import { paginateItems } from '../../helpers/pagination';
 import { PrayerListItem } from '@devouringscripture/common';
 import { MarkdownPreview } from '../common/MarkdownBox';
+import { PrayerIconsContainer } from './PrayerIconsContainer';
+import { PlaceholderCard } from './PlaceholderCard';
 
 export const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
@@ -29,47 +30,6 @@ export const CardContainerRow = styled(Row).attrs(() => ({
   lg: '2',
   xxl: '3',
 }))``;
-
-interface PrayerIconsContainerInterface {
-  itemId: string;
-  deleteItem(id: string): void;
-  children: JSX.Element;
-}
-const IconsContainer = ({ itemId, deleteItem, children }: PrayerIconsContainerInterface) => {
-  return (
-    <div className="icons-container">
-      {children}
-      <TrashFill
-        className="delete-icon"
-        onClick={() => {
-          deleteItem(itemId);
-        }}
-      />
-    </div>
-  );
-};
-
-const PlaceholderCard = () => {
-  return (
-    <Card className="prayer-card">
-      <Card.Body className="pc-body">
-        <Placeholder as={Card.Title} animation="wave">
-          <Placeholder xs="12" />
-        </Placeholder>
-        <Placeholder as={Card.Subtitle} animation="wave">
-          <Placeholder xs="12" />
-        </Placeholder>
-        <Placeholder as={Card.Text} animation="wave">
-          <Placeholder xs="12" />
-        </Placeholder>
-        <Placeholder.Button variant="primary" xs="4" />
-        <Placeholder as={Card.Footer} animation="wave">
-          <Placeholder xs="12" />
-        </Placeholder>
-      </Card.Body>
-    </Card>
-  );
-};
 
 export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   if (type === undefined) {
@@ -158,9 +118,9 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
           <Card.Body className="pc-body">
             <Card.Title>
               {item.title}{' '}
-              <IconsContainer itemId={item.id} deleteItem={deleteItem}>
+              <PrayerIconsContainer itemId={item.id} deleteItem={deleteItem}>
                 {icon}
-              </IconsContainer>
+              </PrayerIconsContainer>
             </Card.Title>
             <Card.Text className="max-height-text">
               <MarkdownPreview content={item.text} />
@@ -176,7 +136,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
   return items;
 };
 
-export function PrayerCards() {
+export const PrayerCards = () => {
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
   const [markUnread] = useMarkUnreadMutation();
@@ -240,4 +200,4 @@ export function PrayerCards() {
       {paginationElement}
     </CardContainerRow>
   );
-}
+};

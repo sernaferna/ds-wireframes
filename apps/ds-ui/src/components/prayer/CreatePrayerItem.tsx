@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
@@ -44,12 +44,13 @@ type ValuesSchema = yup.InferType<typeof schema>;
 export function CreatePrayerItem({ confession = false }) {
   const [newPrayer] = useNewItemMutation();
 
-  const handleSubmit = (text: string, title: string | undefined, type: string | undefined) => {
-    console.log(`handlesubmit ${text}`);
-    const newItem: BasePrayerListItem = { title, text, type, completed: false };
-    console.log(newItem);
-    newPrayer(newItem);
-  };
+  const handleSubmit = useCallback(
+    (text: string, title: string | undefined, type: string | undefined) => {
+      const newItem: BasePrayerListItem = { title, text, type, completed: false };
+      newPrayer(newItem);
+    },
+    [newPrayer]
+  );
 
   const initialValues: ValuesSchema = {
     title: '',
