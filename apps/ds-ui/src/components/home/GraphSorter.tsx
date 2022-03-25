@@ -82,7 +82,7 @@ export const GraphSorter = () => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const vizualizationList = sortedItems.map((item, index) => {

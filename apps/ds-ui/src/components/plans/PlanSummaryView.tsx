@@ -95,7 +95,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const apocPopover = (

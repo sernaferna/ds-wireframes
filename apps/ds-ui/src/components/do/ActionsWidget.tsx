@@ -37,8 +37,11 @@ export function ActionsWidget() {
   if (isLoading || userApiObject.isLoading) {
     return <LoadingMessage />;
   }
-  if (error || userApiObject.error) {
-    return <ErrorLoadingDataMessage />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
+  if (userApiObject.error) {
+    return <ErrorLoadingDataMessage theError={userApiObject.error} />;
   }
 
   return (

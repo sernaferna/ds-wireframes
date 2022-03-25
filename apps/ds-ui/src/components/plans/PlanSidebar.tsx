@@ -26,7 +26,7 @@ export const PlanSidebar = () => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const showSettings = data!.settings.plans.showSettings;

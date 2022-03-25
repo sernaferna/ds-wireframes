@@ -68,7 +68,7 @@ export function CustomActionList() {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   return (
