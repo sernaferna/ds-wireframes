@@ -11,6 +11,7 @@ import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes, BasePrayerListItem } from '@devouringscripture/common';
 import * as yup from 'yup';
 import { Formik, FormikProps, FormikHelpers } from 'formik';
+import { MarkdownBox } from '../common/MarkdownBox';
 
 const praisePopover = (
   <Popover id="praise-popover">
@@ -86,16 +87,12 @@ export function CreatePrayerItem({ confession = false }) {
             </Form.Group>
             <Form.Group as={Col} xs="12">
               <Form.Label>Text</Form.Label>
-              <Form.Control
-                id="body"
-                value={formikProps.values.body}
-                onChange={formikProps.handleChange}
-                onBlur={formikProps.handleBlur}
-                onInput={formikProps.handleBlur}
-                as="textarea"
-                rows={4}
-                name="body"
-                placeholder="Prayer request (mandatory)"
+              <MarkdownBox
+                content={formikProps.values.body}
+                changeCallback={(content) => {
+                  formikProps.setFieldValue('body', content);
+                  formikProps.setFieldTouched('body', true);
+                }}
               />
             </Form.Group>
             {confession ? null : (

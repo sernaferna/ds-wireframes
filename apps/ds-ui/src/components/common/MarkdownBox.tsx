@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 
+interface MDPreview {
+  content: string;
+}
+export const MarkdownPreview = ({ content }: MDPreview) => {
+  return <MDEditor.Markdown source={content} className="md-editor-preview-view" />;
+};
+
 const lordCommand: ICommand = {
   name: 'LORD',
   keyCommand: 'LORD',
@@ -58,7 +65,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: Ma
         <Button size="sm" variant="secondary" onClick={() => setShowPreviewState(!showPreviewState)}>
           {showPreviewState ? 'Hide Preview' : 'Show Preview'}
         </Button>
-        {showPreviewState ? <MDEditor.Markdown source={content} className="md-editor-preview-view" /> : <></>}
+        {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
       </div>
     </div>
   );
