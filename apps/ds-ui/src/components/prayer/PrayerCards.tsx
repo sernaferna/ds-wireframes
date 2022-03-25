@@ -21,6 +21,7 @@ import { getPrayerViewFilter } from '../../stores/UISlice';
 import Row from 'react-bootstrap/Row';
 import { paginateItems } from '../../helpers/pagination';
 import { PrayerListItem } from '@devouringscripture/common';
+import { MarkdownPreview } from '../common/MarkdownBox';
 
 export const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
@@ -161,7 +162,9 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
                 {icon}
               </IconsContainer>
             </Card.Title>
-            <Card.Text className="max-height-text">{item.text}</Card.Text>
+            <Card.Text className="max-height-text">
+              <MarkdownPreview content={item.text} />
+            </Card.Text>
             {submitButton}
           </Card.Body>
           <Card.Footer>{item.date}</Card.Footer>
