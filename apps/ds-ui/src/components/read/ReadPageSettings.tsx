@@ -21,7 +21,7 @@ export function ReadPageSettings() {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const versionToUse = data!.settings.read.defaultVersion;

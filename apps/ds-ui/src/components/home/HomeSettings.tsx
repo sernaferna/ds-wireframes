@@ -21,7 +21,7 @@ export const HomeSettings = () => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const dataFilter = data!.settings.home.statsFilter;

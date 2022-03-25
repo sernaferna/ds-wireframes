@@ -23,7 +23,7 @@ export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const textToDisplay = noteID === selectedNote ? '[Editing] ' + data!.text : data!.text;

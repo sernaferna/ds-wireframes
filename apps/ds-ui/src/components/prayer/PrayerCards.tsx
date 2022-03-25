@@ -222,8 +222,11 @@ export function PrayerCards() {
       </CardContainerRow>
     );
   }
-  if (error || userError) {
-    return <ErrorLoadingDataMessage />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
+  if (userError) {
+    return <ErrorLoadingDataMessage theError={userError} />;
   }
 
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);

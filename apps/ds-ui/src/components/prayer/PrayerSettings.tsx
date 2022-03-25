@@ -65,7 +65,7 @@ export function PrayerSettings() {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const showAll = data!.settings.prayer.showAllItems;

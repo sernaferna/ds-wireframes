@@ -19,9 +19,11 @@ import {
   getRangesForOSIS,
   OSISRange,
   getOSISForReference,
+  ErrorResponse,
 } from '@devouringscripture/common';
 import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
+import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 
 const lordCommand: ICommand = {
   name: 'LORD',
@@ -173,6 +175,7 @@ export const MDNoteTaker = () => {
   const [updateNote] = useUpdateNoteMutation();
   const dispatch = useDispatch();
   const [noteTrigger, noteResult] = useLazyGetNoteByIdQuery();
+  const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
   /*
   Initialization of this component is complex, because there could be a 
@@ -180,7 +183,23 @@ export const MDNoteTaker = () => {
   which should be used to set the start/end passages.
   */
   useEffect(() => {
-    if (passageResult.isLoading || passageResult.error || noteResult.isLoading || noteResult.error) {
+    if (passageResult.error) {
+      if ('data' in passageResult.error) {
+        addErrorMessage(generateErrorStringFromError(passageResult.error.data as ErrorResponse));
+      } else {
+        addErrorMessage('Error retrieving passage from server');
+      }
+      return;
+    }
+    if (noteResult.error) {
+      if ('data' in noteResult.error) {
+        addErrorMessage(generateErrorStringFromError(noteResult.error.data as ErrorResponse));
+      } else {
+        addErrorMessage('Error retrieving note from server');
+      }
+      return;
+    }
+    if (passageResult.isLoading || noteResult.isLoading) {
       return;
     }
 
@@ -273,6 +292,11 @@ export const MDNoteTaker = () => {
 
   return (
     <>
+      <Row>
+        <Col>
+          <AlertUI />
+        </Col>
+      </Row>
       <Row>
         <Col>
           <Row>

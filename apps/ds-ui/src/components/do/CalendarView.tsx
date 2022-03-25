@@ -80,8 +80,11 @@ export function CalendarView({ dateToShow }: CalendarViewInterface) {
   if (isLoading || userDataObj.isLoading) {
     return <LoadingMessage />;
   }
-  if (error || userDataObj.error) {
-    return <ErrorLoadingDataMessage />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
+  if (userDataObj.error) {
+    return <ErrorLoadingDataMessage theError={userDataObj.error} />;
   }
 
   return (

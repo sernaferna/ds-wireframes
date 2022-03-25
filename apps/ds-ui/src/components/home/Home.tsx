@@ -91,51 +91,12 @@ export function Home() {
   if (isLoading || userObject.isLoading) {
     return <LoadingMessage />;
   }
-  if (error || userObject.error) {
-    return <ErrorLoadingDataMessage />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
   }
-
-  // const vizualizationList = userData!.settings.home.vizualizationsOrder
-  //   .filter((item) => item.active)
-  //   .sort((a, b) => {
-  //     if (a.order < b.order) {
-  //       return -1;
-  //     }
-  //     if (a.order > b.order) {
-  //       return 1;
-  //     }
-
-  //     return 0;
-  //   })
-  //   .map((item, index) => {
-  //     let title: string;
-  //     let control: JSX.Element;
-
-  //     switch (item.name) {
-  //       case 'ReadScripture':
-  //         title = 'Read Scripture';
-  //         control = <ReadScripture stats={data!} />;
-  //         break;
-  //       case 'DetailedReading':
-  //         title = 'Detailed Reading Stats';
-  //         control = <DetailedReading stats={data!} />;
-  //         break;
-  //       case 'OldVsNew':
-  //         title = 'Old vs. New Testaments';
-  //         control = <OldVsNew stats={data!} />;
-  //         break;
-  //       case 'AllActivities':
-  //         title = 'All Activity';
-  //         control = <AllActivities stats={data!} />;
-  //         break;
-  //     }
-
-  //     return (
-  //       <VisualizationCard key={`viz-card-${index}`} title={title!}>
-  //         {control!}
-  //       </VisualizationCard>
-  //     );
-  //   });
+  if (userObject.error) {
+    return <ErrorLoadingDataMessage theError={userObject.error} />;
+  }
 
   return (
     <Container fluid={true} className="page-main-container">

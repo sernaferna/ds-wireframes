@@ -25,7 +25,7 @@ export const PassageCards = () => {
     );
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   const items = data!.map((item) => {

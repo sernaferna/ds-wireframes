@@ -16,7 +16,7 @@ export const PassageNotes = () => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   if (!selectedReadingItem && !selectedNote) {
