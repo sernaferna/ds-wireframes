@@ -27,7 +27,7 @@ interface JLButton {
 }
 const JoinLeaveButton = ({ plan, percentageComplete, deleteIP, createIP }: JLButton): JSX.Element => {
   if (plan.status !== PlanStatus.Published) {
-    return <i>Plan not ready for subscription</i>;
+    return <i>Cannot subscribe to plan</i>;
   }
 
   if (percentageComplete === undefined) {
@@ -145,13 +145,9 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
       </Row>
       <Row className="button-row">
         <Col className="edit-col">
-          {data!.isAdmin ? (
-            <Button variant="primary" onClick={() => editPlan(planId)}>
-              Edit
-            </Button>
-          ) : (
-            ''
-          )}
+          <Button variant="primary" onClick={() => editPlan(planId)}>
+            Edit
+          </Button>
         </Col>
         <Col className="join-col">
           <JoinLeaveButton
@@ -162,7 +158,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: Plan
           />
         </Col>
         <Col className="deleteCol">
-          {data!.isAdmin ? (
+          {data!.status === PlanStatus.Deleted ? (
             ''
           ) : (
             <Button variant="danger" onClick={() => deletePlanOnServer(planId)}>
