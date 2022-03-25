@@ -8,10 +8,6 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { DateTime } from 'luxon';
 import { ActionsForDay } from '@devouringscripture/common';
 
-interface CalendarViewInterface {
-  dateToShow: DateTime;
-}
-
 const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
   const actionsSet = new Set<string>();
 
@@ -44,6 +40,9 @@ const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
   return actionsSet;
 };
 
+interface CalendarViewInterface {
+  dateToShow: DateTime;
+}
 export function CalendarView({ dateToShow }: CalendarViewInterface) {
   const [monthToShow, updateMonthToShow] = useState(dateToShow);
   const dispatch = useDispatch();

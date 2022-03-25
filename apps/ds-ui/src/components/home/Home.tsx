@@ -7,12 +7,12 @@ import { ReadScripture } from './stats/ReadScripture';
 import { DetailedReading } from './stats/DetailedReading';
 import { OldVsNew } from './stats/OldVsNew';
 import { AllActivities } from './stats/AllActivities';
-import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import { GraphSorter } from './GraphSorter';
 import { UserAttributes, ActionStats } from '@devouringscripture/common';
+import { VisualizationCard } from './VisualizationCard';
 
 const getVizualizationList = (userData: UserAttributes | undefined, data: ActionStats | undefined) => {
   if (userData === undefined || data === undefined) {
@@ -60,25 +60,6 @@ const getVizualizationList = (userData: UserAttributes | undefined, data: Action
         </VisualizationCard>
       );
     });
-};
-
-interface VisualizationCardInterface {
-  title: string;
-  children: JSX.Element;
-}
-const VisualizationCard = ({ title, children }: VisualizationCardInterface) => {
-  return (
-    <Col className="vizualization-card">
-      <Card className="vizualization-card-content">
-        <Card.Body className="vizualization-card-body">
-          <Card.Title>{title}</Card.Title>
-          <Card.Text as="div" className="vizualization-card-text">
-            {children}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </Col>
-  );
 };
 
 export function Home() {

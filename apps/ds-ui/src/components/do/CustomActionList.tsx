@@ -38,7 +38,8 @@ const generateList = ({ data, deleteCallback }: GenerateListParams) => {
 
   return list;
 };
-export function CustomActionList() {
+
+export const CustomActionList = () => {
   const { data, error, isLoading } = useGetCustomActionTypesQuery();
   const [actionType, setActonType] = useState('');
   const [newItem] = useNewCustomActionMutation();
@@ -91,4 +92,4 @@ export function CustomActionList() {
       </Form>
     </>
   );
-}
+};
