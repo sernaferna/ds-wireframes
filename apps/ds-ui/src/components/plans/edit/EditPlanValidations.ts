@@ -1,4 +1,4 @@
-import { isVersionValid, isReferenceValid } from '@devouringscripture/common';
+import { isVersionValid, isReferenceValid, PlanStatus } from '@devouringscripture/common';
 
 const stringValidation = (fieldName: string, fieldValue: string): string | null => {
   if (fieldValue.trim() === '') {
@@ -32,6 +32,10 @@ const referenceValidation = (ref: string): string | null => {
   return null;
 };
 
+const statusValidation = (status: string): string | null => {
+  return null;
+};
+
 const anyBooleanValidation = (theValue: string | boolean): string | null => {
   return null;
 };
@@ -49,6 +53,8 @@ export const validate: { [id: string]: ValidationFunction } = {
   isFreeform: anyBooleanValidation,
   reference: referenceValidation,
   planInstanceId: () => null,
+  planId: () => null,
+  status: statusValidation,
 };
 
 export interface PlanValues {
@@ -62,6 +68,8 @@ export interface PlanValues {
   isFreeform: boolean;
   reference: string;
   planInstanceId?: string;
+  planId?: string;
+  status?: PlanStatus;
 }
 export const initialPlanValues: PlanValues = {
   planName: '',
