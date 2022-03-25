@@ -89,7 +89,7 @@ export const getValue = (type: string, value: string): string | number | boolean
 export const generateDaysForUpload = (days: DayForPlan[]): PlanDay[] => {
   return days.map((day) => {
     if (day.osis) {
-      return { osis: day.osis };
+      return { osis: getOSISForReference(day.osis) };
     }
 
     if (day.verses) {
