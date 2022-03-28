@@ -57,23 +57,27 @@ export const GraphSorter = () => {
 
   const handleActiveInactive = useCallback(
     (itemName: string) => {
-      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-      newUser.settings.home.vizualizationsOrder.forEach((item) => {
-        if (item.name === itemName) {
-          item.active = !item.active;
-        }
-      });
-      update(newUser);
+      return () => {
+        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+        newUser.settings.home.vizualizationsOrder.forEach((item) => {
+          if (item.name === itemName) {
+            item.active = !item.active;
+          }
+        });
+        update(newUser);
+      };
     },
     [data, update]
   );
 
   const handleSorterClick = useCallback(
     (itemName: string, moveUp: boolean) => {
-      const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
-      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-      newUser.settings.home.vizualizationsOrder = newList;
-      update(newUser);
+      return () => {
+        const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
+        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+        newUser.settings.home.vizualizationsOrder = newList;
+        update(newUser);
+      };
     },
     [sortedItems, update, data]
   );
@@ -88,18 +92,18 @@ export const GraphSorter = () => {
   const vizualizationList = sortedItems.map((item, index) => {
     return (
       <div key={`sort-item-${item.name}`}>
-        {index > 0 ? <CaretLeftFill onClick={() => handleSorterClick(item.name, true)} /> : ''}
+        {index > 0 ? <CaretLeftFill onClick={handleSorterClick(item.name, true)} /> : ''}
         <ToggleButton
           type="checkbox"
           variant="outline-primary"
           id={item.name}
           value={item.name}
           checked={item.active}
-          onClick={() => handleActiveInactive(item.name)}
+          onClick={handleActiveInactive(item.name)}
         >
           {item.name}
         </ToggleButton>
-        {index < sortedItems.length - 1 ? <CaretRightFill onClick={() => handleSorterClick(item.name, false)} /> : ''}
+        {index < sortedItems.length - 1 ? <CaretRightFill onClick={handleSorterClick(item.name, false)} /> : ''}
       </div>
     );
   });

@@ -14,9 +14,11 @@ export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
   const dispatch = useDispatch();
 
   const selectNote = useCallback(() => {
-    if (noteID !== selectedNote) {
-      dispatch(updateSelectedNote(noteID));
-    }
+    return () => {
+      if (noteID !== selectedNote) {
+        dispatch(updateSelectedNote(noteID));
+      }
+    };
   }, [dispatch, selectedNote, noteID]);
 
   if (isLoading) {
@@ -30,12 +32,7 @@ export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
   const noteSnippet = textToDisplay.length > 99 ? textToDisplay.substring(0, 99) + '...' : textToDisplay;
 
   return (
-    <div
-      className={noteID === selectedNote ? 'note-snippet-selected' : 'note-snippet'}
-      onClick={() => {
-        selectNote();
-      }}
-    >
+    <div className={noteID === selectedNote ? 'note-snippet-selected' : 'note-snippet'} onClick={selectNote()}>
       <MDEditor.Markdown source={noteSnippet} />
     </div>
   );

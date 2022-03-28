@@ -14,15 +14,25 @@ export const JoinLeaveButton = ({ plan, percentageComplete, deleteIP, createIP }
   }
 
   if (percentageComplete === undefined) {
+    const handleClick = (id: string) => {
+      return () => {
+        createIP(id);
+      };
+    };
     return (
-      <Button variant="primary" onClick={() => createIP(plan.planInstanceId)}>
+      <Button variant="primary" onClick={handleClick(plan.planInstanceId)}>
         Start
       </Button>
     );
   }
 
+  const handleClick = (id: string) => {
+    return () => {
+      deleteIP(id);
+    };
+  };
   return (
-    <Button variant="primary" onClick={() => deleteIP(plan.planInstanceId)}>
+    <Button variant="primary" onClick={handleClick(plan.planInstanceId)}>
       Leave
     </Button>
   );

@@ -33,6 +33,12 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
     return [];
   }
 
+  const itemClicked = (id: string) => {
+    return () => {
+      handleCheck(id);
+    };
+  };
+
   const unreadItems = data.filter((item) => !item.completed);
   const sortPrayerAsc = userData.settings.prayer.sort === 'date-asc' ? true : false;
   const sortedItems = sortPrayerItems(unreadItems, sortPrayerAsc);
@@ -54,7 +60,7 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
           type="checkbox"
           id={item.id}
           checked={item.completed}
-          onChange={() => handleCheck(item.id)}
+          onChange={itemClicked(item.id)}
         />
       </Form.Group>
     );

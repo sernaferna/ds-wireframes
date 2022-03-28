@@ -50,12 +50,35 @@ export const EditPlanForm = ({
 }: EPFInterface) => {
   const [showWarning, setShowWarning] = useState(true);
 
+  const hideWarning = () => {
+    setShowWarning(false);
+  };
+
+  const handleNumWeeksBlur = (e: any) => {
+    handleBlur(e);
+    fetchVerses();
+  };
+
+  const handleFreeformBlur = (e: FocusEvent<HTMLInputElement>) => {
+    handleBlur(e);
+    if (!e.currentTarget.checked) {
+      fetchVerses();
+    }
+  };
+
+  const handleReferenceBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const newRef = getFormattedReference(e.currentTarget.value);
+    e.currentTarget.value = newRef;
+    values.reference = newRef;
+    handleBlur(e);
+  };
+
   return (
     <Form noValidate>
       <Row>
         <Col className="plan-edit-details">
           <Container className="p-3 bg-light">
-            <Alert variant="warning" dismissible show={showWarning} onClose={() => setShowWarning(false)}>
+            <Alert variant="warning" dismissible show={showWarning} onClose={hideWarning}>
               Altering <b>highlighted settings</b> will reset weeks and days below, overwriting previous changes.
             </Alert>
 
@@ -87,10 +110,7 @@ export const EditPlanForm = ({
                   placeholder="52"
                   value={values.numWeeks}
                   onChange={handleChange}
-                  onBlur={(e) => {
-                    handleBlur(e);
-                    fetchVerses();
-                  }}
+                  onBlur={handleNumWeeksBlur}
                   type="number"
                   isValid={!errors['numWeeks'] && !!touched['numWeeks']}
                   isInvalid={!!errors['numWeeks'] && !!touched['numWeeks']}
@@ -202,12 +222,7 @@ export const EditPlanForm = ({
               label="Free-form entries?"
               checked={values.isFreeform}
               onChange={handleChange}
-              onBlur={(e) => {
-                handleBlur(e);
-                if (!e.currentTarget.checked) {
-                  fetchVerses();
-                }
-              }}
+              onBlur={handleFreeformBlur}
             />
 
             {!values.isFreeform ? (
@@ -224,12 +239,7 @@ export const EditPlanForm = ({
                     value={values.reference}
                     isValid={!!touched['reference'] && !errors['reference']}
                     isInvalid={!!touched['reference'] && !!errors['reference']}
-                    onBlur={(e) => {
-                      const newRef = getFormattedReference(e.currentTarget.value);
-                      e.currentTarget.value = newRef;
-                      values.reference = newRef;
-                      handleBlur(e);
-                    }}
+                    onBlur={handleReferenceBlur}
                     onChange={handleChange}
                   />
                   <Button

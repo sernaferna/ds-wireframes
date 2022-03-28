@@ -8,13 +8,14 @@ interface WeeksDDProps {
 export const WeeksDropdown = ({ numWeeks, updateWeeksCallback }: WeeksDDProps) => {
   const displayString = `${numWeeks} weeks`;
 
+  const handleClick = (numWeeks: number) => {
+    return () => {
+      updateWeeksCallback(numWeeks);
+    };
+  };
+
   return (
-    <Dropdown.Item
-      eventKey={numWeeks}
-      onClick={() => {
-        updateWeeksCallback(numWeeks);
-      }}
-    >
+    <Dropdown.Item eventKey={numWeeks} onClick={handleClick(numWeeks)}>
       {displayString}
     </Dropdown.Item>
   );
