@@ -58,17 +58,38 @@ export function CreatePrayerItem({ confession = false }) {
     type: confession ? PrayerTypes.confession : undefined,
   };
 
+  const formSubmit = (values: ValuesSchema, { setSubmitting, resetForm }: FormikHelpers<ValuesSchema>) => {
+    handleSubmit(values.body, values.title, values.type);
+    setSubmitting(false);
+    resetForm({ values: initialValues });
+  };
+
+  const clickPrayerType = (type: string, p: FormikProps<ValuesSchema>) => {
+    return () => {
+      if (p.values.type !== type) {
+        p.setFieldValue('type', type);
+      } else {
+        p.setFieldValue('type', undefined);
+      }
+    };
+  };
+
+  const classNameFor = (type: string, p: FormikProps<ValuesSchema>, middle: boolean = false) => {
+    const mainClass = p.values.type === type ? 'icon-selected' : 'icon-unselected';
+    if (middle) {
+      return `icon-middle ${mainClass}`;
+    } else {
+      return mainClass;
+    }
+  };
+
   return (
     <Alert variant={confession ? 'danger' : 'primary'}>
       <h1>{confession ? 'Confession' : 'New Prayer Request'}</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={schema}
-        onSubmit={(values: ValuesSchema, { setSubmitting, resetForm }: FormikHelpers<ValuesSchema>) => {
-          handleSubmit(values.body, values.title, values.type);
-          setSubmitting(false);
-          resetForm({ values: initialValues });
-        }}
+        onSubmit={formSubmit}
         validateOnBlur={false}
         validateOnChange={true}
       >
@@ -101,40 +122,20 @@ export function CreatePrayerItem({ confession = false }) {
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
                   <ShieldPlus
-                    className={formikProps.values.type === PrayerTypes.praise ? 'icon-selected' : 'icon-unselected'}
-                    onClick={() => {
-                      if (formikProps.values.type === PrayerTypes.praise) {
-                        formikProps.setFieldValue('type', undefined);
-                      } else {
-                        formikProps.setFieldValue('type', PrayerTypes.praise);
-                      }
-                    }}
+                    className={classNameFor(PrayerTypes.praise, formikProps)}
+                    onClick={clickPrayerType(PrayerTypes.praise, formikProps)}
                   />
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
                   <Tsunami
-                    className={`icon-middle ${
-                      formikProps.values.type === PrayerTypes.request ? 'icon-selected' : 'icon-unselected'
-                    }`}
-                    onClick={() => {
-                      if (formikProps.values.type === PrayerTypes.request) {
-                        formikProps.setFieldValue('type', undefined);
-                      } else {
-                        formikProps.setFieldValue('type', PrayerTypes.request);
-                      }
-                    }}
+                    className={classNameFor(PrayerTypes.request, formikProps, true)}
+                    onClick={clickPrayerType(PrayerTypes.request, formikProps)}
                   />
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={confessionPopover}>
                   <EyeFill
-                    className={formikProps.values.type === PrayerTypes.confession ? 'icon-selected' : 'icon-unselected'}
-                    onClick={() => {
-                      if (formikProps.values.type === PrayerTypes.confession) {
-                        formikProps.setFieldValue('type', undefined);
-                      } else {
-                        formikProps.setFieldValue('type', PrayerTypes.confession);
-                      }
-                    }}
+                    className={classNameFor(PrayerTypes.confession, formikProps)}
+                    onClick={clickPrayerType(PrayerTypes.confession, formikProps)}
                   />
                 </OverlayTrigger>
               </Stack>

@@ -42,16 +42,24 @@ interface MarkdownBoxParams {
 export const MarkdownBox = ({ content, changeCallback, showPreview = false }: MarkdownBoxParams) => {
   const [showPreviewState, setShowPreviewState] = useState(showPreview);
 
+  const reversePreviewState = () => {
+    return () => {
+      setShowPreviewState(!showPreviewState);
+    };
+  };
+
+  const handleChangeEvent = (newValue: string | undefined) => {
+    if (newValue) {
+      changeCallback(newValue);
+    }
+  };
+
   return (
     <div className="md-editor-parent">
       <div className="md-editor-main">
         <MDEditor
           value={content}
-          onChange={(newValue) => {
-            if (newValue) {
-              changeCallback(newValue);
-            }
-          }}
+          onChange={handleChangeEvent}
           autoFocus={true}
           highlightEnable={true}
           preview="edit"
@@ -62,7 +70,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: Ma
         />
       </div>
       <div className="md-editor-preview">
-        <Button size="sm" variant="secondary" onClick={() => setShowPreviewState(!showPreviewState)}>
+        <Button size="sm" variant="secondary" onClick={reversePreviewState}>
           {showPreviewState ? 'Hide Preview' : 'Show Preview'}
         </Button>
         {showPreviewState ? <MarkdownPreview content={content} /> : <></>}

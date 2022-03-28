@@ -27,36 +27,38 @@ export function PrayerSettings() {
 
   const filterCheckClicked = useCallback(
     (filterCheck: string) => {
-      const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-      const filters = newUser.settings.prayer.filters;
+      return () => {
+        const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+        const filters = newUser.settings.prayer.filters;
 
-      switch (filterCheck) {
-        case 'all':
-          if (filters.showAll) {
-            filters.showAll = false;
-          } else {
-            filters.showAll = true;
-            filters.showUnLabeled = true;
-            filters.showConfessions = true;
-            filters.showPraise = true;
-            filters.showRequests = true;
-          }
-          break;
-        case 'unlabeled':
-          filters.showUnLabeled = !filters.showUnLabeled;
-          break;
-        case 'requests':
-          filters.showRequests = !filters.showRequests;
-          break;
-        case 'praise':
-          filters.showPraise = !filters.showPraise;
-          break;
-        case 'confessions':
-          filters.showConfessions = !filters.showConfessions;
-          break;
-      }
+        switch (filterCheck) {
+          case 'all':
+            if (filters.showAll) {
+              filters.showAll = false;
+            } else {
+              filters.showAll = true;
+              filters.showUnLabeled = true;
+              filters.showConfessions = true;
+              filters.showPraise = true;
+              filters.showRequests = true;
+            }
+            break;
+          case 'unlabeled':
+            filters.showUnLabeled = !filters.showUnLabeled;
+            break;
+          case 'requests':
+            filters.showRequests = !filters.showRequests;
+            break;
+          case 'praise':
+            filters.showPraise = !filters.showPraise;
+            break;
+          case 'confessions':
+            filters.showConfessions = !filters.showConfessions;
+            break;
+        }
 
-      update(newUser);
+        update(newUser);
+      };
     },
     [data, update]
   );
@@ -110,7 +112,7 @@ export function PrayerSettings() {
           id="showAllTypesCheck"
           label="Any"
           checked={data!.settings.prayer.filters.showAll}
-          onChange={() => filterCheckClicked('all')}
+          onChange={filterCheckClicked('all')}
         />
         <Form.Check
           type="checkbox"
@@ -118,7 +120,7 @@ export function PrayerSettings() {
           label="Un-Labeled"
           checked={data!.settings.prayer.filters.showUnLabeled}
           disabled={data?.settings.prayer.filters.showAll}
-          onChange={() => filterCheckClicked('unlabeled')}
+          onChange={filterCheckClicked('unlabeled')}
         />
         <Form.Check
           type="checkbox"
@@ -126,7 +128,7 @@ export function PrayerSettings() {
           label="Requests"
           checked={data!.settings.prayer.filters.showRequests}
           disabled={data!.settings.prayer.filters.showAll}
-          onChange={() => filterCheckClicked('requests')}
+          onChange={filterCheckClicked('requests')}
         />
         <Form.Check
           type="checkbox"
@@ -134,7 +136,7 @@ export function PrayerSettings() {
           label="Praise"
           checked={data!.settings.prayer.filters.showPraise}
           disabled={data!.settings.prayer.filters.showAll}
-          onChange={() => filterCheckClicked('praise')}
+          onChange={filterCheckClicked('praise')}
         />
         <Form.Check
           type="checkbox"
@@ -142,7 +144,7 @@ export function PrayerSettings() {
           label="Confessions"
           checked={data!.settings.prayer.filters.showConfessions}
           disabled={data!.settings.prayer.filters.showAll}
-          onChange={() => filterCheckClicked('confessions')}
+          onChange={filterCheckClicked('confessions')}
         />
       </Form.Group>
 

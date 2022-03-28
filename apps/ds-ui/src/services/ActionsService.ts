@@ -71,6 +71,19 @@ export const actionsApi = createApi({
           body: data.dataForDay,
         };
       },
+      async onQueryStarted({ idForItem, ...patch }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          actionsApi.util.updateQueryData('getActionByDate', idForItem, (draft) => {
+            Object.assign(draft, patch);
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: (result) => (result ? [{ type: 'actions', id: result.id }] : []),
     }),
     newCustomAction: builder.mutation<ActionType, BaseActionType>({

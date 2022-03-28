@@ -7,40 +7,42 @@ import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType, TOAST_FADE_TIME } from './ToastManager';
 
 const executeTest = (toastType: string) => {
-  let tt: ToastType = ToastType.Primary;
-  switch (toastType) {
-    case 'primary':
-      tt = ToastType.Primary;
-      break;
-    case 'secondary':
-      tt = ToastType.Secondary;
-      break;
-    case 'success':
-      tt = ToastType.Success;
-      break;
-    case 'danger':
-      tt = ToastType.Danger;
-      break;
-    case 'warning':
-      tt = ToastType.Warning;
-      break;
-    case 'info':
-      tt = ToastType.Info;
-      break;
-    case 'light':
-      tt = ToastType.Light;
-      break;
-    case 'dark':
-      tt = ToastType.Dark;
-      break;
-  }
+  return () => {
+    let tt: ToastType = ToastType.Primary;
+    switch (toastType) {
+      case 'primary':
+        tt = ToastType.Primary;
+        break;
+      case 'secondary':
+        tt = ToastType.Secondary;
+        break;
+      case 'success':
+        tt = ToastType.Success;
+        break;
+      case 'danger':
+        tt = ToastType.Danger;
+        break;
+      case 'warning':
+        tt = ToastType.Warning;
+        break;
+      case 'info':
+        tt = ToastType.Info;
+        break;
+      case 'light':
+        tt = ToastType.Light;
+        break;
+      case 'dark':
+        tt = ToastType.Dark;
+        break;
+    }
 
-  getToastManager().show({
-    title: 'Test',
-    content: 'Testing Toast functionality',
-    duration: TOAST_FADE_TIME,
-    type: tt,
-  });
+    getToastManager().show({
+      title: 'Test',
+      content: 'Testing Toast functionality',
+      duration: TOAST_FADE_TIME,
+      type: tt,
+    });
+  };
 };
 
 export const ToastTester = () => {
@@ -58,6 +60,12 @@ export const ToastTester = () => {
     return null;
   }
 
+  const setNewTT = (newType: string) => {
+    return () => {
+      setToastType(newType);
+    };
+  };
+
   return (
     <SidebarCollapseWidget title="Test Toasts" visible={true} clickFunction={() => {}}>
       <Form>
@@ -67,9 +75,7 @@ export const ToastTester = () => {
           type="radio"
           id="primary-radio"
           checked={toastType === 'primary'}
-          onChange={() => {
-            setToastType('primary');
-          }}
+          onChange={setNewTT('primary')}
         />
         <Form.Check
           label="Secondary"
@@ -77,9 +83,7 @@ export const ToastTester = () => {
           type="radio"
           id="secondary-radio"
           checked={toastType === 'secondary'}
-          onChange={() => {
-            setToastType('secondary');
-          }}
+          onChange={setNewTT('secondary')}
         />
         <Form.Check
           label="Info"
@@ -87,9 +91,7 @@ export const ToastTester = () => {
           type="radio"
           id="info-radio"
           checked={toastType === 'info'}
-          onChange={() => {
-            setToastType('info');
-          }}
+          onChange={setNewTT('info')}
         />
         <Form.Check
           label="Success"
@@ -97,9 +99,7 @@ export const ToastTester = () => {
           type="radio"
           id="success-radio"
           checked={toastType === 'success'}
-          onChange={() => {
-            setToastType('success');
-          }}
+          onChange={setNewTT('success')}
         />
         <Form.Check
           label="Danger"
@@ -107,9 +107,7 @@ export const ToastTester = () => {
           type="radio"
           id="danger-radio"
           checked={toastType === 'danger'}
-          onChange={() => {
-            setToastType('danger');
-          }}
+          onChange={setNewTT('danger')}
         />
         <Form.Check
           label="Warning"
@@ -117,9 +115,7 @@ export const ToastTester = () => {
           type="radio"
           id="warning-radio"
           checked={toastType === 'warning'}
-          onChange={() => {
-            setToastType('warning');
-          }}
+          onChange={setNewTT('warning')}
         />
         <Form.Check
           label="Dark"
@@ -127,9 +123,7 @@ export const ToastTester = () => {
           type="radio"
           id="dark-radio"
           checked={toastType === 'dark'}
-          onChange={() => {
-            setToastType('dark');
-          }}
+          onChange={setNewTT('dark')}
         />
         <Form.Check
           label="Light"
@@ -137,11 +131,9 @@ export const ToastTester = () => {
           type="radio"
           id="light-radio"
           checked={toastType === 'light'}
-          onChange={() => {
-            setToastType('light');
-          }}
+          onChange={setNewTT('light')}
         />
-        <Button className="my-2" variant="primary" onClick={() => executeTest(toastType)}>
+        <Button className="my-2" variant="primary" onClick={executeTest(toastType)}>
           Test
         </Button>
       </Form>
