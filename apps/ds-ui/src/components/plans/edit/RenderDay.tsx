@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, ChangeEvent, FocusEvent } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -57,6 +57,46 @@ export const RenderDay = ({
     }
   }
 
+  const refChanged = (e: ChangeEvent<HTMLInputElement>) => {
+    setReference(e.currentTarget.value);
+    setDirty(true);
+  };
+
+  const refBlurred = (e: FocusEvent<HTMLInputElement>) => {
+    if (isReferenceValid(e.currentTarget.value)) {
+      day.osis = getOSISForReference(e.currentTarget.value);
+    } else {
+      day.osis = e.currentTarget.value;
+    }
+
+    setDirty(true);
+    updateCallback(day);
+  };
+
+  const handleDown = (day: number) => {
+    return () => {
+      downFunction(day);
+    };
+  };
+
+  const handleDoubleDown = (day: number) => {
+    return () => {
+      downFunction(day, true);
+    };
+  };
+
+  const handleUp = (day: number) => {
+    return () => {
+      upFunction(day);
+    };
+  };
+
+  const handleDoubleUp = (day: number) => {
+    return () => {
+      upFunction(day, true);
+    };
+  };
+
   return (
     <InputGroup>
       <Form.Control
@@ -65,46 +105,35 @@ export const RenderDay = ({
         type="text"
         name={day.id}
         id={day.id}
-        onChange={(e) => {
-          setReference(e.currentTarget.value);
-          setDirty(true);
-        }}
-        onBlur={(e) => {
-          if (isReferenceValid(e.currentTarget.value)) {
-            day.osis = getOSISForReference(e.currentTarget.value);
-          } else {
-            day.osis = e.currentTarget.value;
-          }
-          setDirty(true);
-          updateCallback(day);
-        }}
+        onChange={refChanged}
+        onBlur={refBlurred}
         isInvalid={isInvalid}
       />
       {!isFreeform ? (
         <>
           {dayNum > 1 ? (
-            <Button variant="outline-secondary" onClick={() => downFunction(dayNum)}>
+            <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
               <ChevronDown />
             </Button>
           ) : (
             <></>
           )}
           {dayNum > 2 ? (
-            <Button variant="outline-secondary" onClick={() => downFunction(dayNum, true)}>
+            <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
               <ChevronDoubleDown />
             </Button>
           ) : (
             <></>
           )}
           {dayNum < maxDays ? (
-            <Button variant="outline-secondary" onClick={() => upFunction(dayNum)}>
+            <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
               <ChevronUp />
             </Button>
           ) : (
             <></>
           )}
           {dayNum < maxDays - 1 ? (
-            <Button variant="outline-secondary" onClick={() => upFunction(dayNum, true)}>
+            <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
               <ChevronDoubleUp />
             </Button>
           ) : (

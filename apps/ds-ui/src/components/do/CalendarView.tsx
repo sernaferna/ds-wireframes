@@ -3,7 +3,7 @@ import { useGetActionsForMonthQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useDispatch } from 'react-redux';
 import { updateDateShowingInActions } from '../../stores/UISlice';
-import Calendar from 'react-calendar';
+import Calendar, { CalendarTileProperties } from 'react-calendar';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
 import { ActionsForDay } from '@devouringscripture/common';
@@ -76,6 +76,18 @@ export function CalendarView({ dateToShow }: CalendarViewInterface) {
 
   const actionsSet: Set<string> = useMemo(() => getActionSet(data), [data]);
 
+  const getTileClassName = useCallback(
+    ({ date }: CalendarTileProperties): string => {
+      const calDate = DateTime.fromJSDate(date).toISODate();
+      if (actionsSet.has(calDate)) {
+        return 'fw-bolder text-success';
+      }
+
+      return '';
+    },
+    [actionsSet]
+  );
+
   if (isLoading || userDataObj.isLoading) {
     return <LoadingMessage />;
   }
@@ -94,14 +106,7 @@ export function CalendarView({ dateToShow }: CalendarViewInterface) {
       onClickDay={dayClickedInCalendar}
       onActiveStartDateChange={prevNextClickedInCalendar}
       returnValue="end"
-      tileClassName={({ date, view }) => {
-        //const calDate = date.toISOString().split('T')[0];
-        const calDate = DateTime.fromJSDate(date).toISODate();
-        if (actionsSet.has(calDate)) {
-          return 'fw-bolder text-success';
-        }
-        return '';
-      }}
+      tileClassName={getTileClassName}
     />
   );
 }

@@ -10,20 +10,20 @@ interface ShowPassageModalInterface {
   saveFunction(): void;
   show: boolean;
 }
-export const ShowPassageModal = (props: ShowPassageModalInterface) => {
+export const ShowPassageModal = ({ passage, closeFunction, saveFunction, show }: ShowPassageModalInterface) => {
   return (
-    <Modal show={props.show} onHide={props.closeFunction} size="lg" aria-labelledby="modal-title" centered>
+    <Modal show={show} onHide={closeFunction} size="lg" aria-labelledby="modal-title" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="modal-title">{getFormattedReference(props.passage.osis)}</Modal.Title>
+        <Modal.Title id="modal-title">{getFormattedReference(passage.osis)}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <PassageLinkBody passage={props.passage} selected={false} />
+        <PassageLinkBody passage={passage} selected={false} />
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={props.closeFunction}>
+        <Button variant="secondary" onClick={closeFunction}>
           Close
         </Button>
-        <Button variant="primary" onClick={props.saveFunction}>
+        <Button variant="primary" onClick={saveFunction}>
           Save
         </Button>
       </Modal.Footer>

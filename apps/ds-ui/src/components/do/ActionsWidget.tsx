@@ -34,6 +34,26 @@ export function ActionsWidget() {
     [dispatch, dateToShow]
   );
 
+  const handleLeftClick = () => {
+    return () => {
+      if (dateToShow < DateTime.fromISO(userData!.signupDate)) {
+        return;
+      }
+
+      handleDateScroll(false);
+    };
+  };
+
+  const handleRightClick = () => {
+    return () => {
+      if (dateToShow > DateTime.now()) {
+        return;
+      }
+
+      handleDateScroll(true);
+    };
+  };
+
   if (isLoading || userApiObject.isLoading) {
     return <LoadingMessage />;
   }
@@ -50,12 +70,12 @@ export function ActionsWidget() {
         <h4>
           <CaretLeftFill
             className={dateToShow < DateTime.fromISO(userData!.signupDate) ? 'inactive-scroller' : 'active-scroller'}
-            onClick={dateToShow < DateTime.fromISO(userData!.signupDate) ? undefined : () => handleDateScroll(false)}
+            onClick={handleLeftClick()}
           />
           <span>{dateToShow.toISODate()}</span>
           <CaretRightFill
             className={dateToShow > DateTime.now() ? 'inactive-scroller' : 'active-scroller'}
-            onClick={dateToShow > DateTime.now() ? undefined : () => handleDateScroll(true)}
+            onClick={handleRightClick()}
           />
         </h4>
         <ActionWidgetForm day={data as ActionsForDay} />

@@ -10,9 +10,11 @@ export function ReadPageSettings() {
 
   const changeDefaultVersion = useCallback(
     (newVersion: string) => {
-      const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-      newUser.settings.read.defaultVersion = newVersion;
-      update(newUser);
+      return () => {
+        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
+        newUser.settings.read.defaultVersion = newVersion;
+        update(newUser);
+      };
     },
     [data, update]
   );
@@ -35,14 +37,14 @@ export function ReadPageSettings() {
           label="English Standard Version (ESV)"
           name="defaultVersion"
           checked={versionToUse === 'ESV'}
-          onChange={() => changeDefaultVersion('ESV')}
+          onChange={changeDefaultVersion('ESV')}
         />
         <Form.Check
           type="radio"
           label="New International Version (NIV)"
           name="defaultVersion"
           checked={versionToUse === 'NIV'}
-          onChange={() => changeDefaultVersion('NIV')}
+          onChange={changeDefaultVersion('NIV')}
         />
         <Form.Check
           type="radio"
@@ -50,7 +52,7 @@ export function ReadPageSettings() {
           name="defaultVersion"
           checked={versionToUse === 'NKJV'}
           disabled
-          onChange={() => changeDefaultVersion('NKJV')}
+          onChange={changeDefaultVersion('NKJV')}
         />
         <Form.Check
           type="radio"
@@ -58,7 +60,7 @@ export function ReadPageSettings() {
           name="defaultVersion"
           checked={versionToUse === 'KJV'}
           disabled
-          onChange={() => changeDefaultVersion('KJV')}
+          onChange={changeDefaultVersion('KJV')}
         />
       </Form>
       <p className="mt-3">Passage rendering via BibleGateway.</p>

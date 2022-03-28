@@ -13,16 +13,14 @@ export function ActionCheckItem({ item, clickFunction }: ActionCheckItemInterfac
     [item.completed]
   );
 
+  const handleClick = (id: string) => {
+    return () => {
+      clickFunction(id);
+    };
+  };
+
   return (
-    <Stack
-      direction="horizontal"
-      gap={1}
-      className="action-item-stack"
-      key={item.id}
-      onClick={() => {
-        clickFunction(item.id);
-      }}
-    >
+    <Stack direction="horizontal" gap={1} className="action-item-stack" key={item.id} onClick={handleClick(item.id)}>
       {icon}
       <div>{item.displayName}</div>
     </Stack>
