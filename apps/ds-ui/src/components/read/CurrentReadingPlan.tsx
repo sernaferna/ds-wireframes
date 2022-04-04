@@ -1,51 +1,59 @@
-import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import { ShowPassageModal } from './ShowPassageModal';
-import { BasePassage } from '@devouringscripture/common';
-import { useNewItemMutation } from '../../services/PassagesService';
-import Alert from 'react-bootstrap/Alert';
+import React, { useMemo } from 'react';
+import { useGetSubscribedPlansQuery } from '../../services/InstantiatedPlanService';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { ReadingPlanItem } from './ReadingPlanItem';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { DateTime } from 'luxon';
 
 export const CurrentReadingPlan = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [newItem] = useNewItemMutation();
+  const { data, error, isLoading } = useGetSubscribedPlansQuery();
+  const userData = useGetUserByIdQuery(HARDCODED_USER_ID);
 
-  const closeModalFunction = () => {
-    setShowModal(false);
-  };
+  const version = useMemo(() => {
+    if (!userData.data) {
+      return '';
+    }
 
-  const passage: BasePassage = {
-    osis: 'John.1.1',
-    version: 'ESV',
-  };
+    return userData.data.settings.read.defaultVersion;
+  }, [userData]);
 
-  const saveFunction = () => {
-    const { osis, version } = passage;
+  const plansToShow: JSX.Element[] = useMemo(() => {
+    if (!data) {
+      return [];
+    }
 
-    const newPassage: BasePassage = {
-      osis,
-      version,
-    };
-    newItem(newPassage);
+    const dateToday = DateTime.now().toISODate();
+    return data!.map((item, index) => (
+      <ReadingPlanItem key={`rpi-${index}`} plan={item} dateToShow={dateToday} version={version} />
+    ));
+  }, [data, version]);
 
-    closeModalFunction();
-  };
+  if (isLoading || userData.isLoading) {
+    return <LoadingMessage />;
+  }
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
+  if (userData.error) {
+    return <ErrorLoadingDataMessage theError={userData.error} />;
+  }
+
+  // const saveFunction = () => {
+  //   const { osis, version } = passage;
+
+  //   const newPassage: BasePassage = {
+  //     osis,
+  //     version,
+  //   };
+  //   newItem(newPassage);
+
+  //   closeModalFunction();
+  // };
 
   return (
-    <Alert variant="danger">
-      <Alert.Heading>Today's Readings</Alert.Heading>
-
-      <p className="lead">Not yet implemented</p>
-
-      <Button variant="outline-danger" onClick={() => setShowModal(true)}>
-        Launch {passage.osis}/{passage.version}
-      </Button>
-
-      <ShowPassageModal
-        show={showModal}
-        closeFunction={closeModalFunction}
-        saveFunction={saveFunction}
-        passage={passage}
-      />
-    </Alert>
+    <>
+      <h1>Reading Plans</h1>
+      {plansToShow}
+    </>
   );
 };
