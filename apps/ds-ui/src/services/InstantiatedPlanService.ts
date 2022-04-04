@@ -4,17 +4,21 @@ import { BaseInstantiatedPlan, InstantiatedPlan } from '@devouringscripture/comm
 export const instantiatedPlanApi = createApi({
   reducerPath: 'instantiatedPlans',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/ip' }),
-  tagTypes: ['instantiatedPlans'],
+  tagTypes: ['instantiatedPlans', 'plans'],
   endpoints: (builder) => ({
     getAllInstantiatedPlanItems: builder.query<BaseInstantiatedPlan[], void>({
       query: () => '/',
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ planInstanceId }) => ({ type: 'instantiatedPlans' as const, id: planInstanceId })),
-              { type: 'instantiatedPlans', id: 'LIST' },
+              ...result.map(({ planInstanceId }) => ({ type: 'plans' as const, id: planInstanceId })),
+              { type: 'plans', id: 'LIST' },
             ]
-          : [{ type: 'instantiatedPlans', id: 'LIST' }],
+          : [{ type: 'plans', id: 'LIST' }],
+    }),
+    getSubscribedPlans: builder.query<InstantiatedPlan[], void>({
+      query: () => '/subscribed',
+      providesTags: ['instantiatedPlans'],
     }),
     newInstantiatedPlan: builder.mutation<InstantiatedPlan, BaseInstantiatedPlan>({
       query(body) {
@@ -24,7 +28,7 @@ export const instantiatedPlanApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['instantiatedPlans'],
+      invalidatesTags: ['instantiatedPlans', 'plans'],
     }),
     deleteInstantiatedPlan: builder.mutation<string, string>({
       query(id) {
@@ -33,7 +37,7 @@ export const instantiatedPlanApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['instantiatedPlans'],
+      invalidatesTags: ['instantiatedPlans', 'plans'],
     }),
   }),
 });
@@ -42,4 +46,5 @@ export const {
   useGetAllInstantiatedPlanItemsQuery,
   useNewInstantiatedPlanMutation,
   useDeleteInstantiatedPlanMutation,
+  useGetSubscribedPlansQuery,
 } = instantiatedPlanApi;

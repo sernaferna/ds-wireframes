@@ -36,6 +36,7 @@ import { deleteInstantiatedPlanRouter } from './routes/instantiatedPlans/delete'
 import { getAllInstantiatedPlansRouter } from './routes/instantiatedPlans/getAll';
 import { newIPRouter } from './routes/instantiatedPlans/new';
 import { updateInstantiatedPlanRouter } from './routes/instantiatedPlans/update';
+import { getSubscribedIPRouter } from './routes/instantiatedPlans/getSubscribed';
 
 import { errorHandler, NotFoundError } from '@devouringscripture/common';
 
@@ -84,6 +85,7 @@ app.use('/api/ip', [
   getAllInstantiatedPlansRouter,
   newIPRouter,
   updateInstantiatedPlanRouter,
+  getSubscribedIPRouter,
 ]);
 
 app.all('*', async (req, res, next) => {
