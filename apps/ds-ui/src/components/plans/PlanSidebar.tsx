@@ -4,7 +4,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { PlanSettings } from './PlanSettings';
-import { CurrentReadingPlan } from '../read/CurrentReadingPlan';
+import { CurrentReadingPlan } from './read/CurrentReadingPlan';
 
 export const PlanSidebar = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);

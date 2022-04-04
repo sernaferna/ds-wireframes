@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { useGetSubscribedPlansQuery } from '../../services/InstantiatedPlanService';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { useGetSubscribedPlansQuery } from '../../../services/InstantiatedPlanService';
+import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { ReadingPlanItem } from './ReadingPlanItem';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DateTime } from 'luxon';
 
 export const CurrentReadingPlan = () => {
@@ -38,22 +39,10 @@ export const CurrentReadingPlan = () => {
     return <ErrorLoadingDataMessage theError={userData.error} />;
   }
 
-  // const saveFunction = () => {
-  //   const { osis, version } = passage;
-
-  //   const newPassage: BasePassage = {
-  //     osis,
-  //     version,
-  //   };
-  //   newItem(newPassage);
-
-  //   closeModalFunction();
-  // };
-
   return (
     <>
-      <h1>Reading Plans</h1>
-      {plansToShow}
+      <h3>Reading Plans</h3>
+      <ListGroup>{plansToShow}</ListGroup>
     </>
   );
 };

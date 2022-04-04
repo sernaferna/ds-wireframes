@@ -1,11 +1,13 @@
 import React, { useMemo, useState, useCallback } from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
 import { BasePassage, InstantiatedPlan, getFormattedReference } from '@devouringscripture/common';
-import { useGetPlanByInstanceIdQuery } from '../../services/PlanService';
-import { useNewItemMutation } from '../../services/PassagesService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useGetPlanByInstanceIdQuery } from '../../../services/PlanService';
+import { useCompletePlanItemMutation } from '../../../services/InstantiatedPlanService';
+import { useNewItemMutation } from '../../../services/PassagesService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { ShowPassageModal } from './ShowPassageModal';
-import Button from 'react-bootstrap/Button';
 import { Check2Circle, Circle } from 'react-bootstrap-icons';
+import { DateTime } from 'luxon';
 
 /**
  * Helper function to get the index of the day for the currently displayed date
@@ -37,8 +39,12 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
   const { data, error, isLoading } = useGetPlanByInstanceIdQuery(plan.planInstanceId);
   const [showModal, setShowModal] = useState(false);
   const [newItem] = useNewItemMutation();
+  const [completeItem] = useCompletePlanItemMutation();
 
-  const dayIndex = getDayNum(plan, dateToShow);
+  const dayIndex = useMemo(() => {
+    return getDayNum(plan, dateToShow);
+  }, [plan, dateToShow]);
+
   const passage: BasePassage = useMemo(() => {
     if (!data || !data!.days) {
       return { osis: '', version: version };
@@ -52,23 +58,10 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
     };
   }, [data, dayIndex, version]);
 
-  const closeModalFunction = useCallback(() => {
-    setShowModal(false);
-  }, [setShowModal]);
-
   const saveFunction = useCallback(() => {
-    const { osis, version } = passage;
-
-    const newPassage: BasePassage = { osis, version };
-    newItem(newPassage);
-    closeModalFunction();
-  }, [passage, newItem, closeModalFunction]);
-
-  const display = useCallback(() => {
-    return () => {
-      setShowModal(true);
-    };
-  }, [setShowModal]);
+    newItem(passage);
+    setShowModal(false);
+  }, [passage, newItem, setShowModal]);
 
   const icon = useMemo(() => {
     if (!plan.days) {
@@ -78,6 +71,44 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
     return plan.days![dayIndex].completed ? <Check2Circle /> : <Circle />;
   }, [plan, dayIndex]);
 
+  const handleComplete = useCallback(
+    (complete: boolean) => {
+      completeItem({
+        planId: plan.planInstanceId,
+        dayIndex: dayIndex,
+        day: {
+          completed: complete,
+          scheduledDate: plan.days![dayIndex].scheduledDate,
+        },
+      });
+    },
+    [completeItem, plan, dayIndex]
+  );
+
+  const closeModal = useCallback(() => {
+    setShowModal(false);
+  }, [setShowModal]);
+
+  const popupModal = useCallback(() => {
+    setShowModal(true);
+  }, [setShowModal]);
+
+  const variant = useMemo(() => {
+    if (!plan.days) {
+      return 'secondary';
+    }
+
+    if (plan.days![dayIndex].completed) {
+      return 'success';
+    } else {
+      const showingDate = DateTime.fromISO(dateToShow);
+      const planDate = DateTime.fromISO(plan.days![dayIndex].scheduledDate);
+      if (planDate < showingDate) {
+        return 'warning';
+      }
+    }
+  }, [plan.days, dayIndex, dateToShow]);
+
   if (isLoading || dayIndex < 0 || passage.osis === '') {
     return <LoadingMessage />;
   }
@@ -86,17 +117,16 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
   }
 
   return (
-    <div>
-      {data!.name}:
-      <Button variant="link" onClick={display()}>
-        {icon} Show {getFormattedReference(passage.osis)} ({passage.version})
-      </Button>
+    <ListGroup.Item variant={variant} action onClick={popupModal}>
+      {icon} {data!.name}: {getFormattedReference(passage.osis)}
       <ShowPassageModal
         passage={passage}
         show={showModal}
-        closeFunction={closeModalFunction}
+        closeFunction={closeModal}
         saveFunction={saveFunction}
+        completeFunction={handleComplete}
+        isComplete={plan.days![dayIndex].completed}
       />
-    </div>
+    </ListGroup.Item>
   );
 };

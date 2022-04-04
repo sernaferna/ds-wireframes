@@ -4,7 +4,7 @@ import { ReadPageSettings } from './ReadPageSettings';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
-import { CurrentReadingPlan } from './CurrentReadingPlan';
+import { CurrentReadingPlan } from '../plans/read/CurrentReadingPlan';
 
 export const ReadSidebar = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);

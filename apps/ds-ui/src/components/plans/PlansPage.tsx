@@ -8,7 +8,7 @@ import { paginateItems } from '../../helpers/pagination';
 import { PlanSummaryView } from './PlanSummaryView';
 import { useGetAllInstantiatedPlanItemsQuery } from '../../services/InstantiatedPlanService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { CurrentReadingPlan } from '../read/CurrentReadingPlan';
+import { CurrentReadingPlan } from './read/CurrentReadingPlan';
 import { BaseInstantiatedPlan } from '@devouringscripture/common';
 
 const getItemList = (data: BaseInstantiatedPlan[] | undefined) => {

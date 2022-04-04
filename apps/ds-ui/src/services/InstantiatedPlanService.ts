@@ -53,7 +53,7 @@ export const instantiatedPlanApi = createApi({
           body: data.day,
         };
       },
-      invalidatesTags: (result, error, arg) => (result ? [{ type: 'instantiatedPlans', id: arg.planId }] : []),
+      invalidatesTags: ['instantiatedPlans'],
     }),
   }),
 });
