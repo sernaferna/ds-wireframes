@@ -19,6 +19,7 @@ export * from './errors/UserNotFoundError';
 export * from './errors/InvalidPlanStatusError';
 export * from './errors/InvalidPlanError';
 export * from './errors/InvalidPlanDaysError';
+export * from './errors/InvalidDayForPlanError';
 
 export * from './middlewares/HandleFourOhFour';
 export * from './middlewares/ValidateRequest';

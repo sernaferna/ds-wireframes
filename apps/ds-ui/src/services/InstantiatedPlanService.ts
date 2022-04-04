@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BaseInstantiatedPlan, InstantiatedPlan } from '@devouringscripture/common';
+import { BaseInstantiatedPlan, InstantiatedPlan, InstantiatedPlanDay } from '@devouringscripture/common';
+
+interface ICompletePlanItem {
+  planId: string;
+  dayIndex: number;
+  day: InstantiatedPlanDay;
+}
 
 export const instantiatedPlanApi = createApi({
   reducerPath: 'instantiatedPlans',
@@ -39,6 +45,16 @@ export const instantiatedPlanApi = createApi({
       },
       invalidatesTags: ['instantiatedPlans', 'plans'],
     }),
+    completePlanItem: builder.mutation<InstantiatedPlanDay, ICompletePlanItem>({
+      query(data) {
+        return {
+          url: `/completeAction/${data.planId}/${data.dayIndex}`,
+          method: 'PUT',
+          body: data.day,
+        };
+      },
+      invalidatesTags: (result, error, arg) => (result ? [{ type: 'instantiatedPlans', id: arg.planId }] : []),
+    }),
   }),
 });
 
@@ -47,4 +63,5 @@ export const {
   useNewInstantiatedPlanMutation,
   useDeleteInstantiatedPlanMutation,
   useGetSubscribedPlansQuery,
+  useCompletePlanItemMutation,
 } = instantiatedPlanApi;
