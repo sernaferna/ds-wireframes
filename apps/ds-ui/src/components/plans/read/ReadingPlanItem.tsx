@@ -139,6 +139,7 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
         saveFunction={saveFunction}
         completeFunction={handleComplete}
         isComplete={plan.days![dayIndex].completed}
+        dateForReading={dateToShow}
       />
     </ListGroup.Item>
   );
