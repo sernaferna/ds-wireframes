@@ -74,14 +74,14 @@ export const CustomActionList = () => {
 
   return (
     <>
-      <h1>Custom Action List</h1>
+      <h4>Custom Action List</h4>
       <p className="lead">
         Not implemented&mdash;changes here don't impact the Actions functionality in the wireframe.
       </p>
       <p>You've added the following custom actions to your tracker:</p>
       <ul>{list}</ul>
 
-      <h1>Add an Item</h1>
+      <h4>Add an Item</h4>
       <Form onSubmit={handleSubmit}>
         <FloatingLabel controlId="floatingItem" label="Action Type">
           <Form.Control type="text" placeholder="Action" value={actionType} onChange={setText} />

@@ -25,7 +25,7 @@ export const PassageNotes = () => {
 
   return (
     <>
-      <h1>Notes</h1>
+      <h4>Notes</h4>
       <MDNoteTaker />
 
       {selectedReadingItem ? <NotesForPassage osis={data!.osis} /> : <></>}

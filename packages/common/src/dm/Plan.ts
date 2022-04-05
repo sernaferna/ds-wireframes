@@ -33,9 +33,11 @@ export interface BaseInstantiatedPlan {
   percentageComplete?: number;
 }
 
+export interface InstantiatedPlanDay {
+  completed: boolean;
+  scheduledDate: string;
+}
 export interface InstantiatedPlan extends BaseInstantiatedPlan {
   id: string;
-  days?: {
-    completed: boolean;
-  }[];
+  days?: InstantiatedPlanDay[];
 }

@@ -4,7 +4,7 @@ import { PlanAttributes, BasePlanAttributes } from '@devouringscripture/common';
 export const planApi = createApi({
   reducerPath: 'plans',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/plans/public' }),
-  tagTypes: ['plans', 'instantiatedPlans'],
+  tagTypes: ['plans'],
   endpoints: (builder) => ({
     getPlanByInstanceId: builder.query<PlanAttributes, string>({
       query: (id) => `/${id}`,
@@ -24,7 +24,7 @@ export const planApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['plans', 'instantiatedPlans'],
+      invalidatesTags: ['plans'],
     }),
     publishPlan: builder.mutation<PlanAttributes, PlanAttributes | BasePlanAttributes>({
       query(body) {
@@ -34,7 +34,7 @@ export const planApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['plans', 'instantiatedPlans'],
+      invalidatesTags: ['plans'],
     }),
     deletePlan: builder.mutation<string, string>({
       query(id) {
@@ -43,7 +43,7 @@ export const planApi = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['plans', 'instantiatedPlans'],
+      invalidatesTags: ['plans'],
     }),
   }),
 });
