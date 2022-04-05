@@ -98,16 +98,29 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
       return 'secondary';
     }
 
-    if (plan.days![dayIndex].completed) {
-      return 'success';
-    } else {
-      const showingDate = DateTime.fromISO(dateToShow);
-      const planDate = DateTime.fromISO(plan.days![dayIndex].scheduledDate);
-      if (planDate < showingDate) {
+    const indexOfToday = getDayNum(plan, DateTime.now().toISODate());
+
+    let prevIncomplete: DateTime | undefined = undefined;
+    for (let i = indexOfToday - 1; i >= 0; i--) {
+      if (!plan.days[i].completed) {
+        prevIncomplete = DateTime.fromISO(plan.days[i].scheduledDate);
+      }
+    }
+    if (prevIncomplete) {
+      const diff = DateTime.fromISO(dateToShow).diff(prevIncomplete);
+      if (diff.days > 5) {
+        return 'danger';
+      } else {
         return 'warning';
       }
     }
-  }, [plan.days, dayIndex, dateToShow]);
+
+    if (plan.days![dayIndex].completed) {
+      return 'success';
+    } else {
+      return 'secondary';
+    }
+  }, [plan, dateToShow, dayIndex]);
 
   if (isLoading || dayIndex < 0 || passage.osis === '') {
     return <LoadingMessage />;
