@@ -2,7 +2,41 @@ import express, { Request, Response, NextFunction } from 'express';
 import { db } from '../../services/db';
 import { getActionByIdInternal } from './byId';
 import { body, param } from 'express-validator';
-import { validateRequest, DatabaseError, CustomError } from '@devouringscripture/common';
+import { validateRequest, DatabaseError, CustomError, ActionsForDay } from '@devouringscripture/common';
+
+export const internalMarkItemReadForDate = (actionDayId: string, actionId: string, actions: ActionsForDay) => {
+  try {
+    let indexOfDay = db.getIndex('/actions/entries', actionDayId);
+    if (indexOfDay < 0) {
+      db.push('/actions/entries[]', actions);
+      indexOfDay = db.getIndex('/actions/entries', actionDayId);
+    }
+
+    let actionType = 'default';
+
+    let indexOfItem = db.getIndex(`/actions/entries[${indexOfDay}]/${actionType}Actions`, actionId);
+    if (indexOfItem < 0) {
+      actionType = 'custom';
+      indexOfItem = db.getIndex(`/actions/entries[${indexOfDay}]/${actionType}Actions`, actionId);
+    }
+
+    if (indexOfItem < 0) {
+      throw new DatabaseError('markItemForDate');
+    }
+
+    let fieldValue = db.getObject<boolean>(
+      `/actions/entries[${indexOfDay}]/${actionType}Actions[${indexOfItem}]/completed`
+    );
+    fieldValue = !fieldValue;
+    db.push(`/actions/entries[${indexOfDay}]/${actionType}Actions[${indexOfItem}]/completed`, fieldValue);
+  } catch (err) {
+    if (err instanceof CustomError) {
+      throw err;
+    }
+
+    throw new DatabaseError('markItemForDate');
+  }
+};
 
 const router = express.Router();
 
@@ -17,31 +51,13 @@ router.put(
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Marking an item read/unread: ${req.params.actionId} for ${req.params.actionDayId}`);
+    const actionDayId = req.params.actionDayId;
+    const actionId = req.params.actionId;
+    const actions: ActionsForDay = req.body;
+    console.log(`Marking an item read/unread: ${actionId} for ${actionDayId}`);
 
     try {
-      const indexOfDay = db.getIndex('/actions/entries', req.params.actionDayId);
-      if (indexOfDay < 0) {
-        db.push('/actions/entries[]', req.body);
-      }
-
-      let actionType = 'default';
-
-      let indexOfItem = db.getIndex(`/actions/entries[${indexOfDay}]/${actionType}Actions`, req.params.actionId);
-      if (indexOfItem < 0) {
-        actionType = 'custom';
-        indexOfItem = db.getIndex(`/actions/entries[${indexOfDay}]/${actionType}Actions`, req.params.actionId);
-      }
-
-      if (indexOfItem < 0) {
-        throw new DatabaseError('markItemForDate');
-      }
-
-      let fieldValue = db.getObject<boolean>(
-        `/actions/entries[${indexOfDay}]/${actionType}Actions[${indexOfItem}]/completed`
-      );
-      fieldValue = !fieldValue;
-      db.push(`/actions/entries[${indexOfDay}]/${actionType}Actions[${indexOfItem}]/completed`, fieldValue);
+      internalMarkItemReadForDate(actionDayId, actionId, actions);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);
