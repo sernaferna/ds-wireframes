@@ -37,7 +37,7 @@ interface RPI {
 }
 export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
   const { data, error, isLoading } = useGetPlanByInstanceIdQuery(plan.planInstanceId);
-  const [showModal, setShowModal] = useState(false);
+  const [modalShowing, setModalShowing] = useState(false);
   const [newItem] = useNewItemMutation();
   const [completeItem] = useCompletePlanItemMutation();
 
@@ -60,8 +60,8 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
 
   const saveFunction = useCallback(() => {
     newItem(passage);
-    setShowModal(false);
-  }, [passage, newItem, setShowModal]);
+    setModalShowing(false);
+  }, [passage, newItem, setModalShowing]);
 
   const icon = useMemo(() => {
     if (!plan.days) {
@@ -86,12 +86,12 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
   );
 
   const closeModal = useCallback(() => {
-    setShowModal(false);
-  }, [setShowModal]);
+    setModalShowing(false);
+  }, [setModalShowing]);
 
   const popupModal = useCallback(() => {
-    setShowModal(true);
-  }, [setShowModal]);
+    setModalShowing(true);
+  }, [setModalShowing]);
 
   const variant = useMemo(() => {
     if (!plan.days) {
@@ -121,7 +121,7 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
       {icon} {data!.name}: {getFormattedReference(passage.osis)}
       <ShowPassageModal
         passage={passage}
-        show={showModal}
+        show={modalShowing}
         closeFunction={closeModal}
         saveFunction={saveFunction}
         completeFunction={handleComplete}
