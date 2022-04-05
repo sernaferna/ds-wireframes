@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 export interface IUISlice {
   settingsShowing: boolean;
   dateShowingInActions?: string;
+  dateShowingInReadingPlan?: string;
   selectedReadingItem?: string;
   selectedNote?: string;
   selectedPlan?: string;
@@ -22,6 +23,9 @@ export const uiSlice = createSlice({
     },
     updateDateShowingInActions: (state: IUISlice, action: PayloadAction<string>) => {
       state.dateShowingInActions = action.payload;
+    },
+    updateDateShowingInReadingPlan: (state: IUISlice, action: PayloadAction<string>) => {
+      state.dateShowingInReadingPlan = action.payload;
     },
     updateSelectedReadingItem: (state: IUISlice, action: PayloadAction<string>) => {
       state.selectedReadingItem = action.payload;
@@ -41,6 +45,7 @@ export const uiSlice = createSlice({
 export const {
   showSettingsPanel,
   updateDateShowingInActions,
+  updateDateShowingInReadingPlan,
   updateSelectedReadingItem,
   updateSelectedNote,
   updateSelectedPlan,
@@ -52,6 +57,10 @@ export const selectShowSettings = (state: RootState) => state.ui.settingsShowing
 
 export const getDateForActions = (state: RootState) => {
   return state.ui.dateShowingInActions ? state.ui.dateShowingInActions : DateTime.now().toISODate();
+};
+
+export const getDateForReadingPlan = (state: RootState) => {
+  return state.ui.dateShowingInReadingPlan ? state.ui.dateShowingInReadingPlan : DateTime.now().toISODate();
 };
 
 export const getSelectedReadingItem = (state: RootState) => {
