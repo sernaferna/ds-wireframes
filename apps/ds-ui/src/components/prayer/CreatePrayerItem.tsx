@@ -85,7 +85,7 @@ export function CreatePrayerItem({ confession = false }) {
 
   return (
     <Alert variant={confession ? 'danger' : 'primary'}>
-      <h1>{confession ? 'Confession' : 'New Prayer Request'}</h1>
+      <h4>{confession ? 'Confession' : 'New Prayer Request'}</h4>
       <Formik
         initialValues={initialValues}
         validationSchema={schema}

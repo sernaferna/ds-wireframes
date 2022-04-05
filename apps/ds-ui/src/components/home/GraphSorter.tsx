@@ -110,7 +110,7 @@ export const GraphSorter = () => {
 
   return (
     <>
-      <h1>Graph Sorter</h1>
+      <h4>Graph Sorter</h4>
       <Stack className="graph-sorter-list" direction="horizontal">
         {vizualizationList}
       </Stack>

@@ -227,14 +227,13 @@ export const EditPlanForm = ({
 
             {!values.isFreeform ? (
               <>
-                <Form.Label htmlFor="reference" className="h2">
+                <Form.Label htmlFor="reference" className="h4">
                   Passage(s)
                 </Form.Label>
                 <InputGroup>
                   <Form.Control
                     id="reference"
                     name="reference"
-                    size="lg"
                     placeholder="Genesis 1-50"
                     value={values.reference}
                     isValid={!!touched['reference'] && !errors['reference']}
@@ -243,7 +242,6 @@ export const EditPlanForm = ({
                     onChange={handleChange}
                   />
                   <Button
-                    size="lg"
                     variant="outline-warning"
                     onClick={fetchVerses}
                     disabled={!touched['reference'] && !!errors['reference']}

@@ -30,7 +30,7 @@ export const AllNotes = () => {
 
   return (
     <div className="notelist-for-all">
-      <h1>All Notes</h1>
+      <h3>All Notes</h3>
 
       {paginatedNoteList}
 

@@ -86,7 +86,6 @@ export function Home() {
           <HomeSidebar />
         </Col>
         <Col className="page-main-content-col">
-          <h1>Main Page</h1>
           <Row>
             <Col xs={12}>
               <Row xs={1} md={2} lg={2} xxl={3}>

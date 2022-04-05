@@ -41,7 +41,7 @@ export const CurrentReadingPlan = () => {
 
   return (
     <>
-      <h3>Reading Plans</h3>
+      <h4>Reading Plans</h4>
       <ListGroup>{plansToShow}</ListGroup>
     </>
   );

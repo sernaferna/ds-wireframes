@@ -65,7 +65,7 @@ export const PassageLauncher = ({ defaultVersion }: PassageLauncherInterface) =>
           <Form noValidate onSubmit={formikProps.handleSubmit}>
             <Row xs="12">
               <Col xs="12" md="2">
-                <h4>Read Passage</h4>
+                <h5>Read Passage</h5>
               </Col>
               <Col xs="12" md="5">
                 <InputGroup>

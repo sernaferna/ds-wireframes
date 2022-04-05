@@ -393,7 +393,7 @@ export const EditPlan = () => {
 
   return (
     <Container fluid>
-      <h1>Edit Plan</h1>
+      <h3>Edit Plan</h3>
       <AlertUI />
       <EditPlanForm
         days={days}
