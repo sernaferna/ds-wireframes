@@ -103,10 +103,12 @@ router.post(
 
       deleteOldPlanIfNotInUse(plan.planInstanceId, oldPlanIndex);
 
+      console.log('plan days', plan.days);
       const newPlan: PlanAttributes = {
         ...plan,
         planInstanceId: uuidv4(),
         status: PlanStatus.Saved,
+        days: plan.days,
       };
       db.push('/plans[]', newPlan);
       return res.send(newPlan);
