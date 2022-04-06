@@ -10,10 +10,32 @@ import {
   v2GTV1,
   PlanVersionError,
   InvalidPlanStatusError,
+  InstantiatedPlan,
 } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { basePlanValidationRules } from '../../helpers/planValidationRules';
 import { db } from '../../services/db';
+
+export const deleteOldPlanIfNotInUse = (instanceId: string, indexInDB: number) => {
+  try {
+    const instantiated = db.getObject<InstantiatedPlan[]>('/instantiatedPlans');
+    let inUse = false;
+    for (const ip of instantiated) {
+      if (ip.planInstanceId === instanceId) {
+        inUse = true;
+      }
+    }
+    if (!inUse) {
+      db.push(`/plans[${indexInDB}]/status`, PlanStatus.Deleted);
+    }
+  } catch (err) {
+    if (err instanceof CustomError) {
+      throw err;
+    }
+
+    throw new DatabaseError('Save Plan fetching instantiated plans');
+  }
+};
 
 const router = express.Router();
 
@@ -79,11 +101,14 @@ router.post(
         throw new PlanVersionError(plan.version);
       }
 
-      db.push(`/plans[${oldPlanIndex}]/status`, PlanStatus.Deleted);
+      deleteOldPlanIfNotInUse(plan.planInstanceId, oldPlanIndex);
+
+      console.log('plan days', plan.days);
       const newPlan: PlanAttributes = {
         ...plan,
         planInstanceId: uuidv4(),
         status: PlanStatus.Saved,
+        days: plan.days,
       };
       db.push('/plans[]', newPlan);
       return res.send(newPlan);

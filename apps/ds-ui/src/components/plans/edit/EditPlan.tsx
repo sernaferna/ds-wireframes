@@ -195,7 +195,8 @@ export const EditPlan = () => {
     try {
       uploadableDays = generateDaysForUpload(days);
     } catch {
-      addErrorMessage('Error uploading data. check that all days in the plan are valid.');
+      addErrorMessage('Error uploading data. Check that all days in the plan are valid.');
+      return;
     }
     const plan: BasePlanAttributes = {
       name: values.planName,
@@ -210,12 +211,13 @@ export const EditPlan = () => {
       days: uploadableDays,
     };
     let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
-    if ('planInstanceId' in values) {
+    if (values.planInstanceId) {
       const fullPlan: PlanAttributes = {
         ...plan,
         planId: values.planId!,
         planInstanceId: values.planInstanceId!,
         status: values.status!,
+        days: uploadableDays,
       };
       uploadablePlan = fullPlan;
     }
@@ -240,6 +242,13 @@ export const EditPlan = () => {
       return;
     }
 
+    let uploadableDays: any;
+    try {
+      uploadableDays = generateDaysForUpload(days);
+    } catch {
+      addErrorMessage('Error uploading data. Check that all days in the plan are valid.');
+      return;
+    }
     const plan: BasePlanAttributes = {
       name: values.planName,
       description: values.description,
@@ -250,7 +259,7 @@ export const EditPlan = () => {
       length: values.numWeeks,
       osis: values.reference,
       version: values.version,
-      days: [],
+      days: uploadableDays,
     };
 
     let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
@@ -260,6 +269,7 @@ export const EditPlan = () => {
         planId: values.planId!,
         planInstanceId: values.planInstanceId!,
         status: values.status!,
+        days: uploadableDays,
       };
       uploadablePlan = newPlan;
     }
@@ -275,7 +285,7 @@ export const EditPlan = () => {
           addErrorMessage('Unanticipated error saving data');
         }
       });
-  }, [validateForm, savePlan, navigate, values, addErrorMessage]);
+  }, [validateForm, savePlan, navigate, values, addErrorMessage, days]);
 
   const handleReset = useCallback(() => {
     setValues(initialPlanValues);

@@ -12,9 +12,11 @@ import {
   InvalidPlanStatusError,
   isReferenceValid,
   InvalidPlanDaysError,
+  PlanAdminToNonError,
 } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 import { basePlanValidationRules } from '../../helpers/planValidationRules';
+import { deleteOldPlanIfNotInUse } from './save';
 import { db } from '../../services/db';
 
 const router = express.Router();
@@ -31,7 +33,6 @@ router.post(
       try {
         if (req.body.planInstanceId) {
           plan = req.body;
-          console.log('got PlanAttributes from body');
         } else {
           const basePlan: BasePlanAttributes = req.body;
           plan = {
@@ -40,16 +41,13 @@ router.post(
             planId: uuidv4(),
             status: PlanStatus.Unsaved,
           };
-          console.log('got BasePlanAttributes from body');
         }
       } catch (err) {
-        console.error("Couldn't get plan from body");
         throw new InvalidPlanError(`Name: ${req.body.name || ''}; description: ${req.body.description || ''}`);
       }
 
       const numExpectedDays = plan.length * (plan.includeWeekends ? 7 : 5);
       if (!plan.days || plan.days.length !== numExpectedDays) {
-        console.error('Invalid # of weeks');
         throw new InvalidPlanError("Week/day data doesn't match length attribute");
       }
 
@@ -61,7 +59,6 @@ router.post(
       if (plan.status === PlanStatus.Unsaved) {
         plan.status = PlanStatus.Published;
         db.push('/plans[]', plan);
-        console.log('brand new plan saved');
         return res.status(201).send(plan);
       }
 
@@ -83,28 +80,28 @@ router.post(
         db.push(`/plans[${oldIndex}]/status`, plan.status);
         db.push(`/plans[${oldIndex}]/version`, plan.version);
         db.push(`/plans[${oldIndex}]/days`, plan.days);
-        console.log('plan updated');
         return res.send(plan);
       }
 
       if (plan.status === PlanStatus.Deleted) {
-        console.error('plan was already deleted');
         throw new InvalidPlanStatusError(plan.status, PlanStatus.Saved);
       }
 
       //anything else means published
       const oldPlanIndex = db.getIndex('/plans', plan.planInstanceId, 'planInstanceId');
       if (oldPlanIndex < 0) {
-        console.error("plan wasn't found in db");
         throw new InvalidPlanError('Plan not found');
       }
       const oldPlan = db.getObject<PlanAttributes>(`/plans[${oldPlanIndex}]`);
       if (!v2GTV1(plan.version, oldPlan.version)) {
-        console.error('invalid version');
         throw new PlanVersionError(plan.version);
       }
+      if (oldPlan.isAdmin && !plan.isAdmin) {
+        throw new PlanAdminToNonError(plan.name);
+      }
 
-      db.push(`/plans[${oldPlanIndex}]/status`, PlanStatus.Deleted);
+      deleteOldPlanIfNotInUse(oldPlan.planInstanceId, oldPlanIndex);
+
       const newPlan: PlanAttributes = {
         ...plan,
         planInstanceId: uuidv4(),
@@ -112,7 +109,6 @@ router.post(
       };
       delete newPlan.osis;
       db.push('/plans[]', newPlan);
-      console.log('plan re-published');
       return res.send(plan);
     } catch (err) {
       if (err instanceof CustomError) {

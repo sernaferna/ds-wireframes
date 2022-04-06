@@ -6,6 +6,7 @@ import {
   CustomError,
   DatabaseError,
   InvalidPlanError,
+  InstantiatedPlan,
 } from '@devouringscripture/common';
 import { db } from '../../services/db';
 
@@ -44,6 +45,18 @@ router.put(
       }
 
       db.push(`/instantiatedPlans[${indexOfPlan}]/days[${dayIndex}]/completed`, day.completed);
+      const plan = db.getObject<InstantiatedPlan>(`/instantiatedPlans[${indexOfPlan}]`);
+      if (!plan.days) {
+        throw new InvalidPlanError(`${planId} has no days in DB`);
+      }
+      let completedDays = 0;
+      for (const day of plan.days!) {
+        if (day.completed) {
+          completedDays++;
+        }
+      }
+      const percentComplete = (completedDays / plan.days!.length).toFixed(2);
+      db.push(`/instantiatedPlans[${indexOfPlan}]/percentageComplete`, percentComplete);
       res.send(day);
     } catch (err) {
       if (err instanceof CustomError) {
