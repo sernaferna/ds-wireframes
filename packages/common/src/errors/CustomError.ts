@@ -12,6 +12,7 @@ export enum StandardErrorCodes {
   SomethingWentWrong,
   InvalidPlanDays,
   InvalidDayForPlan,
+  PlanAdminToNon,
 }
 
 export interface ErrorResponse {
