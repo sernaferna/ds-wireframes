@@ -1,5 +1,14 @@
-import { Verse, getRefForVerses, PlanDay, getOSISForReference } from '@devouringscripture/common';
+import {
+  Verse,
+  getRefForVerses,
+  PlanDay,
+  getOSISForReference,
+  BasePlanAttributes,
+  PlanAttributes,
+} from '@devouringscripture/common';
+import { visitLexicalEnvironment } from 'typescript';
 import { v4 as uuidv4 } from 'uuid';
+import { PlanValues } from './EditPlanValidations';
 
 export interface DayForPlan {
   verses?: Verse[];
@@ -98,4 +107,46 @@ export const generateDaysForUpload = (days: DayForPlan[]): PlanDay[] => {
 
     return { osis: '' };
   });
+};
+
+/**
+ * Helper function to generate an object suitable for uploading to the Plan API
+ * @param values The values for the plan as captured in the form
+ * @param days The list of days as captured in the form
+ * @returns PlanAttributes or BasePlanAttributes object, as the case may be
+ */
+export const generatePlanForUpload = (values: PlanValues, days: DayForPlan[]): BasePlanAttributes | PlanAttributes => {
+  let uploadableDays: any;
+  try {
+    uploadableDays = generateDaysForUpload(days);
+  } catch {
+    throw new Error('Invalid day list');
+  }
+
+  const plan: BasePlanAttributes = {
+    name: values.planName,
+    description: values.description,
+    includeWeekends: values.includeWeekends,
+    includesApocrypha: values.includeApocrypha,
+    isAdmin: values.isAdmin,
+    isFreeform: values.isFreeform,
+    length: values.numWeeks,
+    osis: values.reference,
+    version: values.version,
+    days: uploadableDays,
+  };
+
+  let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
+  if (values.planInstanceId) {
+    const fullPlan: PlanAttributes = {
+      ...plan,
+      planId: values.planId!,
+      planInstanceId: values.planInstanceId!,
+      status: values.status!,
+      days: uploadableDays,
+    };
+    uploadablePlan = fullPlan;
+  }
+
+  return uploadablePlan;
 };

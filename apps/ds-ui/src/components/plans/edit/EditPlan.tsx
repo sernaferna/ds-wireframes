@@ -12,7 +12,7 @@ import {
 } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
-import { DayForPlan, generateDayList, getValue, generateDaysForUpload } from './Helpers';
+import { DayForPlan, generateDayList, getValue, generateDaysForUpload, generatePlanForUpload } from './Helpers';
 import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import {
@@ -185,54 +185,29 @@ export const EditPlan = () => {
     return false;
   }, [values, setErrors, setTouched]);
 
-  const handleSubmit = useCallback(() => {
+  const handlePublish = useCallback(() => {
     const isFormValid = validateForm();
     if (!isFormValid) {
       return;
     }
 
-    let uploadableDays: any;
     try {
-      uploadableDays = generateDaysForUpload(days);
+      const uploadablePlan = generatePlanForUpload(values, days);
+      publishPlan(uploadablePlan)
+        .unwrap()
+        .then((payload) => {
+          navigate('/plans');
+        })
+        .catch((error) => {
+          if ('data' in error) {
+            addErrorMessage(generateErrorStringFromError(error.data));
+          } else {
+            addErrorMessage('Unanticipated error saving data');
+          }
+        });
     } catch {
-      addErrorMessage('Error uploading data. Check that all days in the plan are valid.');
-      return;
+      addErrorMessage('Error publishing plan. Verify that all form data is correct.');
     }
-    const plan: BasePlanAttributes = {
-      name: values.planName,
-      description: values.description,
-      includeWeekends: values.includeWeekends,
-      includesApocrypha: values.includeApocrypha,
-      isAdmin: values.isAdmin,
-      isFreeform: values.isFreeform,
-      length: values.numWeeks,
-      osis: values.reference,
-      version: values.version,
-      days: uploadableDays,
-    };
-    let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
-    if (values.planInstanceId) {
-      const fullPlan: PlanAttributes = {
-        ...plan,
-        planId: values.planId!,
-        planInstanceId: values.planInstanceId!,
-        status: values.status!,
-        days: uploadableDays,
-      };
-      uploadablePlan = fullPlan;
-    }
-    publishPlan(uploadablePlan)
-      .unwrap()
-      .then((payload) => {
-        navigate('/plans');
-      })
-      .catch((error) => {
-        if ('data' in error) {
-          addErrorMessage(generateErrorStringFromError(error.data));
-        } else {
-          addErrorMessage('Unanticipated error saving data');
-        }
-      });
   }, [validateForm, publishPlan, values, addErrorMessage, navigate, days]);
 
   const handleSave = useCallback(() => {
@@ -242,49 +217,23 @@ export const EditPlan = () => {
       return;
     }
 
-    let uploadableDays: any;
     try {
-      uploadableDays = generateDaysForUpload(days);
+      const uploadablePlan = generatePlanForUpload(values, days);
+      savePlan(uploadablePlan)
+        .unwrap()
+        .then((payload) => {
+          navigate('/plans');
+        })
+        .catch((error) => {
+          if ('data' in error) {
+            addErrorMessage(generateErrorStringFromError(error.data));
+          } else {
+            addErrorMessage('Unanticipated error saving data');
+          }
+        });
     } catch {
-      addErrorMessage('Error uploading data. Check that all days in the plan are valid.');
-      return;
+      addErrorMessage('Error saving plan. Verify that all form data is correct.');
     }
-    const plan: BasePlanAttributes = {
-      name: values.planName,
-      description: values.description,
-      includeWeekends: values.includeWeekends,
-      includesApocrypha: values.includeApocrypha,
-      isAdmin: values.isAdmin,
-      isFreeform: values.isFreeform,
-      length: values.numWeeks,
-      osis: values.reference,
-      version: values.version,
-      days: uploadableDays,
-    };
-
-    let uploadablePlan: BasePlanAttributes | PlanAttributes = plan;
-    if ('planInstanceId' in values) {
-      const newPlan: PlanAttributes = {
-        ...plan,
-        planId: values.planId!,
-        planInstanceId: values.planInstanceId!,
-        status: values.status!,
-        days: uploadableDays,
-      };
-      uploadablePlan = newPlan;
-    }
-    savePlan(uploadablePlan)
-      .unwrap()
-      .then((payload) => {
-        navigate('/plans');
-      })
-      .catch((error) => {
-        if ('data' in error) {
-          addErrorMessage(generateErrorStringFromError(error.data));
-        } else {
-          addErrorMessage('Unanticipated error saving data');
-        }
-      });
   }, [validateForm, savePlan, navigate, values, addErrorMessage, days]);
 
   const handleReset = useCallback(() => {
@@ -414,7 +363,7 @@ export const EditPlan = () => {
         fetchVerses={fetchVerses}
         handleBlur={handleBlur}
         handleChange={handleChange}
-        handleSubmit={handleSubmit}
+        handleSubmit={handlePublish}
         handleSave={handleSave}
         handleReset={handleReset}
         moveVerseDown={moveVerseDown}
