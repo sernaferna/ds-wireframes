@@ -22,11 +22,11 @@
           "vizualizationsOrder": [
             {
               "name": "AllActivities",
-              "active": false,
+              "active": true,
               "order": 0
             },
             {
-              "name": "OldVsNew",
+              "name": "Prayed",
               "active": true,
               "order": 1
             },
@@ -37,8 +37,13 @@
             },
             {
               "name": "DetailedReading",
-              "active": false,
+              "active": true,
               "order": 3
+            },
+            {
+              "name": "OldVsNew",
+              "active": true,
+              "order": 4
             }
           ]
         },
@@ -77,7 +82,7 @@
     {
       "title": "praise",
       "text": "priase item",
-      "completed": false,
+      "completed": true,
       "type": "praise",
       "id": "8a2cbc2c-7bda-40f2-979b-c993eaa18292",
       "date": "2021-12-27"
@@ -2348,6 +2353,258 @@
         ],
         "date": "2022-01-13",
         "id": "8a0204c6-18a4-4c36-a07e-9d03cae625a2"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-03-28",
+        "id": "4db96d08-49f8-4c77-a24b-962e1d14229f"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-04-05",
+        "id": "28b13c30-ce56-464f-9f5e-5ddbd9ace4a6"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": true
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-04-04",
+        "id": "fea29a33-9389-4fac-b56e-ba7e3c7eb0aa"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-04-03",
+        "id": "8e7a78ae-ea83-46cb-be8e-063b41819d65"
       }
     ]
   },
@@ -3557,5 +3814,1516 @@
       "status": "Published"
     }
   ],
-  "instantiatedPlans": []
+  "instantiatedPlans": [
+    {
+      "planInstanceId": "20fe1cc6-c79a-4f67-b8d0-dda46fd05954",
+      "percentageComplete": "0.02",
+      "id": "ee56256a-4d69-432f-b3b3-05cc536ac349",
+      "days": [
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-04"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-05"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-06"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-07"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-08"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-09"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-10"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-05-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-06-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-07-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-08-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-09-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-10-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-11-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-12-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-01-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-02-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-03-31"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-02"
+        }
+      ]
+    },
+    {
+      "planInstanceId": "0bd0cf90-6697-4c6d-b359-15420571d93c",
+      "percentageComplete": "0.60",
+      "id": "ce0459be-accf-4dd7-8591-733a3c960bba",
+      "days": [
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-04"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-05"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-06"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-07"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-08"
+        },
+        {
+          "completed": true,
+          "scheduledDate": "2022-04-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2022-04-15"
+        }
+      ]
+    }
+  ]
 }

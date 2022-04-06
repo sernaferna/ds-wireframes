@@ -24,7 +24,8 @@ export const generateDefaultUser = (): UserAttributes => {
           { name: 'AllActivities', active: true, order: 0 },
           { name: 'OldVsNew', active: false, order: 1 },
           { name: 'ReadScripture', active: true, order: 2 },
-          { name: 'DetailedReading', active: true, order: 3 },
+          { name: 'Prayed', active: true, order: 3 },
+          { name: 'DetailedReading', active: true, order: 4 },
         ],
       },
       prayer: {
@@ -43,6 +44,10 @@ export const generateDefaultUser = (): UserAttributes => {
         showSettings: true,
         showReadingPlan: true,
         defaultVersion: 'ESV',
+      },
+      plans: {
+        showSettings: true,
+        showCurrentReadingPlan: true,
       },
     },
   };

@@ -7,6 +7,7 @@ import { ReadScripture } from './stats/ReadScripture';
 import { DetailedReading } from './stats/DetailedReading';
 import { OldVsNew } from './stats/OldVsNew';
 import { AllActivities } from './stats/AllActivities';
+import { Prayed } from './stats/Prayed';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -52,6 +53,9 @@ const getVizualizationList = (userData: UserAttributes | undefined, data: Action
           title = 'All Activity';
           control = <AllActivities stats={data!} />;
           break;
+        case 'Prayed':
+          title = 'Prayed';
+          control = <Prayed stats={data!} />;
       }
 
       return (
