@@ -12,7 +12,7 @@ import { PlanValues } from './EditPlanValidations';
 import { DayForPlan } from './Helpers';
 import { WeeksDropdown } from './WeeksDropdown';
 import { RenderWeeks } from './RenderWeeks';
-import { UserAttributes, getFormattedReference } from '@devouringscripture/common';
+import { UserAttributes, getFormattedReference, PlanStatus } from '@devouringscripture/common';
 
 interface EPFInterface {
   user: UserAttributes;
@@ -189,6 +189,7 @@ export const EditPlanForm = ({
                       checked={values.isAdmin}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      disabled={values.status === PlanStatus.Published && values.isAdmin}
                     />
                     <Form.Text id="isPlanAdminHelpText" muted>
                       Available to all users
