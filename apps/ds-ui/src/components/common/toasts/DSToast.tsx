@@ -78,7 +78,7 @@ const DSToast: React.FC<ToastProps> = ({
   const toastIcon = useMemo(() => getIcon(type), [type]);
 
   return (
-    <Toast autohide delay={duration}>
+    <Toast autohide delay={duration} onClose={destroy}>
       <Toast.Header className={`toast-heading-${toastStyle}`}>
         {toastIcon}
         <strong>{title}</strong>
