@@ -1,13 +1,13 @@
 import React from 'react';
 import Collapse from 'react-bootstrap/Collapse';
 
-interface SidebarCollapseWidgetParams {
+interface ISidebarCollapseWidget {
   title: string;
   visible: boolean;
   clickFunction(): void;
   children: JSX.Element;
 }
-export const SidebarCollapseWidget = ({ title, visible, clickFunction, children }: SidebarCollapseWidgetParams) => (
+export const SidebarCollapseWidget = ({ title, visible, clickFunction, children }: ISidebarCollapseWidget) => (
   <div className="sidebar-collapse-widget">
     <div className="header-div" aria-expanded={visible} aria-controls="contentDiv" onClick={clickFunction}>
       {title}

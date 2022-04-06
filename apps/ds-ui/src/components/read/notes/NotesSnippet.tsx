@@ -5,10 +5,10 @@ import MDEditor from '@uiw/react-md-editor';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSelectedNote, getSelectedNote } from '../../../stores/UISlice';
 
-interface NotesSnippetInterface {
+interface INotesSnippet {
   noteID: string;
 }
-export const NotesSnippet = ({ noteID }: NotesSnippetInterface) => {
+export const NotesSnippet = ({ noteID }: INotesSnippet) => {
   const selectedNote = useSelector(getSelectedNote);
   const { data, error, isLoading } = useGetNoteByIdQuery(noteID);
   const dispatch = useDispatch();

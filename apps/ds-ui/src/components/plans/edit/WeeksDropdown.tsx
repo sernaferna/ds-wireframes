@@ -1,11 +1,11 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-interface WeeksDDProps {
+interface IWeeksDropdown {
   numWeeks: number;
   updateWeeksCallback(newValue: number): void;
 }
-export const WeeksDropdown = ({ numWeeks, updateWeeksCallback }: WeeksDDProps) => {
+export const WeeksDropdown = ({ numWeeks, updateWeeksCallback }: IWeeksDropdown) => {
   const displayString = `${numWeeks} weeks`;
 
   const handleClick = (numWeeks: number) => {

@@ -3,10 +3,10 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
 import { getNoteList } from './AllNotes';
 
-interface NotesForPassageInterface {
+interface INotesForPassage {
   osis: string;
 }
-export const NotesForPassage = ({ osis }: NotesForPassageInterface) => {
+export const NotesForPassage = ({ osis }: INotesForPassage) => {
   const [trigger, result] = useLazyGetAllNotesForPassageQuery();
 
   useEffect(() => {

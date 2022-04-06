@@ -40,10 +40,10 @@ const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
   return actionsSet;
 };
 
-interface CalendarViewInterface {
+interface ICalendarView {
   dateToShow: DateTime;
 }
-export function CalendarView({ dateToShow }: CalendarViewInterface) {
+export function CalendarView({ dateToShow }: ICalendarView) {
   const [monthToShow, updateMonthToShow] = useState(dateToShow);
   const dispatch = useDispatch();
   let { data, error, isLoading } = useGetActionsForMonthQuery({

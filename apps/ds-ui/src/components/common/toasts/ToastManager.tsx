@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import DSToast, { ToastProps } from './DSToast';
+import DSToast, { IDSToast } from './DSToast';
 
 interface ToastOptions {
   id?: string;
@@ -24,7 +24,7 @@ export enum ToastType {
 export const TOAST_FADE_TIME = 5000;
 
 export class ToastManager {
-  private toasts: ToastProps[] = [];
+  private toasts: IDSToast[] = [];
 
   constructor(private containerRef: HTMLDivElement) {
     this.containerRef = document.getElementById('main-toast-container') as HTMLDivElement;
@@ -32,7 +32,7 @@ export class ToastManager {
 
   public show(options: ToastOptions): void {
     const toastId = Math.random().toString(36).substr(2, 9);
-    const toast: ToastProps = {
+    const toast: IDSToast = {
       id: toastId,
       ...options, // if id is passed within options, it will overwrite the auto-generated one
       destroy: () => this.destroy(options.id ?? toastId),
@@ -43,12 +43,12 @@ export class ToastManager {
   }
 
   public destroy(id: string): void {
-    this.toasts = this.toasts.filter((toast: ToastProps) => toast.id !== id);
+    this.toasts = this.toasts.filter((toast: IDSToast) => toast.id !== id);
     this.render();
   }
 
   private render(): void {
-    const toastsList = this.toasts.map((toastProps: ToastProps) => <DSToast key={toastProps.id} {...toastProps} />);
+    const toastsList = this.toasts.map((toastProps: IDSToast) => <DSToast key={toastProps.id} {...toastProps} />);
     ReactDOM.render(toastsList, this.containerRef);
   }
 }

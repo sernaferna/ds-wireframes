@@ -2,7 +2,7 @@ import React from 'react';
 import { DayForPlan } from './Helpers';
 import { RenderDay } from './RenderDay';
 
-interface IRenderedDays {
+interface IRenderWeeks {
   days: DayForPlan[];
   includeWeekends: boolean;
   isFreeform: boolean;
@@ -10,7 +10,7 @@ interface IRenderedDays {
   downFunc(day: number, cascade?: boolean): void;
   update(day: DayForPlan): void;
 }
-export const RenderWeeks = ({ days, includeWeekends, isFreeform, upFunc, downFunc, update }: IRenderedDays) => {
+export const RenderWeeks = ({ days, includeWeekends, isFreeform, upFunc, downFunc, update }: IRenderWeeks) => {
   const daysPerWeek = includeWeekends ? 7 : 5;
   const returnItems: JSX.Element[] = [];
   let weekNum = 0;

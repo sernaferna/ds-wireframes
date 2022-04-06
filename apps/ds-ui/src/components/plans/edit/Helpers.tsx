@@ -6,7 +6,6 @@ import {
   BasePlanAttributes,
   PlanAttributes,
 } from '@devouringscripture/common';
-import { visitLexicalEnvironment } from 'typescript';
 import { v4 as uuidv4 } from 'uuid';
 import { PlanValues } from './EditPlanValidations';
 
@@ -25,13 +24,12 @@ const moveVerseToArr = (arr1: Verse[], arr2: Verse[]): void => {
   arr1.splice(0, 1);
 };
 
-interface IGenDayList {
-  isFreeform: boolean;
-  numWeeks: number;
-  includeWeekends: boolean;
-  verses: Verse[] | undefined;
-}
-export const generateDayList = ({ isFreeform, numWeeks, includeWeekends, verses }: IGenDayList): DayForPlan[] => {
+export const generateDayList = (
+  isFreeform: boolean,
+  numWeeks: number,
+  includeWeekends: boolean,
+  verses: Verse[] | undefined
+): DayForPlan[] => {
   const daysPerWeek = includeWeekends ? 7 : 5;
   const totalDays = numWeeks * daysPerWeek;
   const days: DayForPlan[] = [];

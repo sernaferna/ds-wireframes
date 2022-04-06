@@ -5,11 +5,11 @@ import Alert from 'react-bootstrap/Alert';
 import { Journal, JournalX } from 'react-bootstrap-icons';
 import Table from 'react-bootstrap/Table';
 
-interface LegendModalInterface {
+interface ILegendModal {
   closeFunction(): void;
   show: boolean;
 }
-export const LegendModal = ({ closeFunction, show }: LegendModalInterface) => {
+export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
   return (
     <Modal show={show} onHide={closeFunction} size="lg" aria-labelledby="modal-title" centered>
       <Modal.Header closeButton>

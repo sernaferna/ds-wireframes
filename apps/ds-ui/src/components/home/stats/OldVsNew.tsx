@@ -2,10 +2,10 @@ import React from 'react';
 import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 
-interface OvNInterface {
+interface IOldVsNew {
   stats: ActionStats;
 }
-export const OldVsNew = ({ stats }: OvNInterface) => {
+export const OldVsNew = ({ stats }: IOldVsNew) => {
   const data = [
     { name: 'Old Testament', value: stats.readLongOT + stats.readShortOT },
     { name: 'New Testament', value: stats.readLongNT + stats.readShortNT },

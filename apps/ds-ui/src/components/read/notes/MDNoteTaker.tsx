@@ -109,6 +109,7 @@ export const MDNoteTaker = () => {
     localState.localNoteId,
     localState.localSelectedReadingItem,
     addErrorMessage,
+    dispatchLocalState,
   ]);
 
   const submitForm = useCallback(() => {

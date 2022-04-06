@@ -2,17 +2,10 @@ import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
-import {
-  Verse,
-  BasePlanAttributes,
-  PlanAttributes,
-  isReferenceValid,
-  getRefForVerses,
-  getOSISForReference,
-} from '@devouringscripture/common';
+import { Verse, isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
-import { DayForPlan, generateDayList, getValue, generateDaysForUpload, generatePlanForUpload } from './Helpers';
+import { DayForPlan, generateDayList, getValue, generatePlanForUpload } from './Helpers';
 import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import {
@@ -53,12 +46,7 @@ export const EditPlan = () => {
         verses = versesResult.data!.slice();
       }
 
-      const listOfDays = generateDayList({
-        includeWeekends,
-        isFreeform,
-        numWeeks,
-        verses,
-      });
+      const listOfDays = generateDayList(isFreeform, numWeeks, includeWeekends, verses);
 
       setDays(listOfDays);
     },

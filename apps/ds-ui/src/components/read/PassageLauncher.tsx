@@ -25,10 +25,10 @@ const schema = yup.object({
 });
 type LauncherSchema = yup.InferType<typeof schema>;
 
-interface PassageLauncherInterface {
+interface IPassageLauncher {
   defaultVersion: string;
 }
-export const PassageLauncher = ({ defaultVersion }: PassageLauncherInterface) => {
+export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
   const [newItem] = useNewItemMutation();
 
   const initialValues: LauncherSchema = useMemo(

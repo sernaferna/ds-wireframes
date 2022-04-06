@@ -6,7 +6,7 @@ import { ChevronUp, ChevronDoubleUp, ChevronDown, ChevronDoubleDown } from 'reac
 import { getFormattedReference, isReferenceValid, getOSISForReference } from '@devouringscripture/common';
 import { DayForPlan } from './Helpers';
 
-interface RenderDayInterface {
+interface IRenderDay {
   dayNum: number;
   maxDays: number;
   isFreeform: boolean;
@@ -24,7 +24,7 @@ export const RenderDay = ({
   upFunction,
   downFunction,
   updateCallback,
-}: RenderDayInterface) => {
+}: IRenderDay) => {
   const [reference, setReference] = useState(day.osis || '');
   const [dirty, setDirty] = useState(false);
 

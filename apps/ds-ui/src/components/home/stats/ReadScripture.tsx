@@ -2,10 +2,10 @@ import React from 'react';
 import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
-interface ReadScriptureInterface {
+interface IReadScripture {
   stats: ActionStats;
 }
-export const ReadScripture = ({ stats }: ReadScriptureInterface) => {
+export const ReadScripture = ({ stats }: IReadScripture) => {
   const readUnreadData = [
     { name: 'Read', value: stats.readScripture },
     { name: `Didn't Read`, value: stats.dataSize - stats.readScripture },
