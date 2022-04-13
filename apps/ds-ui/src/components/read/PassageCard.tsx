@@ -31,7 +31,7 @@ interface PrayerCardInterface {
   passage: Passage;
 }
 export const PassageCard = ({ passage }: PrayerCardInterface) => {
-  const selectedPrayerID = useSelector(getSelectedReadingItem);
+  const selectedItemID = useSelector(getSelectedReadingItem);
   const dispatch = useDispatch();
   const [deleteItem] = useDeletePassageItemMutation();
 
@@ -46,7 +46,7 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
 
   const titleClicked = useCallback(
     (id: string) => {
-      if (selectedPrayerID === id) {
+      if (selectedItemID === id) {
         dispatch(updateSelectedReadingItem(''));
         dispatch(updateSelectedNote(''));
       } else {
@@ -54,7 +54,7 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
         dispatch(updateSelectedNote(''));
       }
     },
-    [selectedPrayerID, dispatch]
+    [selectedItemID, dispatch]
   );
 
   const bibleVersionLogo =
@@ -67,8 +67,8 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
   return (
     <Col className="mt-2">
       <Card
-        bg={selectedPrayerID === passage.id ? 'primary' : ''}
-        className={`passage-card ${selectedPrayerID === passage.id ? 'passage-card-selected' : ''}`}
+        bg={selectedItemID === passage.id ? 'primary' : ''}
+        className={`passage-card ${selectedItemID === passage.id ? 'passage-card-selected' : ''}`}
       >
         <Card.Body className="card-body">
           <Card.Title onClick={() => titleClicked(passage.id)}>
@@ -76,7 +76,7 @@ export const PassageCard = ({ passage }: PrayerCardInterface) => {
             <CloseButton onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">
-            <PassageLinkBody passage={passage} selected={selectedPrayerID === passage.id ? true : false} />
+            <PassageLinkBody passage={passage} selected={selectedItemID === passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
         <Card.Footer className="card-footer">
