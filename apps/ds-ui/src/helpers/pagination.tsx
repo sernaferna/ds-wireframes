@@ -47,20 +47,30 @@ export const paginateItems = (
   const appendItems: JSX.Element[] = [];
   if (pageNums.length > 1) {
     prependItems.push(
-      <Pagination.First disabled={currentPage === 1 ? true : false} onClick={() => clickFunction(1)} />
+      <Pagination.First
+        key="pagination-first"
+        disabled={currentPage === 1 ? true : false}
+        onClick={() => clickFunction(1)}
+      />
     );
     prependItems.push(
-      <Pagination.Prev disabled={currentPage === 1 ? true : false} onClick={() => clickFunction(currentPage - 1)} />
+      <Pagination.Prev
+        key="pagination-prev"
+        disabled={currentPage === 1 ? true : false}
+        onClick={() => clickFunction(currentPage - 1)}
+      />
     );
 
     appendItems.push(
       <Pagination.Next
+        key="pagination-next"
         disabled={currentPage === pageNums.length ? true : false}
         onClick={() => clickFunction(currentPage + 1)}
       />
     );
     appendItems.push(
       <Pagination.Last
+        key="pagination-last"
         disabled={currentPage === pageNums.length ? true : false}
         onClick={() => clickFunction(pageNums.length)}
       />
@@ -69,7 +79,7 @@ export const paginateItems = (
 
   const renderedPageNums = pageNums.map((item) => (
     <Pagination.Item
-      key={item}
+      key={`pagination-${item}`}
       onClick={() => {
         clickFunction(item);
       }}
