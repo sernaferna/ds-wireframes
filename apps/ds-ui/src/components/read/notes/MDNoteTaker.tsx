@@ -38,28 +38,19 @@ export const MDNoteTaker = () => {
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
   /*
-  Initialization of this component is complex, because there could be a 
-  selected note, but if not there could be a selected passage, either of 
-  which should be used to set the start/end passages.
+  Initialize note settings.
   */
   useEffect(() => {
-    if (passageResult.error) {
-      if ('data' in passageResult.error) {
-        addErrorMessage(generateErrorStringFromError(passageResult.error.data as ErrorResponse));
-      } else {
-        addErrorMessage('Error retrieving passage from server');
-      }
-      return;
-    }
     if (noteResult.error) {
       if ('data' in noteResult.error) {
         addErrorMessage(generateErrorStringFromError(noteResult.error.data as ErrorResponse));
+        return;
       } else {
         addErrorMessage('Error retrieving note from server');
+        return;
       }
-      return;
     }
-    if (passageResult.isLoading || noteResult.isLoading) {
+    if (noteResult.isLoading) {
       return;
     }
 
@@ -67,6 +58,7 @@ export const MDNoteTaker = () => {
       if (selectedNote !== localState.localNoteId) {
         dispatchLocalState({ type: ReducerActionType.RESET_FOR_SELECTED_NOTE, payload: selectedNote });
         noteTrigger(selectedNote);
+        return;
       }
 
       if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
@@ -79,38 +71,48 @@ export const MDNoteTaker = () => {
             value: noteResult.data.text,
           },
         });
-        return;
       }
-    } else if (selectedReadingItem) {
-      if (selectedReadingItem !== localState.localSelectedReadingItem) {
-        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM, payload: selectedReadingItem });
-        passageTrigger(selectedReadingItem);
-      }
+    }
+  }, [selectedNote, localState.localNoteId, noteTrigger, noteResult, addErrorMessage]);
 
-      if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
-        const range: OSISRange = getRangesForOSIS(passageResult.data.osis)[0];
-        dispatchLocalState({
-          type: ReducerActionType.RESET_FOR_PASSAGE_NO_NOTE,
-          payload: {
-            startReference: getFormattedReference(range.startOsisString),
-            endReference: getFormattedReference(range.endOsisString),
-          },
-        });
+  /**
+   * Initialize passage settings -- start ref and end ref
+   */
+  useEffect(() => {
+    if (!selectedReadingItem) {
+      return;
+    }
+
+    if (passageResult.error) {
+      if ('data' in passageResult.error) {
+        addErrorMessage(generateErrorStringFromError(passageResult.error.data as ErrorResponse));
+        return;
+      } else {
+        addErrorMessage('Error retrieving passage from server');
         return;
       }
     }
-  }, [
-    selectedReadingItem,
-    selectedNote,
-    passageResult,
-    noteResult,
-    noteTrigger,
-    passageTrigger,
-    localState.localNoteId,
-    localState.localSelectedReadingItem,
-    addErrorMessage,
-    dispatchLocalState,
-  ]);
+    if (passageResult.isLoading) {
+      return;
+    }
+
+    if (selectedReadingItem !== localState.localSelectedReadingItem) {
+      dispatchLocalState({ type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM, payload: selectedReadingItem });
+      passageTrigger(selectedReadingItem);
+      return;
+    }
+
+    if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
+      const range: OSISRange = getRangesForOSIS(passageResult.data.osis)[0];
+      dispatchLocalState({
+        type: ReducerActionType.RESET_FOR_PASSAGE_NO_NOTE,
+        payload: {
+          startReference: getFormattedReference(range.startOsisString),
+          endReference: getFormattedReference(range.endOsisString),
+        },
+      });
+    }
+  }, [selectedReadingItem, localState.localSelectedReadingItem, passageTrigger, passageResult, addErrorMessage]);
 
   const submitForm = useCallback(() => {
     dispatch(updateSelectedReadingItem(''));
