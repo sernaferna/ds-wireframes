@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-04-13T17:36:40.018Z" agent="5.0 (X11; CrOS x86_64 14526.69.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.82 Safari/537.36" etag="5A3qD8wrHg4oHKYUo89H" version="17.4.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-04-13T21:39:20.943Z" agent="5.0 (X11; CrOS x86_64 14526.69.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.82 Safari/537.36" etag="MXXZsrmP_u1mgbuf1RCR" version="17.4.3" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
     <mxGraphModel dx="1168" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="none" math="0" shadow="0">
       <root>
@@ -43,7 +43,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xyDB7umJ-qCF1QacfZHw-64" value="Show downloaded Note details" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="xyDB7umJ-qCF1QacfZHw-64" value="Show downloaded Note details" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="420" y="320" width="100" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xyDB7umJ-qCF1QacfZHw-65" value="Yes" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xyDB7umJ-qCF1QacfZHw-58" target="xyDB7umJ-qCF1QacfZHw-64">
@@ -98,7 +98,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xyDB7umJ-qCF1QacfZHw-75" value="Show empty note, defaulted to passage start / end" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+        <mxCell id="xyDB7umJ-qCF1QacfZHw-75" value="Show empty note, defaulted to passage start / end" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="420" y="570" width="100" height="60" as="geometry" />
         </mxCell>
         <mxCell id="xyDB7umJ-qCF1QacfZHw-76" value="yes" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="xyDB7umJ-qCF1QacfZHw-70" target="xyDB7umJ-qCF1QacfZHw-75">
