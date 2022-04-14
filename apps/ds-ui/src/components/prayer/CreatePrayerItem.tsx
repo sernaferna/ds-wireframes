@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -84,7 +83,7 @@ export function CreatePrayerItem({ confession = false }) {
   };
 
   return (
-    <Alert variant={confession ? 'danger' : 'primary'}>
+    <Alert className={confession ? 'create-prayer-item-confession' : 'create-prayer-item'}>
       <h4>{confession ? 'Confession' : 'New Prayer Request'}</h4>
       <Formik
         initialValues={initialValues}
@@ -95,7 +94,7 @@ export function CreatePrayerItem({ confession = false }) {
       >
         {(formikProps: FormikProps<ValuesSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
-            <Form.Group as={Col} xs="12">
+            <Form.Group>
               <Form.Label>Title</Form.Label>
               <Form.Control
                 id="title"
@@ -107,7 +106,7 @@ export function CreatePrayerItem({ confession = false }) {
                 name="title"
               />
             </Form.Group>
-            <Form.Group as={Col} xs="12">
+            <Form.Group>
               <Form.Label>Text</Form.Label>
               <MarkdownBox
                 content={formikProps.values.body}
@@ -140,9 +139,9 @@ export function CreatePrayerItem({ confession = false }) {
                 </OverlayTrigger>
               </Stack>
             )}
-            <Form.Group className="mt-2">
+            <Form.Group>
               <Button
-                variant={confession ? 'danger' : 'primary'}
+                className="submit-button"
                 type="submit"
                 disabled={
                   !formikProps.touched.body ||

@@ -48,6 +48,24 @@
   max-height: 8em;
 }
 
+.create-prayer-item {
+  @extend .alert-primary;
+
+  .submit-button {
+    @extend .mt-2;
+    @extend .btn-primary;
+  }
+}
+
+.create-prayer-item-confession {
+  @extend .create-prayer-item;
+  @extend .alert-danger;
+
+  .submit-button {
+    @extend .btn-danger;
+  }
+}
+
 .create-prayer-icon-list {
   @extend .h1;
   @extend .m-3;
