@@ -24,8 +24,6 @@ const generateList = ({ data, deleteCallback }: IGenerateList) => {
       <li key={item.id}>
         {item.displayName}{' '}
         <Button
-          size="sm"
-          variant="danger"
           onClick={() => {
             deleteCallback(item.id);
           }}
@@ -73,11 +71,9 @@ export const CustomActionList = () => {
   }
 
   return (
-    <>
+    <div className="custom-action-list">
       <h4>Custom Action List</h4>
-      <p className="lead">
-        Not implemented&mdash;changes here don't impact the Actions functionality in the wireframe.
-      </p>
+      <h3>Not implemented&mdash;changes here don't impact the Actions functionality in the wireframe.</h3>
       <p>You've added the following custom actions to your tracker:</p>
       <ul>{list}</ul>
 
@@ -86,10 +82,8 @@ export const CustomActionList = () => {
         <FloatingLabel controlId="floatingItem" label="Action Type">
           <Form.Control type="text" placeholder="Action" value={actionType} onChange={setText} />
         </FloatingLabel>
-        <Button variant="primary" type="submit">
-          Send
-        </Button>
+        <Button type="submit">Send</Button>
       </Form>
-    </>
+    </div>
   );
 };

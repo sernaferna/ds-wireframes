@@ -1,5 +1,22 @@
+.do-page-calendar-view {
+  @extend .col-6;
+}
+
+.do-page-custom-actions {
+  @extend .col-6;
+}
+
 .action-item-stack {
+  @extend .gap-2;
   cursor: pointer;
+
+  svg.done {
+    @extend .text-success;
+  }
+
+  svg.undone {
+    @extend .text-secondary;
+  }
 
   div {
     @extend .user-select-none;
@@ -21,6 +38,27 @@
 
     .inactive-scroller {
       @extend .text-muted;
+    }
+  }
+}
+
+.custom-action-list {
+  h3 {
+    @extend .lead;
+  }
+
+  ul {
+    li {
+      button {
+        @extend .btn-danger;
+        @extend .btn-sm;
+      }
+    }
+  }
+
+  form {
+    button {
+      @extend .btn-primary;
     }
   }
 }

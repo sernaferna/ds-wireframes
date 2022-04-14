@@ -75,6 +75,9 @@ body {
 }
 
 #header-navbar {
+  @extend .navbar-dark;
+  @extend .bg-dark;
+
   strong {
     @extend .ms-2;
   }
@@ -149,6 +152,20 @@ footer {
 .pagination-div {
   @extend .mt-2;
   @extend .w-100;
+}
+
+.loading-message {
+  @extend .alert-primary;
+}
+
+.error-message {
+  @extend .alert-danger;
+
+  .details {
+    p {
+      @extend .fw-bold;
+    }
+  }
 }
 
 @import './read';

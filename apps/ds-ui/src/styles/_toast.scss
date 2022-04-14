@@ -109,3 +109,10 @@
 .toast-heading-normal {
   @extend .text-body;
 }
+
+.toast-tester-form {
+  button {
+    @extend .my-2;
+    @extend .btn-primary;
+  }
+}

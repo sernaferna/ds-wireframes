@@ -98,7 +98,7 @@ export const RenderDay = ({
   };
 
   return (
-    <InputGroup>
+    <InputGroup className="day-view">
       <Form.Control
         readOnly={!isFreeform}
         value={refForVerses.length > 0 ? refForVerses : formattedReference}
@@ -112,34 +112,34 @@ export const RenderDay = ({
       {!isFreeform ? (
         <>
           {dayNum > 1 ? (
-            <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
+            <Button onClick={handleDown(dayNum)}>
               <ChevronDown />
             </Button>
           ) : (
             <></>
           )}
           {dayNum > 2 ? (
-            <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
+            <Button onClick={handleDoubleDown(dayNum)}>
               <ChevronDoubleDown />
             </Button>
           ) : (
             <></>
           )}
           {dayNum < maxDays ? (
-            <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
+            <Button onClick={handleUp(dayNum)}>
               <ChevronUp />
             </Button>
           ) : (
             <></>
           )}
           {dayNum < maxDays - 1 ? (
-            <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
+            <Button onClick={handleDoubleUp(dayNum)}>
               <ChevronDoubleUp />
             </Button>
           ) : (
             <></>
           )}
-          {day.verses ? <b className="ms-2">{`${day.verses.length} verses`}</b> : <></>}
+          {day.verses ? <div className="verse-indicator">{`${day.verses.length} verses`}</div> : <></>}
         </>
       ) : (
         <></>

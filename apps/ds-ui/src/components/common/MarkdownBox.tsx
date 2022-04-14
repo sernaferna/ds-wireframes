@@ -69,9 +69,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
         />
       </div>
       <div className="md-editor-preview">
-        <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
-          {showPreviewState ? 'Hide Preview' : 'Show Preview'}
-        </Button>
+        <Button onClick={reversePreviewState()}>{showPreviewState ? 'Hide Preview' : 'Show Preview'}</Button>
         {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
       </div>
     </div>

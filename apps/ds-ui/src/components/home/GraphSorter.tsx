@@ -1,7 +1,8 @@
 import React, { useMemo, useCallback } from 'react';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
-import Stack from 'react-bootstrap/Stack';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import { UserAttributes, VizualizationListItem } from '@devouringscripture/common';
@@ -91,7 +92,7 @@ export const GraphSorter = () => {
 
   const vizualizationList = sortedItems.map((item, index) => {
     return (
-      <div key={`sort-item-${item.name}`}>
+      <Col key={`sort-item-${item.name}`}>
         {index > 0 ? <CaretLeftFill onClick={handleSorterClick(item.name, true)} /> : ''}
         <ToggleButton
           type="checkbox"
@@ -104,16 +105,14 @@ export const GraphSorter = () => {
           {item.name}
         </ToggleButton>
         {index < sortedItems.length - 1 ? <CaretRightFill onClick={handleSorterClick(item.name, false)} /> : ''}
-      </div>
+      </Col>
     );
   });
 
   return (
     <>
       <h4>Graph Sorter</h4>
-      <Stack className="graph-sorter-list" direction="horizontal">
-        {vizualizationList}
-      </Stack>
+      <Row className="graph-sorter-list">{vizualizationList}</Row>
     </>
   );
 };

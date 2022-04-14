@@ -68,7 +68,7 @@ export const ToastTester = () => {
 
   return (
     <SidebarCollapseWidget title="Test Toasts" visible={true} clickFunction={() => {}}>
-      <Form>
+      <Form className="toast-tester-form">
         <Form.Check
           label="Primary"
           name="toastTypeRadios"
@@ -133,9 +133,7 @@ export const ToastTester = () => {
           checked={toastType === 'light'}
           onChange={setNewTT('light')}
         />
-        <Button className="my-2" variant="primary" onClick={executeTest(toastType)}>
-          Test
-        </Button>
+        <Button onClick={executeTest(toastType)}>Test</Button>
       </Form>
     </SidebarCollapseWidget>
   );

@@ -90,29 +90,25 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
   );
 
   return (
-    <Alert variant={data!.isAdmin ? 'primary' : 'info'} className="plan-summary-view">
+    <Alert className={`plan-summary-view ${data!.isAdmin ? 'plan-summary-view-admin' : 'plan-summary-view-user'}`}>
       <Alert.Heading>{data!.name}</Alert.Heading>
       <Row>
-        <Col xs="1">{apocIcon}</Col>
-        <Col xs="11">
+        <Col className="apoc-col">{apocIcon}</Col>
+        <Col className="description-col">
           <p>{data!.description}</p>
         </Col>
       </Row>
 
       <Row>
         <Col className="version-col">
-          <Badge bg={data!.isAdmin ? 'primary' : 'info'}>v{data!.version}</Badge>
+          <Badge>v{data!.version}</Badge>
         </Col>
         <Col className="num-weeks-col">
-          <Badge bg={data!.isAdmin ? 'primary' : 'info'}>{data!.length} weeks</Badge>
+          <Badge>{data!.length} weeks</Badge>
         </Col>
         <Col className="percent-complete-col">
           {percentageComplete !== undefined ? (
-            <ProgressBar
-              now={percentageComplete * 100}
-              label={`${percentageComplete * 100}%`}
-              variant={data!.isAdmin ? 'primary' : 'info'}
-            />
+            <ProgressBar now={percentageComplete * 100} label={`${percentageComplete * 100}%`} />
           ) : (
             <i>Not subscribed</i>
           )}
@@ -120,9 +116,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
       </Row>
       <Row className="button-row">
         <Col className="edit-col">
-          <Button variant="primary" onClick={() => editPlan(planId)}>
-            Edit
-          </Button>
+          <Button onClick={() => editPlan(planId)}>Edit</Button>
         </Col>
         <Col className="join-col">
           <JoinLeaveButton
@@ -132,13 +126,11 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
             createIP={createIP}
           />
         </Col>
-        <Col className="deleteCol">
+        <Col className="delete-col">
           {data!.status === PlanStatus.Deleted ? (
             ''
           ) : (
-            <Button variant="danger" onClick={() => deletePlanOnServer(planId)}>
-              Delete
-            </Button>
+            <Button onClick={() => deletePlanOnServer(planId)}>Delete</Button>
           )}
         </Col>
       </Row>

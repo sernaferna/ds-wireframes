@@ -77,13 +77,13 @@ export const EditPlanForm = ({
     <Form noValidate>
       <Row>
         <Col className="plan-edit-details">
-          <Container className="p-3 bg-light">
-            <Alert variant="warning" dismissible show={showWarning} onClose={hideWarning}>
+          <Container className="main-items">
+            <Alert className="warning-message" dismissible show={showWarning} onClose={hideWarning}>
               Altering <b>highlighted settings</b> will reset weeks and days below, overwriting previous changes.
             </Alert>
 
-            <Row className="mb-2">
-              <Col xs="5">
+            <Row>
+              <Col className="name-col">
                 <Form.Label htmlFor="planName">Name:</Form.Label>
                 <Form.Control
                   name="planName"
@@ -91,7 +91,6 @@ export const EditPlanForm = ({
                   value={values.planName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  size="sm"
                   id="planName"
                   placeholder="Plan Name"
                   type="text"
@@ -100,11 +99,10 @@ export const EditPlanForm = ({
                 />
                 <Form.Control.Feedback type="invalid">{errors['planName']}</Form.Control.Feedback>
               </Col>
-              <Col xs="3">
+              <Col className="weeks-col">
                 <Form.Label htmlFor="numWeeks">Weeks:</Form.Label>
                 <Form.Control
                   className="alter-content-field"
-                  size="sm"
                   id="numWeeks"
                   name="numWeeks"
                   placeholder="52"
@@ -130,10 +128,9 @@ export const EditPlanForm = ({
                   <WeeksDropdown numWeeks={156} updateWeeksCallback={updateWeeks} />
                 </DropdownButton>
               </Col>
-              <Col xs="2">
+              <Col className="version-col">
                 <Form.Label htmlFor="version">Version:</Form.Label>
                 <Form.Control
-                  size="sm"
                   id="version"
                   name="version"
                   placeholder="1.0.0"
@@ -145,7 +142,7 @@ export const EditPlanForm = ({
                 />
                 <Form.Control.Feedback type="invalid">{errors['version']}</Form.Control.Feedback>
               </Col>
-              <Col xs="2">
+              <Col className="weekends-col">
                 <Form.Check
                   name="includeWeekends"
                   type="checkbox"
@@ -158,15 +155,14 @@ export const EditPlanForm = ({
               </Col>
             </Row>
 
-            <Row className="mb-2">
-              <Col xs="1">
+            <Row>
+              <Col className="description-label-col">
                 <Form.Label htmlFor="description">Description:</Form.Label>
               </Col>
-              <Col xs="9">
+              <Col className="description-col">
                 <Form.Control
                   id="description"
                   name="description"
-                  size="sm"
                   as="textarea"
                   placeholder="Plan Description"
                   value={values.description}
@@ -177,7 +173,7 @@ export const EditPlanForm = ({
                 />
                 <Form.Control.Feedback type="invalid">{errors['description']}</Form.Control.Feedback>
               </Col>
-              <Col xs="2">
+              <Col className="admin-col">
                 {user.isAdmin ? (
                   <>
                     <Form.Check
@@ -214,7 +210,7 @@ export const EditPlanForm = ({
             </Row>
           </Container>
 
-          <Container className="p-5 mt-3">
+          <Container className="days-container">
             <Form.Check
               className="alter-content-field"
               type="switch"
@@ -227,8 +223,8 @@ export const EditPlanForm = ({
             />
 
             {!values.isFreeform ? (
-              <>
-                <Form.Label htmlFor="reference" className="h4">
+              <div className="osis-controls">
+                <Form.Label htmlFor="reference" className="heading-label">
                   Passage(s)
                 </Form.Label>
                 <InputGroup>
@@ -242,16 +238,12 @@ export const EditPlanForm = ({
                     onBlur={handleReferenceBlur}
                     onChange={handleChange}
                   />
-                  <Button
-                    variant="outline-warning"
-                    onClick={fetchVerses}
-                    disabled={!touched['reference'] && !!errors['reference']}
-                  >
+                  <Button onClick={fetchVerses} disabled={!touched['reference'] && !!errors['reference']}>
                     Reset and Load All
                   </Button>
                   <Form.Control.Feedback type="invalid">{errors['reference']}</Form.Control.Feedback>
                 </InputGroup>
-              </>
+              </div>
             ) : (
               ''
             )}
@@ -267,18 +259,18 @@ export const EditPlanForm = ({
         </Col>
         <Col className="plan-edit-sidebar">
           <div className="sidebar-content">
-            <div className="d-grid gap-2">
-              <Button variant="primary" onClick={handleSave}>
+            <div>
+              <Button className="save-button" onClick={handleSave}>
                 Save
               </Button>
               {user.isAdmin ? (
-                <Button onClick={handleSubmit} variant="success">
+                <Button className="submit-button" onClick={handleSubmit}>
                   Publish
                 </Button>
               ) : (
                 <></>
               )}
-              <Button onClick={handleReset} variant="danger">
+              <Button className="reset-button" onClick={handleReset}>
                 New
               </Button>
             </div>
