@@ -4,20 +4,31 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { NotesSnippet } from './NotesSnippet';
 import { paginateItems } from '../../../helpers/pagination';
 import { Note } from '@devouringscripture/common';
+import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 
-export const getNoteList = (data: Note[] | undefined) => {
+export const getNoteList = (
+  data: Note[] | undefined,
+  downloadedNoteDetails: DownloadedNoteDetails,
+  fetch: FetchFunction
+) => {
   if (data === undefined) {
     return [];
   }
 
-  return data.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
+  return data.map((item) => (
+    <NotesSnippet fetchNote={fetch} downloadedNoteDetails={downloadedNoteDetails} key={item.id} noteID={item.id} />
+  ));
 };
 
-export const AllNotes = () => {
+interface IAllNotes {
+  noteDetails: DownloadedNoteDetails;
+  fetchNote: FetchFunction;
+}
+export const AllNotes = ({ noteDetails, fetchNote }: IAllNotes) => {
   const { data, error, isLoading } = useGetAllNotesQuery();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const noteList = useMemo(() => getNoteList(data), [data]);
+  const noteList = useMemo(() => getNoteList(data, noteDetails, fetchNote), [data, noteDetails, fetchNote]);
 
   if (isLoading) {
     return <LoadingMessage />;

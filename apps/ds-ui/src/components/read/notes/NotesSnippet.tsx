@@ -1,25 +1,32 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useGetNoteByIdQuery } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import MDEditor from '@uiw/react-md-editor';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateSelectedNote, getSelectedNote } from '../../../stores/UISlice';
+import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 
 interface INotesSnippet {
   noteID: string;
+  downloadedNoteDetails: DownloadedNoteDetails;
+  fetchNote: FetchFunction;
 }
-export const NotesSnippet = ({ noteID }: INotesSnippet) => {
-  const selectedNote = useSelector(getSelectedNote);
+export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote }: INotesSnippet) => {
   const { data, error, isLoading } = useGetNoteByIdQuery(noteID);
-  const dispatch = useDispatch();
+
+  const userSelectedID = useMemo(() => {
+    if (downloadedNoteDetails.isDownloaded) {
+      return downloadedNoteDetails.note!.id;
+    } else {
+      return '';
+    }
+  }, [downloadedNoteDetails]);
 
   const selectNote = useCallback(() => {
     return () => {
-      if (noteID !== selectedNote) {
-        dispatch(updateSelectedNote(noteID));
+      if (noteID !== userSelectedID) {
+        fetchNote(noteID);
       }
     };
-  }, [dispatch, selectedNote, noteID]);
+  }, [fetchNote, noteID, userSelectedID]);
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -28,11 +35,11 @@ export const NotesSnippet = ({ noteID }: INotesSnippet) => {
     return <ErrorLoadingDataMessage theError={error} />;
   }
 
-  const textToDisplay = noteID === selectedNote ? '[Editing] ' + data!.text : data!.text;
+  const textToDisplay = noteID === userSelectedID ? '[Editing] ' + data!.text : data!.text;
   const noteSnippet = textToDisplay.length > 99 ? textToDisplay.substring(0, 99) + '...' : textToDisplay;
 
   return (
-    <div className={noteID === selectedNote ? 'note-snippet-selected' : 'note-snippet'} onClick={selectNote()}>
+    <div className={noteID === userSelectedID ? 'note-snippet-selected' : 'note-snippet'} onClick={selectNote()}>
       <MDEditor.Markdown source={noteSnippet} />
     </div>
   );

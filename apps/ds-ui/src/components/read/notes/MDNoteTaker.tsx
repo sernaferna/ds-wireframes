@@ -1,8 +1,5 @@
-import React, { useState, useReducer, useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useSelector, useDispatch } from 'react-redux';
-import { getSelectedReadingItem, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
-import { useLazyGetPassageByIdQuery } from '../../../services/PassagesService';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -13,12 +10,18 @@ import {
   getRangesForOSIS,
   getOSISForReference,
 } from '@devouringscripture/common';
-import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
-import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
+import { useCreateNoteMutation, useUpdateNoteMutation } from '../../../services/VapiService';
 import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 import { MarkdownBox } from '../../common/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
+import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
+
+const getStartEndForOsis = (osis: string): [string, string] => {
+  const range = getRangesForOSIS(osis)[0];
+
+  return [getFormattedReference(range.startOsisString), getFormattedReference(range.endOsisString)];
+};
 
 const schema = yup.object({
   value: yup.string(),
@@ -27,79 +30,116 @@ const schema = yup.object({
 });
 type ValuesSchema = yup.InferType<typeof schema>;
 
-export const MDNoteTaker = () => {
-  const selectedReadingItem = useSelector(getSelectedReadingItem);
-  const selectedNote = useSelector(getSelectedNote);
-  const [noteDownloaded, setNoteDownloaded] = useState(false);
-  const [passageDownloaded, setPassageDownloaded] = useState(false);
-  const [passageTrigger, passageResult] = useLazyGetPassageByIdQuery();
+interface IMDNoteTaker {
+  noteDetails: DownloadedNoteDetails;
+  passageDetails: DownloadedPassageDetails;
+  fetchNote: FetchFunction;
+}
+export const MDNoteTaker = ({ noteDetails, passageDetails, fetchNote }: IMDNoteTaker) => {
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
-  const dispatch = useDispatch();
-  const [noteTrigger, noteResult] = useLazyGetNoteByIdQuery();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
-  const initialValues = useMemo(() => {
-    const initVals: ValuesSchema = {
-      value: '',
-      startReference: '',
-      endReference: '',
-    };
-
-    if (selectedNote) {
-      if (noteDownloaded) {
-        const range = getRangesForOSIS(noteResult.data!.osis)[0];
-        initVals.value = noteResult.data!.text;
-        initVals.startReference = getFormattedReference(range.startOsisString);
-        initVals.endReference = getFormattedReference(range.endOsisString);
-      } else {
-        noteTrigger(selectedNote)
-          .unwrap()
-          .then((response) => {
-            const range = getRangesForOSIS(response.osis)[0];
-            initVals.value = response.text;
-            initVals.startReference = getFormattedReference(range.startOsisString);
-            initVals.endReference = getFormattedReference(range.endOsisString);
-            setNoteDownloaded(true);
-          })
-          .catch((err) => {
-            addErrorMessage('Error downloading note from server');
-            addErrorMessage(generateErrorStringFromError(err));
-          });
-      }
+  const downloadedNote = useMemo(() => {
+    if (noteDetails.isDownloaded) {
+      return noteDetails.note!.text;
     } else {
-      if (passageDownloaded) {
-      } else {
-        passageTrigger(selectedReadingItem)
-          .unwrap()
-          .then((response) => {
-            const range = getRangesForOSIS(response.osis)[0];
-            initVals.value = '';
-            initVals.startReference = getFormattedReference(range.startOsisString);
-            initVals.endReference = getFormattedReference(range.endOsisString);
-            setPassageDownloaded(true);
-          })
-          .catch((err) => {
-            addErrorMessage('Error downloading passage from server');
-            addErrorMessage(generateErrorStringFromError(err));
-          });
-      }
+      return '';
+    }
+  }, [noteDetails]);
+
+  const [downloadedStartRef, downloadedEndRef] = useMemo(() => {
+    let start = '';
+    let end = '';
+    if (noteDetails.isDownloaded) {
+      const [s, e] = getStartEndForOsis(noteDetails.note!.osis);
+      start = s;
+      end = e;
+    } else if (passageDetails.isDownloaded) {
+      const [s, e] = getStartEndForOsis(passageDetails.passage!.osis);
+      start = s;
+      end = e;
     }
 
-    return initVals;
-  }, [
-    selectedNote,
-    noteDownloaded,
-    noteTrigger,
-    addErrorMessage,
-    passageDownloaded,
-    setPassageDownloaded,
-    selectedReadingItem,
-  ]);
+    return [start, end];
+  }, [noteDetails, passageDetails]);
 
-  const newNoteBtn = useCallback(() => {
-    dispatch(updateSelectedNote(''));
-  }, [dispatch]);
+  const initialValues = useMemo((): ValuesSchema => {
+    return {
+      value: downloadedNote,
+      startReference: downloadedStartRef,
+      endReference: downloadedEndRef,
+    };
+  }, [downloadedNote, downloadedStartRef, downloadedEndRef]);
+
+  // TODO Halfway through refactoring; separate useMemo for note, start/end passage, and then init values
+
+  // const initialValues = useMemo(() => {
+  //   const initVals: ValuesSchema = {
+  //     value: '',
+  //     startReference: '',
+  //     endReference: '',
+  //   };
+
+  //   if (selectedNote) {
+  //     if (noteDownloaded) {
+  //       const range = getRangesForOSIS(noteResult.data!.osis)[0];
+
+  //       initVals.value = noteResult.data!.text;
+  //       initVals.startReference = getFormattedReference(range.startOsisString);
+  //       initVals.endReference = getFormattedReference(range.endOsisString);
+
+  //       return initVals;
+  //     } else {
+  //       noteTrigger(selectedNote)
+  //         .unwrap()
+  //         .then(() => {
+  //           setNoteDownloaded(true);
+  //         })
+  //         .catch((err) => {
+  //           addErrorMessage('Error downloading note from server');
+  //           addErrorMessage(generateErrorStringFromError(err));
+  //         });
+  //       return initVals;
+  //     }
+  //   } else {
+  //     if (passageDownloaded) {
+  //       const range = getRangesForOSIS(passageResult.data!.osis)[0];
+
+  //       initVals.value = '';
+  //       initVals.startReference = getFormattedReference(range.startOsisString);
+  //       initVals.endReference = getFormattedReference(range.endOsisString);
+
+  //       return initVals;
+  //     } else {
+  //       passageTrigger(selectedReadingItem)
+  //         .unwrap()
+  //         .then(() => {
+  //           setPassageDownloaded(true);
+  //         })
+  //         .catch((err) => {
+  //           addErrorMessage('Error downloading passage from server');
+  //           addErrorMessage(generateErrorStringFromError(err));
+  //         });
+  //       return initVals;
+  //     }
+  //   }
+  // }, [
+  //   selectedNote,
+  //   noteDownloaded,
+  //   noteTrigger,
+  //   noteResult.data,
+  //   passageTrigger,
+  //   addErrorMessage,
+  //   passageDownloaded,
+  //   setPassageDownloaded,
+  //   selectedReadingItem,
+  //   passageResult.data,
+  // ]);
+
+  const newNoteBtn = () => {
+    fetchNote('');
+  };
 
   const formSubmit = useCallback(
     (values: ValuesSchema) => {
@@ -109,9 +149,9 @@ export const MDNoteTaker = () => {
       const textToSend = values.value!;
       const osisToSend = `${getOSISForReference(values.startReference!)}-${getOSISForReference(values.endReference!)}`;
 
-      if (selectedNote) {
+      if (noteDetails.isDownloaded) {
         const newNote: Note = {
-          ...noteResult.data!,
+          ...noteDetails.note!,
           text: textToSend,
           osis: osisToSend,
         };
@@ -124,15 +164,8 @@ export const MDNoteTaker = () => {
         submitNote(newNote);
       }
     },
-    [addErrorMessage, updateNote, submitNote]
+    [addErrorMessage, updateNote, submitNote, noteDetails]
   );
-
-  if (passageResult.isLoading || noteResult.isLoading) {
-    return <LoadingMessage />;
-  }
-  if (passageResult.error || noteResult.error) {
-    return <ErrorLoadingDataMessage />;
-  }
 
   return (
     <Formik
@@ -157,11 +190,14 @@ export const MDNoteTaker = () => {
                 </Form.Label>
                 <Col>
                   <Form.Control
+                    name="startReference"
                     type="search"
                     placeholder="From..."
                     value={fp.values.startReference}
                     onChange={fp.handleChange}
                     onBlur={fp.handleBlur}
+                    isValid={fp.touched.startReference && !fp.errors.startReference}
+                    isInvalid={fp.touched.startReference && !!fp.errors.startReference}
                   />
                 </Col>
               </Row>
@@ -178,6 +214,9 @@ export const MDNoteTaker = () => {
                     value={fp.values.endReference}
                     onChange={fp.handleChange}
                     onBlur={fp.handleBlur}
+                    name="endReference"
+                    isValid={fp.touched.endReference && !fp.errors.endReference}
+                    isInvalid={fp.touched.endReference && !!fp.errors.endReference}
                   />
                 </Col>
               </Row>
@@ -186,15 +225,16 @@ export const MDNoteTaker = () => {
           <MarkdownBox
             content={fp.values.value || ''}
             changeCallback={(content) => {
-              //fp.handleChange();
+              fp.setFieldValue('value', content);
+              fp.setFieldTouched('value', true);
             }}
           />
           <div className="notes-bottom-panel">
             <Button variant="danger" onClick={newNoteBtn}>
-              {selectedReadingItem ? 'New' : 'Close'}
+              {passageDetails.isDownloaded ? 'New' : 'Close'}
             </Button>
             <Button variant="primary" type="submit">
-              {selectedNote ? 'Update' : 'Save'}
+              {noteDetails.isDownloaded ? 'Update' : 'Save'}
             </Button>
           </div>
         </Form>

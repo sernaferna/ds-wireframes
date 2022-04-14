@@ -6,13 +6,19 @@ import styled from 'styled-components';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 import { paginateItems } from '../../helpers/pagination';
+import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
 
 const CardContainerRow = styled(Row).attrs(() => ({
   xs: '1',
   xxl: '2',
 }))``;
 
-export const PassageCards = () => {
+interface IPassageCards {
+  passageDetails: DownloadedPassageDetails;
+  fetchNote: FetchFunction;
+  fetchPassage: FetchFunction;
+}
+export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassageCards) => {
   const { data, error, isLoading } = useGetCurrentItemsQuery();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -29,7 +35,15 @@ export const PassageCards = () => {
   }
 
   const items = data!.map((item) => {
-    return <PassageCard key={item.id} passage={item} />;
+    return (
+      <PassageCard
+        downloadedPassageDetails={passageDetails}
+        key={item.id}
+        passage={item}
+        fetchNote={fetchNote}
+        fetchPassage={fetchPassage}
+      />
+    );
   });
 
   const [paginatedItems, paginateElement] = paginateItems(items, 6, currentPage, setCurrentPage);

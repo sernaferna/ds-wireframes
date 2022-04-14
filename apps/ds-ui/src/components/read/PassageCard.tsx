@@ -1,13 +1,12 @@
-import React, { SyntheticEvent, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { SyntheticEvent, useCallback, useMemo } from 'react';
 import Card from 'react-bootstrap/Card';
 import Placeholder from 'react-bootstrap/Placeholder';
 import { Passage, getFormattedReference } from '@devouringscripture/common';
 import Col from 'react-bootstrap/Col';
 import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
-import { updateSelectedReadingItem, getSelectedReadingItem, updateSelectedNote } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
+import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
 
 export const PlaceholderCard = () => {
   return (
@@ -27,35 +26,41 @@ export const PlaceholderCard = () => {
   );
 };
 
-interface PrayerCardInterface {
+interface IPassageCard {
   passage: Passage;
+  downloadedPassageDetails: DownloadedPassageDetails;
+  fetchNote: FetchFunction;
+  fetchPassage: FetchFunction;
 }
-export const PassageCard = ({ passage }: PrayerCardInterface) => {
-  const selectedItemID = useSelector(getSelectedReadingItem);
-  const dispatch = useDispatch();
+export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetchPassage }: IPassageCard) => {
   const [deleteItem] = useDeletePassageItemMutation();
+
+  const selectedItemID = useMemo(() => {
+    if (downloadedPassageDetails.isDownloaded) {
+      return downloadedPassageDetails.passage!.id;
+    } else {
+      return '';
+    }
+  }, [downloadedPassageDetails]);
 
   const removeItem = useCallback(
     (e: SyntheticEvent) => {
-      dispatch(updateSelectedReadingItem(''));
+      fetchPassage('');
       deleteItem(passage.id);
       e.stopPropagation();
     },
-    [dispatch, deleteItem, passage.id]
+    [deleteItem, passage.id, fetchPassage]
   );
 
-  const titleClicked = useCallback(
-    (id: string) => {
-      if (selectedItemID === id) {
-        dispatch(updateSelectedReadingItem(''));
-        dispatch(updateSelectedNote(''));
-      } else {
-        dispatch(updateSelectedReadingItem(id));
-        dispatch(updateSelectedNote(''));
-      }
-    },
-    [selectedItemID, dispatch]
-  );
+  const titleClicked = (id: string) => {
+    if (selectedItemID === id) {
+      fetchPassage('');
+      fetchNote('');
+    } else {
+      fetchPassage(id);
+      fetchNote('');
+    }
+  };
 
   const bibleVersionLogo =
     passage.version === 'NIV' ? (

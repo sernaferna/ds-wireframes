@@ -6,8 +6,6 @@ export interface IUISlice {
   settingsShowing: boolean;
   dateShowingInActions?: string;
   dateShowingInReadingPlan?: string;
-  selectedReadingItem?: string;
-  selectedNote?: string;
   selectedPlan?: string;
   prayerViewFilter?: string;
 }
@@ -27,12 +25,6 @@ export const uiSlice = createSlice({
     updateDateShowingInReadingPlan: (state: IUISlice, action: PayloadAction<string>) => {
       state.dateShowingInReadingPlan = action.payload;
     },
-    updateSelectedReadingItem: (state: IUISlice, action: PayloadAction<string>) => {
-      state.selectedReadingItem = action.payload;
-    },
-    updateSelectedNote: (state: IUISlice, action: PayloadAction<string>) => {
-      state.selectedNote = action.payload;
-    },
     updateSelectedPlan: (state: IUISlice, action: PayloadAction<string>) => {
       state.selectedPlan = action.payload;
     },
@@ -46,8 +38,6 @@ export const {
   showSettingsPanel,
   updateDateShowingInActions,
   updateDateShowingInReadingPlan,
-  updateSelectedReadingItem,
-  updateSelectedNote,
   updateSelectedPlan,
   updatePrayerViewFilter,
 } = uiSlice.actions;
@@ -61,14 +51,6 @@ export const getDateForActions = (state: RootState) => {
 
 export const getDateForReadingPlan = (state: RootState) => {
   return state.ui.dateShowingInReadingPlan ? state.ui.dateShowingInReadingPlan : DateTime.now().toISODate();
-};
-
-export const getSelectedReadingItem = (state: RootState) => {
-  return state.ui.selectedReadingItem || '';
-};
-
-export const getSelectedNote = (state: RootState) => {
-  return state.ui.selectedNote || '';
 };
 
 export const getSelectedPlan = (state: RootState) => {
