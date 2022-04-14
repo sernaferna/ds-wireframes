@@ -20,11 +20,11 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { BaseInstantiatedPlan, PlanStatus } from '@devouringscripture/common';
 import { JoinLeaveButton } from './JoinLeaveButton';
 
-interface PlanSummaryViewAttrs {
+interface IPlanSummaryView {
   planId: string;
   percentageComplete?: number;
 }
-export const PlanSummaryView = ({ planId, percentageComplete = undefined }: PlanSummaryViewAttrs) => {
+export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPlanSummaryView) => {
   const { data, error, isLoading } = useGetPlanByInstanceIdQuery(planId);
   const [sendNewPlan] = useNewInstantiatedPlanMutation();
   const [sendRemovePlan] = useDeleteInstantiatedPlanMutation();

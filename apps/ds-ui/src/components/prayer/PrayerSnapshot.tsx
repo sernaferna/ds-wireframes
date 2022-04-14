@@ -47,10 +47,10 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
     const icon = getPrayerIcon(item.type);
 
     const itemBody = (
-      <p>
+      <div>
         {icon}
         <span className="lead">{item.title}</span> <MarkdownPreview content={item.text} />
-      </p>
+      </div>
     );
 
     return (

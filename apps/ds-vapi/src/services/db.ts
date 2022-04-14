@@ -4,7 +4,6 @@ import fs from 'fs';
 import csv from 'csv-parser';
 import { Verse, DatabaseError, InvalidPassageError } from '@devouringscripture/common';
 
-// TODO need a standard query function, that will standardize error handling and closing connections
 export const getDB = (): Database => {
   const db: Database = new sqlite3.Database('db/verses.db', (err: any) => {
     if (err) {

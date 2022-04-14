@@ -2,10 +2,10 @@ import React from 'react';
 import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 
-interface iPrayed {
+interface IPrayed {
   stats: ActionStats;
 }
-export const Prayed = ({ stats }: iPrayed) => {
+export const Prayed = ({ stats }: IPrayed) => {
   const dataset = [
     { name: 'Prayed', value: stats.prayed },
     { name: "Didn't Pray", value: stats.dataSize - stats.prayed },

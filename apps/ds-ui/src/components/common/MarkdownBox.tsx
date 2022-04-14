@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import Button from 'react-bootstrap/Button';
 
-interface MDPreview {
+interface IMarkdownPreview {
   content: string;
 }
-export const MarkdownPreview = ({ content }: MDPreview) => {
+export const MarkdownPreview = ({ content }: IMarkdownPreview) => {
   return <MDEditor.Markdown source={content} className="md-editor-preview-view" />;
 };
 
@@ -34,12 +34,12 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   return command;
 };
 
-interface MarkdownBoxParams {
+interface IMarkdownBox {
   content: string;
   changeCallback: (newValue: string) => void;
   showPreview?: boolean;
 }
-export const MarkdownBox = ({ content, changeCallback, showPreview = false }: MarkdownBoxParams) => {
+export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IMarkdownBox) => {
   const [showPreviewState, setShowPreviewState] = useState(showPreview);
 
   const reversePreviewState = () => {
@@ -60,7 +60,6 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: Ma
         <MDEditor
           value={content}
           onChange={handleChangeEvent}
-          autoFocus={true}
           highlightEnable={true}
           preview="edit"
           defaultTabEnable={true}
@@ -70,7 +69,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: Ma
         />
       </div>
       <div className="md-editor-preview">
-        <Button size="sm" variant="secondary" onClick={reversePreviewState}>
+        <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
           {showPreviewState ? 'Hide Preview' : 'Show Preview'}
         </Button>
         {showPreviewState ? <MarkdownPreview content={content} /> : <></>}

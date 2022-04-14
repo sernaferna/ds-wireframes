@@ -3,10 +3,10 @@ import { ActionsForDay } from '@devouringscripture/common';
 import { ActionCheckItem } from './ActionCheckItem';
 import { useMarkItemReadForDayMutation } from '../../services/ActionsService';
 
-interface ActionWidgetFormInterface {
+interface IActionWidgetForm {
   day: ActionsForDay;
 }
-export function ActionWidgetForm({ day }: ActionWidgetFormInterface) {
+export function ActionWidgetForm({ day }: IActionWidgetForm) {
   const [markReadUnread] = useMarkItemReadForDayMutation();
 
   const itemClicked = useCallback(

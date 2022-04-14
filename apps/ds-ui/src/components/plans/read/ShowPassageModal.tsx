@@ -15,7 +15,7 @@ const OTLONGID = 'actions|default|rlotpass';
 const NTSHORTID = 'actions|default|rsntpass';
 const NTLONGID = 'actions|default|rlntpass';
 
-interface ShowPassageModalInterface {
+interface IShowPassageModal {
   passage: BasePassage;
   closeFunction(): void;
   saveFunction(): void;
@@ -32,7 +32,7 @@ export const ShowPassageModal = ({
   isComplete,
   show,
   dateForReading,
-}: ShowPassageModalInterface) => {
+}: IShowPassageModal) => {
   const { data, error, isLoading } = useGetActionByDateQuery(dateForReading);
   const [markItemReadUnread] = useMarkItemReadForDayMutation();
 

@@ -14,7 +14,7 @@ import { WeeksDropdown } from './WeeksDropdown';
 import { RenderWeeks } from './RenderWeeks';
 import { UserAttributes, getFormattedReference, PlanStatus } from '@devouringscripture/common';
 
-interface EPFInterface {
+interface IEditPlanForm {
   user: UserAttributes;
   values: PlanValues;
   errors: Record<string, string>;
@@ -47,7 +47,7 @@ export const EditPlanForm = ({
   moveVerseUp,
   moveVerseDown,
   updateDay,
-}: EPFInterface) => {
+}: IEditPlanForm) => {
   const [showWarning, setShowWarning] = useState(true);
 
   const hideWarning = () => {

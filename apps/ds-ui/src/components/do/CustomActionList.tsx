@@ -10,11 +10,11 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import { BaseActionType, ActionType } from '@devouringscripture/common';
 
-interface GenerateListParams {
+interface IGenerateList {
   data: ActionType[] | undefined;
   deleteCallback(id: string): void;
 }
-const generateList = ({ data, deleteCallback }: GenerateListParams) => {
+const generateList = ({ data, deleteCallback }: IGenerateList) => {
   if (data === undefined) {
     return <></>;
   }

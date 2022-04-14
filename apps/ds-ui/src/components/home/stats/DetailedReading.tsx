@@ -2,10 +2,10 @@ import React from 'react';
 import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, BarChart, Bar, YAxis, XAxis, Tooltip } from 'recharts';
 
-interface DetailedReadingInterface {
+interface IDetailedReading {
   stats: ActionStats;
 }
-export const DetailedReading = ({ stats }: DetailedReadingInterface) => {
+export const DetailedReading = ({ stats }: IDetailedReading) => {
   const data = [
     {
       name: 'Long OT',

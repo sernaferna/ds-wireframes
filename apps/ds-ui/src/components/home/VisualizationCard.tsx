@@ -2,11 +2,11 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 
-interface VisualizationCardInterface {
+interface IVisualizationCard {
   title: string;
   children: JSX.Element;
 }
-export const VisualizationCard = ({ title, children }: VisualizationCardInterface) => {
+export const VisualizationCard = ({ title, children }: IVisualizationCard) => {
   return (
     <Col className="vizualization-card">
       <Card className="vizualization-card-content">

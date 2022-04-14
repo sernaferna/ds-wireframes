@@ -11,12 +11,12 @@ const getLink = (ref: string, version: string): string => {
   return 'https://www.biblegateway.com/passage/?search=' + encodeURI(ref) + '&version=' + version;
 };
 
-interface PassageLinkInterface {
+interface IPassageLink {
   range: OSISRange;
   version: string;
   selected: boolean;
 }
-const PassageLink = ({ range, version, selected }: PassageLinkInterface) => {
+const PassageLink = ({ range, version, selected }: IPassageLink) => {
   const reference =
     range.startOsisString === range.endOsisString
       ? getReferenceForOSIS(range.startOsisString)
@@ -35,11 +35,11 @@ const PassageLink = ({ range, version, selected }: PassageLinkInterface) => {
   );
 };
 
-interface PassageLinkBodyInterface {
+interface IPassageLinkBody {
   passage: BasePassage;
   selected: boolean;
 }
-export const PassageLinkBody = ({ passage, selected }: PassageLinkBodyInterface) => {
+export const PassageLinkBody = ({ passage, selected }: IPassageLinkBody) => {
   const readablePassage = getFormattedReference(passage.osis);
   const passages: OSISRange[] = getPassagesForReference(readablePassage);
 

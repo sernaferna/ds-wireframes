@@ -2,10 +2,10 @@ import React from 'react';
 import { ActionStats } from '@devouringscripture/common';
 import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 
-interface AllActivitiesInterface {
+interface IAllActivities {
   stats: ActionStats;
 }
-export const AllActivities = ({ stats }: AllActivitiesInterface) => {
+export const AllActivities = ({ stats }: IAllActivities) => {
   const data = [
     {
       name: 'Reading',

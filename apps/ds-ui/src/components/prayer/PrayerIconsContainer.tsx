@@ -1,12 +1,12 @@
 import React from 'react';
 import { TrashFill } from 'react-bootstrap-icons';
 
-interface PrayerIconsContainerInterface {
+interface IPrayerIconsContainer {
   itemId: string;
   deleteItem(id: string): void;
   children: JSX.Element;
 }
-export const PrayerIconsContainer = ({ itemId, deleteItem, children }: PrayerIconsContainerInterface) => {
+export const PrayerIconsContainer = ({ itemId, deleteItem, children }: IPrayerIconsContainer) => {
   const handleClick = (id: string) => {
     return () => {
       deleteItem(id);

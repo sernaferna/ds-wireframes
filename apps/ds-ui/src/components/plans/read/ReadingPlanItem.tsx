@@ -30,12 +30,12 @@ const getDayNum = (plan: InstantiatedPlan, dateToShow: string): number => {
   return -1;
 };
 
-interface RPI {
+interface IReadingPlanItem {
   plan: InstantiatedPlan;
   dateToShow: string;
   version: string;
 }
-export const ReadingPlanItem = ({ plan, dateToShow, version }: RPI) => {
+export const ReadingPlanItem = ({ plan, dateToShow, version }: IReadingPlanItem) => {
   const { data, error, isLoading } = useGetPlanByInstanceIdQuery(plan.planInstanceId);
   const [modalShowing, setModalShowing] = useState(false);
   const [newItem] = useNewItemMutation();

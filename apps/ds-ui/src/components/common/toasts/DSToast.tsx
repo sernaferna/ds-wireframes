@@ -49,7 +49,7 @@ const getIcon = (type: ToastType): JSX.Element => {
   }
 };
 
-export interface ToastProps {
+export interface IDSToast {
   id: string;
   destroy: () => void;
   title: string;
@@ -57,13 +57,7 @@ export interface ToastProps {
   duration?: number;
   type?: ToastType;
 }
-const DSToast: React.FC<ToastProps> = ({
-  destroy,
-  content,
-  title,
-  duration = 0,
-  type = ToastType.None,
-}: ToastProps) => {
+const DSToast = ({ destroy, content, title, duration = 0, type = ToastType.None }: IDSToast) => {
   useEffect(() => {
     if (!duration) return;
 

@@ -1,13 +1,5 @@
-import React, { useEffect, useReducer, useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-  getSelectedReadingItem,
-  updateSelectedReadingItem,
-  getSelectedNote,
-  updateSelectedNote,
-} from '../../../stores/UISlice';
-import { useLazyGetPassageByIdQuery } from '../../../services/PassagesService';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -16,198 +8,237 @@ import {
   Note,
   getFormattedReference,
   getRangesForOSIS,
-  OSISRange,
   getOSISForReference,
-  ErrorResponse,
 } from '@devouringscripture/common';
-import { useCreateNoteMutation, useLazyGetNoteByIdQuery, useUpdateNoteMutation } from '../../../services/VapiService';
-import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
+import { useCreateNoteMutation, useUpdateNoteMutation } from '../../../services/VapiService';
 import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 import { MarkdownBox } from '../../common/MarkdownBox';
-import { useNoteReducer, ReducerActionType, initialInternalState } from './MDNoteReducer';
+import * as yup from 'yup';
+import { Formik, FormikProps } from 'formik';
+import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
 
-export const MDNoteTaker = () => {
-  const [localState, dispatchLocalState] = useReducer(useNoteReducer, initialInternalState);
-  const selectedReadingItem = useSelector(getSelectedReadingItem);
-  const selectedNote = useSelector(getSelectedNote);
-  const [passageTrigger, passageResult] = useLazyGetPassageByIdQuery();
+const getStartEndForOsis = (osis: string): [string, string] => {
+  const range = getRangesForOSIS(osis)[0];
+
+  return [getFormattedReference(range.startOsisString), getFormattedReference(range.endOsisString)];
+};
+
+const schema = yup.object({
+  value: yup.string(),
+  startReference: yup.string(),
+  endReference: yup.string(),
+});
+type ValuesSchema = yup.InferType<typeof schema>;
+
+interface IMDNoteTaker {
+  noteDetails: DownloadedNoteDetails;
+  passageDetails: DownloadedPassageDetails;
+  fetchNote: FetchFunction;
+}
+export const MDNoteTaker = ({ noteDetails, passageDetails, fetchNote }: IMDNoteTaker) => {
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
-  const dispatch = useDispatch();
-  const [noteTrigger, noteResult] = useLazyGetNoteByIdQuery();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
-  /*
-  Initialization of this component is complex, because there could be a 
-  selected note, but if not there could be a selected passage, either of 
-  which should be used to set the start/end passages.
-  */
-  useEffect(() => {
-    if (passageResult.error) {
-      if ('data' in passageResult.error) {
-        addErrorMessage(generateErrorStringFromError(passageResult.error.data as ErrorResponse));
-      } else {
-        addErrorMessage('Error retrieving passage from server');
-      }
-      return;
+  const downloadedNote = useMemo(() => {
+    if (noteDetails.isDownloaded) {
+      return noteDetails.note!.text;
+    } else {
+      return '';
     }
-    if (noteResult.error) {
-      if ('data' in noteResult.error) {
-        addErrorMessage(generateErrorStringFromError(noteResult.error.data as ErrorResponse));
-      } else {
-        addErrorMessage('Error retrieving note from server');
-      }
-      return;
-    }
-    if (passageResult.isLoading || noteResult.isLoading) {
-      return;
+  }, [noteDetails]);
+
+  const [downloadedStartRef, downloadedEndRef] = useMemo(() => {
+    let start = '';
+    let end = '';
+    if (noteDetails.isDownloaded) {
+      const [s, e] = getStartEndForOsis(noteDetails.note!.osis);
+      start = s;
+      end = e;
+    } else if (passageDetails.isDownloaded) {
+      const [s, e] = getStartEndForOsis(passageDetails.passage!.osis);
+      start = s;
+      end = e;
     }
 
-    if (selectedNote) {
-      if (selectedNote !== localState.localNoteId) {
-        dispatchLocalState({ type: ReducerActionType.RESET_FOR_SELECTED_NOTE, payload: selectedNote });
-        noteTrigger(selectedNote);
-      }
+    return [start, end];
+  }, [noteDetails, passageDetails]);
 
-      if (noteResult && noteResult.isSuccess && !noteResult.isLoading) {
-        const range: OSISRange = getRangesForOSIS(noteResult.data.osis)[0];
-        dispatchLocalState({
-          type: ReducerActionType.RESET_FOR_NOTE_RETRIEVED,
-          payload: {
-            startReference: getFormattedReference(range.startOsisString),
-            endReference: getFormattedReference(range.endOsisString),
-            value: noteResult.data.text,
-          },
-        });
-        return;
-      }
-    } else if (selectedReadingItem) {
-      if (selectedReadingItem !== localState.localSelectedReadingItem) {
-        dispatchLocalState({ type: ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM, payload: selectedReadingItem });
-        passageTrigger(selectedReadingItem);
-      }
-
-      if (passageResult && passageResult.isSuccess && !passageResult.isLoading) {
-        const range: OSISRange = getRangesForOSIS(passageResult.data.osis)[0];
-        dispatchLocalState({
-          type: ReducerActionType.RESET_FOR_PASSAGE_NO_NOTE,
-          payload: {
-            startReference: getFormattedReference(range.startOsisString),
-            endReference: getFormattedReference(range.endOsisString),
-          },
-        });
-        return;
-      }
-    }
-  }, [
-    selectedReadingItem,
-    selectedNote,
-    passageResult,
-    noteResult,
-    noteTrigger,
-    passageTrigger,
-    localState.localNoteId,
-    localState.localSelectedReadingItem,
-    addErrorMessage,
-  ]);
-
-  const submitForm = useCallback(() => {
-    dispatch(updateSelectedReadingItem(''));
-
-    if (selectedNote) {
-      const newNote: Note = {
-        ...noteResult.data!,
-        text: localState.value,
-        osis: `${getOSISForReference(localState.startReference)}-${getOSISForReference(localState.endReference)}`,
-      };
-      updateNote(newNote);
-      return;
-    }
-    const note: BaseNote = {
-      text: localState.value,
-      osis: `${getOSISForReference(localState.startReference)}-${getOSISForReference(localState.endReference)}`,
+  const initialValues = useMemo((): ValuesSchema => {
+    return {
+      value: downloadedNote,
+      startReference: downloadedStartRef,
+      endReference: downloadedEndRef,
     };
+  }, [downloadedNote, downloadedStartRef, downloadedEndRef]);
 
-    submitNote(note);
-  }, [
-    dispatch,
-    selectedNote,
-    noteResult,
-    localState.value,
-    localState.startReference,
-    localState.endReference,
-    updateNote,
-    submitNote,
-  ]);
+  // TODO Halfway through refactoring; separate useMemo for note, start/end passage, and then init values
 
-  const newNoteBtn = useCallback(() => {
-    dispatch(updateSelectedNote(''));
-  }, [dispatch]);
+  // const initialValues = useMemo(() => {
+  //   const initVals: ValuesSchema = {
+  //     value: '',
+  //     startReference: '',
+  //     endReference: '',
+  //   };
 
-  if (passageResult.isLoading || noteResult.isLoading) {
-    return <LoadingMessage />;
-  }
-  if (passageResult.error || noteResult.error) {
-    return <ErrorLoadingDataMessage />;
-  }
+  //   if (selectedNote) {
+  //     if (noteDownloaded) {
+  //       const range = getRangesForOSIS(noteResult.data!.osis)[0];
+
+  //       initVals.value = noteResult.data!.text;
+  //       initVals.startReference = getFormattedReference(range.startOsisString);
+  //       initVals.endReference = getFormattedReference(range.endOsisString);
+
+  //       return initVals;
+  //     } else {
+  //       noteTrigger(selectedNote)
+  //         .unwrap()
+  //         .then(() => {
+  //           setNoteDownloaded(true);
+  //         })
+  //         .catch((err) => {
+  //           addErrorMessage('Error downloading note from server');
+  //           addErrorMessage(generateErrorStringFromError(err));
+  //         });
+  //       return initVals;
+  //     }
+  //   } else {
+  //     if (passageDownloaded) {
+  //       const range = getRangesForOSIS(passageResult.data!.osis)[0];
+
+  //       initVals.value = '';
+  //       initVals.startReference = getFormattedReference(range.startOsisString);
+  //       initVals.endReference = getFormattedReference(range.endOsisString);
+
+  //       return initVals;
+  //     } else {
+  //       passageTrigger(selectedReadingItem)
+  //         .unwrap()
+  //         .then(() => {
+  //           setPassageDownloaded(true);
+  //         })
+  //         .catch((err) => {
+  //           addErrorMessage('Error downloading passage from server');
+  //           addErrorMessage(generateErrorStringFromError(err));
+  //         });
+  //       return initVals;
+  //     }
+  //   }
+  // }, [
+  //   selectedNote,
+  //   noteDownloaded,
+  //   noteTrigger,
+  //   noteResult.data,
+  //   passageTrigger,
+  //   addErrorMessage,
+  //   passageDownloaded,
+  //   setPassageDownloaded,
+  //   selectedReadingItem,
+  //   passageResult.data,
+  // ]);
+
+  const newNoteBtn = () => {
+    fetchNote('');
+  };
+
+  const formSubmit = useCallback(
+    (values: ValuesSchema) => {
+      if (values.value === undefined || values.startReference === undefined || values.endReference === undefined) {
+        addErrorMessage('Note not valid');
+      }
+      const textToSend = values.value!;
+      const osisToSend = `${getOSISForReference(values.startReference!)}-${getOSISForReference(values.endReference!)}`;
+
+      if (noteDetails.isDownloaded) {
+        const newNote: Note = {
+          ...noteDetails.note!,
+          text: textToSend,
+          osis: osisToSend,
+        };
+        updateNote(newNote);
+      } else {
+        const newNote: BaseNote = {
+          text: textToSend,
+          osis: osisToSend,
+        };
+        submitNote(newNote);
+      }
+    },
+    [addErrorMessage, updateNote, submitNote, noteDetails]
+  );
 
   return (
-    <>
-      <Row>
-        <Col>
-          <AlertUI />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={formSubmit}
+      validateOnBlur={false}
+      validateOnChange={true}
+    >
+      {(fp: FormikProps<ValuesSchema>) => (
+        <Form noValidate onSubmit={fp.handleSubmit}>
           <Row>
-            <Form.Label column="lg" lg="3">
-              From
-            </Form.Label>
             <Col>
-              <Form.Control
-                type="search"
-                placeholder="From..."
-                value={localState.startReference}
-                onChange={(value) =>
-                  dispatchLocalState({ type: ReducerActionType.SET_START_REF, payload: value.target.value })
-                }
-              />
+              <AlertUI />
             </Col>
           </Row>
-        </Col>
-        <Col>
           <Row>
-            <Form.Label column="lg" lg="1">
-              to
-            </Form.Label>
             <Col>
-              <Form.Control
-                type="search"
-                placeholder="To..."
-                value={localState.endReference}
-                onChange={(value) =>
-                  dispatchLocalState({ type: ReducerActionType.SET_END_REF, payload: value.target.value })
-                }
-              />
+              <Row>
+                <Form.Label column="lg" lg="3">
+                  From
+                </Form.Label>
+                <Col>
+                  <Form.Control
+                    name="startReference"
+                    type="search"
+                    placeholder="From..."
+                    value={fp.values.startReference}
+                    onChange={fp.handleChange}
+                    onBlur={fp.handleBlur}
+                    isValid={fp.touched.startReference && !fp.errors.startReference}
+                    isInvalid={fp.touched.startReference && !!fp.errors.startReference}
+                  />
+                </Col>
+              </Row>
+            </Col>
+            <Col>
+              <Row>
+                <Form.Label column="lg" lg="1">
+                  to
+                </Form.Label>
+                <Col>
+                  <Form.Control
+                    type="search"
+                    placeholder="To..."
+                    value={fp.values.endReference}
+                    onChange={fp.handleChange}
+                    onBlur={fp.handleBlur}
+                    name="endReference"
+                    isValid={fp.touched.endReference && !fp.errors.endReference}
+                    isInvalid={fp.touched.endReference && !!fp.errors.endReference}
+                  />
+                </Col>
+              </Row>
             </Col>
           </Row>
-        </Col>
-      </Row>
-      <MarkdownBox
-        content={localState.value}
-        changeCallback={(content) => {
-          dispatchLocalState({ type: ReducerActionType.SET_VALUE, payload: content });
-        }}
-      />
-      <div className="notes-bottom-panel">
-        <Button variant="danger" onClick={newNoteBtn}>
-          {selectedReadingItem ? 'New' : 'Close'}
-        </Button>
-        <Button variant="primary" onClick={submitForm}>
-          {selectedNote ? 'Update' : 'Save'}
-        </Button>
-      </div>
-    </>
+          <MarkdownBox
+            content={fp.values.value || ''}
+            changeCallback={(content) => {
+              fp.setFieldValue('value', content);
+              fp.setFieldTouched('value', true);
+            }}
+          />
+          <div className="notes-bottom-panel">
+            <Button variant="danger" onClick={newNoteBtn}>
+              {passageDetails.isDownloaded ? 'New' : 'Close'}
+            </Button>
+            <Button variant="primary" type="submit">
+              {noteDetails.isDownloaded ? 'Update' : 'Save'}
+            </Button>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };

@@ -1,34 +1,40 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { getSelectedReadingItem, getSelectedNote } from '../../../stores/UISlice';
 import { MDNoteTaker } from './MDNoteTaker';
 import { NotesForPassage } from './NotesForPassage';
-import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
 import Alert from 'react-bootstrap/Alert';
 
-export const PassageNotes = () => {
-  const selectedReadingItem = useSelector(getSelectedReadingItem);
-  const selectedNote = useSelector(getSelectedNote);
-  const { data, error, isLoading } = useGetPassageByIdQuery(selectedReadingItem);
-
-  if (isLoading) {
+interface IPassageNotes {
+  noteDetails: DownloadedNoteDetails;
+  passageDetails: DownloadedPassageDetails;
+  fetchNote: FetchFunction;
+}
+export const PassageNotes = ({ noteDetails, passageDetails, fetchNote }: IPassageNotes) => {
+  if (noteDetails.isLoading || passageDetails.isLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (noteDetails.error) {
+    return <ErrorLoadingDataMessage theError={noteDetails.error} />;
+  }
+  if (passageDetails.error) {
+    return <ErrorLoadingDataMessage theError={passageDetails.error} />;
   }
 
-  if (!selectedReadingItem && !selectedNote) {
+  if (!noteDetails.isDownloaded && !passageDetails.isDownloaded) {
     return <Alert variant="primary">Please select a passage or noteto take notes.</Alert>;
   }
 
   return (
     <>
       <h4>Notes</h4>
-      <MDNoteTaker />
+      <MDNoteTaker fetchNote={fetchNote} noteDetails={noteDetails} passageDetails={passageDetails} />
 
-      {selectedReadingItem ? <NotesForPassage osis={data!.osis} /> : <></>}
+      {passageDetails.isDownloaded ? (
+        <NotesForPassage fetchNote={fetchNote} noteDetails={noteDetails} osis={passageDetails.passage!.osis} />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

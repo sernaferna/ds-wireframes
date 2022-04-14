@@ -4,7 +4,6 @@ interface InternalState {
   value: string;
   startReference: string;
   endReference: string;
-  showPreview: boolean;
   localSelectedReadingItem: string;
   localNoteId: string;
 }
@@ -13,7 +12,6 @@ export const initialInternalState: InternalState = {
   value: '',
   startReference: '',
   endReference: '',
-  showPreview: false,
   localSelectedReadingItem: '',
   localNoteId: '',
 };
@@ -22,7 +20,6 @@ export enum ReducerActionType {
   SET_VALUE,
   SET_START_REF,
   SET_END_REF,
-  SET_SHOW_PREVIEW,
   SET_LOCAL_SELECTED_READING_ITEM,
   RESET_FOR_SELECTED_NOTE,
   RESET_FOR_NOTE_RETRIEVED,
@@ -42,11 +39,6 @@ type SetStartRefAction = {
 type SetEndRefAction = {
   type: ReducerActionType.SET_END_REF;
   payload: string;
-};
-
-type SetShowPreviewAction = {
-  type: ReducerActionType.SET_SHOW_PREVIEW;
-  payload: boolean;
 };
 
 type SetLocalSelectedReadingItemAction = {
@@ -80,7 +72,6 @@ type ReducerAction =
   | SetValueAction
   | SetStartRefAction
   | SetEndRefAction
-  | SetShowPreviewAction
   | SetLocalSelectedReadingItemAction
   | ResetForSelectedNoteAction
   | ResetForNoteRetrievedAction
@@ -94,8 +85,6 @@ export const useNoteReducer: Reducer<InternalState, ReducerAction> = (state, act
       return { ...state, startReference: action.payload };
     case ReducerActionType.SET_END_REF:
       return { ...state, endReference: action.payload };
-    case ReducerActionType.SET_SHOW_PREVIEW:
-      return { ...state, showPreview: action.payload };
     case ReducerActionType.SET_LOCAL_SELECTED_READING_ITEM:
       return { ...state, localSelectedReadingItem: action.payload };
     case ReducerActionType.RESET_FOR_SELECTED_NOTE:

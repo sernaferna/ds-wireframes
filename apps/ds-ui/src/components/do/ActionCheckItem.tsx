@@ -3,11 +3,11 @@ import { ActionEntry } from '@devouringscripture/common';
 import { Check2Circle, Circle } from 'react-bootstrap-icons';
 import Stack from 'react-bootstrap/Stack';
 
-interface ActionCheckItemInterface {
+interface IActionCheckItem {
   item: ActionEntry;
   clickFunction(id: string): void;
 }
-export function ActionCheckItem({ item, clickFunction }: ActionCheckItemInterface) {
+export function ActionCheckItem({ item, clickFunction }: IActionCheckItem) {
   const icon = useMemo(
     () => (item.completed ? <Check2Circle className="text-success" /> : <Circle className="text-secondary" />),
     [item.completed]

@@ -26,10 +26,10 @@ export const generateErrorStringFromError = (er: ErrorResponse): JSX.Element => 
   );
 };
 
-interface ErrorLoadingDataInterface {
+interface IErrorLoadingDataMessage {
   theError?: Error | FetchBaseQueryError | SerializedError;
 }
-export function ErrorLoadingDataMessage({ theError }: ErrorLoadingDataInterface) {
+export function ErrorLoadingDataMessage({ theError }: IErrorLoadingDataMessage) {
   let message: string | JSX.Element = '';
   if (theError) {
     if ('data' in theError) {
