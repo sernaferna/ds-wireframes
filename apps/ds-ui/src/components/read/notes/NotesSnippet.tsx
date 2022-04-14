@@ -8,8 +8,9 @@ interface INotesSnippet {
   noteID: string;
   downloadedNoteDetails: DownloadedNoteDetails;
   fetchNote: FetchFunction;
+  fetchPassage: FetchFunction;
 }
-export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote }: INotesSnippet) => {
+export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPassage }: INotesSnippet) => {
   const { data, error, isLoading } = useGetNoteByIdQuery(noteID);
 
   const userSelectedID = useMemo(() => {
@@ -24,9 +25,10 @@ export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote }: INote
     return () => {
       if (noteID !== userSelectedID) {
         fetchNote(noteID);
+        fetchPassage('');
       }
     };
-  }, [fetchNote, noteID, userSelectedID]);
+  }, [fetchNote, fetchPassage, noteID, userSelectedID]);
 
   if (isLoading) {
     return <LoadingMessage />;

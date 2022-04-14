@@ -9,8 +9,9 @@ interface IPassageNotes {
   noteDetails: DownloadedNoteDetails;
   passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
+  fetchPassage: FetchFunction;
 }
-export const PassageNotes = ({ noteDetails, passageDetails, fetchNote }: IPassageNotes) => {
+export const PassageNotes = ({ noteDetails, passageDetails, fetchNote, fetchPassage }: IPassageNotes) => {
   if (noteDetails.isLoading || passageDetails.isLoading) {
     return <LoadingMessage />;
   }
@@ -31,7 +32,12 @@ export const PassageNotes = ({ noteDetails, passageDetails, fetchNote }: IPassag
       <MDNoteTaker fetchNote={fetchNote} noteDetails={noteDetails} passageDetails={passageDetails} />
 
       {passageDetails.isDownloaded ? (
-        <NotesForPassage fetchNote={fetchNote} noteDetails={noteDetails} osis={passageDetails.passage!.osis} />
+        <NotesForPassage
+          fetchNote={fetchNote}
+          fetchPassage={fetchPassage}
+          noteDetails={noteDetails}
+          osis={passageDetails.passage!.osis}
+        />
       ) : (
         <></>
       )}
