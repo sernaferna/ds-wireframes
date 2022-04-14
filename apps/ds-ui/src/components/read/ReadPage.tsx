@@ -137,12 +137,17 @@ export const ReadPage = () => {
             <Col className="read-passagenotes-col">
               <PassageNotes
                 fetchNote={getNoteCallback}
+                fetchPassage={getPassageCallback}
                 noteDetails={downloadedNoteDetails}
                 passageDetails={downloadedPassageDetails}
               />
             </Col>
             <Col className="read-all-notes-col">
-              <AllNotes noteDetails={downloadedNoteDetails} fetchNote={getNoteCallback} />
+              <AllNotes
+                noteDetails={downloadedNoteDetails}
+                fetchNote={getNoteCallback}
+                fetchPassage={getPassageCallback}
+              />
             </Col>
           </Row>
         </Col>

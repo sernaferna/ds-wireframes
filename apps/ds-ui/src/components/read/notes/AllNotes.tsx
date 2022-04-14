@@ -9,26 +9,37 @@ import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 export const getNoteList = (
   data: Note[] | undefined,
   downloadedNoteDetails: DownloadedNoteDetails,
-  fetch: FetchFunction
+  fetchNote: FetchFunction,
+  fetchPassage: FetchFunction
 ) => {
   if (data === undefined) {
     return [];
   }
 
   return data.map((item) => (
-    <NotesSnippet fetchNote={fetch} downloadedNoteDetails={downloadedNoteDetails} key={item.id} noteID={item.id} />
+    <NotesSnippet
+      fetchNote={fetchNote}
+      fetchPassage={fetchPassage}
+      downloadedNoteDetails={downloadedNoteDetails}
+      key={item.id}
+      noteID={item.id}
+    />
   ));
 };
 
 interface IAllNotes {
   noteDetails: DownloadedNoteDetails;
   fetchNote: FetchFunction;
+  fetchPassage: FetchFunction;
 }
-export const AllNotes = ({ noteDetails, fetchNote }: IAllNotes) => {
+export const AllNotes = ({ noteDetails, fetchNote, fetchPassage }: IAllNotes) => {
   const { data, error, isLoading } = useGetAllNotesQuery();
   const [currentPage, setCurrentPage] = useState(1);
 
-  const noteList = useMemo(() => getNoteList(data, noteDetails, fetchNote), [data, noteDetails, fetchNote]);
+  const noteList = useMemo(
+    () => getNoteList(data, noteDetails, fetchNote, fetchPassage),
+    [data, noteDetails, fetchNote, fetchPassage]
+  );
 
   if (isLoading) {
     return <LoadingMessage />;

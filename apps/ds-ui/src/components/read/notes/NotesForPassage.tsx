@@ -8,8 +8,9 @@ interface INotesForPassage {
   osis: string;
   noteDetails: DownloadedNoteDetails;
   fetchNote: FetchFunction;
+  fetchPassage: FetchFunction;
 }
-export const NotesForPassage = ({ osis, noteDetails, fetchNote }: INotesForPassage) => {
+export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: INotesForPassage) => {
   const [trigger, result] = useLazyGetAllNotesForPassageQuery();
 
   useEffect(() => {
@@ -19,8 +20,8 @@ export const NotesForPassage = ({ osis, noteDetails, fetchNote }: INotesForPassa
   }, [osis, result, trigger]);
 
   const notesList = useMemo(
-    () => getNoteList(result.data, noteDetails, fetchNote),
-    [result.data, noteDetails, fetchNote]
+    () => getNoteList(result.data, noteDetails, fetchNote, fetchPassage),
+    [result.data, noteDetails, fetchNote, fetchPassage]
   );
 
   if (result.isUninitialized || result.isLoading) {
