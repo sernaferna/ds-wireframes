@@ -3,7 +3,6 @@ import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/To
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import styled from 'styled-components';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import {
   useGetAllItemsQuery,
@@ -23,13 +22,6 @@ import { PrayerListItem } from '@devouringscripture/common';
 import { MarkdownPreview } from '../common/MarkdownBox';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
-
-export const CardContainerRow = styled(Row).attrs(() => ({
-  xs: '1',
-  md: '2',
-  lg: '2',
-  xxl: '3',
-}))``;
 
 export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   if (type === undefined) {
@@ -179,10 +171,10 @@ export const PrayerCards = () => {
 
   if (isLoading || userIsLoading) {
     return (
-      <CardContainerRow>
+      <Row className="prayer-cards-container-row">
         <PlaceholderCard />
         <PlaceholderCard />
-      </CardContainerRow>
+      </Row>
     );
   }
   if (error) {
@@ -195,9 +187,9 @@ export const PrayerCards = () => {
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);
 
   return (
-    <CardContainerRow>
+    <Row className="prayer-cards-container-row">
       {paginatedItems}
       {paginationElement}
-    </CardContainerRow>
+    </Row>
   );
 };

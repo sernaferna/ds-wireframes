@@ -10,6 +10,12 @@
   @extend .col-lg-3;
 }
 
+.prayer-cards-container-row {
+  @extend .row-cols-1;
+  @extend .row-cols-md-2;
+  @extend .row-cols-xxl-3;
+}
+
 .prayer-card {
   @extend .h-100;
   @extend .shadow;
@@ -88,5 +94,11 @@
     @extend .mx-3;
     @extend .mx-lg-2;
     @extend .mx-xxl-3;
+  }
+}
+
+.prayer-settings-form {
+  .group {
+    @extend .p-2;
   }
 }
