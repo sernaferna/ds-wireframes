@@ -6,7 +6,7 @@ interface IMarkdownPreview {
   content: string;
 }
 export const MarkdownPreview = ({ content }: IMarkdownPreview) => {
-  return <MDEditor.Markdown source={content} className="md-editor-preview-view" />;
+  return <MDEditor.Markdown source={content} className="bg-light mx-1 my-2 border" />;
 };
 
 const lordCommand: ICommand = {
@@ -55,8 +55,8 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
   };
 
   return (
-    <div className="md-editor-parent">
-      <div className="md-editor-main">
+    <div>
+      <div className="mb-2">
         <MDEditor
           value={content}
           onChange={handleChangeEvent}
@@ -68,8 +68,10 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           commandsFilter={commandsFilter}
         />
       </div>
-      <div className="md-editor-preview">
-        <Button onClick={reversePreviewState()}>{showPreviewState ? 'Hide Preview' : 'Show Preview'}</Button>
+      <div className="d-grid gap-2">
+        <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
+          {showPreviewState ? 'Hide Preview' : 'Show Preview'}
+        </Button>
         {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
       </div>
     </div>
