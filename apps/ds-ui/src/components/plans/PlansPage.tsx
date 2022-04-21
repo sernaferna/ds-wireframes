@@ -55,11 +55,11 @@ export const PlansPage = () => {
             </Col>
           </Row>
           <Row>
-            <Col className="plan-list-col">
+            <Col xs="12" lg="7">
               {paginatedItems}
               {paginationElement}
             </Col>
-            <Col className="edit-plan-col">
+            <Col xs="12" lg="5">
               <CurrentReadingPlan />
             </Col>
           </Row>
