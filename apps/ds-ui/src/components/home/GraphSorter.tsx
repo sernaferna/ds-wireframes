@@ -92,9 +92,16 @@ export const GraphSorter = () => {
 
   const vizualizationList = sortedItems.map((item, index) => {
     return (
-      <Col key={`sort-item-${item.name}`}>
-        {index > 0 ? <CaretLeftFill onClick={handleSorterClick(item.name, true)} /> : ''}
+      <Col key={`sort-item-${item.name}`} className="bg-light border p-2 text-center">
+        {index > 0 ? (
+          <span className="fs-3 btn" onClick={handleSorterClick(item.name, true)}>
+            <CaretLeftFill />
+          </span>
+        ) : (
+          ''
+        )}
         <ToggleButton
+          className="mx-1"
           type="checkbox"
           variant="outline-primary"
           id={item.name}
@@ -104,7 +111,13 @@ export const GraphSorter = () => {
         >
           {item.name}
         </ToggleButton>
-        {index < sortedItems.length - 1 ? <CaretRightFill onClick={handleSorterClick(item.name, false)} /> : ''}
+        {index < sortedItems.length - 1 ? (
+          <span onClick={handleSorterClick(item.name, false)} className="fs-3 btn">
+            <CaretRightFill />
+          </span>
+        ) : (
+          ''
+        )}
       </Col>
     );
   });
@@ -112,7 +125,9 @@ export const GraphSorter = () => {
   return (
     <>
       <h4>Graph Sorter</h4>
-      <Row className="graph-sorter-list">{vizualizationList}</Row>
+      <Row xs="1" sm="2" md="3" xl="4" xxl="5">
+        {vizualizationList}
+      </Row>
     </>
   );
 };
