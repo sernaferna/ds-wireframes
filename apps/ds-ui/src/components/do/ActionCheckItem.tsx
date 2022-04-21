@@ -9,7 +9,7 @@ interface IActionCheckItem {
 }
 export function ActionCheckItem({ item, clickFunction }: IActionCheckItem) {
   const icon = useMemo(
-    () => (item.completed ? <Check2Circle className="done" /> : <Circle className="undone" />),
+    () => (item.completed ? <Check2Circle className="text-success" /> : <Circle className="text-secondary" />),
     [item.completed]
   );
 
@@ -20,9 +20,9 @@ export function ActionCheckItem({ item, clickFunction }: IActionCheckItem) {
   };
 
   return (
-    <Stack direction="horizontal" className="action-item-stack" key={item.id} onClick={handleClick(item.id)}>
+    <Stack direction="horizontal" gap={2} className="btn" key={item.id} onClick={handleClick(item.id)}>
       {icon}
-      <div>{item.displayName}</div>
+      <div className="user-select-none">{item.displayName}</div>
     </Stack>
   );
 }

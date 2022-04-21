@@ -21,11 +21,11 @@ export function DoPage() {
         </Col>
         <Col className="page-main-content-col">
           <Row>
-            <Col className="do-page-calendar-view">
+            <Col className="col-6">
               <CalendarView dateToShow={dateToShow} />
               <ActionsWidget />
             </Col>
-            <Col className="do-page-custom-actions">
+            <Col className="col-6">
               <CustomActionList />
             </Col>
           </Row>
