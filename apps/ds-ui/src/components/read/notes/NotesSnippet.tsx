@@ -40,8 +40,16 @@ export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPa
   const textToDisplay = noteID === userSelectedID ? '[Editing] ' + data!.text : data!.text;
   const noteSnippet = textToDisplay.length > 99 ? textToDisplay.substring(0, 99) + '...' : textToDisplay;
 
+  let noteSnippetClass = 'p-2 bg-light my-2 border border-2';
+  if (noteID === userSelectedID) {
+    noteSnippetClass += ' text-muted fst-italic';
+  }
+  const noteSnippetStyles = {
+    cursor: noteID === userSelectedID ? 'auto' : 'pointer',
+  };
+
   return (
-    <div className={noteID === userSelectedID ? 'note-snippet-selected' : 'note-snippet'} onClick={selectNote()}>
+    <div className={noteSnippetClass} style={noteSnippetStyles} onClick={selectNote()}>
       <MDEditor.Markdown source={noteSnippet} />
     </div>
   );

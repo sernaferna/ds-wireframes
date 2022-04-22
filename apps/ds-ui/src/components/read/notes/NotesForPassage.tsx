@@ -32,7 +32,7 @@ export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: 
   }
 
   return (
-    <div className="notelist-for-passage">
+    <div className="d-none d-lg-inline-block w-100">
       {notesList.length > 0 ? <h1>Notes for passage:</h1> : <p>No notes for selected passage.</p>}
 
       {notesList}

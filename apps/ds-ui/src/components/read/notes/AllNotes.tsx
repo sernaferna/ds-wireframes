@@ -51,7 +51,7 @@ export const AllNotes = ({ noteDetails, fetchNote, fetchPassage }: IAllNotes) =>
   const [paginatedNoteList, paginateElement] = paginateItems(noteList, 5, currentPage, setCurrentPage);
 
   return (
-    <div className="notelist-for-all">
+    <div>
       <h3>All Notes</h3>
 
       {paginatedNoteList}

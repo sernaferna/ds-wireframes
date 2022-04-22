@@ -64,28 +64,32 @@ export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetc
 
   const bibleVersionLogo =
     passage.version === 'NIV' ? (
-      <img src="logos/niv_179x50.png" alt="NIV Logo" height={'25px'} />
+      <img className="ms-3" src="logos/niv_179x50.png" alt="NIV Logo" height={'25px'} />
     ) : (
-      <img src="logos/esv_95x50.png" alt="NIV Logo" height={'25px'} />
+      <img className="ms-3" src="logos/esv_95x50.png" alt="NIV Logo" height={'25px'} />
     );
 
   return (
     <Col className="mt-2">
       <Card
         bg={selectedItemID === passage.id ? 'primary' : ''}
-        className={`passage-card ${selectedItemID === passage.id ? 'passage-card-selected' : ''}`}
+        className={`h-100 shadow reading-text ${selectedItemID === passage.id ? 'text-white' : ''}`}
       >
-        <Card.Body className="card-body">
-          <Card.Title onClick={() => titleClicked(passage.id)}>
+        <Card.Body className="d-flex flex-column">
+          <Card.Title style={{ cursor: 'pointer' }} onClick={() => titleClicked(passage.id)}>
             {getFormattedReference(passage.osis)}
-            <CloseButton onClick={removeItem} />
+            <CloseButton
+              variant={selectedItemID === passage.id ? 'white' : undefined}
+              className="float-end"
+              onClick={removeItem}
+            />
           </Card.Title>
           <Card.Text as="div">
             <PassageLinkBody passage={passage} selected={selectedItemID === passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
-        <Card.Footer className="card-footer">
-          <img src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
+        <Card.Footer className="d-flex d-md-none flex-row-reverse">
+          <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
           {bibleVersionLogo}
         </Card.Footer>
       </Card>

@@ -164,11 +164,11 @@ export const MDNoteTaker = ({ noteDetails, passageDetails, fetchNote }: IMDNoteT
               fp.setFieldTouched('value', true);
             }}
           />
-          <div className="notes-bottom-panel">
-            <Button variant="danger" onClick={newNoteBtn}>
+          <div className="m-2 d-flex flex-row-reverse">
+            <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
               {passageDetails.isDownloaded ? 'New' : 'Close'}
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" className="ms-2" type="submit">
               {noteDetails.isDownloaded ? 'Update' : 'Save'}
             </Button>
           </div>

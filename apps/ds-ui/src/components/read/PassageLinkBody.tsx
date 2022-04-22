@@ -24,12 +24,7 @@ const PassageLink = ({ range, version, selected }: IPassageLink) => {
   const link = getLink(reference, version);
 
   return (
-    <a
-      className={selected ? 'passage-link-selected' : 'passage-link-unselected'}
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-    >
+    <a className={selected ? 'link-light' : 'link-primary'} href={link} target="_blank" rel="noreferrer">
       {getFormattedReference(reference)}
     </a>
   );
