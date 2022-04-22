@@ -81,19 +81,19 @@ export const ShowPassageModal = ({
   };
 
   return (
-    <Modal className="passage-modal" show={show} onHide={closeFunction} aria-labelledby="modal-title" centered>
+    <Modal show={show} onHide={closeFunction} aria-labelledby="modal-title" centered>
       <Modal.Header closeButton>
         <Modal.Title id="modal-title">{getFormattedReference(passage.osis)}</Modal.Title>
       </Modal.Header>
-      <Modal.Body className="passage-modal-body">
-        <Row>
+      <Modal.Body>
+        <Row className="mb-3">
           <Col>
             <PassageLinkBody passage={passage} selected={false} />
           </Col>
         </Row>
-        <Row>
+        <Row className="mb-3">
           <Col>
-            <Button className="save-button" onClick={saveFunction}>
+            <Button variant="primary" onClick={saveFunction}>
               Save
             </Button>
           </Col>
@@ -103,7 +103,7 @@ export const ShowPassageModal = ({
             <Form.Check type="checkbox" label="Completed?" checked={isComplete} onChange={handleCompleteClick()} />
           </Col>
           <Col>
-            <div className="update-label">
+            <div className="mb-2">
               Updated Actions for {DateTime.fromISO(dateForReading).toLocaleString(DateTime.DATE_FULL)}:
             </div>
             <Form.Check

@@ -47,9 +47,9 @@ export const PlansPage = () => {
           <PlanSidebar />
         </Col>
         <Col className="page-main-content-col">
-          <Row className="plan-page-new-plan-row">
+          <Row className="mb-3">
             <Col>
-              <NavLink key="/plans/edit" to="/plans/edit">
+              <NavLink className="btn btn-primary" key="/plans/edit" to="/plans/edit">
                 New Plan
               </NavLink>
             </Col>

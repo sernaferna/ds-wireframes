@@ -168,9 +168,16 @@ footer {
   }
 }
 
+.alter-content-field {
+  @extend .text-dark;
+  @extend .border-dark;
+  @extend .bg-warning;
+  @extend .bg-gradient;
+  @extend .fw-bold;
+}
+
 @import './read';
 @import './calendar';
 @import './graphs';
 @import './toast';
 @import './pray';
-@import './plans';
