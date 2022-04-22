@@ -15,10 +15,10 @@ export function PrayerPage() {
         </Col>
         <Col className="page-main-content-col">
           <Row>
-            <Col className="cards-column">
+            <Col xs="12" lg="9" className="order-last order-lg-first">
               <PrayerCards />
             </Col>
-            <Col className="create-prayer-column">
+            <Col xs="12" lg="3">
               <CreatePrayerItem />
               <CreatePrayerItem confession={true} />
             </Col>

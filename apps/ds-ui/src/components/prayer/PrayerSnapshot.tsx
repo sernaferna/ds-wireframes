@@ -12,7 +12,7 @@ import { MarkdownPreview } from '../common/MarkdownBox';
 
 const PlaceholderList = () => {
   return (
-    <Card className="prayer-snapshot-card">
+    <Card className="m-0 reading-text">
       <Card.Body>
         <Placeholder as={Form.Check} animation="wave">
           <Placeholder as={Form.Check} xs="12" disabled />
@@ -101,7 +101,7 @@ export function PrayerSnapshot() {
   const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage);
 
   return (
-    <Card className="prayer-snapshot-card">
+    <Card className="m-0 reading-text">
       <Card.Body>
         <Form>{paginatedItems}</Form>
 

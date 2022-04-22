@@ -78,8 +78,8 @@ export function PrayerSettings() {
   }
 
   return (
-    <Form className="prayer-settings-form">
-      <Form.Group className="group">
+    <Form>
+      <Form.Group className="p-2">
         <Form.Text>Completed/Active Requests?</Form.Text>
         <Form.Check
           type="radio"

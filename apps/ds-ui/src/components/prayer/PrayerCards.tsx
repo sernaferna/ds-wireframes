@@ -29,7 +29,7 @@ export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   }
 
   if (type === PrayerTypes.praise) {
-    return <ShieldPlus />;
+    return <ShieldPlus className="d-inline me-1 text-primary" />;
   } else if (type === PrayerTypes.request) {
     return <Tsunami />;
   } else if (type === PrayerTypes.confession) {
@@ -106,15 +106,15 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
 
     return (
       <Col key={item.id} className="mt-2">
-        <Card className="prayer-card">
-          <Card.Body className="pc-body">
+        <Card className="h-100 shadow reading-text">
+          <Card.Body className="d-flex flex-column">
             <Card.Title>
               {item.title}{' '}
               <PrayerIconsContainer itemId={item.id} deleteItem={deleteItem}>
                 {icon}
               </PrayerIconsContainer>
             </Card.Title>
-            <Card.Text className="max-height-text">
+            <Card.Text className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
               <MarkdownPreview content={item.text} />
             </Card.Text>
             {submitButton}
@@ -171,7 +171,7 @@ export const PrayerCards = () => {
 
   if (isLoading || userIsLoading) {
     return (
-      <Row className="prayer-cards-container-row">
+      <Row xs="1" md="2" xxl="3">
         <PlaceholderCard />
         <PlaceholderCard />
       </Row>
@@ -187,7 +187,7 @@ export const PrayerCards = () => {
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);
 
   return (
-    <Row className="prayer-cards-container-row">
+    <Row xs="1" md="2" xxl="3">
       {paginatedItems}
       {paginationElement}
     </Row>

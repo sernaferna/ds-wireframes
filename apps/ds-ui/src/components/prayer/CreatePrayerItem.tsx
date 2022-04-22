@@ -74,16 +74,16 @@ export function CreatePrayerItem({ confession = false }) {
   };
 
   const classNameFor = (type: string, p: FormikProps<ValuesSchema>, middle: boolean = false) => {
-    const mainClass = p.values.type === type ? 'icon-selected' : 'icon-unselected';
+    const mainClass = p.values.type === type ? 'text-light bg-success' : 'text-light bg-secondary';
     if (middle) {
-      return `icon-middle ${mainClass}`;
+      return `mx-3 mx-lg-2 mx-xxl-3 ${mainClass}`;
     } else {
       return mainClass;
     }
   };
 
   return (
-    <Alert className={confession ? 'create-prayer-item-confession' : 'create-prayer-item'}>
+    <Alert variant={confession ? 'danger' : 'primary'}>
       <h4>{confession ? 'Confession' : 'New Prayer Request'}</h4>
       <Formik
         initialValues={initialValues}
@@ -117,7 +117,7 @@ export function CreatePrayerItem({ confession = false }) {
               />
             </Form.Group>
             {confession ? null : (
-              <Stack direction="horizontal" className="create-prayer-icon-list">
+              <Stack direction="horizontal" className="h1 m-3">
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
                   <ShieldPlus
@@ -141,7 +141,8 @@ export function CreatePrayerItem({ confession = false }) {
             )}
             <Form.Group>
               <Button
-                className="submit-button"
+                className="mt-2"
+                variant={confession ? 'danger' : 'primary'}
                 type="submit"
                 disabled={
                   !formikProps.touched.body ||
