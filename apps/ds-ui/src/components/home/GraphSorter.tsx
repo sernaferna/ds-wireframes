@@ -94,14 +94,14 @@ export const GraphSorter = () => {
     return (
       <Col key={`sort-item-${item.name}`} className="bg-light border p-2 text-center">
         {index > 0 ? (
-          <span className="fs-3 btn" onClick={handleSorterClick(item.name, true)}>
+          <span className="fs-3 btn p-0 m-0" onClick={handleSorterClick(item.name, true)}>
             <CaretLeftFill />
           </span>
         ) : (
           ''
         )}
         <ToggleButton
-          className="mx-1"
+          className="mx-0"
           type="checkbox"
           variant="outline-primary"
           id={item.name}
@@ -112,7 +112,7 @@ export const GraphSorter = () => {
           {item.name}
         </ToggleButton>
         {index < sortedItems.length - 1 ? (
-          <span onClick={handleSorterClick(item.name, false)} className="fs-3 btn">
+          <span onClick={handleSorterClick(item.name, false)} className="fs-3 btn p-0 m-0">
             <CaretRightFill />
           </span>
         ) : (

@@ -69,17 +69,15 @@ export function ActionsWidget() {
       <Card.Body>
         <h4>
           <span
-            className={dateToShow < DateTime.fromISO(userData!.signupDate) ? 'text-muted' : ''}
-            style={{ cursor: dateToShow < DateTime.fromISO(userData!.signupDate) ? '' : 'pointer' }}
+            className={`p-0 m-0 ${
+              dateToShow < DateTime.fromISO(userData!.signupDate) ? 'text-muted' : 'text-dark btn btn-lg fs-4'
+            }`}
           >
-            <CaretLeftFill onClick={handleLeftClick()} />
+            <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />
           </span>
-          <span className="user-select-none">{dateToShow.toISODate()}</span>
-          <span
-            className={dateToShow > DateTime.now() ? 'text-muted' : ''}
-            style={{ cursor: dateToShow < DateTime.fromISO(userData!.signupDate) ? '' : 'pointer' }}
-          >
-            <CaretRightFill onClick={handleRightClick()} />
+          <span className="user-select-none mx-1">{dateToShow.toISODate()}</span>
+          <span className={`p-0 m-0 ${dateToShow > DateTime.now() ? 'text-muted' : 'text-dark btn btn-lg fs-4'}`}>
+            <CaretRightFill className="align-middle" onClick={handleRightClick()} />
           </span>
         </h4>
         <ActionWidgetForm day={data as ActionsForDay} />

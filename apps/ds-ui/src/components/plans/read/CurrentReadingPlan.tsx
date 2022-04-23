@@ -117,18 +117,12 @@ export const CurrentReadingPlan = () => {
         <Card.Body>
           <h4>ReadingPlans</h4>
           <h6>
-            <span
-              className={dateToShow <= earliestDate ? 'text-muted' : ''}
-              style={{ cursor: dateToShow <= earliestDate ? '' : 'pointer' }}
-            >
-              <CaretLeftFill onClick={handleLeftClick()} />
+            <span className={`p-0 m-0 ${dateToShow <= earliestDate ? 'text-muted' : 'btn fs-6'}`}>
+              <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />
             </span>
             <span className="user-select-none">{dateToShow.toISODate()}</span>
-            <span
-              className={dateToShow >= latestDate ? 'text-muted' : 'btn'}
-              style={{ cursor: dateToShow >= latestDate ? '' : 'cursor' }}
-            >
-              <CaretRightFill onClick={handleRightClick()} />
+            <span className={`p-0 m-0 ${dateToShow >= latestDate ? 'text-muted' : 'btn fs-6'}`}>
+              <CaretRightFill className="align-middle" onClick={handleRightClick()} />
             </span>
           </h6>
         </Card.Body>
