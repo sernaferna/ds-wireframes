@@ -4,8 +4,8 @@ import Placeholder from 'react-bootstrap/Placeholder';
 
 export const PlaceholderCard = () => {
   return (
-    <Card className="prayer-card">
-      <Card.Body className="pc-body">
+    <Card className="h-100 shadow reading-text">
+      <Card.Body className="d-flex flex-column">
         <Placeholder as={Card.Title} animation="wave">
           <Placeholder xs="12" />
         </Placeholder>

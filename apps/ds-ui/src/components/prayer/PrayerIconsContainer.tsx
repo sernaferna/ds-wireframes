@@ -14,9 +14,11 @@ export const PrayerIconsContainer = ({ itemId, deleteItem, children }: IPrayerIc
   };
 
   return (
-    <div className="icons-container">
+    <div className="float-end text-primary">
       {children}
-      <TrashFill className="delete-icon" onClick={handleClick(itemId)} />
+      <span className="btn btn-lg p-0 ms-1">
+        <TrashFill className="text-danger" onClick={handleClick(itemId)} />
+      </span>
     </div>
   );
 };

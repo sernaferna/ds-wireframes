@@ -81,7 +81,7 @@ export const ShowPassageModal = ({
   };
 
   return (
-    <Modal show={show} onHide={closeFunction} size="lg" aria-labelledby="modal-title" centered>
+    <Modal show={show} onHide={closeFunction} aria-labelledby="modal-title" centered>
       <Modal.Header closeButton>
         <Modal.Title id="modal-title">{getFormattedReference(passage.osis)}</Modal.Title>
       </Modal.Header>
@@ -103,7 +103,9 @@ export const ShowPassageModal = ({
             <Form.Check type="checkbox" label="Completed?" checked={isComplete} onChange={handleCompleteClick()} />
           </Col>
           <Col>
-            <p>Updated Actions for {DateTime.fromISO(dateForReading).toLocaleString(DateTime.DATE_FULL)}:</p>
+            <div className="mb-2">
+              Updated Actions for {DateTime.fromISO(dateForReading).toLocaleString(DateTime.DATE_FULL)}:
+            </div>
             <Form.Check
               type="checkbox"
               checked={otShortCompleted}

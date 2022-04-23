@@ -139,7 +139,7 @@ export const RenderDay = ({
           ) : (
             <></>
           )}
-          {day.verses ? <b className="ms-2">{`${day.verses.length} verses`}</b> : <></>}
+          {day.verses ? <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div> : <></>}
         </>
       ) : (
         <></>

@@ -75,6 +75,9 @@ body {
 }
 
 #header-navbar {
+  @extend .navbar-dark;
+  @extend .bg-dark;
+
   strong {
     @extend .ms-2;
   }
@@ -151,12 +154,28 @@ footer {
   @extend .w-100;
 }
 
-@import './read';
+.loading-message {
+  @extend .alert-primary;
+}
+
+.error-message {
+  @extend .alert-danger;
+
+  .details {
+    p {
+      @extend .fw-bold;
+    }
+  }
+}
+
+.alter-content-field {
+  @extend .text-dark;
+  @extend .border-dark;
+  @extend .bg-warning;
+  @extend .bg-gradient;
+  @extend .fw-bold;
+}
+
 @import './calendar';
 @import './graphs';
 @import './toast';
-@import './do';
-@import './home';
-@import './pray';
-@import './plans';
-@import './markdown';

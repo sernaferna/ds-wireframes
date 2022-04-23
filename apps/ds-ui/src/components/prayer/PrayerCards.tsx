@@ -3,7 +3,6 @@ import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/To
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import styled from 'styled-components';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import {
   useGetAllItemsQuery,
@@ -24,20 +23,13 @@ import { MarkdownPreview } from '../common/MarkdownBox';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
 
-export const CardContainerRow = styled(Row).attrs(() => ({
-  xs: '1',
-  md: '2',
-  lg: '2',
-  xxl: '3',
-}))``;
-
 export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   if (type === undefined) {
     return <></>;
   }
 
   if (type === PrayerTypes.praise) {
-    return <ShieldPlus />;
+    return <ShieldPlus className="d-inline me-1 text-primary" />;
   } else if (type === PrayerTypes.request) {
     return <Tsunami />;
   } else if (type === PrayerTypes.confession) {
@@ -114,15 +106,15 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
 
     return (
       <Col key={item.id} className="mt-2">
-        <Card className="prayer-card">
-          <Card.Body className="pc-body">
+        <Card className="h-100 shadow reading-text">
+          <Card.Body className="d-flex flex-column">
             <Card.Title>
               {item.title}{' '}
               <PrayerIconsContainer itemId={item.id} deleteItem={deleteItem}>
                 {icon}
               </PrayerIconsContainer>
             </Card.Title>
-            <Card.Text className="max-height-text">
+            <Card.Text className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
               <MarkdownPreview content={item.text} />
             </Card.Text>
             {submitButton}
@@ -179,10 +171,10 @@ export const PrayerCards = () => {
 
   if (isLoading || userIsLoading) {
     return (
-      <CardContainerRow>
+      <Row xs="1" md="2" xxl="3">
         <PlaceholderCard />
         <PlaceholderCard />
-      </CardContainerRow>
+      </Row>
     );
   }
   if (error) {
@@ -195,9 +187,9 @@ export const PrayerCards = () => {
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);
 
   return (
-    <CardContainerRow>
+    <Row xs="1" md="2" xxl="3">
       {paginatedItems}
       {paginationElement}
-    </CardContainerRow>
+    </Row>
   );
 };

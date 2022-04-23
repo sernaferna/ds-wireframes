@@ -98,14 +98,14 @@ export function PrayerSettings() {
           onChange={changeFilterOption}
         />
       </Form.Group>
-      <Form.Group className="p-2">
+      <Form.Group className="group">
         <Form.Text>Sort Order?</Form.Text>
         <Form.Select aria-label="Sort By?" onChange={changeSortOption} value={sortOptions}>
           <option value="date-asc">Date Ascending</option>
           <option value="date-desc">Date Descending</option>
         </Form.Select>
       </Form.Group>
-      <Form.Group className="p-2">
+      <Form.Group className="group">
         <Form.Text>Filter Prayer Types?</Form.Text>
         <Form.Check
           type="checkbox"

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
 import Stack from 'react-bootstrap/Stack';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -75,9 +74,9 @@ export function CreatePrayerItem({ confession = false }) {
   };
 
   const classNameFor = (type: string, p: FormikProps<ValuesSchema>, middle: boolean = false) => {
-    const mainClass = p.values.type === type ? 'icon-selected' : 'icon-unselected';
+    const mainClass = p.values.type === type ? 'text-light bg-success' : 'text-light bg-secondary';
     if (middle) {
-      return `icon-middle ${mainClass}`;
+      return `mx-3 mx-lg-2 mx-xxl-3 ${mainClass}`;
     } else {
       return mainClass;
     }
@@ -95,7 +94,7 @@ export function CreatePrayerItem({ confession = false }) {
       >
         {(formikProps: FormikProps<ValuesSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
-            <Form.Group as={Col} xs="12">
+            <Form.Group>
               <Form.Label>Title</Form.Label>
               <Form.Control
                 id="title"
@@ -107,7 +106,7 @@ export function CreatePrayerItem({ confession = false }) {
                 name="title"
               />
             </Form.Group>
-            <Form.Group as={Col} xs="12">
+            <Form.Group>
               <Form.Label>Text</Form.Label>
               <MarkdownBox
                 content={formikProps.values.body}
@@ -118,7 +117,7 @@ export function CreatePrayerItem({ confession = false }) {
               />
             </Form.Group>
             {confession ? null : (
-              <Stack direction="horizontal" className="create-prayer-icon-list">
+              <Stack direction="horizontal" className="h1 m-3">
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
                   <ShieldPlus
@@ -140,8 +139,9 @@ export function CreatePrayerItem({ confession = false }) {
                 </OverlayTrigger>
               </Stack>
             )}
-            <Form.Group className="mt-2">
+            <Form.Group>
               <Button
+                className="mt-2"
                 variant={confession ? 'danger' : 'primary'}
                 type="submit"
                 disabled={

@@ -124,17 +124,17 @@ export const ReadPage = () => {
         </Col>
         <Col className="page-main-content-col">
           <Row>
-            <Col className="read-passagelauncher-col">
+            <Col xs="12">
               <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
             </Col>
-            <Col className="read-passagecard-col">
+            <Col xs="12" lg="6">
               <PassageCards
                 fetchNote={getNoteCallback}
                 fetchPassage={getPassageCallback}
                 passageDetails={downloadedPassageDetails}
               />
             </Col>
-            <Col className="read-passagenotes-col">
+            <Col xs="12" lg="6">
               <PassageNotes
                 fetchNote={getNoteCallback}
                 fetchPassage={getPassageCallback}
@@ -142,7 +142,7 @@ export const ReadPage = () => {
                 passageDetails={downloadedPassageDetails}
               />
             </Col>
-            <Col className="read-all-notes-col">
+            <Col xs="12" className="mt-4">
               <AllNotes
                 noteDetails={downloadedNoteDetails}
                 fetchNote={getNoteCallback}

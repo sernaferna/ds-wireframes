@@ -76,14 +76,14 @@ export const EditPlanForm = ({
   return (
     <Form noValidate>
       <Row>
-        <Col className="plan-edit-details">
-          <Container className="p-3 bg-light">
+        <Col xs="10">
+          <Container className="bg-light p-3">
             <Alert variant="warning" dismissible show={showWarning} onClose={hideWarning}>
               Altering <b>highlighted settings</b> will reset weeks and days below, overwriting previous changes.
             </Alert>
 
             <Row className="mb-2">
-              <Col xs="5">
+              <Col xs="12" md="6" xl="5" className="mb-2">
                 <Form.Label htmlFor="planName">Name:</Form.Label>
                 <Form.Control
                   name="planName"
@@ -91,7 +91,6 @@ export const EditPlanForm = ({
                   value={values.planName}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  size="sm"
                   id="planName"
                   placeholder="Plan Name"
                   type="text"
@@ -100,11 +99,10 @@ export const EditPlanForm = ({
                 />
                 <Form.Control.Feedback type="invalid">{errors['planName']}</Form.Control.Feedback>
               </Col>
-              <Col xs="3">
+              <Col xs="12" md="6" xl="3" className="mb-2">
                 <Form.Label htmlFor="numWeeks">Weeks:</Form.Label>
                 <Form.Control
                   className="alter-content-field"
-                  size="sm"
                   id="numWeeks"
                   name="numWeeks"
                   placeholder="52"
@@ -130,10 +128,9 @@ export const EditPlanForm = ({
                   <WeeksDropdown numWeeks={156} updateWeeksCallback={updateWeeks} />
                 </DropdownButton>
               </Col>
-              <Col xs="2">
+              <Col xs="12" md="6" xl="2" className="mb-2">
                 <Form.Label htmlFor="version">Version:</Form.Label>
                 <Form.Control
-                  size="sm"
                   id="version"
                   name="version"
                   placeholder="1.0.0"
@@ -145,7 +142,7 @@ export const EditPlanForm = ({
                 />
                 <Form.Control.Feedback type="invalid">{errors['version']}</Form.Control.Feedback>
               </Col>
-              <Col xs="2">
+              <Col xs="12" md="6" xl="2" className="mb-2">
                 <Form.Check
                   name="includeWeekends"
                   type="checkbox"
@@ -158,15 +155,14 @@ export const EditPlanForm = ({
               </Col>
             </Row>
 
-            <Row className="mb-2">
-              <Col xs="1">
+            <Row>
+              <Col xs="12" md="2">
                 <Form.Label htmlFor="description">Description:</Form.Label>
               </Col>
-              <Col xs="9">
+              <Col xs="12" md="10" lg="6" xl="8">
                 <Form.Control
                   id="description"
                   name="description"
-                  size="sm"
                   as="textarea"
                   placeholder="Plan Description"
                   value={values.description}
@@ -177,7 +173,7 @@ export const EditPlanForm = ({
                 />
                 <Form.Control.Feedback type="invalid">{errors['description']}</Form.Control.Feedback>
               </Col>
-              <Col xs="2">
+              <Col xs="12" lg="4" xl="2">
                 {user.isAdmin ? (
                   <>
                     <Form.Check
@@ -227,7 +223,7 @@ export const EditPlanForm = ({
             />
 
             {!values.isFreeform ? (
-              <>
+              <div>
                 <Form.Label htmlFor="reference" className="h4">
                   Passage(s)
                 </Form.Label>
@@ -251,7 +247,7 @@ export const EditPlanForm = ({
                   </Button>
                   <Form.Control.Feedback type="invalid">{errors['reference']}</Form.Control.Feedback>
                 </InputGroup>
-              </>
+              </div>
             ) : (
               ''
             )}
@@ -265,20 +261,20 @@ export const EditPlanForm = ({
             />
           </Container>
         </Col>
-        <Col className="plan-edit-sidebar">
-          <div className="sidebar-content">
+        <Col xs="2">
+          <div className="sticky-top">
             <div className="d-grid gap-2">
               <Button variant="primary" onClick={handleSave}>
                 Save
               </Button>
               {user.isAdmin ? (
-                <Button onClick={handleSubmit} variant="success">
+                <Button variant="primary" onClick={handleSubmit}>
                   Publish
                 </Button>
               ) : (
                 <></>
               )}
-              <Button onClick={handleReset} variant="danger">
+              <Button variant="danger" onClick={handleReset}>
                 New
               </Button>
             </div>

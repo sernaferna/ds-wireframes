@@ -51,7 +51,7 @@ export function Header() {
   }
 
   return (
-    <Navbar id="header-navbar" bg="dark" variant="dark" expand="sm">
+    <Navbar id="header-navbar" expand="sm">
       <Navbar.Brand href="/">
         <Image src="/logo192.png" height="50" width="50" />
         <strong>Devouring Scripture</strong>

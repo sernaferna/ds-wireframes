@@ -19,9 +19,9 @@ export const RenderWeeks = ({ days, includeWeekends, isFreeform, upFunc, downFun
     if (i % daysPerWeek === 0) {
       weekNum++;
       returnItems.push(
-        <h2 className="mt-3" key={`week-key-${weekNum}`}>
+        <div className="h3 mt-3" key={`week-key-${weekNum}`}>
           Week {weekNum}
-        </h2>
+        </div>
       );
     }
 

@@ -6,15 +6,13 @@ import { ErrorResponse } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 
 export function LoadingMessage() {
-  return <Alert variant="info">Loading...</Alert>;
+  return <Alert className="loading-message">Loading...</Alert>;
 }
 
 export const generateErrorStringFromError = (er: ErrorResponse): JSX.Element => {
   return (
-    <div className="error-for-header-div" key={uuidv4()}>
-      <p>
-        <b>{`Error ${er.errorCode}`}</b>
-      </p>
+    <div className="details" key={uuidv4()}>
+      <p>{`Error ${er.errorCode}`}</p>
       <ul>
         {er.errors.map((item, index) => (
           <li key={`error-msg-detail-${index}`}>
@@ -44,7 +42,7 @@ export function ErrorLoadingDataMessage({ theError }: IErrorLoadingDataMessage) 
   }
 
   return (
-    <Alert variant="danger">
+    <Alert className="error-message">
       <Alert.Heading>Error!</Alert.Heading>
       <div>Error loading data from server</div>
       <div>{message}</div>

@@ -1,13 +1,3 @@
-.toast-header {
-  svg {
-    @extend .me-1;
-  }
-
-  strong {
-    @extend .me-auto;
-  }
-}
-
 %toast-body {
   @extend .bg-opacity-50;
   @extend .fw-bold;

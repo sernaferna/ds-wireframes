@@ -8,7 +8,7 @@ export function Footer() {
   return (
     <footer>
       <Navbar className="footer-navbar">
-        <p className="footer-copyright-text">&copy; 2021 Devouring Scripture</p>
+        <div className="footer-copyright-text">&copy; 2021 Devouring Scripture</div>
         <NavLink to="/" className="footer-logo-link">
           <Image src="/logo192.png" height="30" width="30" />
         </NavLink>

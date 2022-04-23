@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
-import { CheckSquareFill, ExclamationDiamondFill, InfoCircleFill } from 'react-bootstrap-icons';
+import React, { useEffect } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import { ToastType } from './ToastManager';
+import { ToastIcon } from './ToastIcon';
 
 const getTypeName = (type: ToastType): string => {
   switch (type) {
@@ -26,29 +26,6 @@ const getTypeName = (type: ToastType): string => {
   return 'normal';
 };
 
-const getIcon = (type: ToastType): JSX.Element => {
-  switch (type) {
-    case ToastType.Info:
-      return <InfoCircleFill />;
-    case ToastType.Danger:
-      return <ExclamationDiamondFill />;
-    case ToastType.Dark:
-      return <InfoCircleFill />;
-    case ToastType.Light:
-      return <InfoCircleFill />;
-    case ToastType.Primary:
-      return <InfoCircleFill />;
-    case ToastType.Secondary:
-      return <InfoCircleFill />;
-    case ToastType.Success:
-      return <CheckSquareFill />;
-    case ToastType.Warning:
-      return <ExclamationDiamondFill />;
-    default:
-      return <InfoCircleFill />;
-  }
-};
-
 export interface IDSToast {
   id: string;
   destroy: () => void;
@@ -69,13 +46,12 @@ const DSToast = ({ destroy, content, title, duration = 0, type = ToastType.None 
   }, [destroy, duration]);
 
   const toastStyle = getTypeName(type);
-  const toastIcon = useMemo(() => getIcon(type), [type]);
 
   return (
     <Toast autohide delay={duration} onClose={destroy}>
       <Toast.Header className={`toast-heading-${toastStyle}`}>
-        {toastIcon}
-        <strong>{title}</strong>
+        <ToastIcon className="me-1" type={type} />
+        <strong className="me-auto">{title}</strong>
       </Toast.Header>
       <Toast.Body className={`toast-body-${toastStyle}`}>{content}</Toast.Body>
     </Toast>

@@ -91,12 +91,12 @@ export function Home() {
         </Col>
         <Col className="page-main-content-col">
           <Row>
-            <Col xs={12}>
-              <Row xs={1} md={2} lg={2} xxl={3}>
+            <Col className="col-12">
+              <Row xs="1" md="2" xxl="3" className="">
                 {vizualizationList}
               </Row>
             </Col>
-            <Col xs={12} className="mt-4">
+            <Col xs="12" className="mt-4">
               <GraphSorter />
             </Col>
           </Row>

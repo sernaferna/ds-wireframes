@@ -113,19 +113,17 @@ export const CurrentReadingPlan = () => {
 
   return (
     <>
-      <Card className="action-widget-card">
+      <Card className="m-0 border-0">
         <Card.Body>
           <h4>ReadingPlans</h4>
           <h6>
-            <CaretLeftFill
-              className={dateToShow <= earliestDate ? 'inactive-scroller' : 'active-scroller'}
-              onClick={handleLeftClick()}
-            />
-            <span>{dateToShow.toISODate()}</span>
-            <CaretRightFill
-              className={dateToShow >= latestDate ? 'inactive-scroller' : 'active-scroller'}
-              onClick={handleRightClick()}
-            />
+            <span className={`p-0 m-0 ${dateToShow <= earliestDate ? 'text-muted' : 'btn fs-6'}`}>
+              <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />
+            </span>
+            <span className="user-select-none">{dateToShow.toISODate()}</span>
+            <span className={`p-0 m-0 ${dateToShow >= latestDate ? 'text-muted' : 'btn fs-6'}`}>
+              <CaretRightFill className="align-middle" onClick={handleRightClick()} />
+            </span>
           </h6>
         </Card.Body>
       </Card>

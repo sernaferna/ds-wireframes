@@ -4,7 +4,7 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserSe
 import { LoadingMessage, ErrorLoadingDataMessage } from '../loading';
 import { SidebarCollapseWidget } from '../SidebarCollapseWidget';
 import Button from 'react-bootstrap/Button';
-import { getToastManager, ToastType, TOAST_FADE_TIME } from './ToastManager';
+import { getToastManager, ToastType } from './ToastManager';
 
 const executeTest = (toastType: string) => {
   return () => {
@@ -39,7 +39,7 @@ const executeTest = (toastType: string) => {
     getToastManager().show({
       title: 'Test',
       content: 'Testing Toast functionality',
-      duration: TOAST_FADE_TIME,
+      duration: 30000,
       type: tt,
     });
   };
@@ -68,7 +68,7 @@ export const ToastTester = () => {
 
   return (
     <SidebarCollapseWidget title="Test Toasts" visible={true} clickFunction={() => {}}>
-      <Form>
+      <Form className="toast-tester-form">
         <Form.Check
           label="Primary"
           name="toastTypeRadios"
@@ -133,7 +133,7 @@ export const ToastTester = () => {
           checked={toastType === 'light'}
           onChange={setNewTT('light')}
         />
-        <Button className="my-2" variant="primary" onClick={executeTest(toastType)}>
+        <Button variant="primary" className="my-2" onClick={executeTest(toastType)}>
           Test
         </Button>
       </Form>

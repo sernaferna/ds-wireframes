@@ -11,7 +11,7 @@ interface ILegendModal {
 }
 export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
   return (
-    <Modal show={show} onHide={closeFunction} size="lg" aria-labelledby="modal-title" centered>
+    <Modal show={show} onHide={closeFunction} size="xl" aria-labelledby="modal-title" centered>
       <Modal.Header closeButton>
         <Modal.Title id="modal-title">Legend</Modal.Title>
       </Modal.Header>
