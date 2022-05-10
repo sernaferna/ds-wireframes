@@ -28,17 +28,13 @@ export const RenderDay = ({
   const [reference, setReference] = useState(day.osis || '');
   const [dirty, setDirty] = useState(false);
 
-  const formattedReference = useMemo(() => {
-    if (dirty || !isReferenceValid(reference)) {
-      return reference;
-    }
+  const valueToShow = useMemo(() => {
+    if (day.verses === undefined || day.verses.length < 1) {
+      if (dirty || !isReferenceValid(reference)) {
+        return reference;
+      }
 
-    return getFormattedReference(reference);
-  }, [reference, dirty]);
-
-  const refForVerses = useMemo(() => {
-    if (day.verses === undefined || day.verses.length === 0) {
-      return '';
+      return getFormattedReference(reference);
     }
 
     let tempOsis: string = '';
@@ -46,16 +42,15 @@ export const RenderDay = ({
       tempOsis += verse.osis + ',';
     }
     return getFormattedReference(tempOsis);
-  }, [day.verses]);
+  }, [day.verses, reference, dirty]);
 
-  let isInvalid: boolean = false;
-  if (refForVerses.trim().length > 0) {
-    isInvalid = !isReferenceValid(refForVerses);
-  } else {
-    if (formattedReference.trim().length > 0) {
-      isInvalid = !isReferenceValid(formattedReference);
+  const isInvalid: boolean = useMemo(() => {
+    if (valueToShow.trim().length > 0) {
+      return !isReferenceValid(valueToShow);
+    } else {
+      return false;
     }
-  }
+  }, [valueToShow]);
 
   const refChanged = (e: ChangeEvent<HTMLInputElement>) => {
     setReference(e.currentTarget.value);
@@ -101,7 +96,7 @@ export const RenderDay = ({
     <InputGroup>
       <Form.Control
         readOnly={!isFreeform}
-        value={refForVerses.length > 0 ? refForVerses : formattedReference}
+        value={valueToShow}
         type="text"
         name={day.id}
         id={day.id}
