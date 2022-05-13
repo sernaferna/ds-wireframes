@@ -1,4 +1,4 @@
-import React, { useState, useMemo, ChangeEvent, FocusEvent } from 'react';
+import React, { useState, useMemo, ChangeEvent, FocusEvent, useCallback } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -15,7 +15,6 @@ interface IRenderDay {
   downFunction(day: number, cascade?: boolean): void;
   updateCallback(day: DayForPlan): void;
 }
-
 export const RenderDay = ({
   dayNum,
   maxDays,
@@ -52,45 +51,105 @@ export const RenderDay = ({
     }
   }, [valueToShow]);
 
-  const refChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setReference(e.currentTarget.value);
-    setDirty(true);
-  };
+  const refChanged = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setReference(e.currentTarget.value);
+      setDirty(true);
+    },
+    [setReference, setDirty]
+  );
 
-  const refBlurred = (e: FocusEvent<HTMLInputElement>) => {
-    if (isReferenceValid(e.currentTarget.value)) {
-      day.osis = getOSISForReference(e.currentTarget.value);
-    } else {
-      day.osis = e.currentTarget.value;
-    }
+  const refBlurred = useCallback(
+    (e: FocusEvent<HTMLInputElement>) => {
+      if (isReferenceValid(e.currentTarget.value)) {
+        day.osis = getOSISForReference(e.currentTarget.value);
+      } else {
+        day.osis = e.currentTarget.value;
+      }
 
-    setDirty(true);
-    updateCallback(day);
-  };
+      setDirty(true);
+      updateCallback(day);
+    },
+    [setDirty, updateCallback, day]
+  );
 
-  const handleDown = (day: number) => {
-    return () => {
-      downFunction(day);
-    };
-  };
+  const handleDown = useCallback(
+    (day: number) => {
+      return () => {
+        downFunction(day);
+      };
+    },
+    [downFunction]
+  );
 
-  const handleDoubleDown = (day: number) => {
-    return () => {
-      downFunction(day, true);
-    };
-  };
+  const handleDoubleDown = useCallback(
+    (day: number) => {
+      return () => {
+        downFunction(day, true);
+      };
+    },
+    [downFunction]
+  );
 
-  const handleUp = (day: number) => {
-    return () => {
-      upFunction(day);
-    };
-  };
+  const handleUp = useCallback(
+    (day: number) => {
+      return () => {
+        upFunction(day);
+      };
+    },
+    [upFunction]
+  );
 
-  const handleDoubleUp = (day: number) => {
-    return () => {
-      upFunction(day, true);
-    };
-  };
+  const handleDoubleUp = useCallback(
+    (day: number) => {
+      return () => {
+        upFunction(day, true);
+      };
+    },
+    [upFunction]
+  );
+
+  const buttonGroup = useMemo(() => {
+    return (
+      <>
+        {!isFreeform ? (
+          <>
+            {dayNum > 1 ? (
+              <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
+                <ChevronDown />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {dayNum > 2 ? (
+              <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
+                <ChevronDoubleDown />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {dayNum < maxDays ? (
+              <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
+                <ChevronUp />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {dayNum < maxDays - 1 ? (
+              <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
+                <ChevronDoubleUp />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {day.verses ? <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div> : <></>}
+          </>
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  }, [isFreeform, dayNum, handleDown, handleDoubleDown, handleUp, handleDoubleUp, maxDays, day.verses]);
 
   return (
     <InputGroup>
@@ -104,41 +163,7 @@ export const RenderDay = ({
         onBlur={refBlurred}
         isInvalid={isInvalid}
       />
-      {!isFreeform ? (
-        <>
-          {dayNum > 1 ? (
-            <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
-              <ChevronDown />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {dayNum > 2 ? (
-            <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
-              <ChevronDoubleDown />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {dayNum < maxDays ? (
-            <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
-              <ChevronUp />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {dayNum < maxDays - 1 ? (
-            <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
-              <ChevronDoubleUp />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {day.verses ? <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div> : <></>}
-        </>
-      ) : (
-        <></>
-      )}
+      {buttonGroup}
       <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
     </InputGroup>
   );
