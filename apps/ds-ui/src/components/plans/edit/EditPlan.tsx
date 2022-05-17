@@ -30,32 +30,19 @@ export const EditPlan = () => {
   const [publishPlan] = usePublishPlanMutation();
   const selectedPlan = useSelector(getSelectedPlan);
   const [planTrigger, planServerResult] = useLazyGetPlanByInstanceIdQuery();
-  const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
+  const [AlertUI, addErrorMessage, addWarningMessage, , removeWarningMessage] = useErrorsAndWarnings();
 
-  const regenerateDayList = useCallback(
-    (reference: string, includeWeekends: boolean, isFreeform: boolean, numWeeks: number) => {
-      let verses: Verse[] | undefined = undefined;
+  const regenerateDayList = useCallback(() => {
+    let verses: Verse[] | undefined = undefined;
 
-      if (
-        versesResult &&
-        !versesResult.error &&
-        !versesResult.isLoading &&
-        !versesResult.isUninitialized &&
-        reference.trim().length > 0
-      ) {
-        verses = versesResult.data!.slice();
-      }
+    if (versesResult && !versesResult.error && !versesResult.isLoading && !versesResult.isUninitialized) {
+      verses = versesResult.data!.slice();
+    }
 
-      const listOfDays = generateDayList(isFreeform, numWeeks, includeWeekends, verses);
+    const listOfDays = generateDayList(values.isFreeform, values.numWeeks, values.includeWeekends, verses);
 
-      setDays(listOfDays);
-    },
-    [versesResult, setDays]
-  );
-
-  useEffect(() => {
-    regenerateDayList(values.reference, values.includeWeekends, values.isFreeform, values.numWeeks);
-  }, [regenerateDayList, values.reference, values.includeWeekends, values.isFreeform, values.numWeeks]);
+    setDays(listOfDays);
+  }, [versesResult, setDays, values.isFreeform, values.numWeeks, values.includeWeekends]);
 
   useEffect(() => {
     if (planServerResult.isLoading || planServerResult.error) {
@@ -90,10 +77,10 @@ export const EditPlan = () => {
               }));
               setDays(daysFromServer);
             } else {
-              regenerateDayList(plan.reference, plan.includeWeekends, plan.isFreeform, plan.numWeeks);
+              regenerateDayList();
             }
           })
-          .catch((error) => {
+          .catch(() => {
             addErrorMessage('Error retrieving plan from server');
           });
       }
@@ -108,6 +95,10 @@ export const EditPlan = () => {
     regenerateDayList,
     addErrorMessage,
   ]);
+
+  useEffect(() => {
+    regenerateDayList();
+  }, [regenerateDayList, values.includeWeekends, values.isFreeform, values.numWeeks]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -247,14 +238,17 @@ export const EditPlan = () => {
   );
 
   const fetchVerses = useCallback(() => {
-    if (values.reference.trim().length > 0 && isReferenceValid(values.reference)) {
-      versesTrigger(values.reference)
-        .unwrap()
-        .catch((error) => {
-          addErrorMessage('Error fetching verses');
-        });
-    }
-  }, [versesTrigger, values, addErrorMessage]);
+    addWarningMessage('Loading verses...');
+    versesTrigger(values.reference)
+      .unwrap()
+      .then(() => {
+        removeWarningMessage('Loading verses...');
+      })
+      .catch(() => {
+        addErrorMessage('Error fetching verses');
+        removeWarningMessage('Loading verses...');
+      });
+  }, [versesTrigger, values, addErrorMessage, addWarningMessage, removeWarningMessage]);
 
   const updateDay = useCallback(
     (update: DayForPlan) => {

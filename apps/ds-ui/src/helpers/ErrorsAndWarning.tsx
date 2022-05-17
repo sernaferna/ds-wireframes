@@ -13,7 +13,13 @@ type SetMessageFunction = (message: string | JSX.Element) => void;
  *     2) a function for adding error messages; and 3) a function for
  *     adding warnings.
  */
-export const useErrorsAndWarnings = (): [React.FC, SetMessageFunction, SetMessageFunction] => {
+export const useErrorsAndWarnings = (): [
+  React.FC,
+  SetMessageFunction,
+  SetMessageFunction,
+  SetMessageFunction,
+  SetMessageFunction
+] => {
   const [errors, setErrors] = useState<JSX.Element[]>([]);
   const [warnings, setWarnings] = useState<JSX.Element[]>([]);
 
@@ -24,11 +30,37 @@ export const useErrorsAndWarnings = (): [React.FC, SetMessageFunction, SetMessag
     setErrors(errorSlice);
   };
 
+  const removeError: SetMessageFunction = (message) => {
+    const err: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
+    const newErrs: JSX.Element[] = [];
+
+    for (const e of errors) {
+      if (e !== err) {
+        newErrs.push(e);
+      }
+    }
+
+    setErrors(newErrs);
+  };
+
   const addWarning: SetMessageFunction = (message) => {
     const warn: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
     const warnSlice = warnings.slice();
     warnSlice.push(warn);
     setWarnings(warnSlice);
+  };
+
+  const removeWarning: SetMessageFunction = (message) => {
+    const warn: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
+    const newWarns: JSX.Element[] = [];
+
+    for (const w of warnings) {
+      if (w !== warn) {
+        newWarns.push(w);
+      }
+    }
+
+    setWarnings(newWarns);
   };
 
   const AlertUI = () => {
@@ -44,5 +76,5 @@ export const useErrorsAndWarnings = (): [React.FC, SetMessageFunction, SetMessag
     );
   };
 
-  return [AlertUI, addError, addWarning];
+  return [AlertUI, addError, addWarning, removeError, removeWarning];
 };

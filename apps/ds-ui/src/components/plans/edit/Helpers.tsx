@@ -9,12 +9,25 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { PlanValues } from './EditPlanValidations';
 
+/**
+ * Client-only interface for working with 'days' used for driving the UI
+ * (as opposed to `PlanDay` which is the interface used for the server-side
+ * APIs).
+ */
 export interface DayForPlan {
   verses?: Verse[];
   osis?: string;
   id: string;
 }
 
+/**
+ * Almost but not quite a standard array-handling function; it moves a
+ * `Verse` object from one array to another. If the originating array
+ * is empty, nothing happens.
+ *
+ * @param arr1 The array from which to pull the `Verse`
+ * @param arr2 The array to which the `Verse` should be appended
+ */
 const moveVerseToArr = (arr1: Verse[], arr2: Verse[]): void => {
   if (arr1.length < 1) {
     return;
@@ -24,6 +37,16 @@ const moveVerseToArr = (arr1: Verse[], arr2: Verse[]): void => {
   arr1.splice(0, 1);
 };
 
+/**
+ * Given the incoming data (typically returned from the server-side API),
+ * returns an array of `DayForPlan` objects to be displayed in the UI.
+ *
+ * @param isFreeform Indicates if this is an array of free-form days
+ * @param numWeeks Number of weeks for which days should be generated
+ * @param includeWeekends Indicates if this plan includes weekends
+ * @param verses [Optional] array of `Verse` objects, to be spread across
+ * @returns Array of `DayForPlan` objects
+ */
 export const generateDayList = (
   isFreeform: boolean,
   numWeeks: number,
@@ -42,9 +65,16 @@ export const generateDayList = (
     return days;
   }
 
-  let versesPerDay = Math.ceil(verses.length / days.length);
-  if (versesPerDay < 1) {
-    versesPerDay = 1;
+  const daySpreaderValues: number[] = days.map(() => 0);
+
+  let index = 0;
+  for (let i = 0; i < verses.length; i++) {
+    daySpreaderValues[index]++;
+
+    index++;
+    if (index >= daySpreaderValues.length) {
+      index = 0;
+    }
   }
 
   for (let i = 0; i < days.length; i++) {
@@ -52,7 +82,7 @@ export const generateDayList = (
       days[i].verses = [];
     }
 
-    for (let j = 0; j < versesPerDay; j++) {
+    for (let j = 0; j < daySpreaderValues[i]; j++) {
       moveVerseToArr(verses, days[i].verses!);
     }
 

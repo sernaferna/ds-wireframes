@@ -1,4 +1,4 @@
-import React, { useState, useMemo, ChangeEvent, FocusEvent } from 'react';
+import React, { useState, useMemo, ChangeEvent, FocusEvent, useCallback } from 'react';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -15,7 +15,6 @@ interface IRenderDay {
   downFunction(day: number, cascade?: boolean): void;
   updateCallback(day: DayForPlan): void;
 }
-
 export const RenderDay = ({
   dayNum,
   maxDays,
@@ -28,17 +27,13 @@ export const RenderDay = ({
   const [reference, setReference] = useState(day.osis || '');
   const [dirty, setDirty] = useState(false);
 
-  const formattedReference = useMemo(() => {
-    if (dirty || !isReferenceValid(reference)) {
-      return reference;
-    }
+  const valueToShow = useMemo(() => {
+    if (day.verses === undefined || day.verses.length < 1) {
+      if (dirty || !isReferenceValid(reference)) {
+        return reference;
+      }
 
-    return getFormattedReference(reference);
-  }, [reference, dirty]);
-
-  const refForVerses = useMemo(() => {
-    if (day.verses === undefined || day.verses.length === 0) {
-      return '';
+      return getFormattedReference(reference);
     }
 
     let tempOsis: string = '';
@@ -46,62 +41,121 @@ export const RenderDay = ({
       tempOsis += verse.osis + ',';
     }
     return getFormattedReference(tempOsis);
-  }, [day.verses]);
+  }, [day.verses, reference, dirty]);
 
-  let isInvalid: boolean = false;
-  if (refForVerses.trim().length > 0) {
-    isInvalid = !isReferenceValid(refForVerses);
-  } else {
-    if (formattedReference.trim().length > 0) {
-      isInvalid = !isReferenceValid(formattedReference);
-    }
-  }
-
-  const refChanged = (e: ChangeEvent<HTMLInputElement>) => {
-    setReference(e.currentTarget.value);
-    setDirty(true);
-  };
-
-  const refBlurred = (e: FocusEvent<HTMLInputElement>) => {
-    if (isReferenceValid(e.currentTarget.value)) {
-      day.osis = getOSISForReference(e.currentTarget.value);
+  const isInvalid: boolean = useMemo(() => {
+    if (valueToShow.trim().length > 0) {
+      return !isReferenceValid(valueToShow);
     } else {
-      day.osis = e.currentTarget.value;
+      return false;
     }
+  }, [valueToShow]);
 
-    setDirty(true);
-    updateCallback(day);
-  };
+  const refChanged = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setReference(e.currentTarget.value);
+      setDirty(true);
+    },
+    [setReference, setDirty]
+  );
 
-  const handleDown = (day: number) => {
-    return () => {
-      downFunction(day);
-    };
-  };
+  const refBlurred = useCallback(
+    (e: FocusEvent<HTMLInputElement>) => {
+      if (isReferenceValid(e.currentTarget.value)) {
+        day.osis = getOSISForReference(e.currentTarget.value);
+      } else {
+        day.osis = e.currentTarget.value;
+      }
 
-  const handleDoubleDown = (day: number) => {
-    return () => {
-      downFunction(day, true);
-    };
-  };
+      setDirty(true);
+      updateCallback(day);
+    },
+    [setDirty, updateCallback, day]
+  );
 
-  const handleUp = (day: number) => {
-    return () => {
-      upFunction(day);
-    };
-  };
+  const handleDown = useCallback(
+    (day: number) => {
+      return () => {
+        downFunction(day);
+      };
+    },
+    [downFunction]
+  );
 
-  const handleDoubleUp = (day: number) => {
-    return () => {
-      upFunction(day, true);
-    };
-  };
+  const handleDoubleDown = useCallback(
+    (day: number) => {
+      return () => {
+        downFunction(day, true);
+      };
+    },
+    [downFunction]
+  );
+
+  const handleUp = useCallback(
+    (day: number) => {
+      return () => {
+        upFunction(day);
+      };
+    },
+    [upFunction]
+  );
+
+  const handleDoubleUp = useCallback(
+    (day: number) => {
+      return () => {
+        upFunction(day, true);
+      };
+    },
+    [upFunction]
+  );
+
+  const buttonGroup = useMemo(() => {
+    return (
+      <>
+        {!isFreeform ? (
+          <>
+            {dayNum > 1 ? (
+              <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
+                <ChevronDown />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {dayNum > 2 ? (
+              <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
+                <ChevronDoubleDown />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {dayNum < maxDays ? (
+              <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
+                <ChevronUp />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {dayNum < maxDays - 1 ? (
+              <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
+                <ChevronDoubleUp />
+              </Button>
+            ) : (
+              <></>
+            )}
+            {day.verses ? <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div> : <></>}
+          </>
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  }, [isFreeform, dayNum, handleDown, handleDoubleDown, handleUp, handleDoubleUp, maxDays, day.verses]);
 
   return (
     <InputGroup>
       <Form.Control
         readOnly={!isFreeform}
-        value={refForVerses.length > 0 ? refForVerses : formattedReference}
+        value={valueToShow}
         type="text"
         name={day.id}
         id={day.id}
@@ -109,41 +163,7 @@ export const RenderDay = ({
         onBlur={refBlurred}
         isInvalid={isInvalid}
       />
-      {!isFreeform ? (
-        <>
-          {dayNum > 1 ? (
-            <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
-              <ChevronDown />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {dayNum > 2 ? (
-            <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
-              <ChevronDoubleDown />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {dayNum < maxDays ? (
-            <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
-              <ChevronUp />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {dayNum < maxDays - 1 ? (
-            <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
-              <ChevronDoubleUp />
-            </Button>
-          ) : (
-            <></>
-          )}
-          {day.verses ? <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div> : <></>}
-        </>
-      ) : (
-        <></>
-      )}
+      {buttonGroup}
       <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
     </InputGroup>
   );
