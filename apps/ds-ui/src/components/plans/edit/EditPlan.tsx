@@ -32,30 +32,23 @@ export const EditPlan = () => {
   const [planTrigger, planServerResult] = useLazyGetPlanByInstanceIdQuery();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
-  const regenerateDayList = useCallback(
-    (reference: string, includeWeekends: boolean, isFreeform: boolean, numWeeks: number) => {
-      let verses: Verse[] | undefined = undefined;
+  const regenerateDayList = useCallback(() => {
+    let verses: Verse[] | undefined = undefined;
 
-      if (
-        versesResult &&
-        !versesResult.error &&
-        !versesResult.isLoading &&
-        !versesResult.isUninitialized &&
-        reference.trim().length > 0
-      ) {
-        verses = versesResult.data!.slice();
-      }
+    if (
+      versesResult &&
+      !versesResult.error &&
+      !versesResult.isLoading &&
+      !versesResult.isUninitialized &&
+      values.reference.trim().length > 0
+    ) {
+      verses = versesResult.data!.slice();
+    }
 
-      const listOfDays = generateDayList(isFreeform, numWeeks, includeWeekends, verses);
+    const listOfDays = generateDayList(values.isFreeform, values.numWeeks, values.includeWeekends, verses);
 
-      setDays(listOfDays);
-    },
-    [versesResult, setDays]
-  );
-
-  useEffect(() => {
-    regenerateDayList(values.reference, values.includeWeekends, values.isFreeform, values.numWeeks);
-  }, [regenerateDayList, values.reference, values.includeWeekends, values.isFreeform, values.numWeeks]);
+    setDays(listOfDays);
+  }, [versesResult, setDays, values]);
 
   useEffect(() => {
     if (planServerResult.isLoading || planServerResult.error) {
@@ -90,10 +83,10 @@ export const EditPlan = () => {
               }));
               setDays(daysFromServer);
             } else {
-              regenerateDayList(plan.reference, plan.includeWeekends, plan.isFreeform, plan.numWeeks);
+              regenerateDayList();
             }
           })
-          .catch((error) => {
+          .catch(() => {
             addErrorMessage('Error retrieving plan from server');
           });
       }
@@ -108,6 +101,10 @@ export const EditPlan = () => {
     regenerateDayList,
     addErrorMessage,
   ]);
+
+  useEffect(() => {
+    regenerateDayList();
+  }, [regenerateDayList, values.includeWeekends, values.isFreeform, values.numWeeks]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
