@@ -30,25 +30,19 @@ export const EditPlan = () => {
   const [publishPlan] = usePublishPlanMutation();
   const selectedPlan = useSelector(getSelectedPlan);
   const [planTrigger, planServerResult] = useLazyGetPlanByInstanceIdQuery();
-  const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
+  const [AlertUI, addErrorMessage, addWarningMessage, , removeWarningMessage] = useErrorsAndWarnings();
 
   const regenerateDayList = useCallback(() => {
     let verses: Verse[] | undefined = undefined;
 
-    if (
-      versesResult &&
-      !versesResult.error &&
-      !versesResult.isLoading &&
-      !versesResult.isUninitialized &&
-      values.reference.trim().length > 0
-    ) {
+    if (versesResult && !versesResult.error && !versesResult.isLoading && !versesResult.isUninitialized) {
       verses = versesResult.data!.slice();
     }
 
     const listOfDays = generateDayList(values.isFreeform, values.numWeeks, values.includeWeekends, verses);
 
     setDays(listOfDays);
-  }, [versesResult, setDays, values]);
+  }, [versesResult, setDays, values.isFreeform, values.numWeeks, values.includeWeekends]);
 
   useEffect(() => {
     if (planServerResult.isLoading || planServerResult.error) {
@@ -244,14 +238,17 @@ export const EditPlan = () => {
   );
 
   const fetchVerses = useCallback(() => {
-    if (values.reference.trim().length > 0 && isReferenceValid(values.reference)) {
-      versesTrigger(values.reference)
-        .unwrap()
-        .catch((error) => {
-          addErrorMessage('Error fetching verses');
-        });
-    }
-  }, [versesTrigger, values, addErrorMessage]);
+    addWarningMessage('Loading verses...');
+    versesTrigger(values.reference)
+      .unwrap()
+      .then(() => {
+        removeWarningMessage('Loading verses...');
+      })
+      .catch(() => {
+        addErrorMessage('Error fetching verses');
+        removeWarningMessage('Loading verses...');
+      });
+  }, [versesTrigger, values, addErrorMessage, addWarningMessage, removeWarningMessage]);
 
   const updateDay = useCallback(
     (update: DayForPlan) => {
