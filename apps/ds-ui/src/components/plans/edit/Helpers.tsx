@@ -9,6 +9,11 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { PlanValues } from './EditPlanValidations';
 
+/**
+ * Client-only interface for working with 'days' used for driving the UI
+ * (as opposed to `PlanDay` which is the interface used for the server-side
+ * APIs).
+ */
 export interface DayForPlan {
   verses?: Verse[];
   osis?: string;
@@ -83,23 +88,6 @@ export const generateDayList = (
 
     days[i].osis = getRefForVerses(days[i].verses);
   }
-
-  // let versesPerDay = Math.ceil(verses.length / days.length);
-  // if (versesPerDay < 1) {
-  //   versesPerDay = 1;
-  // }
-
-  // for (let i = 0; i < days.length; i++) {
-  //   if (days[i].verses === undefined) {
-  //     days[i].verses = [];
-  //   }
-
-  //   for (let j = 0; j < versesPerDay; j++) {
-  //     moveVerseToArr(verses, days[i].verses!);
-  //   }
-
-  //   days[i].osis = getRefForVerses(days[i].verses);
-  // }
 
   return days;
 };
