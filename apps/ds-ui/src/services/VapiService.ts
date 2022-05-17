@@ -36,12 +36,18 @@ export const vapiApi = createApi({
           : [{ type: 'notes', id: 'LIST' }],
     }),
     getVersesForOSIS: builder.query<Verse[], string>({
-      query: (osis) => {
-        return {
-          url: '/v/versesForOSIS',
-          method: 'POST',
-          body: { osis: osis },
-        };
+      async queryFn(arg, queryApi, extraOptions, baseQuery) {
+        if (arg === '') {
+          return { data: [] };
+        }
+
+        const bqRes = await baseQuery({ url: '/v/versesForOSIS', method: 'POST', body: { osis: arg } });
+        if (bqRes.error) {
+          return { error: { status: 404, statusText: bqRes.error.status, data: bqRes.error.data } };
+        }
+
+        const verses: Verse[] = bqRes.data as Verse[];
+        return { data: verses };
       },
       providesTags: (result) =>
         result
