@@ -28,8 +28,14 @@ body {
   padding-bottom: 62px;
 }
 
-.small-caps-style {
+.sc {
   font-variant: small-caps;
+  text-transform: lowercase;
+  display: inline-block;
+}
+
+.sc::first-letter {
+  text-transform: uppercase;
 }
 
 .reading-text {
