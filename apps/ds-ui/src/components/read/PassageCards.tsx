@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import { useGetCurrentItemsQuery } from '../../services/PassagesService';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import { PlaceholderCard, PassageCard } from './PassageCard';
-import styled from 'styled-components';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
 import { paginateItems } from '../../helpers/pagination';
 import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
-
-const CardContainerRow = styled(Row).attrs(() => ({
-  xs: '1',
-  xxl: '2',
-}))``;
 
 interface IPassageCards {
   passageDetails: DownloadedPassageDetails;
@@ -24,10 +18,10 @@ export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassa
 
   if (isLoading) {
     return (
-      <CardContainerRow>
+      <Row xs="1" xxl="2">
         <PlaceholderCard />
         <PlaceholderCard />
-      </CardContainerRow>
+      </Row>
     );
   }
   if (error) {
@@ -49,9 +43,9 @@ export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassa
   const [paginatedItems, paginateElement] = paginateItems(items, 6, currentPage, setCurrentPage);
 
   return (
-    <CardContainerRow>
+    <Row xs="1" xxl="2">
       {paginatedItems.length > 0 ? paginatedItems : <Alert variant="primary">No saved passages.</Alert>}
       {paginateElement}
-    </CardContainerRow>
+    </Row>
   );
 };
