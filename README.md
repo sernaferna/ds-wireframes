@@ -143,14 +143,19 @@ Firstly, a GitHub **Project** is used for tracking any changes to be made, bugs 
 
 Then, for working with the actual code in Git, the following process is typically followed:
 
-1. Create and check out a new branch. (For changes to fix a single Issue, such as a simple bug fix, naming the branch after the issue (e.g. `is110`) is acceptable.)
-1. Make whatever changes are necessary, committing along the way
-1. When everything is working, Push to GitHub, still on the new branch
+1. On the local developer machine:
+   1. Create and check out a new branch. (For changes to fix a single Issue, such as a simple bug fix, naming the branch after the issue (e.g. `is110`) is acceptable.)
+   1. Make whatever changes are necessary, committing along the way
+   1. When everything is working, Push to GitHub, still on the new branch
 1. In GitHub:
    1. Create a Pull Request to merge the code into `main`
    1. Link Issues that are fixed with this PR (if any).
    1. Approve the PR.
-1. Back on the local developer machine, checkout `main` and Pull.
+1. Back on the local developer machine
+   1. Checkout `main` and Pull from GitHub.
+   1. **Optional**: If finished with the branch, delete it locally and on GitHub, with the commands listed above.
+
+_Of course, deleting the branch in GitHub could be done the website instead of from the command line, but since the local branch is already being deleted there anyway it can just be done for both copies._
 
 After this, if there are other branches active, they may need to merge in the changes from `main`.
 
