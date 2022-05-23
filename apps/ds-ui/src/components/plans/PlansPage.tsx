@@ -58,7 +58,7 @@ export const PlansPage = () => {
               {paginationElement}
             </Col>
             <Col xs="12" lg="5">
-              <CurrentReadingPlan />
+              <CurrentReadingPlan showTitle={true} />
             </Col>
           </Row>
         </Col>
