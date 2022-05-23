@@ -99,7 +99,7 @@ export function PrayerSnapshot({ showTitle = false }: IPrayerSnapshot) {
     }
   }
 
-  const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage);
+  const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage, 'sm');
 
   return (
     <Card className="m-0 border-0">

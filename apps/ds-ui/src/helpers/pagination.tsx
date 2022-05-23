@@ -28,7 +28,8 @@ export const paginateItems = (
   itemList: any[],
   lengthToShow: number,
   currentPage: number,
-  clickFunction: (page: number) => void
+  clickFunction: (page: number) => void,
+  size: 'sm' | 'lg' | undefined = undefined
 ): [any[], JSX.Element | undefined] => {
   const indexOfLastItem = currentPage * lengthToShow;
   const indexOfFirstItem = indexOfLastItem - lengthToShow;
@@ -94,7 +95,7 @@ export const paginateItems = (
   return [
     currentItems,
     <div className="pagination-div">
-      <Pagination>{returnArray}</Pagination>
+      <Pagination size={size}>{returnArray}</Pagination>
     </div>,
   ];
 };
