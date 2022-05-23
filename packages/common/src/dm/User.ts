@@ -46,5 +46,10 @@ export interface UserAttributes {
       showSettings: boolean;
       showCurrentReadingPlan: boolean;
     };
+    stats: {
+      showSettings: boolean;
+      statsFilter: string;
+      vizualizationsOrder: VizualizationListItem[];
+    };
   };
 }
