@@ -85,7 +85,7 @@ export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetc
             <PassageLinkBody passage={passage} selected={selectedItemID === passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
-        <Card.Footer className="d-flex d-md-none flex-row-reverse">
+        <Card.Footer className="d-none d-lg-flex flex-row-reverse">
           <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
           {bibleVersionLogo}
         </Card.Footer>

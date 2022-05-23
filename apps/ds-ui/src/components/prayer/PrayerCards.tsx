@@ -183,7 +183,7 @@ export const PrayerCards = () => {
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);
 
   return (
-    <Row xs="1" md="2" xxl="3">
+    <Row xs="1" md="2" lg="1" xl="2" xxl="3">
       {paginatedItems}
       {paginationElement}
     </Row>
