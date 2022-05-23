@@ -4,7 +4,6 @@ import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '.
 import { UserAttributes } from '@devouringscripture/common';
 import { DoPageSettings } from './DoPageSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { CreatePrayerItem } from '../prayer/CreatePrayerItem';
 
 export function DoSidebar() {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -13,12 +12,6 @@ export function DoSidebar() {
   const toggleSettings = useCallback(() => {
     const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
     newUser.settings.actions.showSettings = !newUser.settings.actions.showSettings;
-    update(newUser);
-  }, [update, data]);
-
-  const togglePrayer = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.actions.showPrayerEntry = !newUser.settings.actions.showPrayerEntry;
     update(newUser);
   }, [update, data]);
 
@@ -37,14 +30,6 @@ export function DoSidebar() {
         clickFunction={toggleSettings}
       >
         <DoPageSettings />
-      </SidebarCollapseWidget>
-
-      <SidebarCollapseWidget
-        title="Prayer"
-        visible={data!.settings.actions.showPrayerEntry}
-        clickFunction={togglePrayer}
-      >
-        <CreatePrayerItem />
       </SidebarCollapseWidget>
     </>
   );

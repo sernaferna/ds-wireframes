@@ -9,43 +9,12 @@
       "isAdmin": true,
       "settings": {
         "showSizeIndicator": false,
-        "showToastTester": false,
+        "showToastTester": true,
         "actions": {
-          "showSettings": true,
-          "showPrayerEntry": true
+          "showSettings": true
         },
         "home": {
-          "showSettings": true,
-          "showActions": true,
-          "showPrayers": true,
-          "statsFilter": "alltime",
-          "vizualizationsOrder": [
-            {
-              "name": "AllActivities",
-              "active": true,
-              "order": 0
-            },
-            {
-              "name": "Prayed",
-              "active": true,
-              "order": 1
-            },
-            {
-              "name": "ReadScripture",
-              "active": true,
-              "order": 2
-            },
-            {
-              "name": "DetailedReading",
-              "active": true,
-              "order": 3
-            },
-            {
-              "name": "OldVsNew",
-              "active": true,
-              "order": 4
-            }
-          ]
+          "showSettings": true
         },
         "prayer": {
           "showSettings": true,
@@ -67,18 +36,42 @@
         "plans": {
           "showSettings": true,
           "showCurrentReadingPlan": true
+        },
+        "stats": {
+          "showSettings": true,
+          "statsFilter": "alltime",
+          "vizualizationsOrder": [
+            {
+              "name": "Prayed",
+              "active": true,
+              "order": 0
+            },
+            {
+              "name": "AllActivities",
+              "active": false,
+              "order": 1
+            },
+            {
+              "name": "ReadScripture",
+              "active": true,
+              "order": 2
+            },
+            {
+              "name": "DetailedReading",
+              "active": true,
+              "order": 3
+            },
+            {
+              "name": "OldVsNew",
+              "active": false,
+              "order": 4
+            }
+          ]
         }
       }
     }
   ],
   "prayerItems": [
-    {
-      "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      "date": "2021-11-18",
-      "text": "Sed in odio vel nulla ultricies commodo eget non neque.",
-      "completed": false,
-      "id": "456a0d3c-7006-473e-acde-0d621d3a0ab1"
-    },
     {
       "title": "praise",
       "text": "priase item",
@@ -2605,16 +2598,199 @@
         ],
         "date": "2022-04-03",
         "id": "8e7a78ae-ea83-46cb-be8e-063b41819d65"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-04-14",
+        "id": "7f5860e3-d4f1-4f81-80e3-60d07843ed1e"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-04-21",
+        "id": "12e1c631-a478-477c-9841-3ebef7b8c563"
+      },
+      {
+        "defaultActions": [
+          {
+            "id": "actions|default|shortotpass",
+            "displayName": "Read Short OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rsntpass",
+            "displayName": "Read Short NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|rlotpass",
+            "displayName": "Read Long OT Passage",
+            "completed": true
+          },
+          {
+            "id": "actions|default|rlntpass",
+            "displayName": "Read Long NT Passage",
+            "completed": false
+          },
+          {
+            "id": "actions|default|journ",
+            "displayName": "Journalled",
+            "completed": false
+          },
+          {
+            "id": "actions|default|pray",
+            "displayName": "Prayed",
+            "completed": false
+          },
+          {
+            "id": "actions|default|create",
+            "displayName": "Did Something Creative for God",
+            "completed": false
+          },
+          {
+            "id": "actions|default|converse",
+            "displayName": "Had a Spiritual Conversation",
+            "completed": false
+          }
+        ],
+        "customActions": [
+          {
+            "id": "186012ac-1978-442c-8c93-78b1f4c3e47b",
+            "displayName": "Discipled my kids",
+            "completed": false
+          },
+          {
+            "id": "dfd2065a-7e64-4c4c-8b23-55b98dafed9f",
+            "displayName": "Prepared music for the service",
+            "completed": false
+          },
+          {
+            "id": "4f995e2e-b6a8-49a2-8835-f3177509cc08",
+            "displayName": "Led a bible study",
+            "completed": false
+          }
+        ],
+        "date": "2022-05-09",
+        "id": "3ab51eea-5216-4752-abe9-d6e47aa85880"
       }
     ]
   },
   "passages": [
-    {
-      "osis": "Gen.1.1-Gen.50.26",
-      "version": "ESV",
-      "id": "6c269262-ad67-4c5d-b669-d24da244a5d9",
-      "date": "2022-01-16"
-    },
     {
       "osis": "Gen.1.1-Gen.2.25",
       "version": "ESV",
@@ -3812,13 +3988,59 @@
       "planInstanceId": "0bd0cf90-6697-4c6d-b359-15420571d93c",
       "planId": "dfde9130-6797-4f80-b667-227566ddbfa6",
       "status": "Published"
+    },
+    {
+      "name": "A brand new plan",
+      "description": "This won't stick around",
+      "includeWeekends": false,
+      "includesApocrypha": false,
+      "isAdmin": false,
+      "isFreeform": true,
+      "length": 2,
+      "osis": "",
+      "version": "1.0.0",
+      "days": [
+        {
+          "osis": "Matt.1.1-Matt.1.25"
+        },
+        {
+          "osis": "Matt.2.1-Matt.2.23"
+        },
+        {
+          "osis": "Luke.1.1-Luke.1.80"
+        },
+        {
+          "osis": "Luke.2.1-Luke.2.52"
+        },
+        {
+          "osis": "Mark.1.1-Mark.1.45"
+        },
+        {
+          "osis": "Mark.2.1-Mark.2.28"
+        },
+        {
+          "osis": "John.1.1-John.1.51"
+        },
+        {
+          "osis": "John.2.1-John.2.25"
+        },
+        {
+          "osis": "John.3.1-John.3.36"
+        },
+        {
+          "osis": "John.4.1-John.4.54"
+        }
+      ],
+      "planInstanceId": "859ef44b-dcf2-4d36-95ce-cda265235cf6",
+      "planId": "5c31da68-1980-4735-ab7b-cab6ca6870b8",
+      "status": "Deleted"
     }
   ],
   "instantiatedPlans": [
     {
-      "planInstanceId": "20fe1cc6-c79a-4f67-b8d0-dda46fd05954",
-      "percentageComplete": "0.02",
-      "id": "ee56256a-4d69-432f-b3b3-05cc536ac349",
+      "planInstanceId": "0bd0cf90-6697-4c6d-b359-15420571d93c",
+      "percentageComplete": "0.60",
+      "id": "ce0459be-accf-4dd7-8591-733a3c960bba",
       "days": [
         {
           "completed": true,
@@ -3842,14 +4064,6 @@
         },
         {
           "completed": true,
-          "scheduledDate": "2022-04-09"
-        },
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-10"
-        },
-        {
-          "completed": true,
           "scheduledDate": "2022-04-11"
         },
         {
@@ -3867,101 +4081,16 @@
         {
           "completed": false,
           "scheduledDate": "2022-04-15"
-        },
+        }
+      ]
+    },
+    {
+      "planInstanceId": "20fe1cc6-c79a-4f67-b8d0-dda46fd05954",
+      "percentageComplete": "0.00",
+      "id": "0a109a2c-0b77-4235-8c76-37afa5a7a986",
+      "days": [
         {
-          "completed": false,
-          "scheduledDate": "2022-04-16"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-17"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-18"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-19"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-20"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-21"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-22"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-23"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-24"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-25"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-26"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-27"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-28"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-29"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-04-30"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-01"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-02"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-03"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-04"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-05"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-06"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-07"
-        },
-        {
-          "completed": false,
-          "scheduledDate": "2022-05-08"
-        },
-        {
-          "completed": false,
+          "completed": true,
           "scheduledDate": "2022-05-09"
         },
         {
@@ -5275,53 +5404,146 @@
         {
           "completed": false,
           "scheduledDate": "2023-04-02"
-        }
-      ]
-    },
-    {
-      "planInstanceId": "0bd0cf90-6697-4c6d-b359-15420571d93c",
-      "percentageComplete": "0.60",
-      "id": "ce0459be-accf-4dd7-8591-733a3c960bba",
-      "days": [
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-04"
-        },
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-05"
-        },
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-06"
-        },
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-07"
-        },
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-08"
-        },
-        {
-          "completed": true,
-          "scheduledDate": "2022-04-11"
         },
         {
           "completed": false,
-          "scheduledDate": "2022-04-12"
+          "scheduledDate": "2023-04-03"
         },
         {
           "completed": false,
-          "scheduledDate": "2022-04-13"
+          "scheduledDate": "2023-04-04"
         },
         {
           "completed": false,
-          "scheduledDate": "2022-04-14"
+          "scheduledDate": "2023-04-05"
         },
         {
           "completed": false,
-          "scheduledDate": "2022-04-15"
+          "scheduledDate": "2023-04-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-07"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-08"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-09"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-10"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-11"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-12"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-13"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-14"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-15"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-16"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-17"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-18"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-19"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-20"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-21"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-22"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-23"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-24"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-25"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-26"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-27"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-28"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-29"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-04-30"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-01"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-02"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-03"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-04"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-05"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-06"
+        },
+        {
+          "completed": false,
+          "scheduledDate": "2023-05-07"
         }
       ]
     }

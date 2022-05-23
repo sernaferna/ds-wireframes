@@ -42,9 +42,12 @@ export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassa
   const [paginatedItems, paginateElement] = paginateItems(items, 6, currentPage, setCurrentPage);
 
   return (
-    <Row xs="1" xxl="2">
-      {paginatedItems.length > 0 ? paginatedItems : <Alert variant="primary">No saved passages.</Alert>}
-      {paginateElement}
-    </Row>
+    <>
+      <h4>Saved Passages</h4>
+      <Row xs="1" sm="2" xxl="2">
+        {paginatedItems.length > 0 ? paginatedItems : <Alert variant="primary">No saved passages.</Alert>}
+        {paginateElement}
+      </Row>
+    </>
   );
 };

@@ -4,9 +4,11 @@ import { Button } from 'react-bootstrap';
 
 interface IMarkdownPreview {
   content: string;
+  shaded?: boolean;
 }
-export const MarkdownPreview = ({ content }: IMarkdownPreview) => {
-  return <MDEditor.Markdown source={content} className="bg-light mx-1 my-2 border" />;
+export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
+  const classNames: string = shaded ? 'bg-light border mx-1 my-2' : ';';
+  return <MDEditor.Markdown source={content} className={classNames} />;
 };
 
 const lordCommand: ICommand = {

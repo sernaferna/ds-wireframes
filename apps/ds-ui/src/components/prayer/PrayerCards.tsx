@@ -110,8 +110,8 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
                 {icon}
               </PrayerIconsContainer>
             </Card.Title>
-            <Card.Text className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
-              <MarkdownPreview content={item.text} />
+            <Card.Text as="div" className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
+              <MarkdownPreview content={item.text} shaded={false} />
             </Card.Text>
             {submitButton}
           </Card.Body>
@@ -183,7 +183,7 @@ export const PrayerCards = () => {
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);
 
   return (
-    <Row xs="1" md="2" xxl="3">
+    <Row xs="1" md="2" lg="1" xl="2" xxl="3">
       {paginatedItems}
       {paginationElement}
     </Row>

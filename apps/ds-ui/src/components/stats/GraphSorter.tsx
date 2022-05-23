@@ -1,9 +1,9 @@
 import React, { useMemo, useCallback } from 'react';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
-import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
-import { Row, Col, ToggleButton } from 'react-bootstrap';
+import { Col, ToggleButton, Row } from 'react-bootstrap';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
-import { UserAttributes, VizualizationListItem } from '@devouringscripture/common';
+import { VizualizationListItem, UserAttributes } from '@devouringscripture/common';
+import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => {
   return list.slice().sort((a, b) => {
@@ -17,6 +17,7 @@ const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => 
   });
 };
 
+// TODO can this be refactored to use array.map instead of a for loop?
 const updateOrderNoInList = (initialList: VizualizationListItem[]): VizualizationListItem[] => {
   const listToReturn: VizualizationListItem[] = [];
 
@@ -52,13 +53,13 @@ export const GraphSorter = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
   const [update] = useUpdateUserMutation();
 
-  const sortedItems = useMemo(() => sortVizList(data!.settings.home.vizualizationsOrder), [data]);
+  const sortedItems = useMemo(() => sortVizList(data!.settings.stats.vizualizationsOrder), [data]);
 
   const handleActiveInactive = useCallback(
     (itemName: string) => {
       return () => {
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-        newUser.settings.home.vizualizationsOrder.forEach((item) => {
+        const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+        newUser.settings.stats.vizualizationsOrder.forEach((item) => {
           if (item.name === itemName) {
             item.active = !item.active;
           }
@@ -73,8 +74,8 @@ export const GraphSorter = () => {
     (itemName: string, moveUp: boolean) => {
       return () => {
         const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-        newUser.settings.home.vizualizationsOrder = newList;
+        const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+        newUser.settings.stats.vizualizationsOrder = newList;
         update(newUser);
       };
     },
@@ -88,7 +89,7 @@ export const GraphSorter = () => {
     return <ErrorLoadingDataMessage theError={error} />;
   }
 
-  const vizualizationList = sortedItems.map((item, index) => {
+  const vizList = sortedItems.map((item, index) => {
     return (
       <Col key={`sort-item-${item.name}`} className="bg-light border p-2 text-center">
         {index > 0 ? (
@@ -96,7 +97,7 @@ export const GraphSorter = () => {
             <CaretLeftFill />
           </span>
         ) : (
-          ''
+          <></>
         )}
         <ToggleButton
           className="mx-0"
@@ -110,11 +111,11 @@ export const GraphSorter = () => {
           {item.name}
         </ToggleButton>
         {index < sortedItems.length - 1 ? (
-          <span onClick={handleSorterClick(item.name, false)} className="fs-3 btn p-0 m-0">
+          <span className="fs-3 btn p-0 m-0" onClick={handleSorterClick(item.name, false)}>
             <CaretRightFill />
           </span>
         ) : (
-          ''
+          <></>
         )}
       </Col>
     );
@@ -124,7 +125,7 @@ export const GraphSorter = () => {
     <>
       <h4>Graph Sorter</h4>
       <Row xs="1" sm="2" md="3" xl="4" xxl="5">
-        {vizualizationList}
+        {vizList}
       </Row>
     </>
   );

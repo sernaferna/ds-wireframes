@@ -56,15 +56,10 @@ body {
 .page-sidebar-container-col {
   @extend .order-last;
   @extend .col-12;
-  @extend .order-sm-last;
   @extend .col-sm-12;
-  @extend .order-md-last;
   @extend .col-md-12;
-  @extend .order-lg-first;
   @extend .col-lg-3;
-  @extend .order-xl-first;
   @extend .col-xl-3;
-  @extend .order-xxl-first;
   @extend .col-xxl-2;
 }
 

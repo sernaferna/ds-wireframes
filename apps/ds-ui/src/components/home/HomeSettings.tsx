@@ -1,23 +1,30 @@
 import React, { useCallback } from 'react';
 import { Form } from 'react-bootstrap';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export const HomeSettings = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
-  const changeDataFilterOption = useCallback(
-    (option: string) => {
-      return () => {
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-        newUser.settings.home.statsFilter = option;
-        update(newUser);
-      };
-    },
-    [data, update]
-  );
+  const handleShowSIChange = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.showSizeIndicator = !newUser.settings.showSizeIndicator;
+    updateUser(newUser);
+  }, [data, updateUser]);
+
+  const handleTTChange = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.settings.showToastTester = !newUser.settings.showToastTester;
+    updateUser(newUser);
+  }, [data, updateUser]);
+
+  const handleAdminChange = useCallback(() => {
+    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+    newUser.isAdmin = !newUser.isAdmin;
+    updateUser(newUser);
+  }, [data, updateUser]);
 
   if (isLoading) {
     return <LoadingMessage />;
@@ -26,45 +33,28 @@ export const HomeSettings = () => {
     return <ErrorLoadingDataMessage theError={error} />;
   }
 
-  const dataFilter = data!.settings.home.statsFilter;
-
   return (
     <Form>
-      <Form.Label>Choose Filter Option:</Form.Label>
       <Form.Check
-        type="radio"
-        label="Last Week"
-        name="dataFilter"
-        checked={dataFilter === 'week'}
-        onChange={changeDataFilterOption('week')}
+        type="checkbox"
+        id="showSizeIndicatorSetting"
+        label="Show Size Indicator"
+        checked={data!.settings.showSizeIndicator}
+        onChange={handleShowSIChange}
       />
       <Form.Check
-        type="radio"
-        label="Last Two Weeks"
-        name="dataFilter"
-        checked={dataFilter === '2weeks'}
-        onChange={changeDataFilterOption('2weeks')}
+        type="checkbox"
+        id="showToastTesterSetting"
+        label="Show Toast Tester"
+        checked={data!.settings.showToastTester}
+        onChange={handleTTChange}
       />
       <Form.Check
-        type="radio"
-        label="Last Month"
-        name="dataFilter"
-        checked={dataFilter === 'month'}
-        onChange={changeDataFilterOption('month')}
-      />
-      <Form.Check
-        type="radio"
-        label="Last Year"
-        name="dataFilter"
-        checked={dataFilter === 'year'}
-        onChange={changeDataFilterOption('year')}
-      />
-      <Form.Check
-        type="radio"
-        label="All Time"
-        name="dataFilter"
-        checked={dataFilter === 'alltime'}
-        onChange={changeDataFilterOption('alltime')}
+        type="checkbox"
+        id="isAdmin"
+        label="Admin User?"
+        checked={data!.isAdmin}
+        onChange={handleAdminChange}
       />
     </Form>
   );

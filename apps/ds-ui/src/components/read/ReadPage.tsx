@@ -121,8 +121,9 @@ export const ReadPage = () => {
           <ReadSidebar />
         </Col>
         <Col className="page-main-content-col">
+          <h1 className="d-none d-md-block">Read the Scripture</h1>
           <Row>
-            <Col xs="12">
+            <Col xs="12" className="mb-2">
               <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
             </Col>
             <Col xs="12" lg="6">

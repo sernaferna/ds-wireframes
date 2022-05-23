@@ -20,9 +20,9 @@ export function ActionCheckItem({ item, clickFunction }: IActionCheckItem) {
   };
 
   return (
-    <Stack direction="horizontal" gap={2} className="btn p-0" key={item.id} onClick={handleClick(item.id)}>
+    <Stack direction="horizontal" gap={1} className="btn p-0" key={item.id} onClick={handleClick(item.id)}>
       {icon}
-      <div className="user-select-none">{item.displayName}</div>
+      <div className="user-select-none text-start">{item.displayName}</div>
     </Stack>
   );
 }

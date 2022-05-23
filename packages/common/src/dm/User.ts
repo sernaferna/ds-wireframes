@@ -16,14 +16,9 @@ export interface UserAttributes {
     showToastTester: boolean;
     actions: {
       showSettings: boolean;
-      showPrayerEntry: boolean;
     };
     home: {
       showSettings: boolean;
-      showActions: boolean;
-      showPrayers: boolean;
-      statsFilter: string;
-      vizualizationsOrder: VizualizationListItem[];
     };
     prayer: {
       showSettings: boolean;
@@ -45,6 +40,11 @@ export interface UserAttributes {
     plans: {
       showSettings: boolean;
       showCurrentReadingPlan: boolean;
+    };
+    stats: {
+      showSettings: boolean;
+      statsFilter: string;
+      vizualizationsOrder: VizualizationListItem[];
     };
   };
 }

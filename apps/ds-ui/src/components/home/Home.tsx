@@ -1,86 +1,12 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { HomeSidebar } from './HomeSidebar';
-import { useGetActionStatsQuery } from '../../services/ActionsService';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { ReadScripture } from './stats/ReadScripture';
-import { DetailedReading } from './stats/DetailedReading';
-import { OldVsNew } from './stats/OldVsNew';
-import { AllActivities } from './stats/AllActivities';
-import { Prayed } from './stats/Prayed';
 import { Col, Row, Container } from 'react-bootstrap';
-import { GraphSorter } from './GraphSorter';
-import { UserAttributes, ActionStats } from '@devouringscripture/common';
-import { VisualizationCard } from './VisualizationCard';
+import { CurrentReadingPlan } from '../plans/read/CurrentReadingPlan';
+import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
+import { ActionsWidget } from '../do/ActionsWidget';
+import { CreatePrayerItem } from '../prayer/CreatePrayerItem';
 
-const getVizualizationList = (userData: UserAttributes | undefined, data: ActionStats | undefined) => {
-  if (userData === undefined || data === undefined) {
-    return [];
-  }
-
-  return userData.settings.home.vizualizationsOrder
-    .filter((item) => item.active)
-    .sort((a, b) => {
-      if (a.order < b.order) {
-        return -1;
-      }
-      if (a.order > b.order) {
-        return 1;
-      }
-
-      return 0;
-    })
-    .map((item, index) => {
-      let title: string;
-      let control: JSX.Element;
-
-      switch (item.name) {
-        case 'ReadScripture':
-          title = 'Read Scripture';
-          control = <ReadScripture stats={data!} />;
-          break;
-        case 'DetailedReading':
-          title = 'Detailed Reading Stats';
-          control = <DetailedReading stats={data!} />;
-          break;
-        case 'OldVsNew':
-          title = 'Old vs. New Testaments';
-          control = <OldVsNew stats={data!} />;
-          break;
-        case 'AllActivities':
-          title = 'All Activity';
-          control = <AllActivities stats={data!} />;
-          break;
-        case 'Prayed':
-          title = 'Prayed';
-          control = <Prayed stats={data!} />;
-      }
-
-      return (
-        <VisualizationCard key={`viz-card-${index}`} title={title!}>
-          {control!}
-        </VisualizationCard>
-      );
-    });
-};
-
-export function Home() {
-  const userObject = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = userObject.data;
-  const { data, error, isLoading } = useGetActionStatsQuery(userData?.settings.home.statsFilter);
-
-  const vizualizationList = useMemo(() => getVizualizationList(userData, data), [userData, data]);
-
-  if (isLoading || userObject.isLoading) {
-    return <LoadingMessage />;
-  }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
-  }
-  if (userObject.error) {
-    return <ErrorLoadingDataMessage theError={userObject.error} />;
-  }
-
+export const Home = () => {
   return (
     <Container fluid={true} className="page-main-container">
       <Row>
@@ -88,18 +14,27 @@ export function Home() {
           <HomeSidebar />
         </Col>
         <Col className="page-main-content-col">
+          <h1 className="d-none d-md-block">Devouring Scripture: Base Actions</h1>
           <Row>
-            <Col className="col-12">
-              <Row xs="1" md="2" xxl="3" className="">
-                {vizualizationList}
-              </Row>
+            <Col xs="12" md="6" lg="4">
+              <CurrentReadingPlan showTitle={true} />
             </Col>
-            <Col xs="12" className="mt-4">
-              <GraphSorter />
+            <Col xs="12" md="6" lg="4">
+              <ActionsWidget showTitle={true} />
+            </Col>
+            <Col xs="12" lg="4">
+              <Row>
+                <Col xs="12" sm="4" lg="12">
+                  <PrayerSnapshot showTitle={true} />
+                </Col>
+                <Col xs="12" sm="8" lg="12">
+                  <CreatePrayerItem />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Col>
       </Row>
     </Container>
   );
-}
+};

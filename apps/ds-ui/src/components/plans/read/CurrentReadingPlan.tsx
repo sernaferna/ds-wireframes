@@ -9,7 +9,10 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DateTime } from 'luxon';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 
-export const CurrentReadingPlan = () => {
+interface ICurrentReadingPlan {
+  showTitle?: boolean;
+}
+export const CurrentReadingPlan = ({ showTitle = false }: ICurrentReadingPlan) => {
   const dateToShow = DateTime.fromISO(useSelector(getDateForReadingPlan));
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetSubscribedPlansQuery();
@@ -114,7 +117,7 @@ export const CurrentReadingPlan = () => {
     <>
       <Card className="m-0 border-0">
         <Card.Body>
-          <h4>ReadingPlans</h4>
+          {showTitle ? <h4>Reading Plan(s)</h4> : <></>}
           <h6>
             <span className={`p-0 m-0 ${dateToShow <= earliestDate ? 'text-muted' : 'btn fs-6'}`}>
               <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />

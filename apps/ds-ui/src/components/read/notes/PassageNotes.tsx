@@ -23,7 +23,12 @@ export const PassageNotes = ({ noteDetails, passageDetails, fetchNote, fetchPass
   }
 
   if (!noteDetails.isDownloaded && !passageDetails.isDownloaded) {
-    return <Alert variant="primary">Please select a passage or noteto take notes.</Alert>;
+    return (
+      <>
+        <h4>Notes</h4>
+        <Alert variant="primary">Please select a passage or note to take notes.</Alert>
+      </>
+    );
   }
 
   return (

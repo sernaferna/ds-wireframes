@@ -47,7 +47,7 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
     const itemBody = (
       <div>
         {icon}
-        <span className="lead">{item.title}</span> <MarkdownPreview content={item.text} />
+        <span className="lead">{item.title}</span> <MarkdownPreview content={item.text} shaded={false} />
       </div>
     );
 
@@ -67,7 +67,10 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
   return renderedItems;
 };
 
-export function PrayerSnapshot() {
+interface IPrayerSnapshot {
+  showTitle?: boolean;
+}
+export function PrayerSnapshot({ showTitle = false }: IPrayerSnapshot) {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
@@ -96,12 +99,13 @@ export function PrayerSnapshot() {
     }
   }
 
-  const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage);
+  const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage, 'sm');
 
   return (
-    <Card className="m-0 reading-text">
+    <Card className="m-0 border-0">
       <Card.Body>
-        <Form>{paginatedItems}</Form>
+        {showTitle ? <h4>Prayer Items</h4> : <></>}
+        <Form className="reading-text">{paginatedItems}</Form>
 
         {paginationElement}
       </Card.Body>
