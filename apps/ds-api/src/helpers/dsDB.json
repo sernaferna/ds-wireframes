@@ -11,8 +11,7 @@
         "showSizeIndicator": false,
         "showToastTester": true,
         "actions": {
-          "showSettings": true,
-          "showPrayerEntry": true
+          "showSettings": true
         },
         "home": {
           "showSettings": true,

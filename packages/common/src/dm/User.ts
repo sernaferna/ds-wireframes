@@ -16,7 +16,6 @@ export interface UserAttributes {
     showToastTester: boolean;
     actions: {
       showSettings: boolean;
-      showPrayerEntry: boolean;
     };
     home: {
       showSettings: boolean;
