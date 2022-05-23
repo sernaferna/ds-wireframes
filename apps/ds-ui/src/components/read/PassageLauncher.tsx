@@ -117,7 +117,7 @@ export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
                 <Button
                   type="submit"
                   disabled={
-                    !formikProps.touched.version || !!formikProps.errors.version || !!formikProps.errors.reference
+                    !formikProps.touched.reference || !!formikProps.errors.version || !!formikProps.errors.reference
                   }
                   variant="primary"
                   size="sm"
