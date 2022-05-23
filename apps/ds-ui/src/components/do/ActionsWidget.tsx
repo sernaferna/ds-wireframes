@@ -10,7 +10,10 @@ import { ActionWidgetForm } from './ActionWidgetForm';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
 
-export function ActionsWidget() {
+interface IActionsWidget {
+  showTitle?: boolean;
+}
+export function ActionsWidget({ showTitle = false }: IActionsWidget) {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
   const dispatch = useDispatch();
 
@@ -67,7 +70,8 @@ export function ActionsWidget() {
   return (
     <Card className="m-0 border-0">
       <Card.Body>
-        <h4>
+        {showTitle ? <h4>Action List</h4> : <></>}
+        <h6>
           <span
             className={`p-0 m-0 ${
               dateToShow < DateTime.fromISO(userData!.signupDate) ? 'text-muted' : 'text-dark btn btn-lg fs-4'
@@ -79,7 +83,7 @@ export function ActionsWidget() {
           <span className={`p-0 m-0 ${dateToShow > DateTime.now() ? 'text-muted' : 'text-dark btn btn-lg fs-4'}`}>
             <CaretRightFill className="align-middle" onClick={handleRightClick()} />
           </span>
-        </h4>
+        </h6>
         <ActionWidgetForm day={data as ActionsForDay} />
       </Card.Body>
     </Card>
