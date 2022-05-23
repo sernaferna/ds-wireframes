@@ -19,8 +19,6 @@ export interface UserAttributes {
     };
     home: {
       showSettings: boolean;
-      showActions: boolean;
-      showPrayers: boolean;
     };
     prayer: {
       showSettings: boolean;

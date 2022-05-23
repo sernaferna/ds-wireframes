@@ -14,9 +14,7 @@
           "showSettings": true
         },
         "home": {
-          "showSettings": true,
-          "showActions": false,
-          "showPrayers": true
+          "showSettings": true
         },
         "prayer": {
           "showSettings": true,
