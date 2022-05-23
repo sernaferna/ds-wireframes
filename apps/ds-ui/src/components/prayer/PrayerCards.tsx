@@ -110,7 +110,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
                 {icon}
               </PrayerIconsContainer>
             </Card.Title>
-            <Card.Text className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
+            <Card.Text as="div" className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
               <MarkdownPreview content={item.text} shaded={false} />
             </Card.Text>
             {submitButton}
