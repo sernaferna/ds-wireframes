@@ -47,7 +47,7 @@ export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
   );
 
   return (
-    <Row>
+    <Row className="bg-light m-1 p-1">
       <Formik
         validationSchema={schema}
         onSubmit={(values) => {
@@ -59,10 +59,10 @@ export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
         {(formikProps: FormikProps<LauncherSchema>) => (
           <Form noValidate onSubmit={formikProps.handleSubmit}>
             <Row xs="12">
-              <Col xs="12" md="2">
-                <h5>Read Passage</h5>
-              </Col>
-              <Col xs="12" md="5">
+              <Form.Label column={true} xs="12" md="3" xl="2" className="text-start text-md-end">
+                Read Passage:
+              </Form.Label>
+              <Col xs="12" md="4" xl="5">
                 <InputGroup>
                   <InputGroup.Text id="passageIcon">
                     <CardText />
