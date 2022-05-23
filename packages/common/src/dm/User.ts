@@ -22,8 +22,6 @@ export interface UserAttributes {
       showSettings: boolean;
       showActions: boolean;
       showPrayers: boolean;
-      statsFilter: string;
-      vizualizationsOrder: VizualizationListItem[];
     };
     prayer: {
       showSettings: boolean;

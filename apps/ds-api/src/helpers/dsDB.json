@@ -17,35 +17,7 @@
         "home": {
           "showSettings": true,
           "showActions": false,
-          "showPrayers": true,
-          "statsFilter": "alltime",
-          "vizualizationsOrder": [
-            {
-              "name": "Prayed",
-              "active": true,
-              "order": 0
-            },
-            {
-              "name": "AllActivities",
-              "active": false,
-              "order": 1
-            },
-            {
-              "name": "ReadScripture",
-              "active": true,
-              "order": 2
-            },
-            {
-              "name": "DetailedReading",
-              "active": true,
-              "order": 3
-            },
-            {
-              "name": "OldVsNew",
-              "active": false,
-              "order": 4
-            }
-          ]
+          "showPrayers": true
         },
         "prayer": {
           "showSettings": true,
