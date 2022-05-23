@@ -1,9 +1,7 @@
 import React from 'react';
 import { PrayerCards } from './PrayerCards';
 import { PrayerSidebar } from './PrayerSidebar';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
+import { Row, Col, Container } from 'react-bootstrap';
 import { CreatePrayerItem } from './CreatePrayerItem';
 
 export function PrayerPage() {

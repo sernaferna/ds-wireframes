@@ -6,9 +6,7 @@ import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserServi
 import { useLazyGetNoteByIdQuery } from '../../services/VapiService';
 import { useLazyGetPassageByIdQuery } from '../../services/PassagesService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
+import { Row, Col, Container } from 'react-bootstrap';
 import { PassageNotes } from './notes/PassageNotes';
 import { AllNotes } from './notes/AllNotes';
 import { Note, Passage } from '@devouringscripture/common';

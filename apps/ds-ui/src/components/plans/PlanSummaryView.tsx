@@ -1,14 +1,7 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Alert from 'react-bootstrap/Alert';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ProgressBar from 'react-bootstrap/ProgressBar';
+import { Alert, Row, Col, ProgressBar, Popover, OverlayTrigger, Button, Badge } from 'react-bootstrap';
 import { Journal, JournalX } from 'react-bootstrap-icons';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Button from 'react-bootstrap/Button';
-import Badge from 'react-bootstrap/Badge';
 import { useGetPlanByInstanceIdQuery, useDeletePlanMutation } from '../../services/PlanService';
 import { updateSelectedPlan } from '../../stores/UISlice';
 import { useDispatch } from 'react-redux';

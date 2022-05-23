@@ -1,9 +1,6 @@
 import React from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Alert from 'react-bootstrap/Alert';
+import { Modal, Button, Alert, Table } from 'react-bootstrap';
 import { Journal, JournalX } from 'react-bootstrap-icons';
-import Table from 'react-bootstrap/Table';
 
 interface ILegendModal {
   closeFunction(): void;

@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useGetCurrentItemsQuery } from '../../services/PassagesService';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import { PlaceholderCard, PassageCard } from './PassageCard';
-import Row from 'react-bootstrap/Row';
-import Alert from 'react-bootstrap/Alert';
+import { Row, Alert } from 'react-bootstrap';
 import { paginateItems } from '../../helpers/pagination';
 import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
 

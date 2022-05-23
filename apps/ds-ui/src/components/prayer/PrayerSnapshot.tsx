@@ -1,7 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Placeholder from 'react-bootstrap/Placeholder';
+import { Card, Form, Placeholder } from 'react-bootstrap';
 import { useGetAllItemsQuery, useMarkReadMutation, sortPrayerItems } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { ErrorLoadingDataMessage } from '../common/loading';

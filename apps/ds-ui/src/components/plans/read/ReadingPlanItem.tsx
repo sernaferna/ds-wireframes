@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useCallback } from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
+import { ListGroup } from 'react-bootstrap';
 import { BasePassage, InstantiatedPlan, getFormattedReference } from '@devouringscripture/common';
 import { useGetPlanByInstanceIdQuery } from '../../../services/PlanService';
 import { useCompletePlanItemMutation } from '../../../services/InstantiatedPlanService';

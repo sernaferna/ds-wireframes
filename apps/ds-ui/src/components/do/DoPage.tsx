@@ -1,9 +1,7 @@
 import React from 'react';
 import { ActionsWidget } from './ActionsWidget';
 import { DoSidebar } from './DoSidebar';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Container from 'react-bootstrap/Container';
+import { Col, Row, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getDateForActions } from '../../stores/UISlice';
 import { CalendarView } from './CalendarView';

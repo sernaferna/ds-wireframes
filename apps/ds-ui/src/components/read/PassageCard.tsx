@@ -1,9 +1,6 @@
 import React, { SyntheticEvent, useCallback, useMemo } from 'react';
-import Card from 'react-bootstrap/Card';
-import Placeholder from 'react-bootstrap/Placeholder';
+import { Card, Placeholder, Col, CloseButton } from 'react-bootstrap';
 import { Passage, getFormattedReference } from '@devouringscripture/common';
-import Col from 'react-bootstrap/Col';
-import CloseButton from 'react-bootstrap/CloseButton';
 import { useDeletePassageItemMutation } from '../../services/PassagesService';
 import { PassageLinkBody } from './PassageLinkBody';
 import { DownloadedPassageDetails, FetchFunction } from './ReadPage';

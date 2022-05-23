@@ -1,8 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+import { Button, Row, Col, Form } from 'react-bootstrap';
 import {
   BaseNote,
   Note,

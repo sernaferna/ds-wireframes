@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
-import Button from 'react-bootstrap/Button';
+import { Button } from 'react-bootstrap';
 
 interface IMarkdownPreview {
   content: string;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Collapse from 'react-bootstrap/Collapse';
+import { Collapse } from 'react-bootstrap';
 
 interface ISidebarCollapseWidget {
   title: string;

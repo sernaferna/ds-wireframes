@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
-import Form from 'react-bootstrap/Form';
+import { Form } from 'react-bootstrap';
 import { UserAttributes } from '@devouringscripture/common';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 

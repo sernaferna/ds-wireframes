@@ -1,14 +1,9 @@
 import React, { useCallback } from 'react';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Offcanvas, Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { Gear } from 'react-bootstrap-icons';
-import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
 import { Settings } from './Settings';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectShowSettings, showSettingsPanel } from '../../stores/UISlice';
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';

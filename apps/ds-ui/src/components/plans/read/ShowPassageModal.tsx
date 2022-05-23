@@ -1,9 +1,5 @@
 import React, { useMemo } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+import { Modal, Button, Row, Col, Form } from 'react-bootstrap';
 import { BasePassage, getFormattedReference, ActionsForDay } from '@devouringscripture/common';
 import { PassageLinkBody } from '../../read/PassageLinkBody';
 import { useGetActionByDateQuery, useMarkItemReadForDayMutation } from '../../../services/ActionsService';

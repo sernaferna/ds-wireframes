@@ -1,10 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Row from 'react-bootstrap/Row';
-import FormControl from 'react-bootstrap/FormControl';
-import Button from 'react-bootstrap/Button';
+import { Col, Form, InputGroup, Row, FormControl, Button } from 'react-bootstrap';
 import { BookmarkFill, CardText } from 'react-bootstrap-icons';
 import { useNewItemMutation } from '../../services/PassagesService';
 import { BasePassage, isReferenceValid, getReferenceForOSIS, getOSISForReference } from '@devouringscripture/common';

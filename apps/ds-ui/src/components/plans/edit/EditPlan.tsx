@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect, ChangeEvent, FocusEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
+import { Container } from 'react-bootstrap';
 import { Verse, isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';

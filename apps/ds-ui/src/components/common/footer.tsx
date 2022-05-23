@@ -1,7 +1,5 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Image, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
 export function Footer() {

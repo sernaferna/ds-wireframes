@@ -1,7 +1,7 @@
 import React from 'react';
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import Alert from 'react-bootstrap/Alert';
+import { Alert } from 'react-bootstrap';
 import { ErrorResponse } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 

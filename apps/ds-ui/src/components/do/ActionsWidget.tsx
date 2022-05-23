@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDateForActions, updateDateShowingInActions } from '../../stores/UISlice';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
-import Card from 'react-bootstrap/Card';
+import { Card } from 'react-bootstrap';
 import { useGetActionByDateQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ActionsForDay } from '@devouringscripture/common';

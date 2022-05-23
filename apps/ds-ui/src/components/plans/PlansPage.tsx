@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { PlanSidebar } from './PlanSidebar';
 import { paginateItems } from '../../helpers/pagination';

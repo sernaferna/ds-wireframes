@@ -1,8 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { ToastType, TOAST_FADE_TIME, getToastManager } from '../common/toasts/ToastManager';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
+import { Button, Col, Card, Row } from 'react-bootstrap';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import {
   useGetAllItemsQuery,
@@ -12,13 +10,11 @@ import {
   useDeletePrayerItemMutation,
 } from '../../services/PrayerService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
-import { PrayerTypes, UserAttributes } from '@devouringscripture/common';
+import { PrayerTypes, UserAttributes, PrayerListItem } from '@devouringscripture/common';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
-import Row from 'react-bootstrap/Row';
 import { paginateItems } from '../../helpers/pagination';
-import { PrayerListItem } from '@devouringscripture/common';
 import { MarkdownPreview } from '../common/MarkdownBox';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';

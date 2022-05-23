@@ -1,8 +1,7 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPrayerViewFilter, updatePrayerViewFilter } from '../../stores/UISlice';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { Form, FloatingLabel } from 'react-bootstrap';
 
 export const PrayerViewFilterComponent = () => {
   const filterString = useSelector(getPrayerViewFilter);

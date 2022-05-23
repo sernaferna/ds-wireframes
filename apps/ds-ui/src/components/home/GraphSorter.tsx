@@ -1,9 +1,7 @@
 import React, { useMemo, useCallback } from 'react';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
 import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import ToggleButton from 'react-bootstrap/ToggleButton';
+import { Row, Col, ToggleButton } from 'react-bootstrap';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import { UserAttributes, VizualizationListItem } from '@devouringscripture/common';
 

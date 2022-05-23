@@ -1,7 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Card from 'react-bootstrap/Card';
+import { ListGroup, Card } from 'react-bootstrap';
 import { useGetSubscribedPlansQuery } from '../../../services/InstantiatedPlanService';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { getDateForReadingPlan, updateDateShowingInReadingPlan } from '../../../stores/UISlice';
