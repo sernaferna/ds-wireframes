@@ -38,7 +38,7 @@ export const PlanSidebar = () => {
         <PlanSettings />
       </SidebarCollapseWidget>
 
-      <SidebarCollapseWidget title="Current" visible={showCurrentPlan} clickFunction={toggleCurrentPlan}>
+      <SidebarCollapseWidget title="Current Reading Plan" visible={showCurrentPlan} clickFunction={toggleCurrentPlan}>
         <CurrentReadingPlan />
       </SidebarCollapseWidget>
     </>
