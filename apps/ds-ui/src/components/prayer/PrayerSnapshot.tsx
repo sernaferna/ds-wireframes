@@ -47,7 +47,7 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
     const itemBody = (
       <div>
         {icon}
-        <span className="lead">{item.title}</span> <MarkdownPreview content={item.text} />
+        <span className="lead">{item.title}</span> <MarkdownPreview content={item.text} shaded={false} />
       </div>
     );
 
