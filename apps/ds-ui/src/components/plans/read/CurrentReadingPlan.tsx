@@ -117,7 +117,7 @@ export const CurrentReadingPlan = ({ showTitle = false }: ICurrentReadingPlan) =
     <>
       <Card className="m-0 border-0">
         <Card.Body>
-          {showTitle ? <h4>ReadingPlans</h4> : <></>}
+          {showTitle ? <h4>Reading Plan(s)</h4> : <></>}
           <h6>
             <span className={`p-0 m-0 ${dateToShow <= earliestDate ? 'text-muted' : 'btn fs-6'}`}>
               <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />
