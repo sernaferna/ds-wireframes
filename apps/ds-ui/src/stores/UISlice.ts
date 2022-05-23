@@ -3,22 +3,18 @@ import { RootState } from './Store';
 import { DateTime } from 'luxon';
 
 export interface IUISlice {
-  settingsShowing: boolean;
   dateShowingInActions?: string;
   dateShowingInReadingPlan?: string;
   selectedPlan?: string;
   prayerViewFilter?: string;
 }
 
-const initialState: IUISlice = { settingsShowing: false };
+const initialState: IUISlice = {};
 
 export const uiSlice = createSlice({
   name: 'ui',
   initialState: initialState,
   reducers: {
-    showSettingsPanel: (state: IUISlice, action: PayloadAction<boolean>) => {
-      state.settingsShowing = action.payload;
-    },
     updateDateShowingInActions: (state: IUISlice, action: PayloadAction<string>) => {
       state.dateShowingInActions = action.payload;
     },
@@ -35,15 +31,12 @@ export const uiSlice = createSlice({
 });
 
 export const {
-  showSettingsPanel,
   updateDateShowingInActions,
   updateDateShowingInReadingPlan,
   updateSelectedPlan,
   updatePrayerViewFilter,
 } = uiSlice.actions;
 export default uiSlice.reducer;
-
-export const selectShowSettings = (state: RootState) => state.ui.settingsShowing;
 
 export const getDateForActions = (state: RootState) => {
   return state.ui.dateShowingInActions ? state.ui.dateShowingInActions : DateTime.now().toISODate();
