@@ -1,0 +1,19 @@
+{
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        // leave imports as they are
+        "modules": false,
+        "targets": {
+          "browsers": ["last 2 chrome versions"]
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    // support dynamic import syntax, but leave it unchanged
+    "babel-plugin-syntax-dynamic-import"
+  ]
+}

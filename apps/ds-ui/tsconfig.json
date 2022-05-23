@@ -1,9 +1,9 @@
 {
   "extends": "../../tsconfig",
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*"],
   "compilerOptions": {
-    "noEmit": true
+    "noEmit": true,
+    "target": "ESNext",
+    "sourceMap": true
   }
 }

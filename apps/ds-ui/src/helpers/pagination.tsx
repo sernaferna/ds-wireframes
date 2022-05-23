@@ -1,4 +1,4 @@
-import Pagination from 'react-bootstrap/Pagination';
+import { Pagination } from 'react-bootstrap';
 
 /**
  * Helper function that can paginate a list of items in an array (of

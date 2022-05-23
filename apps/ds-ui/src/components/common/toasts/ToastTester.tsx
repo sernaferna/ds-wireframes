@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import { Form, Button } from 'react-bootstrap';
 import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../loading';
 import { SidebarCollapseWidget } from '../SidebarCollapseWidget';
-import Button from 'react-bootstrap/Button';
 import { getToastManager, ToastType } from './ToastManager';
 
 const executeTest = (toastType: string) => {

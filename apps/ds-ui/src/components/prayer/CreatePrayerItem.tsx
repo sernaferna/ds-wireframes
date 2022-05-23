@@ -1,11 +1,6 @@
 import React, { useCallback } from 'react';
-import Form from 'react-bootstrap/Form';
-import Stack from 'react-bootstrap/Stack';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Alert from 'react-bootstrap/Alert';
+import { Form, Stack, Popover, OverlayTrigger, Alert, Button } from 'react-bootstrap';
 import { useNewItemMutation } from '../../services/PrayerService';
-import Button from 'react-bootstrap/Button';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes, BasePrayerListItem } from '@devouringscripture/common';
 import * as yup from 'yup';

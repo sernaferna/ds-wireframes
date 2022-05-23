@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Toast from 'react-bootstrap/Toast';
+import { Toast } from 'react-bootstrap';
 import { ToastType } from './ToastManager';
 import { ToastIcon } from './ToastIcon';
 

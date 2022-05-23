@@ -1,7 +1,5 @@
 import React, { useState, useMemo, ChangeEvent, FocusEvent, useCallback } from 'react';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { InputGroup, Form, Button } from 'react-bootstrap';
 import { ChevronUp, ChevronDoubleUp, ChevronDown, ChevronDoubleDown } from 'react-bootstrap-icons';
 import { getFormattedReference, isReferenceValid, getOSISForReference } from '@devouringscripture/common';
 import { DayForPlan } from './Helpers';

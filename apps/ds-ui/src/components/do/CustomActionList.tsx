@@ -5,9 +5,7 @@ import {
   useDeleteCustomActionMutation,
 } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Button from 'react-bootstrap/Button';
+import { Form, FloatingLabel, Button } from 'react-bootstrap';
 import { BaseActionType, ActionType } from '@devouringscripture/common';
 
 interface IGenerateList {

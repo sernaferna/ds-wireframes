@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { ActionEntry } from '@devouringscripture/common';
 import { Check2Circle, Circle } from 'react-bootstrap-icons';
-import Stack from 'react-bootstrap/Stack';
+import { Stack } from 'react-bootstrap';
 
 interface IActionCheckItem {
   item: ActionEntry;

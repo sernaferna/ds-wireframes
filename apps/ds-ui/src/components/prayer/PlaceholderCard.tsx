@@ -1,6 +1,5 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
-import Placeholder from 'react-bootstrap/Placeholder';
+import { Card, Placeholder } from 'react-bootstrap';
 
 export const PlaceholderCard = () => {
   return (

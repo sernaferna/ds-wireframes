@@ -3,7 +3,7 @@ import { MDNoteTaker } from './MDNoteTaker';
 import { NotesForPassage } from './NotesForPassage';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
-import Alert from 'react-bootstrap/Alert';
+import { Alert } from 'react-bootstrap';
 
 interface IPassageNotes {
   noteDetails: DownloadedNoteDetails;

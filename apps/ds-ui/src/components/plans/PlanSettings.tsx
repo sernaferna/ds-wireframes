@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import Button from 'react-bootstrap/Button';
+import { Button } from 'react-bootstrap';
 import { LegendModal } from './LegendModal';
 
 export const PlanSettings = () => {

@@ -8,7 +8,7 @@ import { Home } from './home/Home';
 import { DoPage } from './do/DoPage';
 import { Help } from './common/Help';
 import { FourOhFour } from './common/FourOhFour';
-import ToastContainer from 'react-bootstrap/ToastContainer';
+import { ToastContainer } from 'react-bootstrap';
 import { PrayerPage } from './prayer/PrayerPage';
 import { PlansPage } from './plans/PlansPage';
 import { EditPlan } from './plans/edit/EditPlan';
