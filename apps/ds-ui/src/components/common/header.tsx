@@ -13,6 +13,7 @@ const links = [
   { label: 'Pray', href: '/prayer' },
   { label: 'Read', href: '/read' },
   { label: 'Do', href: '/do' },
+  { label: 'Stats', href: '/stats' },
 ].map(({ label, href }) => {
   return (
     <NavLink key={href} className="nav-link" to={href}>
