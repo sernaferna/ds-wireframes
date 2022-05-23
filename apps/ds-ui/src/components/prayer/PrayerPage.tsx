@@ -3,6 +3,7 @@ import { PrayerCards } from './PrayerCards';
 import { PrayerSidebar } from './PrayerSidebar';
 import { Row, Col, Container } from 'react-bootstrap';
 import { CreatePrayerItem } from './CreatePrayerItem';
+import { PrayerSnapshot } from './PrayerSnapshot';
 
 export function PrayerPage() {
   return (
@@ -12,13 +13,18 @@ export function PrayerPage() {
           <PrayerSidebar />
         </Col>
         <Col className="page-main-content-col">
+          <h1 className="d-none d-md-block">Prayer</h1>
           <Row>
-            <Col xs="12" lg="9" className="order-last order-lg-first">
-              <PrayerCards />
+            <Col xs="12" lg="8">
+              <div className="d-md-none">
+                <PrayerSnapshot />
+              </div>
+              <div className="d-none d-md-block">
+                <PrayerCards />
+              </div>
             </Col>
-            <Col xs="12" lg="3">
+            <Col xs="12" lg="4">
               <CreatePrayerItem />
-              <CreatePrayerItem confession={true} />
             </Col>
           </Row>
         </Col>
