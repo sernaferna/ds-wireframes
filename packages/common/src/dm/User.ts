@@ -39,7 +39,6 @@ export interface UserAttributes {
     };
     plans: {
       showSettings: boolean;
-      showCurrentReadingPlan: boolean;
     };
     stats: {
       showSettings: boolean;

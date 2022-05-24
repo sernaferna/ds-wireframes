@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { Button, Alert } from 'react-bootstrap';
 import { useGetAllNotesQuery } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { NotesSnippet } from './NotesSnippet';
@@ -35,6 +36,7 @@ interface IAllNotes {
 export const AllNotes = ({ noteDetails, fetchNote, fetchPassage }: IAllNotes) => {
   const { data, error, isLoading } = useGetAllNotesQuery();
   const [currentPage, setCurrentPage] = useState(1);
+  const [showAllNotesClicked, setShowAllNotesClicked] = useState<boolean>(false);
 
   const noteList = useMemo(
     () => getNoteList(data, noteDetails, fetchNote, fetchPassage),
@@ -51,12 +53,19 @@ export const AllNotes = ({ noteDetails, fetchNote, fetchPassage }: IAllNotes) =>
   const [paginatedNoteList, paginateElement] = paginateItems(noteList, 5, currentPage, setCurrentPage);
 
   return (
-    <div>
-      <h3>All Notes</h3>
+    <>
+      <Alert variant="dark" className={showAllNotesClicked ? 'd-none' : 'd-block d-lg-none'}>
+        <Button variant="dark" onClick={() => setShowAllNotesClicked(true)}>
+          Show All Notes
+        </Button>
+      </Alert>
+      <div className={showAllNotesClicked ? 'd-block' : 'd-none d-lg-block'}>
+        <h3>All Notes</h3>
 
-      {paginatedNoteList}
+        {paginatedNoteList}
 
-      {paginateElement}
-    </div>
+        {paginateElement}
+      </div>
+    </>
   );
 };

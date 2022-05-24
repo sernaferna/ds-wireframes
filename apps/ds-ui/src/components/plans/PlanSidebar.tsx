@@ -4,7 +4,6 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { PlanSettings } from './PlanSettings';
-import { CurrentReadingPlan } from './read/CurrentReadingPlan';
 
 export const PlanSidebar = () => {
   const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
@@ -16,12 +15,6 @@ export const PlanSidebar = () => {
     update(newUser);
   }, [data, update]);
 
-  const toggleCurrentPlan = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.plans.showCurrentReadingPlan = !newUser.settings.plans.showCurrentReadingPlan;
-    update(newUser);
-  }, [data, update]);
-
   if (isLoading) {
     return <LoadingMessage />;
   }
@@ -30,16 +23,11 @@ export const PlanSidebar = () => {
   }
 
   const showSettings = data!.settings.plans.showSettings;
-  const showCurrentPlan = data!.settings.plans.showCurrentReadingPlan;
 
   return (
     <>
       <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
         <PlanSettings />
-      </SidebarCollapseWidget>
-
-      <SidebarCollapseWidget title="Current Reading Plan" visible={showCurrentPlan} clickFunction={toggleCurrentPlan}>
-        <CurrentReadingPlan />
       </SidebarCollapseWidget>
     </>
   );
