@@ -34,8 +34,7 @@
           "showReadingPlan": true
         },
         "plans": {
-          "showSettings": true,
-          "showCurrentReadingPlan": true
+          "showSettings": true
         },
         "stats": {
           "showSettings": true,
