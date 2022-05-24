@@ -80,6 +80,9 @@ export function PrayerSettings() {
   return (
     <Form>
       <Form.Group className="p-2">
+        <Form.Text muted>Settings here apply across the entire site.</Form.Text>
+      </Form.Group>
+      <Form.Group className="p-2">
         <Form.Text>Completed/Active Requests?</Form.Text>
         <Form.Check
           type="radio"
