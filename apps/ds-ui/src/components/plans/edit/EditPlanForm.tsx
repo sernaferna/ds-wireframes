@@ -68,7 +68,7 @@ export const EditPlanForm = ({
   return (
     <Form noValidate>
       <Row>
-        <Col xs="10">
+        <Col xs="12" sm="10">
           <Container className="bg-light p-3">
             <Alert variant="warning" dismissible show={showWarning} onClose={hideWarning}>
               Altering <b>highlighted settings</b> will reset weeks and days below, overwriting previous changes.
@@ -253,7 +253,7 @@ export const EditPlanForm = ({
             />
           </Container>
         </Col>
-        <Col xs="2">
+        <Col xs="12" sm="2">
           <div className="sticky-top">
             <div className="d-grid gap-2">
               <Button variant="primary" onClick={handleSave}>
