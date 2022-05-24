@@ -3,7 +3,7 @@ import { BasePassage, Passage } from '@devouringscripture/common';
 
 export const passageApi = createApi({
   reducerPath: 'passages',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/read/current' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7000/api/read/current` }),
   tagTypes: ['currentPassages'],
   endpoints: (builder) => ({
     getCurrentItems: builder.query<Passage[], void>({

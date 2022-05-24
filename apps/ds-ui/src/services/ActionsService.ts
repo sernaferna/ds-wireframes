@@ -14,7 +14,7 @@ interface ItemsForMonthInterface {
 
 export const actionsApi = createApi({
   reducerPath: 'actions',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/actions/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7000/api/actions/` }),
   tagTypes: ['actions', 'customActionTypes', 'stats'],
   endpoints: (builder) => ({
     getRecentActions: builder.query<ActionsForDay[], void>({

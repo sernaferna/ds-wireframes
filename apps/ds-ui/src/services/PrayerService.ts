@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 
 export const prayerApi = createApi({
   reducerPath: 'prayer',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/pi/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7000/api/pi/` }),
   tagTypes: ['prayerItems'],
   endpoints: (builder) => ({
     getItemById: builder.query<PrayerListItem, string>({
