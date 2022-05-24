@@ -3,7 +3,7 @@ import { PlanAttributes, BasePlanAttributes } from '@devouringscripture/common';
 
 export const planApi = createApi({
   reducerPath: 'plans',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/plans/public' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7000/api/plans/public` }),
   tagTypes: ['plans'],
   endpoints: (builder) => ({
     getPlanByInstanceId: builder.query<PlanAttributes, string>({

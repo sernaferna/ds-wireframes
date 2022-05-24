@@ -8,7 +8,7 @@ export interface Bounds {
 
 export const vapiApi = createApi({
   reducerPath: 'vapi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7001/vapi' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7001/vapi` }),
   tagTypes: ['notes', 'verses'],
   endpoints: (builder) => ({
     getNoteById: builder.query<Note, string>({

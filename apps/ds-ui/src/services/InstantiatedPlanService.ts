@@ -9,7 +9,7 @@ interface ICompletePlanItem {
 
 export const instantiatedPlanApi = createApi({
   reducerPath: 'instantiatedPlans',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/ip' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7000/api/ip` }),
   tagTypes: ['instantiatedPlans', 'plans'],
   endpoints: (builder) => ({
     getAllInstantiatedPlanItems: builder.query<BaseInstantiatedPlan[], void>({

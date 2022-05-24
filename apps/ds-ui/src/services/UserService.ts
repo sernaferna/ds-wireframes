@@ -3,7 +3,7 @@ import { UserAttributes } from '@devouringscripture/common';
 
 export const userApi = createApi({
   reducerPath: 'user',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:7000/api/user/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: `http://${process.env.REACT_APP_API_SERVER}:7000/api/user/` }),
   tagTypes: ['user'],
   endpoints: (builder) => ({
     getUserById: builder.query<UserAttributes, string>({
