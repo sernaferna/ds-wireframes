@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-bootstrap';
+import { v4 as uuidv4 } from 'uuid';
 
-type SetMessageFunction = (message: string | JSX.Element) => void;
+type SetMessageFunction = (message: string | JSX.Element) => string;
+type RemoveMessageFunction = (id: string) => void;
 
 /**
  * Custom hook for working with error/warning messages. Provides UI
@@ -17,25 +19,29 @@ export const useErrorsAndWarnings = (): [
   React.FC,
   SetMessageFunction,
   SetMessageFunction,
-  SetMessageFunction,
-  SetMessageFunction
+  RemoveMessageFunction,
+  RemoveMessageFunction
 ] => {
   const [errors, setErrors] = useState<JSX.Element[]>([]);
   const [warnings, setWarnings] = useState<JSX.Element[]>([]);
 
   const addError: SetMessageFunction = (message) => {
-    const err: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
+    const uuid = uuidv4();
+
+    const err: JSX.Element =
+      typeof message === 'string' ? <div key={uuid}>{message}</div> : <div key={uuid}>{message}</div>;
     const errorSlice = errors.slice();
     errorSlice.push(err);
     setErrors(errorSlice);
+
+    return uuid;
   };
 
-  const removeError: SetMessageFunction = (message) => {
-    const err: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
+  const removeError: RemoveMessageFunction = (id) => {
     const newErrs: JSX.Element[] = [];
 
     for (const e of errors) {
-      if (e !== err) {
+      if (e.key !== id) {
         newErrs.push(e);
       }
     }
@@ -44,18 +50,22 @@ export const useErrorsAndWarnings = (): [
   };
 
   const addWarning: SetMessageFunction = (message) => {
-    const warn: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
+    const uuid = uuidv4();
+
+    const warn: JSX.Element =
+      typeof message === 'string' ? <div key={uuid}>{message}</div> : <div key={uuid}>{message}</div>;
     const warnSlice = warnings.slice();
     warnSlice.push(warn);
     setWarnings(warnSlice);
+
+    return uuid;
   };
 
-  const removeWarning: SetMessageFunction = (message) => {
-    const warn: JSX.Element = typeof message === 'string' ? <div>{message}</div> : message;
+  const removeWarning: RemoveMessageFunction = (id) => {
     const newWarns: JSX.Element[] = [];
 
     for (const w of warnings) {
-      if (w !== warn) {
+      if (w.key !== id) {
         newWarns.push(w);
       }
     }

@@ -238,7 +238,7 @@ export const EditPlan = () => {
   );
 
   const fetchVerses = useCallback(() => {
-    addWarningMessage('Loading verses...');
+    const warningID = addWarningMessage('Loading verses...');
     versesTrigger(values.reference)
       .unwrap()
       .then(() => {
@@ -246,7 +246,7 @@ export const EditPlan = () => {
       })
       .catch(() => {
         addErrorMessage('Error fetching verses');
-        removeWarningMessage('Loading verses...');
+        removeWarningMessage(warningID);
       });
   }, [versesTrigger, values, addErrorMessage, addWarningMessage, removeWarningMessage]);
 
