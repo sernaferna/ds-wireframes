@@ -149,11 +149,11 @@ Then, for working with the actual code in Git, the following process is typicall
    1. When everything is working, Push to GitHub, still on the new branch
 1. In GitHub:
    1. Create a Pull Request to merge the code into `main`
-   1. Link Issues that are fixed with this PR (if any).
+   1. Link Issues that are fixed with this PR (if any). Preference is to link via the PR comments; i.e. to link the PR with Issue 130, the comments should include `closes #130`. This will link the text of the comment to the Issue itself.
    1. Approve the PR.
 1. Back on the local developer machine
    1. Checkout `main` and Pull from GitHub.
-   1. **Optional**: If finished with the branch, delete it locally and on GitHub, with the commands listed above.
+   1. **Optional**: If finished with the branch, delete it locally and on GitHub with the commands listed above.
 
 _Of course, deleting the branch in GitHub could be done the website instead of from the command line, but since the local branch is already being deleted there anyway it can just be done for both copies._
 
