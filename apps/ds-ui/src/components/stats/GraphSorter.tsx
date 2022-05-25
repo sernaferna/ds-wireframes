@@ -17,16 +17,12 @@ const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => 
   });
 };
 
-// TODO can this be refactored to use array.map instead of a for loop?
 const updateOrderNoInList = (initialList: VizualizationListItem[]): VizualizationListItem[] => {
-  const listToReturn: VizualizationListItem[] = [];
-
-  for (let i = 0; i < initialList.length; i++) {
-    const item: VizualizationListItem = { name: initialList[i].name, active: initialList[i].active, order: i };
-    listToReturn.push(item);
-  }
-
-  return listToReturn;
+  return initialList.map((item, index) => ({
+    name: item.name,
+    active: item.active,
+    order: index,
+  }));
 };
 
 const moveItemUpInList = (initialList: VizualizationListItem[], name: string) => {
