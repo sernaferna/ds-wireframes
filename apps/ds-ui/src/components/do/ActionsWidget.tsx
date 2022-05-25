@@ -7,8 +7,8 @@ import { useGetActionByDateQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ActionsForDay } from '@devouringscripture/common';
 import { ActionWidgetForm } from './ActionWidgetForm';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 interface IActionsWidget {
   showTitle?: boolean;
@@ -19,8 +19,7 @@ export function ActionsWidget({ showTitle = false }: IActionsWidget) {
 
   const { data, error, isLoading } = useGetActionByDateQuery(dateToShow.toISODate());
 
-  const userApiObject = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = userApiObject.data;
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
   const handleDateScroll = useCallback(
     (increase: boolean) => {
@@ -57,14 +56,14 @@ export function ActionsWidget({ showTitle = false }: IActionsWidget) {
     };
   };
 
-  if (isLoading || userApiObject.isLoading) {
+  if (isLoading || userLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage theError={error} />;
   }
-  if (userApiObject.error) {
-    return <ErrorLoadingDataMessage theError={userApiObject.error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (

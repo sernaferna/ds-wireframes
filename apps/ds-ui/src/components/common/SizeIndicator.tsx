@@ -1,17 +1,18 @@
 import React from 'react';
 import { ButtonGroup, Card, Button } from 'react-bootstrap';
 import { DisplayFill, LaptopFill, PhoneFill, PhoneLandscapeFill, TabletFill } from 'react-bootstrap-icons';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 
-export function SizeIndicator() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  if (isLoading) {
+export const SizeIndicator = () => {
+  const [userData, userResponseError, userLoading] = useUserSettings();
+
+  if (userLoading) {
     return null;
   }
-  if (error) {
+  if (userResponseError) {
     return null;
   }
-  if (!data!.settings.showSizeIndicator) {
+  if (!userData!.settings.showSizeIndicator) {
     return null;
   }
 
@@ -83,4 +84,4 @@ export function SizeIndicator() {
       </Card.Body>
     </Card>
   );
-}
+};

@@ -9,7 +9,7 @@ import {
   sortPrayerItems,
   useDeletePrayerItemMutation,
 } from '../../services/PrayerService';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { PrayerTypes, UserAttributes, PrayerListItem } from '@devouringscripture/common';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
@@ -130,12 +130,7 @@ export const PrayerCards = () => {
   const [markUnread] = useMarkUnreadMutation();
   const [deleteItem] = useDeletePrayerItemMutation();
   const [currentPage, setCurrentPage] = useState(1);
-
-  const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = tempObj.data;
-  const userIsLoading = tempObj.isLoading;
-  const userError = tempObj.error;
-
+  const [userData, userResponseError, userLoading] = useUserSettings();
   const prayerFilterString = useSelector(getPrayerViewFilter);
 
   const handleCompleteButton = useCallback(
@@ -165,7 +160,7 @@ export const PrayerCards = () => {
     [data, userData, prayerFilterString, handleCompleteButton, deleteItem]
   );
 
-  if (isLoading || userIsLoading) {
+  if (isLoading || userLoading) {
     return (
       <Row xs="1" md="2" xxl="3">
         <PlaceholderCard />
@@ -176,8 +171,8 @@ export const PrayerCards = () => {
   if (error) {
     return <ErrorLoadingDataMessage theError={error} />;
   }
-  if (userError) {
-    return <ErrorLoadingDataMessage theError={userError} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);

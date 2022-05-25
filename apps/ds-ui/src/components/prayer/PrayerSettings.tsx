@@ -1,34 +1,26 @@
 import React, { useCallback } from 'react';
 import { Form } from 'react-bootstrap';
-import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
 import { PrayerViewFilterComponent } from './PrayerViewFilterComponent';
 
 export function PrayerSettings() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
-
-  const changeFilterOption = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.prayer.showAllItems = !newUser.settings.prayer.showAllItems;
-    update(newUser);
-  }, [data, update]);
+  const [userData, userResponseError, userLoading, , flipBoolCallback, updateStringProp, , getUserCopy, updateUser] =
+    useUserSettings();
 
   const changeSortOption = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    if (newUser.settings.prayer.sort === 'date-asc') {
-      newUser.settings.prayer.sort = 'date-desc';
+    if (userData!.settings.prayer.sort === 'date-asc') {
+      updateStringProp('settings.prayer.sort', 'date-desc');
     } else {
-      newUser.settings.prayer.sort = 'date-asc';
+      updateStringProp('settings.prayer.sort', 'date-asc');
     }
-    update(newUser);
-  }, [data, update]);
+  }, [userData, updateStringProp]);
 
   const filterCheckClicked = useCallback(
     (filterCheck: string) => {
       return () => {
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+        const newUser: UserAttributes = getUserCopy();
         const filters = newUser.settings.prayer.filters;
 
         switch (filterCheck) {
@@ -57,22 +49,22 @@ export function PrayerSettings() {
             break;
         }
 
-        update(newUser);
+        updateUser(newUser);
       };
     },
-    [data, update]
+    [getUserCopy, updateUser]
   );
 
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  const showAll = data!.settings.prayer.showAllItems;
+  const showAll = userData!.settings.prayer.showAllItems;
 
-  let sortOptions = data!.settings.prayer.sort;
+  let sortOptions = userData!.settings.prayer.sort;
   if (sortOptions !== 'date-asc' && sortOptions !== 'date-desc') {
     sortOptions = 'date-asc';
   }
@@ -90,7 +82,7 @@ export function PrayerSettings() {
           label="Show All Prayer Items"
           name="prayerFilter"
           checked={showAll}
-          onChange={changeFilterOption}
+          onChange={flipBoolCallback('settings.prayer.showAllItems')}
         />
         <Form.Check
           type="radio"
@@ -98,7 +90,7 @@ export function PrayerSettings() {
           label="Show Active Prayer Items"
           name="prayerFilter"
           checked={!showAll}
-          onChange={changeFilterOption}
+          onChange={flipBoolCallback('settings.prayer.showAllItems')}
         />
       </Form.Group>
       <Form.Group className="group">
@@ -114,39 +106,39 @@ export function PrayerSettings() {
           type="checkbox"
           id="showAllTypesCheck"
           label="Any"
-          checked={data!.settings.prayer.filters.showAll}
+          checked={userData!.settings.prayer.filters.showAll}
           onChange={filterCheckClicked('all')}
         />
         <Form.Check
           type="checkbox"
           id="showUnlabeledCheck"
           label="Un-Labeled"
-          checked={data!.settings.prayer.filters.showUnLabeled}
-          disabled={data?.settings.prayer.filters.showAll}
+          checked={userData!.settings.prayer.filters.showUnLabeled}
+          disabled={userData?.settings.prayer.filters.showAll}
           onChange={filterCheckClicked('unlabeled')}
         />
         <Form.Check
           type="checkbox"
           id="showRequestsCheck"
           label="Requests"
-          checked={data!.settings.prayer.filters.showRequests}
-          disabled={data!.settings.prayer.filters.showAll}
+          checked={userData!.settings.prayer.filters.showRequests}
+          disabled={userData!.settings.prayer.filters.showAll}
           onChange={filterCheckClicked('requests')}
         />
         <Form.Check
           type="checkbox"
           id="showPraiseCheck"
           label="Praise"
-          checked={data!.settings.prayer.filters.showPraise}
-          disabled={data!.settings.prayer.filters.showAll}
+          checked={userData!.settings.prayer.filters.showPraise}
+          disabled={userData!.settings.prayer.filters.showAll}
           onChange={filterCheckClicked('praise')}
         />
         <Form.Check
           type="checkbox"
           id="showConfessionsCheck"
           label="Confessions"
-          checked={data!.settings.prayer.filters.showConfessions}
-          disabled={data!.settings.prayer.filters.showAll}
+          checked={userData!.settings.prayer.filters.showConfessions}
+          disabled={userData!.settings.prayer.filters.showAll}
           onChange={filterCheckClicked('confessions')}
         />
       </Form.Group>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 const links = [
   { label: 'Home', href: '/' },
@@ -28,13 +28,13 @@ const adminLinks = [].map(({ label, href }) => {
 });
 
 export function Header() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (
@@ -48,7 +48,7 @@ export function Header() {
         <Navbar.Collapse id="ds-header-navbar">
           <Nav>
             {links}
-            {data!.isAdmin ? adminLinks : ''}
+            {userData!.isAdmin ? adminLinks : ''}
           </Nav>
         </Navbar.Collapse>
       </Container>

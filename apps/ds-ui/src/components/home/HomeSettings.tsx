@@ -1,36 +1,16 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 export const HomeSettings = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [updateUser] = useUpdateUserMutation();
+  const [userData, userResponseError, userIsLoading, , flipUserBoolCallback] = useUserSettings();
 
-  const handleShowSIChange = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.showSizeIndicator = !newUser.settings.showSizeIndicator;
-    updateUser(newUser);
-  }, [data, updateUser]);
-
-  const handleTTChange = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.showToastTester = !newUser.settings.showToastTester;
-    updateUser(newUser);
-  }, [data, updateUser]);
-
-  const handleAdminChange = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.isAdmin = !newUser.isAdmin;
-    updateUser(newUser);
-  }, [data, updateUser]);
-
-  if (isLoading) {
-    return <LoadingMessage />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userIsLoading || userData === undefined) {
+    return <LoadingMessage />;
   }
 
   return (
@@ -39,22 +19,22 @@ export const HomeSettings = () => {
         type="checkbox"
         id="showSizeIndicatorSetting"
         label="Show Size Indicator"
-        checked={data!.settings.showSizeIndicator}
-        onChange={handleShowSIChange}
+        checked={userData!.settings.showSizeIndicator}
+        onChange={flipUserBoolCallback('settings.showSizeIndicator')}
       />
       <Form.Check
         type="checkbox"
         id="showToastTesterSetting"
         label="Show Toast Tester"
-        checked={data!.settings.showToastTester}
-        onChange={handleTTChange}
+        checked={userData!.settings.showToastTester}
+        onChange={flipUserBoolCallback('settings.showToastTester')}
       />
       <Form.Check
         type="checkbox"
         id="isAdmin"
         label="Admin User?"
-        checked={data!.isAdmin}
-        onChange={handleAdminChange}
+        checked={userData!.isAdmin}
+        onChange={flipUserBoolCallback('isAdmin')}
       />
     </Form>
   );

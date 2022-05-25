@@ -8,7 +8,7 @@ import { OldVsNew } from './graphs/OldVsNew';
 import { AllActivities } from './graphs/AllActivities';
 import { Prayed } from './graphs/Prayed';
 import { VisualizationCard } from './VisualizationCard';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { useGetActionStatsQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { GraphSorter } from './GraphSorter';
@@ -65,20 +65,19 @@ const getVisualizationList = (userData: UserAttributes | undefined, data: Action
 };
 
 export const Stats = () => {
-  const userObject = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = userObject.data;
+  const [userData, userResponseError, userLoading] = useUserSettings();
   const { data, error, isLoading } = useGetActionStatsQuery(userData?.settings.stats.statsFilter);
 
   const vizList = useMemo(() => getVisualizationList(userData, data), [userData, data]);
 
-  if (isLoading || userObject.isLoading) {
+  if (isLoading || userLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage theError={error} />;
   }
-  if (userObject.error) {
-    return <ErrorLoadingDataMessage theError={userObject.error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (

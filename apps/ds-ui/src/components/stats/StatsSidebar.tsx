@@ -1,32 +1,26 @@
-import React, { useCallback } from 'react';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common';
+import React from 'react';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { StatsSettings } from './StatsSettings';
 
 export const StatsSidebar = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , toggleBoolCallback] = useUserSettings();
 
-  const toggleSettings = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.stats.showSettings = !newUser.settings.stats.showSettings;
-    update(newUser);
-  }, [data, update]);
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
-
-  const showSettings = data!.settings.stats.showSettings;
 
   return (
     <>
-      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget
+        title="Configuration"
+        visible={userData!.settings.stats.showSettings}
+        clickFunction={toggleBoolCallback('settings.stats.showSettings')}
+      >
         <StatsSettings />
       </SidebarCollapseWidget>
     </>

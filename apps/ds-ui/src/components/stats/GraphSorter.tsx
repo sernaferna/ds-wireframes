@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { Col, ToggleButton, Row } from 'react-bootstrap';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import { VizualizationListItem, UserAttributes } from '@devouringscripture/common';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => {
@@ -50,43 +50,42 @@ const moveItemDownInList = (initialList: VizualizationListItem[], name: string) 
 };
 
 export const GraphSorter = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , , , , getUserCopy, updateBulkUser] = useUserSettings();
 
-  const sortedItems = useMemo(() => sortVizList(data!.settings.stats.vizualizationsOrder), [data]);
+  const sortedItems = useMemo(() => sortVizList(userData!.settings.stats.vizualizationsOrder), [userData]);
 
   const handleActiveInactive = useCallback(
     (itemName: string) => {
       return () => {
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+        const newUser: UserAttributes = getUserCopy();
         newUser.settings.stats.vizualizationsOrder.forEach((item) => {
           if (item.name === itemName) {
             item.active = !item.active;
           }
         });
-        update(newUser);
+        updateBulkUser(newUser);
       };
     },
-    [data, update]
+    [getUserCopy, updateBulkUser]
   );
 
   const handleSorterClick = useCallback(
     (itemName: string, moveUp: boolean) => {
       return () => {
         const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
+        const newUser: UserAttributes = getUserCopy();
         newUser.settings.stats.vizualizationsOrder = newList;
-        update(newUser);
+        updateBulkUser(newUser);
       };
     },
-    [sortedItems, update, data]
+    [sortedItems, updateBulkUser, getUserCopy]
   );
 
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   const vizList = sortedItems.map((item, index) => {

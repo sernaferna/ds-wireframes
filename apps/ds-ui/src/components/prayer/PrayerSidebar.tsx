@@ -1,32 +1,26 @@
-import React, { useCallback } from 'react';
-import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
+import React from 'react';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { PrayerSettings } from './PrayerSettings';
-import { UserAttributes } from '@devouringscripture/common';
 
 export function PrayerSidebar() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 
-  const toggleSettings = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.prayer.showSettings = !newUser.settings.prayer.showSettings;
-    update(newUser);
-  }, [data, update]);
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
-
-  const showSettings = data!.settings.prayer.showSettings;
 
   return (
     <>
-      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget
+        title="Configuration"
+        visible={userData!.settings.prayer.showSettings}
+        clickFunction={flipBoolCallback('settings.prayer.showSettings')}
+      >
         <PrayerSettings />
       </SidebarCollapseWidget>
     </>

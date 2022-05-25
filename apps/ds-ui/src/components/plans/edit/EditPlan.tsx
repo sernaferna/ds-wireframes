@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Verse, isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/common';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
+import { useUserSettings } from '../../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue, generatePlanForUpload } from './Helpers';
 import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
@@ -19,7 +19,7 @@ import { EditPlanForm } from './EditPlanForm';
 import { v4 as uuidv4 } from 'uuid';
 
 export const EditPlan = () => {
-  const userResponse = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const [userData, userResponseError, userLoading] = useUserSettings();
   const [versesTrigger, versesResult] = useLazyGetVersesForOSISQuery();
   const [values, setValues] = useState(initialPlanValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -325,11 +325,11 @@ export const EditPlan = () => {
     [days, setDays]
   );
 
-  if (userResponse.isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (userResponse.error) {
-    return <ErrorLoadingDataMessage theError={userResponse.error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (
@@ -339,7 +339,7 @@ export const EditPlan = () => {
       <EditPlanForm
         days={days}
         errors={errors}
-        user={userResponse.data!}
+        user={userData!}
         values={values}
         touched={touched}
         fetchVerses={fetchVerses}
