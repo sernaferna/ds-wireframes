@@ -1,36 +1,34 @@
 import React, { useCallback } from 'react';
 import { Form } from 'react-bootstrap';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 export const HomeSettings = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [updateUser] = useUpdateUserMutation();
+  const [userData, userResponseError, userIsLoading, flipUserBool] = useUserSettings();
+
+  // const handleSettingChange = useCallback((setting:string)=> {
+  //   return () => {
+  //     flipUserBool(setting);
+  //   }
+  // }, [flipUserBool]);
 
   const handleShowSIChange = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.showSizeIndicator = !newUser.settings.showSizeIndicator;
-    updateUser(newUser);
-  }, [data, updateUser]);
+    flipUserBool('settings.showSizeIndicator');
+  }, [flipUserBool]);
 
   const handleTTChange = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.showToastTester = !newUser.settings.showToastTester;
-    updateUser(newUser);
-  }, [data, updateUser]);
+    flipUserBool('settings.showToastTester');
+  }, [flipUserBool]);
 
   const handleAdminChange = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.isAdmin = !newUser.isAdmin;
-    updateUser(newUser);
-  }, [data, updateUser]);
+    flipUserBool('isAdmin');
+  }, [flipUserBool]);
 
-  if (isLoading) {
-    return <LoadingMessage />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userIsLoading || userData === undefined) {
+    return <LoadingMessage />;
   }
 
   return (
@@ -39,21 +37,21 @@ export const HomeSettings = () => {
         type="checkbox"
         id="showSizeIndicatorSetting"
         label="Show Size Indicator"
-        checked={data!.settings.showSizeIndicator}
+        checked={userData!.settings.showSizeIndicator}
         onChange={handleShowSIChange}
       />
       <Form.Check
         type="checkbox"
         id="showToastTesterSetting"
         label="Show Toast Tester"
-        checked={data!.settings.showToastTester}
+        checked={userData!.settings.showToastTester}
         onChange={handleTTChange}
       />
       <Form.Check
         type="checkbox"
         id="isAdmin"
         label="Admin User?"
-        checked={data!.isAdmin}
+        checked={userData!.isAdmin}
         onChange={handleAdminChange}
       />
     </Form>
