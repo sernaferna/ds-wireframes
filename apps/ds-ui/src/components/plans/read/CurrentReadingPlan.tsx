@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ListGroup, Card } from 'react-bootstrap';
 import { useGetSubscribedPlansQuery } from '../../../services/InstantiatedPlanService';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
+import { useUserSettings } from '../../../helpers/UserSettings';
 import { getDateForReadingPlan, updateDateShowingInReadingPlan } from '../../../stores/UISlice';
 import { ReadingPlanItem } from './ReadingPlanItem';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
@@ -16,14 +16,14 @@ export const CurrentReadingPlan = ({ showTitle = false }: ICurrentReadingPlan) =
   const dateToShow = DateTime.fromISO(useSelector(getDateForReadingPlan));
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetSubscribedPlansQuery();
-  const userData = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
   const version = useMemo(() => {
-    if (!userData.data) {
+    if (!userData) {
       return '';
     }
 
-    return userData.data.settings.read.defaultVersion;
+    return userData.settings.read.defaultVersion;
   }, [userData]);
 
   const earliestDate = useMemo(() => {
@@ -103,14 +103,14 @@ export const CurrentReadingPlan = ({ showTitle = false }: ICurrentReadingPlan) =
     };
   };
 
-  if (isLoading || userData.isLoading) {
+  if (isLoading || userLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage theError={error} />;
   }
-  if (userData.error) {
-    return <ErrorLoadingDataMessage theError={userData.error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (

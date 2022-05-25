@@ -1,35 +1,29 @@
-import React, { useCallback } from 'react';
-import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common';
+import React from 'react';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { HomeSettings } from './HomeSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ToastTester } from '../common/toasts/ToastTester';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 export function HomeSidebar() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , updateBoolCallback] = useUserSettings();
 
-  const toggleSettings = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.home.showSettings = !newUser.settings.home.showSettings;
-    update(newUser);
-  }, [data, update]);
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
-
-  const showSettings = data!.settings.home.showSettings;
 
   return (
     <>
       <ToastTester />
 
-      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget
+        title="Configuration"
+        visible={userData!.settings.home.showSettings}
+        clickFunction={updateBoolCallback('settings.home.showSettings')}
+      >
         <HomeSettings />
       </SidebarCollapseWidget>
     </>

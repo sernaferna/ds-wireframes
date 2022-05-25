@@ -4,9 +4,9 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useDispatch } from 'react-redux';
 import { updateDateShowingInActions } from '../../stores/UISlice';
 import Calendar, { CalendarTileProperties } from 'react-calendar';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
 import { DateTime } from 'luxon';
 import { ActionsForDay } from '@devouringscripture/common';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
   const actionsSet = new Set<string>();
@@ -50,8 +50,7 @@ export function CalendarView({ dateToShow }: ICalendarView) {
     year: monthToShow.get('year'),
     month: monthToShow.get('month'),
   });
-  const userDataObj = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = userDataObj.data;
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
   const dayClickedInCalendar = useCallback(
     (value: Date, event: any) => {
@@ -88,14 +87,14 @@ export function CalendarView({ dateToShow }: ICalendarView) {
     [actionsSet]
   );
 
-  if (isLoading || userDataObj.isLoading) {
+  if (isLoading || userLoading) {
     return <LoadingMessage />;
   }
   if (error) {
     return <ErrorLoadingDataMessage theError={error} />;
   }
-  if (userDataObj.error) {
-    return <ErrorLoadingDataMessage theError={userDataObj.error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (

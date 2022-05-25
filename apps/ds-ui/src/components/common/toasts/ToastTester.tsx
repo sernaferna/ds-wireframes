@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../../services/UserService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../loading';
 import { SidebarCollapseWidget } from '../SidebarCollapseWidget';
 import { getToastManager, ToastType } from './ToastManager';
+import { useUserSettings } from '../../../helpers/UserSettings';
 
 const executeTest = (toastType: string) => {
   return () => {
@@ -46,16 +46,16 @@ const executeTest = (toastType: string) => {
 
 export const ToastTester = () => {
   const [toastType, setToastType] = useState('primary');
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  if (!data!.settings.showToastTester) {
+  if (!userData!.settings.showToastTester) {
     return null;
   }
 

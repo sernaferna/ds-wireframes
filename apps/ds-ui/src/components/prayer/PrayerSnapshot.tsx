@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { Card, Form, Placeholder } from 'react-bootstrap';
 import { useGetAllItemsQuery, useMarkReadMutation, sortPrayerItems } from '../../services/PrayerService';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import { paginateItems } from '../../helpers/pagination';
 import { PrayerListItem, UserAttributes } from '@devouringscripture/common';
@@ -74,10 +74,7 @@ export function PrayerSnapshot({ showTitle = false }: IPrayerSnapshot) {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
-  const tempObj = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const userData = tempObj.data;
-  const userError = tempObj.error;
-  const userIsLoading = tempObj.isLoading;
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
   const handleCheck = useCallback(
     (id: string) => {
@@ -88,15 +85,14 @@ export function PrayerSnapshot({ showTitle = false }: IPrayerSnapshot) {
 
   const initialItems = useMemo(() => getInitialItems({ data, userData, handleCheck }), [data, userData, handleCheck]);
 
-  if (isLoading || userIsLoading) {
+  if (isLoading || userLoading) {
     return <PlaceholderList />;
   }
-  if (error || userError) {
-    if (error) {
-      return <ErrorLoadingDataMessage theError={error} />;
-    } else {
-      return <ErrorLoadingDataMessage theError={userError} />;
-    }
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage, 'sm');

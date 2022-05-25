@@ -1,44 +1,35 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { ReadPageSettings } from './ReadPageSettings';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { UserAttributes } from '@devouringscripture/common';
 import { CurrentReadingPlan } from '../plans/read/CurrentReadingPlan';
 
 export const ReadSidebar = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 
-  const toggleSettings = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.read.showSettings = !newUser.settings.read.showSettings;
-    update(newUser);
-  }, [data, update]);
-
-  const togglePlan = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.read.showReadingPlan = !newUser.settings.read.showReadingPlan;
-    update(newUser);
-  }, [data, update]);
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
-
-  const showSettings = data!.settings.read.showSettings;
-  const showReadingPlan = data!.settings.read.showReadingPlan;
 
   return (
     <>
-      <SidebarCollapseWidget title="Configuration" visible={showSettings} clickFunction={toggleSettings}>
+      <SidebarCollapseWidget
+        title="Configuration"
+        visible={userData!.settings.read.showSettings}
+        clickFunction={flipBoolCallback('settings.read.showSettings')}
+      >
         <ReadPageSettings />
       </SidebarCollapseWidget>
 
-      <SidebarCollapseWidget title="Reading Plan" visible={showReadingPlan} clickFunction={togglePlan}>
+      <SidebarCollapseWidget
+        title="Reading Plan"
+        visible={userData!.settings.read.showReadingPlan}
+        clickFunction={flipBoolCallback('settings.read.showReadingPlan')}
+      >
         <CurrentReadingPlan />
       </SidebarCollapseWidget>
     </>

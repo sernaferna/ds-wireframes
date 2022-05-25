@@ -1,32 +1,19 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Form } from 'react-bootstrap';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export const StatsSettings = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , , , updateStringCallback] = useUserSettings();
 
-  const changeDataFilterOption = useCallback(
-    (option: string) => {
-      return () => {
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-        newUser.settings.stats.statsFilter = option;
-        update(newUser);
-      };
-    },
-    [data, update]
-  );
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  const dataFilter = data!.settings.stats.statsFilter;
+  const dataFilter = userData!.settings.stats.statsFilter;
 
   return (
     <Form>
@@ -36,35 +23,35 @@ export const StatsSettings = () => {
         label="Last Week"
         name="dataFilter"
         checked={dataFilter === 'week'}
-        onChange={changeDataFilterOption('week')}
+        onChange={updateStringCallback('settings.stats.statsFilter', 'week')}
       />
       <Form.Check
         type="radio"
         label="Last Two Weeks"
         name="dataFilter"
         checked={dataFilter === '2weeks'}
-        onChange={changeDataFilterOption('2weeks')}
+        onChange={updateStringCallback('settings.stats.statsFilter', '2weeks')}
       />
       <Form.Check
         type="radio"
         label="Last Month"
         name="dataFilter"
         checked={dataFilter === 'month'}
-        onChange={changeDataFilterOption('month')}
+        onChange={updateStringCallback('settings.stats.statsFilter', 'month')}
       />
       <Form.Check
         type="radio"
         label="Last Year"
         name="dataFilter"
         checked={dataFilter === 'year'}
-        onChange={changeDataFilterOption('year')}
+        onChange={updateStringCallback('settings.stats.statsFilter', 'year')}
       />
       <Form.Check
         type="radio"
         label="All Time"
         name="dataFilter"
         checked={dataFilter === 'alltime'}
-        onChange={changeDataFilterOption('alltime')}
+        onChange={updateStringCallback('settings.stats.statsFilter', 'alltime')}
       />
     </Form>
   );

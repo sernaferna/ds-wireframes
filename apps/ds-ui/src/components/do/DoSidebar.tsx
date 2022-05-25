@@ -1,33 +1,25 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
-import { useGetUserByIdQuery, useUpdateUserMutation, HARDCODED_USER_ID } from '../../services/UserService';
-import { UserAttributes } from '@devouringscripture/common';
 import { DoPageSettings } from './DoPageSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useUserSettings } from '../../helpers/UserSettings';
 
 export function DoSidebar() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 
-  const toggleSettings = useCallback(() => {
-    const newUser: UserAttributes = JSON.parse(JSON.stringify(data));
-    newUser.settings.actions.showSettings = !newUser.settings.actions.showSettings;
-    update(newUser);
-  }, [update, data]);
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (
     <>
       <SidebarCollapseWidget
         title="Configuration"
-        visible={data!.settings.actions.showSettings}
-        clickFunction={toggleSettings}
+        visible={userData!.settings.actions.showSettings}
+        clickFunction={flipBoolCallback('settings.actions.showSettings')}
       >
         <DoPageSettings />
       </SidebarCollapseWidget>

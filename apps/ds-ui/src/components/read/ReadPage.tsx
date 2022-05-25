@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { ReadSidebar } from './ReadSidebar';
 import { PassageCards } from './PassageCards';
 import { PassageLauncher } from './PassageLauncher';
-import { useGetUserByIdQuery, HARDCODED_USER_ID } from '../../services/UserService';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { useLazyGetNoteByIdQuery } from '../../services/VapiService';
 import { useLazyGetPassageByIdQuery } from '../../services/PassagesService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
@@ -28,7 +28,7 @@ export interface DownloadedPassageDetails {
 export type FetchFunction = (id: string) => void;
 
 export const ReadPage = () => {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
+  const [userData, userResponseError, userLoading] = useUserSettings();
   const [noteTrigger] = useLazyGetNoteByIdQuery();
   const [passageTrigger] = useLazyGetPassageByIdQuery();
   const [downloadedNoteDetails, updateDownloadedNoteDetails] = useState<DownloadedNoteDetails>({
@@ -107,11 +107,11 @@ export const ReadPage = () => {
     },
     [passageTrigger, updateDownloadedPassageDetails, downloadedPassageDetails]
   );
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
   return (
@@ -124,7 +124,7 @@ export const ReadPage = () => {
           <h1 className="d-none d-md-block">Read the Scripture</h1>
           <Row>
             <Col xs="12" className="mb-2">
-              <PassageLauncher defaultVersion={data!.settings.read.defaultVersion} />
+              <PassageLauncher defaultVersion={userData!.settings.read.defaultVersion} />
             </Col>
             <Col xs="12" lg="6">
               <PassageCards

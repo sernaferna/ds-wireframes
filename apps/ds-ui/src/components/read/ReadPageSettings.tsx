@@ -1,32 +1,19 @@
-import React, { useCallback } from 'react';
-import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../../services/UserService';
+import React from 'react';
+import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Form } from 'react-bootstrap';
-import { UserAttributes } from '@devouringscripture/common';
 
 export function ReadPageSettings() {
-  const { data, error, isLoading } = useGetUserByIdQuery(HARDCODED_USER_ID);
-  const [update] = useUpdateUserMutation();
+  const [userData, userResponseError, userLoading, , , , updateStringCallback] = useUserSettings();
 
-  const changeDefaultVersion = useCallback(
-    (newVersion: string) => {
-      return () => {
-        const newUser: UserAttributes = JSON.parse(JSON.stringify(data!));
-        newUser.settings.read.defaultVersion = newVersion;
-        update(newUser);
-      };
-    },
-    [data, update]
-  );
-
-  if (isLoading) {
+  if (userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  const versionToUse = data!.settings.read.defaultVersion;
+  const versionToUse = userData!.settings.read.defaultVersion;
 
   return (
     <>
@@ -37,14 +24,14 @@ export function ReadPageSettings() {
           label="English Standard Version (ESV)"
           name="defaultVersion"
           checked={versionToUse === 'ESV'}
-          onChange={changeDefaultVersion('ESV')}
+          onChange={updateStringCallback('settings.read.defaultVersion', 'ESV')}
         />
         <Form.Check
           type="radio"
           label="New International Version (NIV)"
           name="defaultVersion"
           checked={versionToUse === 'NIV'}
-          onChange={changeDefaultVersion('NIV')}
+          onChange={updateStringCallback('settings.read.defaultVersion', 'NIV')}
         />
         <Form.Check
           type="radio"
@@ -52,7 +39,7 @@ export function ReadPageSettings() {
           name="defaultVersion"
           checked={versionToUse === 'NKJV'}
           disabled
-          onChange={changeDefaultVersion('NKJV')}
+          onChange={updateStringCallback('settings.read.defaultVersion', 'NKJV')}
         />
         <Form.Check
           type="radio"
@@ -60,7 +47,7 @@ export function ReadPageSettings() {
           name="defaultVersion"
           checked={versionToUse === 'KJV'}
           disabled
-          onChange={changeDefaultVersion('KJV')}
+          onChange={updateStringCallback('settings.read.defaultVersion', 'KJV')}
         />
       </Form>
       <p className="mt-3">Passage rendering via BibleGateway.</p>
