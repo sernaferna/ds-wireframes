@@ -1,5 +1,5 @@
 import React, { useState, useMemo, ChangeEvent, FocusEvent, useCallback } from 'react';
-import { InputGroup, Form, Button } from 'react-bootstrap';
+import { InputGroup, Form, Button, Row, Col } from 'react-bootstrap';
 import { ChevronUp, ChevronDoubleUp, ChevronDown, ChevronDoubleDown } from 'react-bootstrap-icons';
 import { getFormattedReference, isReferenceValid, getOSISForReference } from '@devouringscripture/common';
 import { DayForPlan } from './Helpers';
@@ -150,19 +150,41 @@ export const RenderDay = ({
   }, [isFreeform, dayNum, handleDown, handleDoubleDown, handleUp, handleDoubleUp, maxDays, day.verses]);
 
   return (
-    <InputGroup>
-      <Form.Control
-        readOnly={!isFreeform}
-        value={valueToShow}
-        type="text"
-        name={day.id}
-        id={day.id}
-        onChange={refChanged}
-        onBlur={refBlurred}
-        isInvalid={isInvalid}
-      />
-      {buttonGroup}
-      <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
-    </InputGroup>
+    <>
+      <div className="d-block d-sm-none">
+        <Row>
+          <Col xs="12">
+            <Form.Control
+              readOnly={!isFreeform}
+              value={valueToShow}
+              type="text"
+              name={day.id}
+              id={day.id}
+              onChange={refChanged}
+              onBlur={refBlurred}
+              isInvalid={isInvalid}
+            />
+            <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
+          </Col>
+          <Col xs="12">{buttonGroup}</Col>
+        </Row>
+      </div>
+      <div className="d-none d-sm-block">
+        <InputGroup>
+          <Form.Control
+            readOnly={!isFreeform}
+            value={valueToShow}
+            type="text"
+            name={day.id}
+            id={day.id}
+            onChange={refChanged}
+            onBlur={refBlurred}
+            isInvalid={isInvalid}
+          />
+          {buttonGroup}
+          <Form.Control.Feedback type="invalid">Invalid reference</Form.Control.Feedback>
+        </InputGroup>
+      </div>
+    </>
   );
 };
