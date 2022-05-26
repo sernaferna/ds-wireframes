@@ -100,7 +100,7 @@ export function CalendarView({ dateToShow }: ICalendarView) {
   return (
     <Calendar
       value={dateToShow.toJSDate()}
-      minDate={new Date(userData!.signupDate)}
+      minDate={DateTime.fromISO(userData!.signupDate).toJSDate()}
       maxDate={DateTime.now().toJSDate()}
       onClickDay={dayClickedInCalendar}
       onActiveStartDateChange={prevNextClickedInCalendar}

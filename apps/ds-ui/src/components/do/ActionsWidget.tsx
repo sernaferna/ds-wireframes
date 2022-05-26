@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getDateForActions, updateDateShowingInActions } from '../../stores/UISlice';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
@@ -36,25 +36,52 @@ export function ActionsWidget({ showTitle = false }: IActionsWidget) {
     [dispatch, dateToShow]
   );
 
-  const handleLeftClick = () => {
+  const showPrevButton: boolean = useMemo(() => {
+    if (!userData || !dateToShow) {
+      return false;
+    }
+
+    const signupDate = DateTime.fromISO(userData!.signupDate);
+    const diff = dateToShow.diff(signupDate, 'days').days;
+    if (diff > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [userData, dateToShow]);
+
+  const showNextButton: boolean = useMemo(() => {
+    if (!dateToShow) {
+      return false;
+    }
+
+    const diff = dateToShow.diff(DateTime.now(), 'days').days;
+    if (diff < -1) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [dateToShow]);
+
+  const handleLeftClick = useCallback(() => {
     return () => {
-      if (dateToShow < DateTime.fromISO(userData!.signupDate)) {
+      if (!showPrevButton) {
         return;
       }
 
       handleDateScroll(false);
     };
-  };
+  }, [showPrevButton, handleDateScroll]);
 
-  const handleRightClick = () => {
+  const handleRightClick = useCallback(() => {
     return () => {
-      if (dateToShow > DateTime.now()) {
+      if (!showNextButton) {
         return;
       }
 
       handleDateScroll(true);
     };
-  };
+  }, [showNextButton, handleDateScroll]);
 
   if (isLoading || userLoading) {
     return <LoadingMessage />;
@@ -71,15 +98,11 @@ export function ActionsWidget({ showTitle = false }: IActionsWidget) {
       <Card.Body>
         {showTitle ? <h4>Action List</h4> : <></>}
         <h6>
-          <span
-            className={`p-0 m-0 ${
-              dateToShow < DateTime.fromISO(userData!.signupDate) ? 'text-muted' : 'text-dark btn btn-lg fs-4'
-            }`}
-          >
+          <span className={`p-0 m-0 ${showPrevButton ? 'text-dark btn btn-lg fs-4' : 'text-muted'}`}>
             <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />
           </span>
           <span className="user-select-none mx-1">{dateToShow.toISODate()}</span>
-          <span className={`p-0 m-0 ${dateToShow > DateTime.now() ? 'text-muted' : 'text-dark btn btn-lg fs-4'}`}>
+          <span className={`p-0 m-0 ${showNextButton ? 'text-dark btn btn-lg fs-4' : 'text-muted'}`}>
             <CaretRightFill className="align-middle" onClick={handleRightClick()} />
           </span>
         </h6>
