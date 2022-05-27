@@ -129,6 +129,11 @@ export const ShowPassageModal = ({
           </Col>
         </Row>
       </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={closeFunction}>
+          Close
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };
