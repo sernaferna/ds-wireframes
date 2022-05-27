@@ -130,17 +130,21 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: IReadingPlanItem)
   }
 
   return (
-    <ListGroup.Item variant={variant} action onClick={popupModal}>
-      {icon} {data!.name}: {getFormattedReference(passage.osis)}
-      <ShowPassageModal
-        passage={passage}
-        show={modalShowing}
-        closeFunction={closeModal}
-        saveFunction={saveFunction}
-        completeFunction={handleComplete}
-        isComplete={plan.days![dayIndex].completed}
-        dateForReading={dateToShow}
-      />
-    </ListGroup.Item>
+    <>
+      <ListGroup.Item variant={variant} action>
+        <div onClick={popupModal}>
+          {icon} {data!.name}: <b className="reading-text">{getFormattedReference(passage.osis)}</b>
+        </div>
+        <ShowPassageModal
+          passage={passage}
+          show={modalShowing}
+          closeFunction={closeModal}
+          saveFunction={saveFunction}
+          completeFunction={handleComplete}
+          isComplete={plan.days![dayIndex].completed}
+          dateForReading={dateToShow}
+        />
+      </ListGroup.Item>
+    </>
   );
 };
