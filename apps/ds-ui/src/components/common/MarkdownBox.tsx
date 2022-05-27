@@ -22,6 +22,28 @@ const lordCommand: ICommand = {
   },
 };
 
+const scCommand: ICommand = {
+  name: 'SC',
+  keyCommand: 'SC',
+  buttonProps: { 'aria-label': 'Insert all SMALL CAPS' },
+  icon: <b className="sc2">A.D.</b>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `<span class="sc2">${state.selectedText ? state.selectedText : 'A.D.'}</span>`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+const scstyleCommand: ICommand = {
+  name: 'SmallCaps',
+  keyCommand: 'SmallCaps',
+  buttonProps: { 'aria-label': 'Insert Small Caps' },
+  icon: <span className="small-caps-style">SmCa</span>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `<span class="small-caps-style">${state.selectedText}</span>`;
+    api.replaceSelection(modifyText);
+  },
+};
+
 const commandsToFilterOut = ['code', 'image', 'checked-list'];
 
 const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
@@ -65,7 +87,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           highlightEnable={true}
           preview="edit"
           defaultTabEnable={true}
-          extraCommands={[lordCommand]}
+          extraCommands={[lordCommand, scCommand, scstyleCommand]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
         />
