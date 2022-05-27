@@ -16,21 +16,17 @@ export const Home = () => {
         <Col className="page-main-content-col">
           <h1 className="d-none d-md-block">Devouring Scripture: Base Actions</h1>
           <Row>
-            <Col xs="12" md="6" lg="4">
+            <Col xs="12" sm="6" lg="4" xxl="3">
               <CurrentReadingPlan showTitle={true} />
             </Col>
-            <Col xs="12" md="6" lg="4">
+            <Col xs="12" sm="6" lg="4" xxl="3">
               <ActionsWidget showTitle={true} />
             </Col>
-            <Col xs="12" lg="4">
-              <Row>
-                <Col xs="12" sm="4" lg="12">
-                  <PrayerSnapshot showTitle={true} />
-                </Col>
-                <Col xs="12" sm="8" lg="12">
-                  <CreatePrayerItem />
-                </Col>
-              </Row>
+            <Col xs="12" sm="4" lg="4" xxl="3">
+              <PrayerSnapshot showTitle={true} />
+            </Col>
+            <Col xs="12" sm="8" lg="12" xxl="3">
+              <CreatePrayerItem />
             </Col>
           </Row>
         </Col>
