@@ -6,9 +6,8 @@ import { defaultCustomActions } from '../../../helpers/ActionHelpers';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  console.log('Get all custom actions called');
-
   let response;
+
   try {
     response = db.getObject<ActionType[]>('/actions/custom');
   } catch (err) {

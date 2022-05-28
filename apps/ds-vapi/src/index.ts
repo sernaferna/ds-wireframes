@@ -15,7 +15,7 @@ import { updateNoteRouter } from './routes/notes/update';
 import { deleteNoteRouter } from './routes/notes/delete';
 import { getNotesForPassageRouter } from './routes/notes/getAllForPassage';
 
-import { NotFoundError, errorHandler } from '@devouringscripture/common';
+import { NotFoundError, errorHandler, logAPICall } from '@devouringscripture/common';
 import { getDB, populateDB } from './services/db';
 import { Database } from 'sqlite3';
 
@@ -50,6 +50,7 @@ db.serialize(() => {
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(logAPICall);
 
 app.use('/vapi/v', [getAllVersesRouter, getRangeOfVersesRouter, getBoundsForPassageRouter, getVersesForOsisRouter]);
 

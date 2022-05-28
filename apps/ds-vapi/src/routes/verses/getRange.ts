@@ -15,7 +15,6 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     const lowerBound: number = parseInt(req.params.lowerBound as string, 10);
     const upperBound: number = parseInt(req.params.upperBound as string, 10);
-    console.log(`Get verse range api called from ${lowerBound} to ${upperBound}`);
 
     try {
       getVersesByNum(lowerBound, upperBound)

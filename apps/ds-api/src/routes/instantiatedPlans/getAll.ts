@@ -12,8 +12,6 @@ import { db } from '../../services/db';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  console.log(`get all instantiated plans`);
-
   try {
     const instantiatedPlans: InstantiatedPlan[] = db.getObject<InstantiatedPlan[]>(`/instantiatedPlans`);
 

@@ -26,10 +26,9 @@ router.post(
   basePlanValidationRules(),
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Publishing plan', req.body.name);
-
     try {
       let plan: PlanAttributes;
+
       try {
         if (req.body.planInstanceId) {
           plan = req.body;

@@ -14,7 +14,6 @@ router.get(
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Calling getActionsForMonth for ${req.params.year}/${req.params.month}`);
     const passedMonth = DateTime.fromISO(`${req.params.year}-${req.params.month}-01`);
     const prevMonth = passedMonth.minus({ month: 1 });
     const nextMonth = passedMonth.plus({ month: 1 });

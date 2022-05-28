@@ -11,7 +11,6 @@ router.delete(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const planInstanceId = req.params.planInstanceId;
-    console.log(`Delete plan called for ${planInstanceId}`);
 
     try {
       const index = db.getIndex(`/plans`, planInstanceId, 'planInstanceId');

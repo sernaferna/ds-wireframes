@@ -6,8 +6,8 @@ import { db } from '../../services/db';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  console.log('getAll pi called');
   let response;
+
   try {
     response = db.getObject<PrayerListItems>('/prayerItems');
   } catch (err) {

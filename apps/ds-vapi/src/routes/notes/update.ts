@@ -18,7 +18,6 @@ router.put(
   validateRequest,
   async (req: Request, res: Response) => {
     const newNote: Note = req.body;
-    console.log(`Update note for ${newNote.id}`);
 
     const bounds: Bounds[] = await getBoundsForPassage(newNote.osis);
 

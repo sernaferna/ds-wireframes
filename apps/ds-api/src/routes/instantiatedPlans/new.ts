@@ -23,7 +23,6 @@ router.post(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const newBaseIP: BaseInstantiatedPlan = req.body;
-    console.log(`newIP`);
 
     try {
       const plan = getPlanById(newBaseIP.planInstanceId);

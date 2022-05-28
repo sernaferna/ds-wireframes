@@ -10,7 +10,6 @@ router.put(
   [param('itemId').isUUID().withMessage('Valid ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`markRead called for ${req.params.itemId}`);
     let item: PrayerListItem | null = null;
     try {
       const index = db.getIndex('/prayerItems', req.params.itemId);
@@ -33,7 +32,6 @@ router.put(
   [param('itemId').isUUID().withMessage('Valid ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`markUnread called for ${req.params.itemId}`);
     let item: PrayerListItem | null = null;
     try {
       const index = db.getIndex('/prayerItems', req.params.itemId);

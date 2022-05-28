@@ -6,9 +6,8 @@ import { generateActionBacklog } from '../../helpers/ActionHelpers';
 const router = express.Router();
 
 router.get('/recent', async (req: Request, res: Response) => {
-  console.log('Called get recent actions router');
-
   let response;
+
   try {
     response = db.getObject<ActionsForDay[]>('/actions/entries');
   } catch (err) {

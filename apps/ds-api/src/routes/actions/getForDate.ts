@@ -29,8 +29,6 @@ router.get(
   [param('actionDate').isDate().withMessage('Valid date required')],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log(`Called get action for ${req.params.actionDate}`);
-
     const response = getActionForDateInternal(req.params.actionDate);
 
     res.send(response);

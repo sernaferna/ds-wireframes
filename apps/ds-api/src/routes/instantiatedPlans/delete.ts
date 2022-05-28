@@ -11,7 +11,6 @@ router.delete(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const ipId: string = req.params.ipId;
-    console.log(`Deleting instantiated plan ${ipId}`);
 
     try {
       const planIndex = db.getIndex(`/instantiatedPlans`, ipId, 'planInstanceId');

@@ -23,8 +23,6 @@ router.get(
   [param('id').isUUID().withMessage('ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`API called to get note ${req.params.id}`);
-
     let item: Note | null = null;
     try {
       item = getNoteById(req.params.id);

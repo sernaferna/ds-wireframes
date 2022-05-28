@@ -18,8 +18,6 @@ router.get(
   [param('actionDayID').isUUID(4).withMessage('Valid ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Getting action id ${req.params.actionDayId}`);
-
     try {
       const response: ActionsForDay = getActionByIdInternal(req.params.actionDayId);
       res.send(response);

@@ -5,8 +5,6 @@ import { db } from '../../services/db';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  console.log('getAll Plans called');
-
   try {
     const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
     res.send(publicPlans);

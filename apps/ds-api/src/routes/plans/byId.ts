@@ -34,7 +34,6 @@ router.get(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const planInstanceId: string = req.params.planInstanceId;
-    console.log(`Get Plan by ID called: ${planInstanceId}`);
 
     try {
       const item = getPlanById(planInstanceId);

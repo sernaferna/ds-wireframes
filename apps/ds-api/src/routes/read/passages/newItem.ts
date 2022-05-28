@@ -16,7 +16,6 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const newBaseItem: BasePassage = req.body;
-    console.log(`New reading passage called with OSIS ${newBaseItem.osis}`);
     const newItem: Passage = {
       ...newBaseItem,
       id: uuidv4(),

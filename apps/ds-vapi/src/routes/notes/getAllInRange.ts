@@ -16,7 +16,6 @@ router.get(
   async (req: Request, res: Response) => {
     const lowerBound: number = parseInt(req.params.lowerBound as string, 10);
     const upperBound: number = parseInt(req.params.upperBound as string, 10);
-    console.log(`Get notes from ${lowerBound} to ${upperBound} called`);
 
     try {
       const allResults = notesDB.getObject<Note[]>('/notes');
