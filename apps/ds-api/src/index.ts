@@ -40,7 +40,7 @@ import { updateInstantiatedPlanRouter } from './routes/instantiatedPlans/update'
 import { getSubscribedIPRouter } from './routes/instantiatedPlans/getSubscribed';
 import { completeIPItemRouter } from './routes/instantiatedPlans/complete';
 
-import { errorHandler, NotFoundError } from '@devouringscripture/common';
+import { errorHandler, NotFoundError, logAPICall } from '@devouringscripture/common';
 
 console.log('API starting');
 
@@ -57,6 +57,7 @@ const app = express();
 // app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(logAPICall);
 
 app.use('/api/pi', [getAllPrayerItemsRouter, getPIById, markReadRouter, newPrayerItemRouter, deletePrayerItemRouter]);
 app.use('/api/user', [getUserByIdRouter, updateUserRouter, getAllInstantiatedPlansRouter]);
