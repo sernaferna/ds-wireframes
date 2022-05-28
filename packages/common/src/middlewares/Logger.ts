@@ -18,13 +18,15 @@ const getDurationInMillis = (start: [number, number]) => {
 /**
  * Helper function to write out a log in JSON format.
  *
+ * @param app Name of the calling application
  * @param event The event being logged
  * @param method The HTTP method called
  * @param path The Path of the API
  * @param duration The duration in milliseconds (if applicable)
  */
-const writeLog = (event: string, method: string, path: string, duration?: number) => {
+const writeLog = (app: string, event: string, method: string, path: string, duration?: number) => {
   const obj: any = {
+    app,
     event,
     method,
     path,
@@ -45,12 +47,13 @@ export const logAPICall = (req: Request, res: Response, next: NextFunction) => {
   const start = process.hrtime();
   const method = req.method;
   const path = req.path;
+  const app = process.env.npm_package_name || '';
 
-  writeLog('START', method, path);
+  writeLog(app, 'START', method, path);
 
   res.on('close', () => {
     const durInMillis = getDurationInMillis(start);
-    writeLog('END', method, path, durInMillis);
+    writeLog(app, 'END', method, path, durInMillis);
   });
 
   next();
