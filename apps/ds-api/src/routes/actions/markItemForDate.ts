@@ -54,7 +54,6 @@ router.put(
     const actionDayId = req.params.actionDayId;
     const actionId = req.params.actionId;
     const actions: ActionsForDay = req.body;
-    console.log(`Marking an item read/unread: ${actionId} for ${actionDayId}`);
 
     try {
       internalMarkItemReadForDate(actionDayId, actionId, actions);

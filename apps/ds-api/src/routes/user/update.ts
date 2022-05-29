@@ -13,7 +13,6 @@ router.put(
   validateRequest,
   async (req: Request, res: Response) => {
     const newUser: UserAttributes = req.body as UserAttributes;
-    console.log(`updateUser called for ${newUser.id}`);
 
     db.delete('/users[0]');
     db.push('/users[]', newUser);

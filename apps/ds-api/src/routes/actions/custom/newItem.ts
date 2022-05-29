@@ -11,8 +11,6 @@ router.post(
   [body('displayName').notEmpty().withMessage('Must include display name')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`create custom action type called with ${req.body.displayName}`);
-
     const newBaseItem = req.body;
     const newItem: ActionType = {
       ...newBaseItem,

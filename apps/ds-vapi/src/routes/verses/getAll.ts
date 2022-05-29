@@ -5,8 +5,6 @@ import { getVersesByNum } from '../../services/db';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  console.log('Get all verses API called');
-
   try {
     getVersesByNum()
       .then((verses) => res.send(verses))

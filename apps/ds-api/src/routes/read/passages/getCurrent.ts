@@ -5,9 +5,8 @@ import { db } from '../../../services/db';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  console.log('getAll current passage items called');
-
   let response;
+
   try {
     response = db.getObject<PassageItems>('/passages');
   } catch (err) {

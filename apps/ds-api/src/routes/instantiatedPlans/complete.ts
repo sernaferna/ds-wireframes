@@ -23,7 +23,6 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     const planId: string = req.params.planId;
     const dayIndex: number = parseInt(req.params.day);
-    console.log(`Mark complete/uncomplete for ${planId} day ${dayIndex}`);
 
     let day: InstantiatedPlanDay;
     try {

@@ -19,7 +19,6 @@ router.post(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const osis: string = req.body.osis;
-    console.log(`getVersesForOSIS: ${osis}`);
     let response: Verse[] = [];
 
     try {

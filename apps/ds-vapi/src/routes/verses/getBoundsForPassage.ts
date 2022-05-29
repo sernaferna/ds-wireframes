@@ -44,8 +44,6 @@ router.post(
   [check('osis').exists().withMessage('OSIS string required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Get bounds for passage called with ${req.body.osis}`);
-
     try {
       const passageArray: OSISRange[] = getRangesForOSIS(req.body.osis);
       if (passageArray.length < 1) {

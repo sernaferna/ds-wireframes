@@ -15,22 +15,22 @@ import { updateNoteRouter } from './routes/notes/update';
 import { deleteNoteRouter } from './routes/notes/delete';
 import { getNotesForPassageRouter } from './routes/notes/getAllForPassage';
 
-import { NotFoundError, errorHandler } from '@devouringscripture/common';
+import { NotFoundError, errorHandler, logAPICall, writeLog } from '@devouringscripture/common';
 import { getDB, populateDB } from './services/db';
 import { Database } from 'sqlite3';
 
-console.log('VAPI starting');
+writeLog('VAPI starting');
 
 dotenv.config();
 
 if (!process.env.PORT) {
-  console.error('No listening port configured');
+  writeLog('No listening port configured', undefined, undefined, 'ERROR');
   process.exit();
 }
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const db: Database = getDB();
-console.log('Connected to DB');
+writeLog('Connected to DB');
 
 db.serialize(() => {
   db.get('SELECT COUNT(versenum) c FROM verses', (err: any, row: any) => {
@@ -41,7 +41,7 @@ db.serialize(() => {
       populateDB(db);
     }
     if (row.c < 1) {
-      console.log(`Count returned ${row.c}: creating/populating DB`);
+      writeLog(`Count returned ${row.c}: creating/populating DB`);
       populateDB(db);
     }
   });
@@ -50,6 +50,7 @@ db.serialize(() => {
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(logAPICall);
 
 app.use('/vapi/v', [getAllVersesRouter, getRangeOfVersesRouter, getBoundsForPassageRouter, getVersesForOsisRouter]);
 
@@ -69,5 +70,5 @@ app.all('*', (req, res, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`VAPI started listening on port ${PORT}`);
+  writeLog(`VAPI started listening on port ${PORT}`);
 });

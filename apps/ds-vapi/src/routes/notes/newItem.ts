@@ -14,7 +14,6 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const newBaseItem: BaseNote = req.body;
-    console.log(`New note being saved for passage ${newBaseItem.osis}`);
 
     const bounds: Bounds[] = await getBoundsForPassage(newBaseItem.osis);
 

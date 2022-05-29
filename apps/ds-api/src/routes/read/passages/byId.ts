@@ -10,8 +10,6 @@ router.get(
   [param('id').isUUID().withMessage('Valid ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Get passage by ID ${req.params.id}`);
-
     try {
       const index: number = db.getIndex('/passages', req.params.id);
       if (index < 0) {

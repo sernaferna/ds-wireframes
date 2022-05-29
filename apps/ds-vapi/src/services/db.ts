@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 import { Database } from 'sqlite3';
 import fs from 'fs';
 import csv from 'csv-parser';
-import { Verse, DatabaseError, InvalidPassageError } from '@devouringscripture/common';
+import { Verse, DatabaseError, InvalidPassageError, writeLog } from '@devouringscripture/common';
 
 export const getDB = (): Database => {
   const db: Database = new sqlite3.Database('db/verses.db', (err: any) => {
@@ -74,8 +74,7 @@ export const populateDB = (db: Database) => {
           [row.versenum, row.osis, row.apoc],
           (err: any) => {
             if (err) {
-              console.error('error inserting into table');
-              console.error(err);
+              writeLog('error inserting into table', undefined, undefined, 'ERROR', err);
               throw new DatabaseError('populateDB');
             }
           }
@@ -88,12 +87,11 @@ export const populateDB = (db: Database) => {
           db.run('COMMIT;');
           db.close((err: any) => {
             if (err) {
-              console.error('Error closing DB');
-              console.error(err);
+              writeLog('Error closing DB', undefined, undefined, 'ERROR', err);
               throw new DatabaseError('closing DB conn in populateDB');
             }
 
-            console.log('DB created');
+            writeLog('DB created');
           });
         });
       });

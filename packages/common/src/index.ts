@@ -25,6 +25,7 @@ export * from './errors/PlanAdminToNonError';
 export * from './middlewares/HandleFourOhFour';
 export * from './middlewares/ValidateRequest';
 export * from './middlewares/ErrorHandler';
+export * from './middlewares/Logger';
 
 export * from './helpers/VersionNumberHelpers';
 export * from './helpers/refparse/index';

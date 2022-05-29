@@ -21,7 +21,6 @@ router.put(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const newIP: InstantiatedPlan = req.body;
-    console.log(`updating IP ${newIP.id}`);
 
     try {
       const planIndex = db.getIndex(`/instantiatedPlans`, newIP.id);

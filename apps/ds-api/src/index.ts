@@ -40,14 +40,14 @@ import { updateInstantiatedPlanRouter } from './routes/instantiatedPlans/update'
 import { getSubscribedIPRouter } from './routes/instantiatedPlans/getSubscribed';
 import { completeIPItemRouter } from './routes/instantiatedPlans/complete';
 
-import { errorHandler, NotFoundError } from '@devouringscripture/common';
+import { errorHandler, NotFoundError, logAPICall, writeLog } from '@devouringscripture/common';
 
-console.log('API starting');
+writeLog('API starting');
 
 dotenv.config();
 
 if (!process.env.PORT) {
-  console.error('no port environment variable');
+  writeLog('no port environment variable', undefined, undefined, 'ERROR');
   process.exit();
 }
 
@@ -57,6 +57,7 @@ const app = express();
 // app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(logAPICall);
 
 app.use('/api/pi', [getAllPrayerItemsRouter, getPIById, markReadRouter, newPrayerItemRouter, deletePrayerItemRouter]);
 app.use('/api/user', [getUserByIdRouter, updateUserRouter, getAllInstantiatedPlansRouter]);
@@ -98,5 +99,5 @@ app.all('*', async (req, res, next) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`App started. Listening on port ${PORT}`);
+  writeLog(`App started. Listening on port ${PORT}`);
 });

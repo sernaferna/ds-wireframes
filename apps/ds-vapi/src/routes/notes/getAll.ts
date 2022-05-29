@@ -10,8 +10,6 @@ export const getAllNotes = () => {
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  console.log('Get all notes called');
-
   try {
     const response = getAllNotes();
     res.send(response);

@@ -25,7 +25,6 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     const date = req.params.date;
     const actionType = 'actions|default|shortotpass';
-    console.log(`Action to read short OT passage for ${date}`);
 
     try {
       markItemRead(date, actionType);
@@ -48,7 +47,6 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     const date = req.params.date;
     const actionType = 'actions|default|rlotpass';
-    console.log(`Action to read short OT passage for ${date}`);
 
     try {
       markItemRead(date, actionType);
@@ -71,7 +69,6 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     const date = req.params.date;
     const actionType = 'actions|default|rsntpass';
-    console.log(`Action to read short OT passage for ${date}`);
 
     try {
       markItemRead(date, actionType);
@@ -94,7 +91,6 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     const date = req.params.date;
     const actionType = 'actions|default|rlntpass';
-    console.log(`Action to read short OT passage for ${date}`);
 
     try {
       markItemRead(date, actionType);

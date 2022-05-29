@@ -10,8 +10,6 @@ router.delete(
   [param('id').isUUID().withMessage('ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Calling delete note for ${req.params.id}`);
-
     try {
       const indexOfItem = notesDB.getIndex('/notes', req.params.id);
       if (indexOfItem < 0) {

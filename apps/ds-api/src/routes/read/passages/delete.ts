@@ -10,8 +10,6 @@ router.delete(
   [param('id').isUUID().withMessage('ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Delete current read item with id ${req.params.id}`);
-
     try {
       const indexOfItem = db.getIndex('/passages', req.params.id);
       if (indexOfItem < 0) {

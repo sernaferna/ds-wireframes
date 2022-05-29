@@ -10,8 +10,6 @@ router.delete(
   [param('id').isUUID().withMessage('Valid ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`Delete custom action called for ${req.params.id}`);
-
     try {
       const indexOfItem = db.getIndex('/actions/custom', req.params.id);
       if (indexOfItem < 0) {

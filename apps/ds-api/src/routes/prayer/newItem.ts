@@ -13,11 +13,6 @@ router.post(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const newBaseItem: BasePrayerListItem = req.body;
-    console.log(
-      `new prayer item API called; text of item is '${newBaseItem.text.substring(0, 20)}${
-        newBaseItem.text.length > 20 ? '...' : ''
-      }'`
-    );
     const newItem: PrayerListItem = {
       ...newBaseItem,
       id: uuidv4(),

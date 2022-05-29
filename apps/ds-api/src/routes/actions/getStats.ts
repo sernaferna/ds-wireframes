@@ -12,7 +12,6 @@ router.get(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const timeframe = req.query.tf || 'alltime';
-    console.log(`get action stats called for ${timeframe}`);
 
     const stats: ActionStats = {
       dataSize: 0,

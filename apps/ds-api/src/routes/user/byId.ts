@@ -12,7 +12,6 @@ router.get(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId: string = req.params.userId;
-    console.log(`getUser called for ${userId}`);
 
     let user: UserAttributes | null = null;
 
@@ -22,7 +21,6 @@ router.get(
         throw new UserNotFoundError(userId);
       }
       user = db.getData(`/users[${index}]`);
-      delete user!.plans;
     } catch (err) {
       if (userId === '2f740108-8596-4a8a-b334-518ab34a8c50') {
         user = generateDefaultUser();

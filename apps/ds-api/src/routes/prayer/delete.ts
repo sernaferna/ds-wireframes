@@ -10,8 +10,6 @@ router.delete(
   [param('id').isUUID().withMessage('ID required')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(`delete prayer item called with ${req.params.id}`);
-
     try {
       const indexOfItem = db.getIndex('/prayerItems', req.params.id);
       if (indexOfItem < 0) {
