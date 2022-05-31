@@ -18,9 +18,17 @@ jobs:
         uses: 'actions/checkout@v2'
         with:
           ref: ${{ github.ref }}
+      - name: 'cat package.json'
+        run: cat ./apps/ds-ui/package.json
       - name: 'Bump version for UI'
         id: ui-bump
         uses: 'phips28/gh-action-bump-version@master'
+        with:
+          tag-prefix: 'v'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-ui'
+      - name: 'output step'
+        env:
+          NEW_TAG: ${{ steps.ui-bump.outputs.newTag }}
+        run: echo "new tag $NEW_TAG"
