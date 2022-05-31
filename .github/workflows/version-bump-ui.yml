@@ -20,12 +20,12 @@ jobs:
         id: ui-bump
         uses: 'phips28/gh-action-bump-version@master'
         with:
-          - tag-prefix: 'v'
-            default: prerelease
-            major-wording: 'MAJOR,BREAKING CHANGE'
-            minor-wording: 'minor'
-            patch-wording: 'feat,fix'
-            rc-wording: ''
+          tag-prefix: 'v'
+          default: prerelease
+          major-wording: 'MAJOR,BREAKING CHANGE'
+          minor-wording: 'minor'
+          patch-wording: 'feat,fix'
+          rc-wording: ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-ui'
