@@ -1,10 +1,6 @@
 {
   "name": "ds-ui",
-<<<<<<< HEAD
-  "version": "0.1.1",
-=======
   "version": "0.1.2",
->>>>>>> 30026db338a130ad7bcca7b7996edf70eeea8c21
   "private": true,
   "dependencies": {
     "@devouringscripture/common": "^1.0.0",
