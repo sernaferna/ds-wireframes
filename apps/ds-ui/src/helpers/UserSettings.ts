@@ -3,7 +3,7 @@ import { UserAttributes } from '@devouringscripture/common';
 import { useGetUserByIdQuery, HARDCODED_USER_ID, useUpdateUserMutation } from '../services/UserService';
 import { get as getProperty, set as setProperty } from 'lodash-es';
 
-// Type declarations for the types of functions exported from the hook
+// Declarations for the types of functions exported from the hook
 type FlipBoolPropertyFunction = (propPath: string) => void;
 type FlipBoolPropertyCallbackFunction = (propPath: string) => () => void;
 type UpdateStringSettingFunction = (propPath: string, newValue: string) => void;
