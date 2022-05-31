@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: 'Checkout source code'
         uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
       - name: 'Bump version for UI'
         id: ui-bump
         uses: 'phips28/gh-action-bump-version@master'
