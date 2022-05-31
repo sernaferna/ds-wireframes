@@ -11,12 +11,21 @@ on:
 jobs:
   bump_version:
     name: 'Bump version Number for UI app'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout source code'
         uses: 'actions/checkout@v2'
       - name: 'Bump version for UI'
+        id: ui-bump
         uses: 'phips28/gh-action-bump-version@master'
+        with:
+          - tag-prefix: 'v'
+            default: prerelease
+            major-wording: 'MAJOR,BREAKING CHANGE'
+            minor-wording: 'minor'
+            patch-wording: 'feat,fix'
+            rc-wording: ''
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-ui'
