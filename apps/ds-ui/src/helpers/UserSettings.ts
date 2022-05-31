@@ -12,7 +12,7 @@ type GetNewUserHelper = () => UserAttributes;
 type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
 
 /**
- * Hook User Settings. Since numerous components within the application
+ * User Settings hook. Since numerous components within the application
  * need to retrieve and/or update settings, this hook makes
  * it easy to do so, without a lot of duplicated code across the app.
  *
