@@ -21,7 +21,7 @@ type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
  * they'll get redrawn by React.
  *
  * The last two helpers (`GetNewUserHelper` and `UpdateBulkUserFunction`)
- * are for complicated cases.
+ * are for complicated cases where manual control is needed.
  *
  * @returns Tuple of the following items: 1) the user data (undefined until avail
  * from the API); 2) the error response (if any) from the API; 3) isLoading;
