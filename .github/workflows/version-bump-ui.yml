@@ -11,7 +11,6 @@ on:
 jobs:
   bump_version:
     name: 'Bump version Number for UI app'
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout source code'
