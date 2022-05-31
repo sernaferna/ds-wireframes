@@ -20,7 +20,7 @@ type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
  * the server, so calling components can simply make the updates, and
  * they'll get redrawn by React.
  *
- * The last two helper functions (`GetNewUserHelper` and `UpdateBulkUserFunction`)
+ * The last two helpers (`GetNewUserHelper` and `UpdateBulkUserFunction`)
  * are used in more complicated cases, where a simple case isn't good enough.
  *
  * @returns Tuple of the following items: 1) the user data (undefined until avail
