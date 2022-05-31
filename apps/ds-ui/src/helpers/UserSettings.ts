@@ -17,7 +17,7 @@ type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
  * it easy to do so without a lot of duplicated code across the app.
  *
  * Each of the helper functions/callbacks automatically updates
- * the server, so calling components can simply make the updates, confident that
+ * the server, so calling components can simply make the updates, and
  * they'll get redrawn by React.
  *
  * The last two helper functions (`GetNewUserHelper` and `UpdateBulkUserFunction`)
