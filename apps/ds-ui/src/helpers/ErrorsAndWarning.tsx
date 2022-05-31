@@ -7,7 +7,7 @@ type RemoveMessageFunction = (id: string) => void;
 
 /**
  * Custom hook for error/warning messages. Provides dismissible
- * UI for showing the errors/warnings, and functions for
+ * UI for showing the errors/warnings and functions for
  * adding errors or warnings.
  *
  * @returns Tuple containing: 1) the functional component to be
