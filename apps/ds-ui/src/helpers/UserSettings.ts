@@ -18,7 +18,7 @@ type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
  *
  * Each of the helper functions/callbacks automatically sends the update to
  * the server, so calling components can simply make the updates, confident that
- * they'll get redrawn when the updates come back.
+ * they'll get redrawn by React.
  *
  * The last two helper functions (`GetNewUserHelper` and `UpdateBulkUserFunction`)
  * are used in more complicated cases, where a simple "set the value of this one property"
