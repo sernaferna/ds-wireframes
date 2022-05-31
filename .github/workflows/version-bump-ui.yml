@@ -1,0 +1,23 @@
+name: 'Bump Version'
+
+on:
+  pull_request:
+    branches: [main]
+    types:
+      - closed
+    paths:
+      - 'apps/ds-ui/**'
+
+jobs:
+  bump_ui:
+    name: 'Bump version Number for UI app'
+    if_merged:
+      if: github.event.pull_request.merged == true
+      runs-on: ubuntu-latest
+      steps:
+        - name: 'Checkout source code'
+          uses: 'actions/checkout@v2'
+        - name: 'Bump version for UI'
+          uses: 'phips28/gh-action-bump-version@master'
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
