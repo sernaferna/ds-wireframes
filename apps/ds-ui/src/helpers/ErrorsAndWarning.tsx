@@ -10,7 +10,7 @@ type RemoveMessageFunction = (id: string) => void;
  * (dismissible) for showing the errors/warnings, and functions for
  * adding errors or warnings.
  *
- * @returns Tuble containing: 1) the Functional Component to be
+ * @returns Tuple containing: 1) the Functional Component to be
  *     displayed wherever desired in the UI of the containing page;
  *     2) a function for adding error messages; and 3) a function for
  *     adding warnings.
