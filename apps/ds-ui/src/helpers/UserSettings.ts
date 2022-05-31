@@ -16,7 +16,7 @@ type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
  * need to retrieve and update settings this hook makes
  * it easy to do so without a lot of duplicated code across the app.
  *
- * Each of the helper functions/callbacks automatically sends the update to
+ * Each of the helper functions/callbacks automatically updates
  * the server, so calling components can simply make the updates, confident that
  * they'll get redrawn by React.
  *
