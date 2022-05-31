@@ -1,28 +1,29 @@
-# name: 'Bump Version'
+name: 'Bump Version'
 
-# on:
-#   pull_request:
-#     branches: [main]
-#     types:
-#       - closed
-#     paths:
-#       - 'apps/ds-ui/**'
+on:
+  pull_request:
+    branches: [main]
+    types:
+      - closed
+    paths:
+      - 'apps/ds-ui/**'
 
-# jobs:
-#   bump_version:
-#     name: 'Bump version Number for UI app'
-#     if: github.event.pull_request.merged == true
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: 'Checkout source code'
-#         uses: 'actions/checkout@v2'
-#         with:
-#           ref: ${{ github.ref }}
-#       - name: 'Bump version for UI'
-#         id: ui-bump
-#         uses: 'phips28/gh-action-bump-version@master'
-#         with:
-#           tag-prefix: 'v'
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           PACKAGEJSON_DIR: 'apps/ds-ui'
+jobs:
+  bump_version:
+    name: 'Bump version Number for UI app'
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      - name: 'Bump version for UI'
+        id: ui-bump
+        uses: 'phips28/gh-action-bump-version@master'
+        with:
+          tag-prefix: 'v'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'apps/ds-ui'
+          ref: ${{ github.ref}}
