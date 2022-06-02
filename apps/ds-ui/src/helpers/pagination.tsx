@@ -4,7 +4,7 @@ import { Pagination } from 'react-bootstrap';
  * Helper function to paginate a list of items in an array (of
  * any kind). Calling component is responsible for using the arrays
  * properly. Returns a tuple containing the subset of the array
- * that should be shown, as well as a list of Pagination.x tags
+ * that should be shown, as well as a list of Pagination tags
  * to be used in a <Paginate> element.
  *
  * Does NOT control pagination from the perspective of calling an
