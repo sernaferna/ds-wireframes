@@ -1,6 +1,12 @@
 import { PrayerListItems } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 
+/**
+ * Helper function to generate a list of hard-coded pyrayer items
+ * for display in the UI.
+ *
+ * @returns Array of hard-coded prayer list items
+ */
 export const generatePrayerItems = (): PrayerListItems => {
   const items: PrayerListItems = [
     {
