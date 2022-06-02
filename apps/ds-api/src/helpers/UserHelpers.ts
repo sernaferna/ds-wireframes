@@ -1,5 +1,11 @@
 import { UserAttributes } from '@devouringscripture/common';
 
+/**
+ * Helper function to return a user object, the first time the app
+ * is run without such data.
+ *
+ * @returns Pre-populated user object, with proper defaults
+ */
 export const generateDefaultUser = (): UserAttributes => {
   return {
     firstName: 'David',
@@ -13,20 +19,9 @@ export const generateDefaultUser = (): UserAttributes => {
       showToastTester: false,
       actions: {
         showSettings: true,
-        showPrayerEntry: true,
       },
       home: {
         showSettings: true,
-        showActions: true,
-        showPrayers: true,
-        statsFilter: 'alltime',
-        vizualizationsOrder: [
-          { name: 'AllActivities', active: true, order: 0 },
-          { name: 'OldVsNew', active: false, order: 1 },
-          { name: 'ReadScripture', active: true, order: 2 },
-          { name: 'Prayed', active: true, order: 3 },
-          { name: 'DetailedReading', active: true, order: 4 },
-        ],
       },
       prayer: {
         showSettings: true,
@@ -47,7 +42,17 @@ export const generateDefaultUser = (): UserAttributes => {
       },
       plans: {
         showSettings: true,
-        showCurrentReadingPlan: true,
+      },
+      stats: {
+        showSettings: true,
+        statsFilter: 'alltime',
+        vizualizationsOrder: [
+          { name: 'AllActivities', active: true, order: 0 },
+          { name: 'OldVsNew', active: false, order: 1 },
+          { name: 'ReadScripture', active: true, order: 2 },
+          { name: 'Prayed', active: true, order: 3 },
+          { name: 'DetailedReading', active: false, order: 4 },
+        ],
       },
     },
   };
