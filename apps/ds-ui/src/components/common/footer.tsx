@@ -1,12 +1,13 @@
 import React from 'react';
 import { Image, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import packageJson from '../../../package.json';
 
 export function Footer() {
   return (
     <footer>
       <Navbar className="footer-navbar">
-        <div className="footer-copyright-text">&copy; 2021 Devouring Scripture</div>
+        <div className="footer-copyright-text">&copy; 2021 Devouring Scripture, v{packageJson.version}</div>
         <NavLink to="/" className="footer-logo-link">
           <Image src="/logo192.png" height="30" width="30" />
         </NavLink>
