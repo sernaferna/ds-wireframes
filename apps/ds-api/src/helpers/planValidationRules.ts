@@ -26,6 +26,12 @@ export const basePlanValidationRules = () => {
   ];
 };
 
+/**
+ * Builds on `basePlanValidatorRules` to add rules for Plan
+ * objects.
+ *
+ * @returns Array of Express Validator rules
+ */
 export const planValidationRules = () => {
   const baseRules = basePlanValidationRules();
 

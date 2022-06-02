@@ -5,7 +5,7 @@ import csv from 'csv-parser';
 import { Verse, DatabaseError, InvalidPassageError, writeLog } from '@devouringscripture/common';
 
 /**
- * Gets an instance of the local SQLite DB
+ * Gets an instance of the SQLite DB
  *
  * @returns The instantiated database
  */
