@@ -52,6 +52,12 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
   });
 };
 
+/**
+ * Retrieve a single verse, based on OSIS string.
+ *
+ * @param osis OSIS string for which to fetch the verses
+ * @returns [Promise] Single verse object, matching the OSIS
+ */
 export const getVerseByOSIS = (osis: string): Promise<Verse> => {
   return new Promise<Verse>((resolve, reject) => {
     const db: Database = getDB();
