@@ -90,7 +90,7 @@ npm start -w ds-ui
 
 ## Run a Test
 
-The very few unit tests that were written be run all at once; the root `package.json` has a `test` script that calls the individual test scripts.
+The very few unit tests that were written run all at once; the root `package.json` has a `test` script that calls the individual test scripts.
 
 ```bash
 npm run test
@@ -98,11 +98,13 @@ npm run test
 
 ## Run a Build
 
-The library, being common to the other applications, needs to be built when changes are made, as follows:
+The `common` library, being by the other applications, needs to be built when changes are made, as follows:
 
 ```bash
 npm run build
 ```
+
+It's best to shut down the application(s) (if running), run the build, and then reload VS Code to get the latest changes.
 
 ## Git Branching
 
@@ -137,7 +139,7 @@ git push origin --delete remoteBranchName
 
 # Workflow
 
-The original author almost always followed this process for making changes.
+This process is used for making changes.
 
 Firstly, a GitHub **Project** is used for tracking any changes to be made, bugs to be fixed, etc. It's essentially a backlog, but when any item in the Project is going to be actively worked on it is converted to an **Issue** (along with being moved to the appropriate swimlane in the Project).
 
@@ -145,22 +147,19 @@ Then, for working with the actual code in Git, the following process is typicall
 
 1. On the local developer machine:
    1. Create and check out a new branch. (For changes to fix a single Issue, such as a simple bug fix, naming the branch after the issue (e.g. `is110`) is acceptable.)
-   1. Make whatever changes are necessary, committing along the way
+   1. Make whatever changes are necessary, committing along the way. Commit comments are important: commits containing the word `major` will force a major version change in a later step, and steps containing the word `minor` will force a minor version change. Any other changes will result in a patch change to version number.
    1. When everything is working, Push to GitHub, still on the new branch
 1. In GitHub:
    1. Create a Pull Request to merge the code into `main`
    1. Link Issues that are fixed with this PR (if any).
       1. Preference is to link via the PR comments; i.e. to link the PR with Issue 130, the comments should include `closes #130`. This will link the text of the comment to the Issue itself.
-      1. Node version numbers for the three applications will be updated automatically, accordin to these rules:
-         1. If the PR comment includes the strings `BREAKING CHANGE` or `major` the major version will be incremented.
-         1. If the PR comment includes the strings `feat` or `minor` the minor version will be incremented.
-         1. Otherwise, the patch version will be incremented.
+      1. Node version numbers for any of the three applications that were modified will be updated automatically, according to these rules listed above. The overall workspace also has a version which will be incremented, and the main workspace version will become the Git tag.
    1. Approve the PR.
 1. Back on the local developer machine
    1. Checkout `main` and Pull from GitHub.
    1. **Optional**: If finished with the branch, delete it locally and on GitHub with the commands listed above.
 
-_Of course, deleting the branch in GitHub could be done the website instead of from the command line, but since the local branch is already being deleted there anyway it can just be done for both copies._
+_Of course, deleting the branch in GitHub could be done from the website instead of the command line, but since the local branch is already being deleted there anyway, both can be done at once._
 
 After this, if there are other branches active, they may need to merge in the changes from `main`.
 
