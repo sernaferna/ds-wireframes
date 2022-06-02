@@ -1,11 +1,9 @@
 name: 'Bump UI Version'
 
 on:
-  pull_request:
+  push:
     branches:
       - 'main'
-    types:
-      - closed
     paths:
       - 'apps/ds-api/**'
       - 'apps/ds-ui/**'
