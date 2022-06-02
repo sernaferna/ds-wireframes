@@ -31,6 +31,8 @@ jobs:
         with:
           target-branch: 'main'
           skip-tag: 'true'
+          major-wording: 'MAJOR'
+          minor-wording: 'MINOR'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-ui'
@@ -41,6 +43,8 @@ jobs:
         with:
           target-branch: 'main'
           skip-tag: 'true'
+          major-wording: 'MAJOR'
+          minor-wording: 'MINOR'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-api'
@@ -51,6 +55,8 @@ jobs:
         with:
           target-branch: 'main'
           skip-tag: 'true'
+          major-wording: 'MAJOR'
+          minor-wording: 'MINOR'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-vapi'
@@ -59,6 +65,8 @@ jobs:
         uses: 'phips28/gh-action-bump-version@master'
         with:
           target-branch: 'main'
+          major-wording: 'MAJOR'
+          minor-wording: 'MINOR'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REF: ${{ github.ref}}
