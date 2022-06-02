@@ -19,6 +19,14 @@ export const getDB = (): Database => {
   return db;
 };
 
+/**
+ * Async function to fetch a set of verses, given lower/upper
+ * bounds based on the `versenum`.
+ *
+ * @param lowerBound The lowest verse to fetch
+ * @param upperBound The highest verse to fetch
+ * @returns [Promise] Array of `Verse` objects matching the params
+ */
 export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 40000): Promise<Verse[]> => {
   return new Promise<Verse[]>((resolve, reject) => {
     const db: Database = getDB();
