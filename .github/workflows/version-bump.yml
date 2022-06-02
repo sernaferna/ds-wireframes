@@ -61,3 +61,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-vapi'
           GITHUB_REF: ${{ github.ref}}
+      - name: 'Bump version for Workspace'
+        uses: 'phips28/gh-action-bump-version@master'
+        with:
+          target-branch: 'main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REF: ${{ github.ref}}
