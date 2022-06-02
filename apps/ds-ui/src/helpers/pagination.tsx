@@ -15,7 +15,7 @@ import { Pagination } from 'react-bootstrap';
  *     what that array might contain.
  * @param lengthToShow Number of items that should be shown on a "page"
  * @param currentPage Current page that's being displayed
- * @param clickFunction A function (taking in a number) to call when an
+ * @param clickFunction A function (taking a number) to call when an
  *     item is clicked. Typically would be called by components leveraging
  *     useState, in which case simply use the setting function returned by
  * useState
