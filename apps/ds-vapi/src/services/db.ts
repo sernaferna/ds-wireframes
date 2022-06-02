@@ -4,6 +4,11 @@ import fs from 'fs';
 import csv from 'csv-parser';
 import { Verse, DatabaseError, InvalidPassageError, writeLog } from '@devouringscripture/common';
 
+/**
+ * Gets an instance of the local SQLite DB
+ *
+ * @returns The instantiated database
+ */
 export const getDB = (): Database => {
   const db: Database = new sqlite3.Database('db/verses.db', (err: any) => {
     if (err) {
