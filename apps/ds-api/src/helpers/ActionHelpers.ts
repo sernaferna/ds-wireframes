@@ -2,6 +2,14 @@ import { ActionsForDay, ActionEntry, ActionType } from '@devouringscripture/comm
 import { v4 as uuidv4 } from 'uuid';
 import { DateTime } from 'luxon';
 
+/**
+ * Helper function to return all of the necessary data for an
+ * `ActionsForDay` object for a given day.
+ *
+ * @param date ISO date for which actions should be generated
+ * @param id ID for the day, if it's already been set
+ * @returns Populated `ActionsForDay` structure, with no completions
+ */
 export const populateActionsForDay = (date: string, id?: string): ActionsForDay => {
   const defaultActions: ActionEntry[] = defaultActionTypes.map((item) => ({
     id: item.id,
