@@ -1,22 +1,22 @@
-name: 'Bump UI Version'
+name: 'Bump VAPI Version'
 
 on:
   push:
     branches:
       - 'main'
     paths:
-      - 'apps/ds-ui/**'
+      - 'apps/ds-vapi/**'
 
 jobs:
   bump_version:
-    name: 'Bump version Number for UI app'
+    name: 'Bump version Number for VAPI app'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout source code'
         uses: 'actions/checkout@v2'
         with:
           ref: ${{ github.ref }}
-      - name: 'Bump version for UI'
+      - name: 'Bump version for VAPI'
         id: ui-bump
         uses: 'phips28/gh-action-bump-version@master'
         with:
@@ -24,5 +24,5 @@ jobs:
           target-branch: 'main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PACKAGEJSON_DIR: 'apps/ds-ui'
+          PACKAGEJSON_DIR: 'apps/ds-vapi'
           GITHUB_REF: ${{ github.ref}}
