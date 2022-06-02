@@ -1,0 +1,63 @@
+name: 'Bump UI Version'
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+    types:
+      - closed
+    paths:
+      - 'apps/ds-api/**'
+      - 'apps/ds-ui/**'
+      - 'apps/ds-vapi/**'
+
+jobs:
+  bump_versions:
+    name: 'Bump version numbers apps'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      - name: 'Filters'
+        uses: 'dorny/paths-filter@v2'
+        id: filter
+        with:
+          filters: |
+            api:
+              - 'apps/ds-api/**'
+            ui:
+              - 'apps/ds-ui/**'
+            vapi:
+              - 'apps/ds-vapi/**'
+      - name: 'Bump version for UI'
+        uses: 'phips28/gh-action-bump-version@master'
+        if: steps.filter.outputs.ui == 'true'
+        with:
+          target-branch: 'main'
+          skip-tag: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'apps/ds-ui'
+          GITHUB_REF: ${{ github.ref}}
+      - name: 'Bump version for API'
+        uses: 'phips28/gh-action-bump-version@master'
+        if: steps.filter.outputs.api == 'true'
+        with:
+          target-branch: 'main'
+          skip-tag: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'apps/ds-api'
+          GITHUB_REF: ${{ github.ref}}
+      - name: 'Bump version for VAPI'
+        uses: 'phips28/gh-action-bump-version@master'
+        if: steps.filter.outputs.vapi == 'true'
+        with:
+          target-branch: 'main'
+          skip-tag: 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'apps/ds-vapi'
+          GITHUB_REF: ${{ github.ref}}
