@@ -6,9 +6,9 @@ type SetMessageFunction = (message: string | JSX.Element) => string;
 type RemoveMessageFunction = (id: string) => void;
 
 /**
- * Custom hook for error/warning messages. Provides dismissible
- * UI for showing errors/warnings, and functions for
- * adding errors or warnings.
+ * Custom hook for error/warning messages. Provides UI for showing
+ * dismissable errors/warnings, and functions for adding errors or
+ * warnings.
  *
  * @returns Tuple containing: 1) the functional component to be
  *     displayed wherever desired in the UI of the containing page;
