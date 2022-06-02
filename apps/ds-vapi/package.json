@@ -1,6 +1,6 @@
 {
   "name": "ds-vapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "API for working with Bible verses, requiring a more intensive DB than ds-api uses",
   "main": "index.js",
   "scripts": {
