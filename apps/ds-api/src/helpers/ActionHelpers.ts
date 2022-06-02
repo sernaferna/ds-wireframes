@@ -28,16 +28,20 @@ export const populateActionsForDay = (date: string, id?: string): ActionsForDay 
   return entry;
 };
 
-/*
-Goes back over the last 30 days. For each day: randomly decides whether not to generate an item, and then for each action randomly decides whether to indicate it's completed.
-*/
+/**
+ * Helper function to go back over the previous 30 days and generate
+ * test data. For each item in each day it randomly decides whether to
+ * generate the item, and then randomly decides whether to indicate
+ * it's completed.
+ *
+ * @returns Array of randomly populated `ActionsForDay` objects
+ */
 export const generateActionBacklog = (): ActionsForDay[] => {
   const actions: ActionsForDay[] = [];
 
   for (let i = 30; i > 0; i--) {
     if (Math.random() < 0.5) {
-      //const dateToUse = new Date(new Date().setDate(new Date().getDate() - i)).toISOString().split('T')[0];
-      // create a Luxon `DateTime` which is `i` days in the past, and convert it back to an ISO date string
+      // create `DateTime` `i` days in the past and convert back to ISO string
       const dateToUse = DateTime.now().minus({ days: i }).toISODate();
       const action = populateActionsForDay(dateToUse);
       for (let j = 0; j < action.customActions.length; j++) {
