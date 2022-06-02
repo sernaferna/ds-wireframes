@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - 'main'
-    paths:
-      - 'apps/ds-api/**'
-      - 'apps/ds-ui/**'
-      - 'apps/ds-vapi/**'
 
 jobs:
   bump_versions:
