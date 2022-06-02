@@ -1,4 +1,4 @@
-name: 'Bump UI Version'
+name: 'Bump Version Numbers'
 
 on:
   push:
