@@ -1,6 +1,12 @@
 import { body } from 'express-validator';
 import { isVersionValid, PlanVersionError } from '@devouringscripture/common';
 
+/**
+ * Keeps all validation rules for Base Plans in one place, to be reused
+ * in any Express routes that need Plan validation.
+ *
+ * @returns Array of Express Validator rules
+ */
 export const basePlanValidationRules = () => {
   return [
     body('name').notEmpty().withMessage('Name required'),
