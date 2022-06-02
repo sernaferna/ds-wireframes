@@ -12,7 +12,7 @@ import { Pagination } from 'react-bootstrap';
  * retrieved.
  *
  * @param itemList The array of items; agnostic as to type
- * @param lengthToShow Number of items that should be shown on a "page"
+ * @param lengthToShow Number of items to be shown per "page"
  * @param currentPage Current page that's being displayed
  * @param clickFunction A function (taking a number) to call when an
  *     item is clicked. Typically would be called by components leveraging
