@@ -11,8 +11,7 @@ import { Pagination } from 'react-bootstrap';
  * external API; works with a full list of items that have already been
  * retrieved.
  *
- * @param itemList The array of items. This function is agnostic as to
- *     what that array might contain.
+ * @param itemList The array of items; agnostic as to type
  * @param lengthToShow Number of items that should be shown on a "page"
  * @param currentPage Current page that's being displayed
  * @param clickFunction A function (taking a number) to call when an
