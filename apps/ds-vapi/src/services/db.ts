@@ -80,6 +80,12 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
   });
 };
 
+/**
+ * Populates an empty SQLite DB with table structures and verse
+ * data.
+ *
+ * @param db The SQLite db object
+ */
 export const populateDB = (db: Database) => {
   db.serialize(() => {
     db.run('CREATE TABLE IF NOT EXISTS verses ( versenum INTEGER, osis VARCHAR(20), apoc INTEGER)');
