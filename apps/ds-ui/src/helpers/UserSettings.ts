@@ -23,7 +23,7 @@ type UpdateBulkUserFunction = (newUser: UserAttributes) => void;
  * The last two helpers (`GetNewUserHelper` and `UpdateBulkUserFunction`)
  * are for complicated cases where manual control is needed.
  *
- * @returns Tuple of the following items: 1) the user data (undefined until avail
+ * @returns Tuple of: 1) the user data (undefined until avail
  * from the API); 2) the error response (if any) from the API; 3) isLoading;
  * 4) helper function to "flip" a boolean property; 5) a Callback version of
  * the same function; 6) helper function to set a string property; 7) callback
