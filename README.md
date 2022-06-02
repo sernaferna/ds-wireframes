@@ -153,7 +153,7 @@ Then, for working with the actual code in Git, the following process is typicall
    1. Create a Pull Request to merge the code into `main`
    1. Link Issues that are fixed with this PR (if any).
       1. Preference is to link via the PR comments; i.e. to link the PR with Issue 130, the comments should include `closes #130`. This will link the text of the comment to the Issue itself.
-      1. Node version numbers for any of the three applications that were modified will be updated automatically, according to these rules listed above. The overall workspace also has a version which will be incremented, and the main workspace version will become the Git tag.
+      1. Node version numbers for any of the three applications that were modified will be updated automatically, according to these rules listed above. The overall workspace also has a version which will be incremented, and the main workspace version will become the Git tag. (Workspace version will be incremented even if none of the applications are; e.g. changes to the readme would still increment the workspace version.)
    1. Approve the PR.
 1. Back on the local developer machine
    1. Checkout `main` and Pull from GitHub.
