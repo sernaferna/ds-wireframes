@@ -8,7 +8,7 @@ import { Pagination } from 'react-bootstrap';
  * to be used in a <Paginate> element.
  *
  * Does NOT control pagination from the perspective of calling an
- * external API; works with a list of items that have already been
+ * external API; works with a full list of items that have already been
  * retrieved.
  *
  * @param itemList The array of items. This function is agnostic as to
