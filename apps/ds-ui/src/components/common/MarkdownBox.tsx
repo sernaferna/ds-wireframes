@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
+import supersub from 'remark-supersub';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 
@@ -10,7 +11,7 @@ interface IMarkdownPreview {
 }
 export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
   const classNames: string = shaded ? 'bg-light border mx-1 my-2' : ';';
-  return <MDEditor.Markdown source={content} className={classNames} />;
+  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[supersub]} />;
 };
 
 const lordCommand: ICommand = {
@@ -56,7 +57,7 @@ const superCommand: ICommand = {
     </b>
   ),
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<sup>${state.selectedText}</sup>`;
+    const modifyText = `^${state.selectedText}^`;
     api.replaceSelection(modifyText);
   },
 };
@@ -86,15 +87,22 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
 
   useEffect(() => {
-    if (mdContainer == null || mdContainer.current == null) {
-      console.log('Stuff is null');
-      return;
-    }
+    const handleResize = () => {
+      if (mdContainer === null || mdContainer.current === null) {
+        setShowToolbar(false);
+        return;
+      }
 
-    console.log('offsetWidth', mdContainer.current.offsetWidth);
-    if (mdContainer.current.offsetWidth > MIN_SIZE_FOR_TOOLBAR) {
-      setShowToolbar(true);
-    }
+      if (mdContainer.current!.offsetWidth > MIN_SIZE_FOR_TOOLBAR) {
+        setShowToolbar(true);
+        return;
+      }
+
+      setShowToolbar(false);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
   }, [mdContainer, setShowToolbar]);
 
   const reversePreviewState = () => {
