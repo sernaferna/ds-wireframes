@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
+
+const MIN_SIZE_FOR_TOOLBAR = 350;
 
 interface IMarkdownPreview {
   content: string;
@@ -44,6 +46,21 @@ const scstyleCommand: ICommand = {
   },
 };
 
+const superCommand: ICommand = {
+  name: 'Superscript',
+  keyCommand: 'Superscript',
+  buttonProps: { 'aria-label': 'Superscript' },
+  icon: (
+    <b>
+      2<sup>2</sup>
+    </b>
+  ),
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `<sup>${state.selectedText}</sup>`;
+    api.replaceSelection(modifyText);
+  },
+};
+
 const commandsToFilterOut = ['code', 'image', 'checked-list'];
 
 const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
@@ -65,6 +82,20 @@ interface IMarkdownBox {
 }
 export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IMarkdownBox) => {
   const [showPreviewState, setShowPreviewState] = useState(showPreview);
+  const mdContainer = useRef<HTMLDivElement>(null);
+  const [showToolbar, setShowToolbar] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (mdContainer == null || mdContainer.current == null) {
+      console.log('Stuff is null');
+      return;
+    }
+
+    console.log('offsetWidth', mdContainer.current.offsetWidth);
+    if (mdContainer.current.offsetWidth > MIN_SIZE_FOR_TOOLBAR) {
+      setShowToolbar(true);
+    }
+  }, [mdContainer, setShowToolbar]);
 
   const reversePreviewState = () => {
     return () => {
@@ -80,16 +111,18 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
 
   return (
     <div>
-      <div className="mb-2">
+      <div ref={mdContainer} className="mb-2">
         <MDEditor
+          id="this-is-the-editor"
           value={content}
           onChange={handleChangeEvent}
           highlightEnable={true}
           preview="edit"
           defaultTabEnable={true}
-          extraCommands={[lordCommand, scCommand, scstyleCommand]}
+          extraCommands={[lordCommand, scCommand, scstyleCommand, superCommand]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
+          hideToolbar={!showToolbar}
         />
       </div>
       <div className="d-grid gap-2">
