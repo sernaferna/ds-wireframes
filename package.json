@@ -9,5 +9,8 @@
   "workspaces": [
     "./packages/*",
     "./apps/*"
-  ]
+  ],
+  "dependencies": {
+    "remark-supersub": "^1.0.0"
+  }
 }
