@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
+import { tac, lowerCaps, smallCaps, highlight } from '@devouringscripture/remark-plugins';
+import { MarkdownTutorial } from './MarkdownTutorial';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 
@@ -11,7 +13,13 @@ interface IMarkdownPreview {
 }
 export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
   const classNames: string = shaded ? 'bg-light border mx-1 my-2' : ';';
-  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[supersub]} />;
+  return (
+    <MDEditor.Markdown
+      source={content}
+      className={classNames}
+      remarkPlugins={[tac, lowerCaps, smallCaps, highlight, supersub]}
+    />
+  );
 };
 
 const lordCommand: ICommand = {
@@ -20,7 +28,7 @@ const lordCommand: ICommand = {
   buttonProps: { 'aria-label': 'Insert LORD' },
   icon: <b className="sc">LORD</b>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<span class="sc">LORD</span>`;
+    const modifyText = `^^^${state.selectedText ? state.selectedText : 'LORD'}^^^`;
     api.replaceSelection(modifyText);
   },
 };
@@ -31,7 +39,7 @@ const scCommand: ICommand = {
   buttonProps: { 'aria-label': 'Insert all SMALL CAPS' },
   icon: <b className="sc2">A.D.</b>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<span class="sc2">${state.selectedText ? state.selectedText : 'A.D.'}</span>`;
+    const modifyText = `^^${state.selectedText ? state.selectedText : 'A.D.'}^^`;
     api.replaceSelection(modifyText);
   },
 };
@@ -42,7 +50,7 @@ const scstyleCommand: ICommand = {
   buttonProps: { 'aria-label': 'Insert Small Caps' },
   icon: <span className="small-caps-style">SmCa</span>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<span class="small-caps-style">${state.selectedText}</span>`;
+    const modifyText = `^-^${state.selectedText}^-^`;
     api.replaceSelection(modifyText);
   },
 };
@@ -58,6 +66,17 @@ const superCommand: ICommand = {
   ),
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^${state.selectedText}^`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+const highlightCommand: ICommand = {
+  name: 'Highlight',
+  keyCommand: 'Highlight',
+  buttonProps: { 'aria-label': 'Highlight' },
+  icon: <mark>abc</mark>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `==${state.selectedText}==`;
     api.replaceSelection(modifyText);
   },
 };
@@ -85,6 +104,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
   const [showPreviewState, setShowPreviewState] = useState(showPreview);
   const mdContainer = useRef<HTMLDivElement>(null);
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
+  const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -127,10 +147,25 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           highlightEnable={true}
           preview="edit"
           defaultTabEnable={true}
-          extraCommands={[lordCommand, scCommand, scstyleCommand, superCommand]}
+          extraCommands={[lordCommand, scCommand, scstyleCommand, superCommand, highlightCommand]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
           hideToolbar={!showToolbar}
+        />
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            setShowMDTutorial(true);
+          }}
+        >
+          Show Tutorial
+        </Button>
+        <MarkdownTutorial
+          show={showMDTutorial}
+          handleClose={() => {
+            setShowMDTutorial(false);
+          }}
         />
       </div>
       <div className="d-grid gap-2">

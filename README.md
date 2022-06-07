@@ -8,7 +8,7 @@ There are a few projects, along with some libraries for the sake of reducing cod
 - `ds-api` is a simple API that mocks back-end functions
 - `ds-vapi` is a separate API specifically for handling verses and notes, created only because it required a more robust DB than `ds-api`
 
-These apps (as well as the library) are described below.
+These apps (as well as the libraries) are described below.
 
 ## ds-ui: Devouring Scripture UI
 
@@ -40,6 +40,10 @@ Along with ignoring the `dsDB.json` file, the `.gitignore` file will also ignore
 ## common
 
 A library with common code leveraged across the other applications. It exposes commonly used type definitions that are returned from APIs but also used in the UI app, some error handling code that is used by both of the APIs, and anything else that could be refactored out so that the same code wasn't being written multiple times.
+
+## remark-plugins
+
+For inputs that accept **markdown**, the application leverages the `@uiw/react-md-editor` library, which accepts **Remark** plugins that can further enhance the way MD is converted to HTML. This library provides a set of these plugins, to provide some specialized use cases.
 
 ### Bible Reference/OSIS Parsing
 
@@ -98,13 +102,43 @@ npm run test
 
 ## Run a Build
 
-The `common` library, being by the other applications, needs to be built when changes are made, as follows:
+All of the libraries can be built at once, using a script defined in the main `package.json`:
 
 ```bash
 npm run build
 ```
 
 It's best to shut down the application(s) (if running), run the build, and then reload VS Code to get the latest changes.
+
+### Run a Build of remark-plugins
+
+There are issues getting the **remark-plugins** library to build; the build sometimes hangs when changes are made. There is likely a misconfiguration somewhere in a `tsconfig` or other file.
+
+In order to get **remark-plugins** to build, it has to be built individually; assuming the developer is starting from the root directory, they would need to:
+
+```bash
+# attempting to run the build will hang; this doesn't work:
+npm run build
+
+# go to the directory of the library
+cd packages/remark-plugins
+
+# deleting the build folder seems to help
+rm -r -f build/
+
+# run the build only for this library
+npm run build
+```
+
+After this, builds can be run normally again:
+
+```bash
+# go back to root
+cd ../..
+
+# running the build normally works now!
+npm run build
+```
 
 ## Git Branching
 
