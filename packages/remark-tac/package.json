@@ -1,7 +1,6 @@
 {
   "name": "@devouringscripture/remark-tac",
   "version": "1.0.0",
-  "type": "module",
   "description": "Plugin for Title All Caps",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
