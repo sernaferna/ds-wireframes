@@ -26,7 +26,9 @@ export default function tac(): Transformer {
               type: 'span',
               data: {
                 hName: 'span',
-                hClassNames: ['sc blah'],
+                hProperties: {
+                  className: ['sc'],
+                },
               },
               children: [
                 {
