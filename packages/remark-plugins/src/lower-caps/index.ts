@@ -2,7 +2,7 @@ import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal, Data, Node } from 'unist';
 
-export const lowerCaps = (): Transformer => {
+export function lowerCaps(): Transformer {
   return (tree) => {
     visit(tree, ['text'], (node, i, parent: any) => {
       if (node.type !== 'text') {
@@ -11,7 +11,7 @@ export const lowerCaps = (): Transformer => {
 
       const { value } = node as Literal<string>;
 
-      const values = value.split(/\^~/);
+      const values = value.split(/\^\^/);
       if (values.length === 1 || values.length % 2 === 0) {
         return;
       }
@@ -42,4 +42,4 @@ export const lowerCaps = (): Transformer => {
       parent.children.splice(i, 1, ...children);
     });
   };
-};
+}

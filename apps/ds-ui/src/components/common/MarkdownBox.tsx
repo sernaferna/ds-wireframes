@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
-import { tac } from '@devouringscripture/remark-plugins';
+import { tac, lowerCaps } from '@devouringscripture/remark-plugins';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 
@@ -12,7 +12,7 @@ interface IMarkdownPreview {
 }
 export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
   const classNames: string = shaded ? 'bg-light border mx-1 my-2' : ';';
-  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[tac, supersub]} />;
+  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[tac, lowerCaps, supersub]} />;
 };
 
 const lordCommand: ICommand = {
@@ -21,7 +21,7 @@ const lordCommand: ICommand = {
   buttonProps: { 'aria-label': 'Insert LORD' },
   icon: <b className="sc">LORD</b>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `^^${state.selectedText ? state.selectedText : 'LORD'}^^`;
+    const modifyText = `^^^${state.selectedText ? state.selectedText : 'LORD'}^^^`;
     api.replaceSelection(modifyText);
   },
 };
@@ -32,7 +32,7 @@ const scCommand: ICommand = {
   buttonProps: { 'aria-label': 'Insert all SMALL CAPS' },
   icon: <b className="sc2">A.D.</b>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<span class="sc2">${state.selectedText ? state.selectedText : 'A.D.'}</span>`;
+    const modifyText = `^^${state.selectedText ? state.selectedText : 'A.D.'}^^`;
     api.replaceSelection(modifyText);
   },
 };
