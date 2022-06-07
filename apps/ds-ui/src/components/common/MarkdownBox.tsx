@@ -3,6 +3,7 @@ import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-ed
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
 import { tac, lowerCaps, smallCaps, highlight } from '@devouringscripture/remark-plugins';
+import { MarkdownTutorial } from './MarkdownTutorial';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 
@@ -103,6 +104,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
   const [showPreviewState, setShowPreviewState] = useState(showPreview);
   const mdContainer = useRef<HTMLDivElement>(null);
   const [showToolbar, setShowToolbar] = useState<boolean>(false);
+  const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -149,6 +151,21 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           visiableDragbar={false}
           commandsFilter={commandsFilter}
           hideToolbar={!showToolbar}
+        />
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            setShowMDTutorial(true);
+          }}
+        >
+          Show Tutorial
+        </Button>
+        <MarkdownTutorial
+          show={showMDTutorial}
+          handleClose={() => {
+            setShowMDTutorial(false);
+          }}
         />
       </div>
       <div className="d-grid gap-2">
