@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
-import { tac } from '@devouringscripture/remark-tac';
+import { tac } from '@devouringscripture/remark-plugins';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 

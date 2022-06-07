@@ -1,5 +1,5 @@
 {
-  "name": "@devouringscripture/remark-tac",
+  "name": "@devouringscripture/remark-plugins",
   "version": "1.0.0",
   "description": "Plugin for Title All Caps",
   "main": "./build/index.js",

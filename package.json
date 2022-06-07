@@ -3,7 +3,7 @@
   "version": "5.2.0",
   "scripts": {
     "start": "npm start -w ds-api & npm start -w ds-vapi & npm start -w ds-ui",
-    "build": "npm run build -w @devouringscripture/common & npm run build -w @devouringscripture/remark-tac",
+    "build": "npm run build -w @devouringscripture/common & npm run build -w @devouringscripture/remark-plugins",
     "test": "npm run test -w @devouringscripture/common"
   },
   "workspaces": [

@@ -10,8 +10,8 @@
       "ds-vapi": ["./apps/ds-vapi/src"],
       "@devouringscripture/common/*": ["./packages/common/src/*"],
       "@devouringscripture/common": ["./packages/common/src"],
-      "@devouringscripture/remark-tac/*": ["./packages/remark-tac/src/*"],
-      "@devouringscripture/remark-tac": ["./packages/remark-tac/src"]
+      "@devouringscripture/remark-plugins/*": ["./packages/remark-plugins/src/*"],
+      "@devouringscripture/remark-plugins": ["./packages/remark-plugins/src"]
     }
   }
 }
