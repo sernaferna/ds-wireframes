@@ -2,8 +2,6 @@ import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal, Data, Node } from 'unist';
 
-export const somethingElse = '';
-
 export default function tac(): Transformer {
   return (tree) => {
     visit(tree, ['text'], (node, i, parent: any) => {
