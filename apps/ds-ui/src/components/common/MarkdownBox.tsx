@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
-import { tac, lowerCaps } from '@devouringscripture/remark-plugins';
+import { tac, lowerCaps, smallCaps } from '@devouringscripture/remark-plugins';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 
@@ -12,7 +12,9 @@ interface IMarkdownPreview {
 }
 export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
   const classNames: string = shaded ? 'bg-light border mx-1 my-2' : ';';
-  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[tac, lowerCaps, supersub]} />;
+  return (
+    <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[tac, lowerCaps, smallCaps, supersub]} />
+  );
 };
 
 const lordCommand: ICommand = {
@@ -43,7 +45,7 @@ const scstyleCommand: ICommand = {
   buttonProps: { 'aria-label': 'Insert Small Caps' },
   icon: <span className="small-caps-style">SmCa</span>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `<span class="small-caps-style">${state.selectedText}</span>`;
+    const modifyText = `^-^${state.selectedText}^-^`;
     api.replaceSelection(modifyText);
   },
 };
