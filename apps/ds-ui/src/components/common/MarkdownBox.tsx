@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
+import tac from '@devouringscripture/remark-tac';
 
 const MIN_SIZE_FOR_TOOLBAR = 350;
 
@@ -11,7 +12,7 @@ interface IMarkdownPreview {
 }
 export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
   const classNames: string = shaded ? 'bg-light border mx-1 my-2' : ';';
-  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[supersub]} />;
+  return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={[tac, supersub]} />;
 };
 
 const lordCommand: ICommand = {
