@@ -189,8 +189,9 @@ Then, for working with the actual code in Git, the following process is typicall
       1. Preference is to link via the PR comments; i.e. to link the PR with Issue 130, the comments should include `closes #130`. This will link the text of the comment to the Issue itself.
       1. Node version numbers for any of the three applications that were modified will be updated automatically, according to these rules listed above. The overall workspace also has a version which will be incremented, and the main workspace version will become the Git tag. (Workspace version will be incremented even if none of the applications are; e.g. changes to the readme would still increment the workspace version.)
    1. Approve the PR.
+   1. Wait for all GitHub actions to complete, since source code in the main branch will be updated.
 1. Back on the local developer machine
-   1. Checkout `main` and Pull from GitHub.
+   1. Checkout `main` and Pull from GitHub (which will include the code modified by GitHub Actions).
    1. **Optional**: If finished with the branch, delete it locally and on GitHub with the commands listed above.
 
 _Of course, deleting the branch in GitHub could be done from the website instead of the command line, but since the local branch is already being deleted there anyway, both can be done at once._
