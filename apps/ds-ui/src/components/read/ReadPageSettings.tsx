@@ -4,7 +4,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Form } from 'react-bootstrap';
 
 export function ReadPageSettings() {
-  const [userData, userResponseError, userLoading, , , , updateStringCallback] = useUserSettings();
+  const [userData, userResponseError, userLoading, , flipBoolCallback, , updateStringCallback] = useUserSettings();
 
   if (userLoading) {
     return <LoadingMessage />;
@@ -18,6 +18,16 @@ export function ReadPageSettings() {
   return (
     <>
       <Form>
+        <h6>General Settings</h6>
+        <Form.Check
+          type="checkbox"
+          id="showSizeIndicatorSetting"
+          label="Show Size Indicator"
+          checked={userData!.settings.showSizeIndicator}
+          onChange={flipBoolCallback('settings.showSizeIndicator')}
+        />
+
+        <h6 className="mt-3">Reading Settings</h6>
         <Form.Label>Default Version for Passages:</Form.Label>
         <Form.Check
           type="radio"
