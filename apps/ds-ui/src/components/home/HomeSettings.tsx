@@ -15,6 +15,7 @@ export const HomeSettings = () => {
 
   return (
     <Form>
+      <h6>General Settings</h6>
       <Form.Check
         type="checkbox"
         id="showSizeIndicatorSetting"

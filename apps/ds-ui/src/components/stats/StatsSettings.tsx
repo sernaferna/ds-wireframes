@@ -4,7 +4,7 @@ import { useUserSettings } from '../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export const StatsSettings = () => {
-  const [userData, userResponseError, userLoading, , , , updateStringCallback] = useUserSettings();
+  const [userData, userResponseError, userLoading, , flipBoolCallback, , updateStringCallback] = useUserSettings();
 
   if (userLoading) {
     return <LoadingMessage />;
@@ -17,6 +17,16 @@ export const StatsSettings = () => {
 
   return (
     <Form>
+      <h6>General Settings</h6>
+      <Form.Check
+        type="checkbox"
+        id="showSizeIndicatorSetting"
+        label="Show Size Indicator"
+        checked={userData!.settings.showSizeIndicator}
+        onChange={flipBoolCallback('settings.showSizeIndicator')}
+      />
+
+      <h6 className="mt-3">Stat Settings</h6>
       <Form.Label>Choose Filter Option:</Form.Label>
       <Form.Check
         type="radio"
