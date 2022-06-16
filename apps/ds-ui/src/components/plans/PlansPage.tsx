@@ -1,13 +1,17 @@
 import React, { useState, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { PlanSidebar } from './PlanSidebar';
 import { paginateItems } from '../../helpers/pagination';
 import { PlanSummaryView } from './PlanSummaryView';
 import { useGetAllInstantiatedPlanItemsQuery } from '../../services/InstantiatedPlanService';
+import { getDateForActions } from '../../stores/UISlice';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { CurrentReadingPlan } from './read/CurrentReadingPlan';
 import { BaseInstantiatedPlan } from '@devouringscripture/common';
+import { PlanCalendarView } from './PlanCalendarView';
+import { DateTime } from 'luxon';
+import { CurrentReadingPlan } from './read/CurrentReadingPlan';
 
 const getItemList = (data: BaseInstantiatedPlan[] | undefined) => {
   if (data === undefined) {
@@ -26,6 +30,7 @@ const getItemList = (data: BaseInstantiatedPlan[] | undefined) => {
 export const PlansPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllInstantiatedPlanItemsQuery();
+  const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
 
   const itemList = useMemo(() => getItemList(data), [data]);
 
@@ -58,7 +63,16 @@ export const PlansPage = () => {
               {paginationElement}
             </Col>
             <Col xs="12" xl="5">
-              <CurrentReadingPlan showTitle={true} />
+              <Row>
+                <Col>
+                  <CurrentReadingPlan />
+                </Col>
+              </Row>
+              <Row className="mt-3">
+                <Col className="d-flex justify-content-center">
+                  <PlanCalendarView dateToShow={dateToShow} />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Col>
