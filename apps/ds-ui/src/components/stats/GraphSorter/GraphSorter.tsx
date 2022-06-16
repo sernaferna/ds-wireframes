@@ -2,8 +2,11 @@ import React, { useMemo, useCallback } from 'react';
 import { Col, ToggleButton, Row } from 'react-bootstrap';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import { VizualizationListItem, UserAttributes } from '@devouringscripture/common';
-import { useUserSettings } from '../../helpers/UserSettings';
-import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
+import { useUserSettings } from '../../../helpers/UserSettings';
+import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ListItem } from './ListItem';
 
 const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => {
   return list.slice().sort((a, b) => {
@@ -77,6 +80,19 @@ export const GraphSorter = () => {
     [sortedItems, updateBulkUser, getUserCopy]
   );
 
+  const moveListItem = useCallback((dragIndex: number, hoverIndex: number) => {
+    const dragItem = sortedItems[dragIndex];
+    const hoverItem = sortedItems[hoverIndex];
+
+    const updatedItems = [...sortedItems];
+    updatedItems[dragIndex] = hoverItem;
+    updatedItems[hoverIndex] = dragItem;
+
+    const newUser = getUserCopy();
+    newUser.settings.stats.vizualizationsOrder = updatedItems;
+    updateBulkUser(newUser);
+  }, []);
+
   if (userLoading) {
     return <LoadingMessage />;
   }
@@ -116,9 +132,18 @@ export const GraphSorter = () => {
     );
   });
 
+  const newVizList = sortedItems.map((item, index) => (
+    <ListItem text={item.name} index={item.order} moveListItem={moveListItem} />
+  ));
+
   return (
     <>
-      <h4>Graph Sorter</h4>
+      <h4>Graph Sorder</h4>
+      <DndProvider backend={HTML5Backend}>
+        <Row></Row>
+      </DndProvider>
+
+      <h4>Graph Sorter OLD</h4>
       <Row xs="1" sm="2" md="3" xl="4" xxl="5">
         {vizList}
       </Row>

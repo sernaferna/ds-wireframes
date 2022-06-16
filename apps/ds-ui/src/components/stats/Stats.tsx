@@ -11,7 +11,7 @@ import { VisualizationCard } from './VisualizationCard';
 import { useUserSettings } from '../../helpers/UserSettings';
 import { useGetActionStatsQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { GraphSorter } from './GraphSorter';
+import { GraphSorter } from './GraphSorter/GraphSorter';
 
 const getVisualizationList = (userData: UserAttributes | undefined, data: ActionStats | undefined) => {
   if (userData === undefined || data === undefined) {
