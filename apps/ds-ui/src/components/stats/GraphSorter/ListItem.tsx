@@ -20,23 +20,32 @@ export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInac
     }),
   });
 
-  const [, dropRef] = useDrop({
+  const [{ isOver }, dropRef] = useDrop({
     accept: 'item',
-    hover: (item: IListItem, monitor) => {
+    hover: (item: IListItem) => {
       const dragIndex = item.index;
       const hoverIndex = index;
 
       moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
   });
 
   const dragDropRef = dragRef(dropRef(ref));
 
+  let classNames = 'bg-light border m-2';
+  classNames += isDragging ? ' opacity-25' : ' opacity-100';
+  if (isOver) {
+    classNames += ' border-warning';
+  }
+
   return (
-    <Col ref={dragDropRef} className={isDragging ? 'opacity-25' : 'opacity-100'}>
-      <div className="bg-light border">
-        <p>{text}</p>
+    <Col ref={dragDropRef} className={classNames}>
+      <div>
+        <p className="lead">{text}</p>
         <Form.Check type="checkbox" label="Active?" checked={isActive} onChange={() => handleActiveInactive(text)} />
       </div>
     </Col>
