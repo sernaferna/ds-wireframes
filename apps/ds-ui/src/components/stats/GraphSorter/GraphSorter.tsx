@@ -6,6 +6,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ListItem } from './ListItem';
+import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
 
 const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => {
   return list.slice().sort((a, b) => {
@@ -43,6 +44,8 @@ const updateOrderNoInList = (initialList: VizualizationListItem[]): Vizualizatio
 export const GraphSorter = () => {
   const [userData, userResponseError, userLoading, , , , , getUserCopy, updateBulkUser] = useUserSettings();
   const [vizItems, updateVizItems] = useState<VizualizationListItem[]>([]);
+  const [warningID, setWarningID] = useState<string | undefined>(undefined);
+  const [AlertUI, , addWarningMessage, , removeWarningMessage] = useErrorsAndWarnings();
 
   useEffect(() => {
     if (!userData) {
@@ -71,7 +74,11 @@ export const GraphSorter = () => {
     const newUser = getUserCopy();
     newUser.settings.stats.vizualizationsOrder = updateOrderNoInList(vizItems);
     updateBulkUser(newUser);
-  }, [getUserCopy, vizItems, updateBulkUser]);
+    if (warningID !== undefined) {
+      removeWarningMessage(warningID);
+      setWarningID(undefined);
+    }
+  }, [getUserCopy, vizItems, updateBulkUser, warningID, removeWarningMessage, setWarningID]);
 
   const moveListItem = useCallback(
     (dragIndex: number, hoverIndex: number) => {
@@ -82,8 +89,12 @@ export const GraphSorter = () => {
       updatedItems[dragIndex] = hoverItem;
       updatedItems[hoverIndex] = dragItem;
       updateVizItems(updatedItems);
+      if (warningID === undefined) {
+        const warnID = addWarningMessage('Unsaved changes');
+        setWarningID(warnID);
+      }
     },
-    [updateVizItems, vizItems]
+    [updateVizItems, vizItems, warningID, addWarningMessage, setWarningID]
   );
 
   if (userLoading) {
@@ -106,6 +117,7 @@ export const GraphSorter = () => {
 
   return (
     <>
+      <AlertUI />
       <h4>Graph Sorter</h4>
 
       <DndProvider backend={HTML5Backend}>
