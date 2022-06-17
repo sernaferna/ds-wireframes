@@ -36,16 +36,18 @@ export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInac
 
   const dragDropRef = dragRef(dropRef(ref));
 
-  let classNames = 'bg-light border m-2';
+  let classNames = 'bg-light border my-2 p-2';
   classNames += isDragging ? ' opacity-25' : ' opacity-100';
   if (isOver) {
     classNames += ' border-warning';
   }
 
   return (
-    <Col ref={dragDropRef} className={classNames}>
-      <p className="lead">{text}</p>
-      <Form.Check type="checkbox" label="Active?" checked={isActive} onChange={handleActiveInactive(text)} />
+    <Col ref={dragDropRef}>
+      <div className={classNames}>
+        <span className="lead">{text}</span>
+        <Form.Check type="checkbox" label="Active?" checked={isActive} onChange={handleActiveInactive(text)} />
+      </div>
     </Col>
   );
 };
