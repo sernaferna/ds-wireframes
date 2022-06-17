@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { Col, ToggleButton, Row } from 'react-bootstrap';
 import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 import { VizualizationListItem, UserAttributes } from '@devouringscripture/common';
@@ -50,6 +50,15 @@ const moveItemDownInList = (initialList: VizualizationListItem[], name: string) 
 
 export const GraphSorter = () => {
   const [userData, userResponseError, userLoading, , , , , getUserCopy, updateBulkUser] = useUserSettings();
+  const [vizItems, updateVizItems] = useState<VizualizationListItem[]>([]);
+
+  useEffect(() => {
+    if (!userData) {
+      return;
+    }
+
+    updateVizItems(sortVizList(userData!.settings.stats.vizualizationsOrder));
+  }, [userData]);
 
   const sortedItems = useMemo(() => sortVizList(userData!.settings.stats.vizualizationsOrder), [userData]);
 
@@ -80,18 +89,18 @@ export const GraphSorter = () => {
     [sortedItems, updateBulkUser, getUserCopy]
   );
 
-  const moveListItem = useCallback((dragIndex: number, hoverIndex: number) => {
-    const dragItem = sortedItems[dragIndex];
-    const hoverItem = sortedItems[hoverIndex];
+  const moveListItem = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const dragItem = vizItems[dragIndex];
+      const hoverItem = vizItems[hoverIndex];
 
-    const updatedItems = [...sortedItems];
-    updatedItems[dragIndex] = hoverItem;
-    updatedItems[hoverIndex] = dragItem;
-
-    const newUser = getUserCopy();
-    newUser.settings.stats.vizualizationsOrder = updatedItems;
-    updateBulkUser(newUser);
-  }, []);
+      const updatedItems = vizItems.slice();
+      updatedItems[dragIndex] = hoverItem;
+      updatedItems[hoverIndex] = dragItem;
+      updateVizItems(updatedItems);
+    },
+    [updateVizItems, vizItems]
+  );
 
   if (userLoading) {
     return <LoadingMessage />;
@@ -132,15 +141,24 @@ export const GraphSorter = () => {
     );
   });
 
-  const newVizList = sortedItems.map((item, index) => (
-    <ListItem text={item.name} index={item.order} moveListItem={moveListItem} />
+  const newVizList = vizItems.map((item, index) => (
+    <ListItem
+      key={`viz-list-${index}`}
+      text={item.name}
+      index={item.order}
+      moveListItem={moveListItem}
+      isActive={item.active}
+      handleActiveInactive={handleActiveInactive}
+    />
   ));
 
   return (
     <>
       <h4>Graph Sorder</h4>
       <DndProvider backend={HTML5Backend}>
-        <Row></Row>
+        <Row xs="1" sm="2" md="3" xl="4" xxl="5">
+          {newVizList}
+        </Row>
       </DndProvider>
 
       <h4>Graph Sorter OLD</h4>

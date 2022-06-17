@@ -1,13 +1,15 @@
 import React, { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { Col } from 'react-bootstrap';
+import { Col, Form } from 'react-bootstrap';
 
 interface IListItem {
   text: string;
   index: number;
+  isActive: boolean;
   moveListItem(dragIndex: number, hoverIndex: number): void;
+  handleActiveInactive(itemName: string): void;
 }
-export const ListItem = ({ text, index, moveListItem }: IListItem) => {
+export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInactive }: IListItem) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -23,16 +25,6 @@ export const ListItem = ({ text, index, moveListItem }: IListItem) => {
     hover: (item: IListItem, monitor) => {
       const dragIndex = item.index;
       const hoverIndex = index;
-      const hoverBoundingRect = ref.current!.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const hoverActualY = monitor.getClientOffset()!.y - hoverBoundingRect.top;
-
-      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) {
-        return;
-      }
 
       moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
@@ -41,11 +33,12 @@ export const ListItem = ({ text, index, moveListItem }: IListItem) => {
 
   const dragDropRef = dragRef(dropRef(ref));
 
-  const opacity = isDragging ? 0 : 1;
-
   return (
-    <Col ref={dragDropRef} style={{ opacity }}>
-      {text}
+    <Col ref={dragDropRef} className={isDragging ? 'opacity-25' : 'opacity-100'}>
+      <div className="bg-light border">
+        <p>{text}</p>
+        <Form.Check type="checkbox" label="Active?" checked={isActive} onChange={() => handleActiveInactive(text)} />
+      </div>
     </Col>
   );
 };
