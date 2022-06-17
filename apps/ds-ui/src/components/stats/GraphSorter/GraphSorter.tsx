@@ -20,11 +20,24 @@ const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => 
 };
 
 const updateOrderNoInList = (initialList: VizualizationListItem[]): VizualizationListItem[] => {
-  return initialList.map((item, index) => ({
+  const activeList = initialList.filter((item) => item.active);
+  const inactiveList = initialList.filter((item) => !item.active);
+
+  const newList = activeList.map((item, index) => ({
     name: item.name,
     active: item.active,
     order: index,
   }));
+
+  for (const item of inactiveList) {
+    newList.push({
+      name: item.name,
+      active: false,
+      order: newList.length,
+    });
+  }
+
+  return newList;
 };
 
 export const GraphSorter = () => {
