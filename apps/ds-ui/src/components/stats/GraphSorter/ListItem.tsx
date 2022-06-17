@@ -7,7 +7,7 @@ interface IListItem {
   index: number;
   isActive: boolean;
   moveListItem(dragIndex: number, hoverIndex: number): void;
-  handleActiveInactive(itemName: string): void;
+  handleActiveInactive(itemName: string): () => void;
 }
 export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInactive }: IListItem) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -44,10 +44,8 @@ export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInac
 
   return (
     <Col ref={dragDropRef} className={classNames}>
-      <div>
-        <p className="lead">{text}</p>
-        <Form.Check type="checkbox" label="Active?" checked={isActive} onChange={() => handleActiveInactive(text)} />
-      </div>
+      <p className="lead">{text}</p>
+      <Form.Check type="checkbox" label="Active?" checked={isActive} onChange={handleActiveInactive(text)} />
     </Col>
   );
 };

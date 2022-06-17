@@ -1,6 +1,5 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
-import { Col, ToggleButton, Row } from 'react-bootstrap';
-import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
+import React, { useCallback, useState, useEffect } from 'react';
+import { Row, Button } from 'react-bootstrap';
 import { VizualizationListItem, UserAttributes } from '@devouringscripture/common';
 import { useUserSettings } from '../../../helpers/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
@@ -28,26 +27,6 @@ const updateOrderNoInList = (initialList: VizualizationListItem[]): Vizualizatio
   }));
 };
 
-const moveItemUpInList = (initialList: VizualizationListItem[], name: string) => {
-  const list = sortVizList(initialList);
-  const index = list.findIndex((item) => item.name === name);
-
-  [list[index], list[index - 1]] = [list[index - 1], list[index]];
-  const returnList = updateOrderNoInList(list);
-
-  return returnList;
-};
-
-const moveItemDownInList = (initialList: VizualizationListItem[], name: string) => {
-  const list = sortVizList(initialList);
-  const index = list.findIndex((item) => item.name === name);
-
-  [list[index], list[index + 1]] = [list[index + 1], list[index]];
-  const returnList = updateOrderNoInList(list);
-
-  return returnList;
-};
-
 export const GraphSorter = () => {
   const [userData, userResponseError, userLoading, , , , , getUserCopy, updateBulkUser] = useUserSettings();
   const [vizItems, updateVizItems] = useState<VizualizationListItem[]>([]);
@@ -59,8 +38,6 @@ export const GraphSorter = () => {
 
     updateVizItems(sortVizList(userData!.settings.stats.vizualizationsOrder));
   }, [userData]);
-
-  const sortedItems = useMemo(() => sortVizList(userData!.settings.stats.vizualizationsOrder), [userData]);
 
   const handleActiveInactive = useCallback(
     (itemName: string) => {
@@ -77,17 +54,11 @@ export const GraphSorter = () => {
     [getUserCopy, updateBulkUser]
   );
 
-  const handleSorterClick = useCallback(
-    (itemName: string, moveUp: boolean) => {
-      return () => {
-        const newList = moveUp ? moveItemUpInList(sortedItems, itemName) : moveItemDownInList(sortedItems, itemName);
-        const newUser: UserAttributes = getUserCopy();
-        newUser.settings.stats.vizualizationsOrder = newList;
-        updateBulkUser(newUser);
-      };
-    },
-    [sortedItems, updateBulkUser, getUserCopy]
-  );
+  const uploadChanges = useCallback(() => {
+    const newUser = getUserCopy();
+    newUser.settings.stats.vizualizationsOrder = updateOrderNoInList(vizItems);
+    updateBulkUser(newUser);
+  }, [getUserCopy, vizItems, updateBulkUser]);
 
   const moveListItem = useCallback(
     (dragIndex: number, hoverIndex: number) => {
@@ -109,39 +80,7 @@ export const GraphSorter = () => {
     return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  const vizList = sortedItems.map((item, index) => {
-    return (
-      <Col key={`sort-item-${item.name}`} className="bg-light border p-2 text-center">
-        {index > 0 ? (
-          <span className="fs-3 btn p-0 m-0" onClick={handleSorterClick(item.name, true)}>
-            <CaretLeftFill />
-          </span>
-        ) : (
-          <></>
-        )}
-        <ToggleButton
-          className="mx-0"
-          type="checkbox"
-          variant="outline-primary"
-          id={item.name}
-          value={item.name}
-          checked={item.active}
-          onClick={handleActiveInactive(item.name)}
-        >
-          {item.name}
-        </ToggleButton>
-        {index < sortedItems.length - 1 ? (
-          <span className="fs-3 btn p-0 m-0" onClick={handleSorterClick(item.name, false)}>
-            <CaretRightFill />
-          </span>
-        ) : (
-          <></>
-        )}
-      </Col>
-    );
-  });
-
-  const newVizList = vizItems.map((item, index) => (
+  const vizList = vizItems.map((item, index) => (
     <ListItem
       key={`viz-list-${index}`}
       text={item.name}
@@ -154,17 +93,17 @@ export const GraphSorter = () => {
 
   return (
     <>
-      <h4>Graph Sorder</h4>
+      <h4>Graph Sorter</h4>
+
       <DndProvider backend={HTML5Backend}>
-        <Row xs="1" sm="2" md="3" xl="4" xxl="5">
-          {newVizList}
+        <Row xs="1" md="2" xxl="3">
+          {vizList}
         </Row>
       </DndProvider>
 
-      <h4>Graph Sorter OLD</h4>
-      <Row xs="1" sm="2" md="3" xl="4" xxl="5">
-        {vizList}
-      </Row>
+      <Button variant="primary" onClick={uploadChanges}>
+        Upload
+      </Button>
     </>
   );
 };
