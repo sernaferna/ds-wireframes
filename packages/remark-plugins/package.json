@@ -6,7 +6,8 @@
   "types": "./build/index.d.ts",
   "dependencies": {
     "unified": "^10.1.2",
-    "unist-util-visit": "^4.1.0"
+    "unist-util-visit": "^4.1.0",
+    "@devouringscripture/common": "^1.0.0"
   },
   "devDependencies": {
     "typescript": "^4.5.4"
