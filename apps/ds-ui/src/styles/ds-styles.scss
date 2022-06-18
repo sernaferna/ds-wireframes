@@ -52,6 +52,16 @@ body {
   font-family: 'Merriweather', serif;
 }
 
+.biblelink::after {
+  content: '\271E';
+}
+.esvlink::after {
+  content: ' (ESV)\271E';
+}
+.nivlink::after {
+  content: ' (NIV)\271E';
+}
+
 .page-main-container {
   @extend .m-0;
   @extend .p-1;
