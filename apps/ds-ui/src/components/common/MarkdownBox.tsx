@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
-import { tac, lowerCaps, smallCaps, highlight } from '@devouringscripture/remark-plugins';
+import { tac, lowerCaps, smallCaps, highlight, bibleLinks } from '@devouringscripture/remark-plugins';
 import { MarkdownTutorial } from './MarkdownTutorial';
 
-const MIN_SIZE_FOR_TOOLBAR = 350;
+const MIN_SIZE_FOR_TOOLBAR = 450;
 
 interface IMarkdownPreview {
   content: string;
@@ -17,7 +17,7 @@ export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) =>
     <MDEditor.Markdown
       source={content}
       className={classNames}
-      remarkPlugins={[tac, lowerCaps, smallCaps, highlight, supersub]}
+      remarkPlugins={[tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks]}
     />
   );
 };
@@ -81,7 +81,29 @@ const highlightCommand: ICommand = {
   },
 };
 
-const commandsToFilterOut = ['code', 'image', 'checked-list'];
+const esvLinkCommand: ICommand = {
+  name: 'BibleLink',
+  keyCommand: 'BibleLink',
+  buttonProps: { 'aria-label': 'Bible link' },
+  icon: <u>ESV✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `[[${state.selectedText}]ESV]`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+const nivLinkCommand: ICommand = {
+  name: 'BibleLink',
+  keyCommand: 'BibleLink',
+  buttonProps: { 'aria-label': 'Bible link' },
+  icon: <u>NIV✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `[[${state.selectedText}]NIV]`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr', 'title2'];
 
 const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   if (isExtra) {
@@ -147,7 +169,15 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           highlightEnable={true}
           preview="edit"
           defaultTabEnable={true}
-          extraCommands={[lordCommand, scCommand, scstyleCommand, superCommand, highlightCommand]}
+          extraCommands={[
+            lordCommand,
+            scCommand,
+            scstyleCommand,
+            esvLinkCommand,
+            nivLinkCommand,
+            superCommand,
+            highlightCommand,
+          ]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
           hideToolbar={!showToolbar}

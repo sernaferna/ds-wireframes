@@ -16,6 +16,8 @@ export function bibleLinks(): Transformer {
 
       const { value } = node as Literal<string>;
 
+      console.debug(`initial value: ${value}`);
+
       const parseResult = bibleLinkRE.exec(value);
       if (parseResult === null) {
         return;
@@ -24,8 +26,11 @@ export function bibleLinks(): Transformer {
         return;
       }
 
-      let searchString = getFormattedReference(parseResult[1]);
-      searchString = encodeURIComponent(searchString);
+      console.debug(`Initial string: '${value.substring(0, parseResult.index)}'`);
+      console.debug(`string after the matched stuff: '${value.substring(parseResult.index + parseResult[0].length)}'`);
+
+      const formattedReference = getFormattedReference(parseResult[1]);
+      const searchString = encodeURIComponent(formattedReference);
 
       const linkUrl = `https://www.biblegateway.com/passage/?search=${searchString}&version=${parseResult[2]}`;
 
@@ -50,12 +55,24 @@ export function bibleLinks(): Transformer {
         children: [
           {
             type: 'text',
-            value: 'blah',
+            value: formattedReference,
           },
         ],
       };
 
-      parent.children.splice(i, 1, newLink);
+      const returnChildren = [
+        {
+          type: 'text',
+          value: value.substring(0, parseResult.index),
+        },
+        newLink,
+        {
+          type: 'text',
+          value: value.substring(parseResult.index + parseResult[0].length),
+        },
+      ];
+
+      parent.children.splice(i, 1, ...returnChildren);
     });
   };
 }
