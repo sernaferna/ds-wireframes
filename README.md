@@ -70,7 +70,25 @@ Some _very_ basic [**Jest**](https://jestjs.io/) unit cases were added for some 
 
 ## remark-plugins
 
-For inputs that accept **markdown** (e.g. prayer items, notes), the application leverages the `@uiw/react-md-editor` library, which accepts **Remark** plugins that can further enhance the way MD is converted to HTML. This library provides a set of these plugins for special cases of use to Christians.
+For inputs that accept **markdown** (e.g. prayer items, notes), the application leverages the `@uiw/react-md-editor` library, which supports most common markdown conventions (e.g. bold and italics, headings, inline code and codeblocks, blockquotes, links, and even footnotes).
+
+The MD editor used also supports **Remark plugins** that can further enhance the way MD is converted to HTML. This library provides a set of specialized plugins of use to Christians. These plugins make it easier to use common Christian notations with nicely rendered outputs. For example:
+
+```markdown
+Sometime around 1446^^B.C.^^ God said to Moses in [[Ex 3:14]ESV]:
+
+> ^-^I am who I am^-^
+
+or, as rendered in the King James Version[^1],
+
+> ^^^I AM THAT I AM^^^
+
+This comment from the 15^th^ Century was echoed in ==Jesus' many "I am" statements== in the New Testament.
+
+[^1]: [[Ex 3:14]KJV]
+```
+
+These notations aren't necessary to use the markdown features of the site, but add some extra help when necessary.
 
 ### Title All Caps (`tac`)
 
