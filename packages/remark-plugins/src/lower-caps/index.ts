@@ -27,7 +27,7 @@ export function lowerCaps(): Transformer {
               data: {
                 hName: 'span',
                 hProperties: {
-                  className: ['sc2'],
+                  style: 'font-variant: small-caps; text-transform: lowercase; display: inline-block;',
                 },
               },
               children: [

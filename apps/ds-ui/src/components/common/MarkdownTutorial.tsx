@@ -112,7 +112,9 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
             </tr>
             <tr>
               <td>
-                <span className="sc2">A.D.</span>
+                <span style={{ fontVariant: 'small-caps', textTransform: 'lowercase', display: 'inline-block' }}>
+                  A.D.
+                </span>
               </td>
               <td>
                 Renders text in small caps, but none of the letters will be capitalized (even though they're all
@@ -122,7 +124,11 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
                 <code>It took place in 30^^A.D.^^.</code>
               </td>
               <td className="reading-text">
-                It took place in 30<span className="sc2">A.D.</span>.
+                It took place in 30
+                <span style={{ fontVariant: 'small-caps', textTransform: 'lowercase', display: 'inline-block' }}>
+                  A.D.
+                </span>
+                .
               </td>
             </tr>
             <tr>
