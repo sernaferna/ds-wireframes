@@ -110,36 +110,6 @@ npm run build
 
 It's best to shut down the application(s) (if running), run the build, and then reload VS Code to get the latest changes.
 
-### Run a Build of remark-plugins
-
-There are issues getting the **remark-plugins** library to build; the build sometimes hangs when changes are made. There is likely a misconfiguration somewhere in a `tsconfig` or other file.
-
-In order to get **remark-plugins** to build, it has to be built individually; assuming the developer is starting from the root directory, they would need to:
-
-```bash
-# attempting to run the build will hang; this doesn't work:
-npm run build
-
-# go to the directory of the library
-cd packages/remark-plugins
-
-# deleting the build folder seems to help
-rm -r -f build/
-
-# run the build only for this library
-npm run build
-```
-
-After this, builds can be run normally again:
-
-```bash
-# go back to root
-cd ../..
-
-# running the build normally works now!
-npm run build
-```
-
 ## Git Branching
 
 This might be unprofessional but the original author kept Googling some commonly used Git commands over and over, and figured it would be easier to just write them here. These are the most commonly used Git commands, including some that are _so_ common that everyone knows them instinctively but they're included for completeness.
