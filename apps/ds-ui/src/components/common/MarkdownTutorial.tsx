@@ -100,8 +100,8 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
                 <b className="sc">LORD</b>
               </td>
               <td>
-                Renders text in <span className="small-caps-style">Small Caps</span>, ensuring that the first letter is
-                capitalized, while allowing the original text to stay all Caps.
+                Renders text in <span style={{ fontVariant: 'small-caps' }}>Small Caps</span>, ensuring that the first
+                letter is capitalized, while allowing the original text to stay all Caps.
               </td>
               <td>
                 <code>The ^^^LORD^^^ is one.</code>
@@ -127,14 +127,14 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
             </tr>
             <tr>
               <td>
-                <span className="small-caps-style">SmCa</span>
+                <span style={{ fontVariant: 'small-caps' }}>SmCa</span>
               </td>
               <td>Normal Small Caps style</td>
               <td>
                 <code>He is the ^-^I Am^-^</code>
               </td>
               <td className="reading-text">
-                He is the <span className="small-caps-style">I Am</span>
+                He is the <span style={{ fontVariant: 'small-caps' }}>I Am</span>
               </td>
             </tr>
             <tr>

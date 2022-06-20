@@ -48,7 +48,7 @@ const scstyleCommand: ICommand = {
   name: 'SmallCaps',
   keyCommand: 'SmallCaps',
   buttonProps: { 'aria-label': 'Insert Small Caps' },
-  icon: <span className="small-caps-style">SmCa</span>,
+  icon: <span style={{ fontVariant: 'small-caps' }}>SmCa</span>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^-^${state.selectedText}^-^`;
     api.replaceSelection(modifyText);
