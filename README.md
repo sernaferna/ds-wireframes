@@ -41,10 +41,6 @@ Along with ignoring the `dsDB.json` file, the `.gitignore` file will also ignore
 
 A library with common code leveraged across the other applications. It exposes commonly used type definitions that are returned from APIs but also used in the UI app, some error handling code that is used by both of the APIs, and anything else that could be refactored out so that the same code wasn't being written multiple times.
 
-## remark-plugins
-
-For inputs that accept **markdown**, the application leverages the `@uiw/react-md-editor` library, which accepts **Remark** plugins that can further enhance the way MD is converted to HTML. This library provides a set of these plugins, to provide some specialized use cases.
-
 ### Bible Reference/OSIS Parsing
 
 Part of the common functionality is a set of functions for parsing and working with Bible passage references. It can:
@@ -71,6 +67,84 @@ To clear up some of what was just described, here's some commonly used terminolo
 This library makes heavy use of the [**Bible Passage Reference Parser**](https://github.com/openbibleinfo/Bible-Passage-Reference-Parser) and [**Bible Reference Formatter**](https://github.com/openbibleinfo/Bible-Reference-Formatter) libraries. In fact, a number of these functions are just light wrappers over those underlying libraries, which do the heavy lifting. Helper functions like `isPassageRefValid()` (returning a simple Boolean as opposed to a complicated object or OSIS string that need to be parsed) are easier to use in the wireframe.
 
 Some _very_ basic [**Jest**](https://jestjs.io/) unit cases were added for some of the functions, but only where it was deemed to be a time saver.
+
+## remark-plugins
+
+For inputs that accept **markdown** (e.g. prayer items, notes), the application leverages the `@uiw/react-md-editor` library, which accepts **Remark** plugins that can further enhance the way MD is converted to HTML. This library provides a set of these plugins for special cases of use to Christians.
+
+### Title All Caps (`tac`)
+
+Handles a special case that comes up often in Christian writing where a word should be written in all capital letters but can be rendered in Small Caps (where the device supports it). A common example is the way the word "LORD" is often rendered in Old Testament Scriptures.
+
+For example, the following could be written in markdown:
+
+```markdown
+Thus saith the ^^^LORD^^^.
+```
+
+The text surrounded with `^^^` will be replaced with spans supporting CSS attributes such as the following (without the spaces between the spans):
+
+```html
+<span style="text-transform: uppercase;">L</span>
+<span style="text-transform: lowercase; font-variant: small-caps;">ORD</span>
+```
+
+On browsers that support these CSS features, this will be rendered in small caps, with the "L" larger than the "ORD." On browsers that _don't_ support the latest CSS markup, the text will be rendered in all uppercase as "LORD", which is a good fallback. (The Small Caps can't be demonstrated properly on this page, since standard markdown doesn't support it.)
+
+### Lower Caps (`lowerCaps`)
+
+Similar to Title All Caps in that the text is rendered as Small Caps except that all of the letters are in small letters. Useful for writing things like `2022A.D.` where the "A.D." should be rendered smaller for readability.
+
+```markdown
+In the year 2022^^A.D.^^
+```
+
+Just as with "Title All Caps", this approach allows the letters to be written in all capitals, rendered in all capitals as a fall-back, and rendered as smaller caps (for readability) on devices that support the advanced CSS markup.
+
+### Small Caps (`smallCaps`)
+
+Simply renders text surrounded with `^-^` as regular Small Caps.
+
+```markdown
+Some of this text will be ^-^Small Caps^-^ on devices that support it.
+```
+
+Again, this can't be properly demonstrated in this GitHub markdown, but it's just rendered as a `<span>` with the `font-variant ` set to `small-caps`.
+
+### Highlight (`highlight`)
+
+Highlights text surrounded by `==` (using the HTML `<mark>`) tag. Once again this can't be demonstrated, but
+
+```markdown
+Some ==highlighted text==
+```
+
+will be rendered to the underlying HTML as
+
+```html
+Some <mark>highlighted text</mark>
+```
+
+such that "highlighted text" is highlighted in yellow.
+
+### Bible Links (`bibleLinks`)
+
+Special case for rendering a link to a Bible passage on the **Bible Gateway** website, The link will also be decorated with the version in parentheses as well as a cross icon to visually distinguish these links from other links.
+
+```markdown
+Link to [[Rom 1:1]ESV]
+```
+
+would render HTML as follows:
+
+```html
+Link to
+<a href="https://www.biblegateway.com/passage/?search=Romans%201%3A1&amp;version=ESV" target="_blank"
+  >Romans 1:1 (ESV)✞</a
+>
+```
+
+If no version is specified (such as `[[Rom 1:1]]` instead of `[[Rom 1:1]NIV]`) the default version selected in the user's preferences will be used.
 
 # Common Commands
 
