@@ -3,7 +3,7 @@ import { visit } from 'unist-util-visit';
 import { Literal, Data, Node } from 'unist';
 import { isReferenceValid, getFormattedReference } from '@devouringscripture/common';
 
-const bibleLinkRE = /\[\[([^\]]*)\]([^\]]*)\]/;
+const bibleLinkRE = /\[\[([^\]]+)\]([^\]]*)\]/;
 const nivRE = /NIV/i;
 const esvRE = /ESV/i;
 
@@ -24,33 +24,26 @@ export function bibleLinks(): Transformer {
         return;
       }
 
+      const version = parseResult[2].length > 0 ? parseResult[2] : 'ESV';
+
       const formattedReference = getFormattedReference(parseResult[1]);
       const searchString = encodeURIComponent(formattedReference);
 
-      const linkUrl = `https://www.biblegateway.com/passage/?search=${searchString}&version=${parseResult[2]}`;
-
-      let linkClass = 'biblelink';
-      if (nivRE.test(parseResult[2])) {
-        linkClass = 'nivlink';
-      }
-      if (esvRE.test(parseResult[2])) {
-        linkClass = 'esvlink';
-      }
+      const linkUrl = `https://www.biblegateway.com/passage/?search=${searchString}&version=${version}`;
 
       const newLink = {
         type: 'link',
-        title: `${parseResult[1]} (${parseResult[2]})`,
+        title: `${parseResult[1]} (${version})`,
         url: linkUrl,
         data: {
           hProperties: {
-            className: [linkClass],
             target: '_blank',
           },
         },
         children: [
           {
             type: 'text',
-            value: formattedReference,
+            value: formattedReference + ` (${version})✞`,
           },
         ],
       };

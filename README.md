@@ -144,7 +144,7 @@ Link to
 >
 ```
 
-If no version is specified (such as `[[Rom 1:1]]` instead of `[[Rom 1:1]NIV]`) the default version selected in the user's preferences will be used.
+If no version is specified (such as `[[Rom 1:1]]` instead of `[[Rom 1:1]NIV]`) it defaults to ESV.
 
 # Common Commands
 

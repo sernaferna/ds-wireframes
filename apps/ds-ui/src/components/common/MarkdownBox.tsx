@@ -87,8 +87,8 @@ const highlightCommand: ICommand = {
 };
 
 const esvLinkCommand: ICommand = {
-  name: 'BibleLink',
-  keyCommand: 'BibleLink',
+  name: 'ESVLink',
+  keyCommand: 'ESVLink',
   buttonProps: { 'aria-label': 'Bible link' },
   icon: <u>ESV✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
@@ -98,8 +98,8 @@ const esvLinkCommand: ICommand = {
 };
 
 const nivLinkCommand: ICommand = {
-  name: 'BibleLink',
-  keyCommand: 'BibleLink',
+  name: 'NIVLink',
+  keyCommand: 'NIVLink',
   buttonProps: { 'aria-label': 'Bible link' },
   icon: <u>NIV✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
@@ -108,6 +108,16 @@ const nivLinkCommand: ICommand = {
   },
 };
 
+const bibleLinkCommand: ICommand = {
+  name: 'BibleLink',
+  keyCommand: 'BibleLink',
+  buttonProps: { 'aria-label': 'Bible link' },
+  icon: <u>BG✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `[[${state.selectedText}]]`;
+    api.replaceSelection(modifyText);
+  },
+};
 const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr', 'title2'];
 
 const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
@@ -180,6 +190,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
             scstyleCommand,
             esvLinkCommand,
             nivLinkCommand,
+            bibleLinkCommand,
             superCommand,
             highlightCommand,
           ]}
