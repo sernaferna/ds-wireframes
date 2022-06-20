@@ -97,22 +97,27 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
           <tbody>
             <tr>
               <td>
-                <b className="sc">LORD</b>
+                <b>L</b>
+                <b style={{ fontVariant: 'small-caps' }}>ord</b>
               </td>
               <td>
-                Renders text in <span className="small-caps-style">Small Caps</span>, ensuring that the first letter is
-                capitalized, while allowing the original text to stay all Caps.
+                Renders text in <span style={{ fontVariant: 'small-caps' }}>Small Caps</span>, ensuring that the first
+                letter is capitalized, while allowing the original text to stay all Caps.
               </td>
               <td>
-                <code>The ^^^LORD^^^ is one.</code>
+                <code>The ^^^LORD^^^ is one. The ^^^GOD ALMIGHTY^^^ is good.</code>
               </td>
               <td className="reading-text">
-                The <span className="sc">LORD</span> is one.
+                The L<span style={{ fontVariant: 'small-caps' }}>ord</span> is one. The G
+                <span style={{ fontVariant: 'small-caps' }}>od</span> A
+                <span style={{ fontVariant: 'small-caps' }}>lmighty</span> is good.
               </td>
             </tr>
             <tr>
               <td>
-                <span className="sc2">A.D.</span>
+                <span style={{ fontVariant: 'small-caps', textTransform: 'lowercase', display: 'inline-block' }}>
+                  A.D.
+                </span>
               </td>
               <td>
                 Renders text in small caps, but none of the letters will be capitalized (even though they're all
@@ -122,19 +127,23 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
                 <code>It took place in 30^^A.D.^^.</code>
               </td>
               <td className="reading-text">
-                It took place in 30<span className="sc2">A.D.</span>.
+                It took place in 30
+                <span style={{ fontVariant: 'small-caps', textTransform: 'lowercase', display: 'inline-block' }}>
+                  A.D.
+                </span>
+                .
               </td>
             </tr>
             <tr>
               <td>
-                <span className="small-caps-style">SmCa</span>
+                <span style={{ fontVariant: 'small-caps' }}>SmCa</span>
               </td>
               <td>Normal Small Caps style</td>
               <td>
                 <code>He is the ^-^I Am^-^</code>
               </td>
               <td className="reading-text">
-                He is the <span className="small-caps-style">I Am</span>
+                He is the <span style={{ fontVariant: 'small-caps' }}>I Am</span>
               </td>
             </tr>
             <tr>

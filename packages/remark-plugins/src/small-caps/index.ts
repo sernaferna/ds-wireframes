@@ -23,11 +23,11 @@ export function smallCaps(): Transformer {
               value: str,
             }
           : {
-              type: 'span',
+              type: 'element',
               data: {
                 hName: 'span',
                 hProperties: {
-                  className: ['small-caps-style'],
+                  style: 'font-variant: small-caps;',
                 },
               },
               children: [

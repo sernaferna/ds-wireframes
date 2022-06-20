@@ -28,26 +28,6 @@ body {
   padding-bottom: 62px;
 }
 
-.sc {
-  font-variant: small-caps;
-  text-transform: lowercase;
-  display: inline-block;
-}
-
-.sc::first-letter {
-  text-transform: uppercase;
-}
-
-.sc2 {
-  font-variant: small-caps;
-  text-transform: lowercase;
-  display: inline-block;
-}
-
-.small-caps-style {
-  font-variant: small-caps;
-}
-
 .reading-text {
   font-family: 'Merriweather', serif;
 }

@@ -16,28 +16,58 @@ export function tac(): Transformer {
         return;
       }
 
-      const children: Node<Data>[] = values.map((str, i) =>
-        i % 2 === 0
-          ? {
-              type: 'text',
-              value: str,
-            }
-          : {
-              type: 'span',
-              data: {
-                hName: 'span',
-                hProperties: {
-                  className: ['sc'],
-                },
+      const children: any[] = [];
+
+      values.forEach((item, index) => {
+        if (index % 2 === 0) {
+          children.push({
+            type: 'text',
+            value: item,
+          });
+          return;
+        }
+
+        const individualWords = item.split(' ');
+        individualWords.forEach((word, wordIndex) => {
+          children.push({
+            type: 'element',
+            data: {
+              hName: 'span',
+              hProperties: {
+                style: 'text-transform: uppercase;',
               },
-              children: [
-                {
-                  type: 'text',
-                  value: str,
-                },
-              ],
-            }
-      );
+            },
+            children: [
+              {
+                type: 'text',
+                value: word.substring(0, 1),
+              },
+            ],
+          });
+          children.push({
+            type: 'element',
+            data: {
+              hName: 'span',
+              hProperties: {
+                style: 'text-transform: lowercase; font-variant: small-caps;',
+              },
+            },
+            children: [
+              {
+                type: 'text',
+                value: word.substring(1, word.length),
+              },
+            ],
+          });
+
+          if (wordIndex <= individualWords.length) {
+            children.push({
+              type: 'text',
+              value: ' ',
+            });
+          }
+        });
+      });
 
       parent.children.splice(i, 1, ...children);
     });

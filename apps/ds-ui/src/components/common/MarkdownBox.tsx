@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import MDEditor, { ICommand, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import supersub from 'remark-supersub';
-import { tac, lowerCaps, smallCaps, highlight } from '@devouringscripture/remark-plugins';
+import { tac, lowerCaps, smallCaps, highlight, bibleLinks } from '@devouringscripture/remark-plugins';
 import { MarkdownTutorial } from './MarkdownTutorial';
 
-const MIN_SIZE_FOR_TOOLBAR = 350;
+const MIN_SIZE_FOR_TOOLBAR = 450;
 
 interface IMarkdownPreview {
   content: string;
@@ -17,7 +17,7 @@ export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) =>
     <MDEditor.Markdown
       source={content}
       className={classNames}
-      remarkPlugins={[tac, lowerCaps, smallCaps, highlight, supersub]}
+      remarkPlugins={[tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks]}
     />
   );
 };
@@ -26,7 +26,12 @@ const lordCommand: ICommand = {
   name: 'LORD',
   keyCommand: 'LORD',
   buttonProps: { 'aria-label': 'Insert LORD' },
-  icon: <b className="sc">LORD</b>,
+  icon: (
+    <>
+      <b>L</b>
+      <b style={{ fontVariant: 'small-caps' }}>ord</b>
+    </>
+  ),
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^^^${state.selectedText ? state.selectedText : 'LORD'}^^^`;
     api.replaceSelection(modifyText);
@@ -37,7 +42,7 @@ const scCommand: ICommand = {
   name: 'SC',
   keyCommand: 'SC',
   buttonProps: { 'aria-label': 'Insert all SMALL CAPS' },
-  icon: <b className="sc2">A.D.</b>,
+  icon: <b style={{ fontVariant: 'small-caps', textTransform: 'lowercase', display: 'inline-block' }}>A.D.</b>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^^${state.selectedText ? state.selectedText : 'A.D.'}^^`;
     api.replaceSelection(modifyText);
@@ -48,7 +53,7 @@ const scstyleCommand: ICommand = {
   name: 'SmallCaps',
   keyCommand: 'SmallCaps',
   buttonProps: { 'aria-label': 'Insert Small Caps' },
-  icon: <span className="small-caps-style">SmCa</span>,
+  icon: <span style={{ fontVariant: 'small-caps' }}>SmCa</span>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^-^${state.selectedText}^-^`;
     api.replaceSelection(modifyText);
@@ -81,7 +86,39 @@ const highlightCommand: ICommand = {
   },
 };
 
-const commandsToFilterOut = ['code', 'image', 'checked-list'];
+const esvLinkCommand: ICommand = {
+  name: 'ESVLink',
+  keyCommand: 'ESVLink',
+  buttonProps: { 'aria-label': 'Bible link' },
+  icon: <u>ESV✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `[[${state.selectedText}]ESV]`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+const nivLinkCommand: ICommand = {
+  name: 'NIVLink',
+  keyCommand: 'NIVLink',
+  buttonProps: { 'aria-label': 'Bible link' },
+  icon: <u>NIV✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `[[${state.selectedText}]NIV]`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+const bibleLinkCommand: ICommand = {
+  name: 'BibleLink',
+  keyCommand: 'BibleLink',
+  buttonProps: { 'aria-label': 'Bible link' },
+  icon: <u>BG✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const modifyText = `[[${state.selectedText}]]`;
+    api.replaceSelection(modifyText);
+  },
+};
+const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr', 'title2'];
 
 const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   if (isExtra) {
@@ -147,7 +184,16 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           highlightEnable={true}
           preview="edit"
           defaultTabEnable={true}
-          extraCommands={[lordCommand, scCommand, scstyleCommand, superCommand, highlightCommand]}
+          extraCommands={[
+            lordCommand,
+            scCommand,
+            scstyleCommand,
+            esvLinkCommand,
+            nivLinkCommand,
+            bibleLinkCommand,
+            superCommand,
+            highlightCommand,
+          ]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
           hideToolbar={!showToolbar}
