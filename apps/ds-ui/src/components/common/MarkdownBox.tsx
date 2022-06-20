@@ -26,7 +26,12 @@ const lordCommand: ICommand = {
   name: 'LORD',
   keyCommand: 'LORD',
   buttonProps: { 'aria-label': 'Insert LORD' },
-  icon: <b className="sc">LORD</b>,
+  icon: (
+    <>
+      <b>L</b>
+      <b style={{ fontVariant: 'small-caps' }}>ord</b>
+    </>
+  ),
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^^^${state.selectedText ? state.selectedText : 'LORD'}^^^`;
     api.replaceSelection(modifyText);

@@ -97,17 +97,20 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
           <tbody>
             <tr>
               <td>
-                <b className="sc">LORD</b>
+                <b>L</b>
+                <b style={{ fontVariant: 'small-caps' }}>ord</b>
               </td>
               <td>
                 Renders text in <span style={{ fontVariant: 'small-caps' }}>Small Caps</span>, ensuring that the first
                 letter is capitalized, while allowing the original text to stay all Caps.
               </td>
               <td>
-                <code>The ^^^LORD^^^ is one.</code>
+                <code>The ^^^LORD^^^ is one. The ^^^GOD ALMIGHTY^^^ is good.</code>
               </td>
               <td className="reading-text">
-                The <span className="sc">LORD</span> is one.
+                The L<span style={{ fontVariant: 'small-caps' }}>ord</span> is one. The G
+                <span style={{ fontVariant: 'small-caps' }}>od</span> A
+                <span style={{ fontVariant: 'small-caps' }}>lmighty</span> is good.
               </td>
             </tr>
             <tr>
