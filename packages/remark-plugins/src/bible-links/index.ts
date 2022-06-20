@@ -16,8 +16,6 @@ export function bibleLinks(): Transformer {
 
       const { value } = node as Literal<string>;
 
-      console.debug(`initial value: ${value}`);
-
       const parseResult = bibleLinkRE.exec(value);
       if (parseResult === null) {
         return;
@@ -25,9 +23,6 @@ export function bibleLinks(): Transformer {
       if (!isReferenceValid(parseResult[1])) {
         return;
       }
-
-      console.debug(`Initial string: '${value.substring(0, parseResult.index)}'`);
-      console.debug(`string after the matched stuff: '${value.substring(parseResult.index + parseResult[0].length)}'`);
 
       const formattedReference = getFormattedReference(parseResult[1]);
       const searchString = encodeURIComponent(formattedReference);
