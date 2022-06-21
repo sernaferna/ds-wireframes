@@ -9,11 +9,13 @@ import { ActionsForDay } from '@devouringscripture/common';
 import { ActionWidgetForm } from './ActionWidgetForm';
 import { DateTime } from 'luxon';
 import { useUserSettings } from '../../hooks/UserSettings';
+import { SetMessageFunction } from '../../hooks/ErrorsAndWarning';
 
 interface IActionsWidget {
   showTitle?: boolean;
+  setErrorMessage: SetMessageFunction;
 }
-export function ActionsWidget({ showTitle = false }: IActionsWidget) {
+export function ActionsWidget({ setErrorMessage, showTitle = false }: IActionsWidget) {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
   const dispatch = useDispatch();
 
@@ -106,7 +108,7 @@ export function ActionsWidget({ showTitle = false }: IActionsWidget) {
             <CaretRightFill className="align-middle" onClick={handleRightClick()} />
           </span>
         </h6>
-        <ActionWidgetForm day={data as ActionsForDay} />
+        <ActionWidgetForm day={data as ActionsForDay} setErrorMessage={setErrorMessage} />
       </Card.Body>
     </Card>
   );

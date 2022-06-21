@@ -4,10 +4,15 @@ import { PrayerSidebar } from './PrayerSidebar';
 import { Row, Col, Container } from 'react-bootstrap';
 import { CreatePrayerItem } from './CreatePrayerItem';
 import { PrayerSnapshot } from './PrayerSnapshot';
+import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
 
 export function PrayerPage() {
+  const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
+
   return (
     <Container fluid={true} className="page-main-container">
+      <AlertUI />
+
       <Row>
         <Col className="page-sidebar-container-col">
           <PrayerSidebar />
@@ -20,7 +25,7 @@ export function PrayerPage() {
                 <PrayerSnapshot />
               </div>
               <div className="d-none d-md-block">
-                <PrayerCards />
+                <PrayerCards errorFunction={addErrorMessage} />
               </div>
             </Col>
             <Col xs="12" lg="4">

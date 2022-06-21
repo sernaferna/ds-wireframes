@@ -5,10 +5,15 @@ import { CurrentReadingPlan } from '../plans/read/CurrentReadingPlan';
 import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { ActionsWidget } from '../do/ActionsWidget';
 import { CreatePrayerItem } from '../prayer/CreatePrayerItem';
+import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
 
 export const Home = () => {
+  const [AlertUI, setErrorMessage] = useErrorsAndWarnings();
+
   return (
     <Container fluid={true} className="page-main-container">
+      <AlertUI />
+
       <Row>
         <Col className="page-sidebar-container-col">
           <HomeSidebar />
@@ -20,7 +25,7 @@ export const Home = () => {
               <CurrentReadingPlan showTitle={true} />
             </Col>
             <Col xs="12" sm="6" lg="4" xxl="3">
-              <ActionsWidget showTitle={true} />
+              <ActionsWidget showTitle={true} setErrorMessage={setErrorMessage} />
             </Col>
             <Col xs="12" sm="4" lg="4" xxl="3">
               <PrayerSnapshot showTitle={true} />

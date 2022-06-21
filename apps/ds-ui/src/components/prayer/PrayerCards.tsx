@@ -18,6 +18,7 @@ import { paginateItems } from '../../hooks/pagination';
 import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
+import { SetMessageFunction } from '../../hooks/ErrorsAndWarning';
 
 export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   if (type === undefined) {
@@ -124,7 +125,10 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
   return items;
 };
 
-export const PrayerCards = () => {
+interface IPrayerCards {
+  errorFunction: SetMessageFunction;
+}
+export const PrayerCards = ({ errorFunction }: IPrayerCards) => {
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
   const [markUnread] = useMarkUnreadMutation();
@@ -149,10 +153,10 @@ export const PrayerCards = () => {
           type: ToastType.Success,
         });
       } catch (err) {
-        console.log(err);
+        errorFunction('Error retrieving prayer items from server');
       }
     },
-    [markRead, markUnread]
+    [markRead, markUnread, errorFunction]
   );
 
   const factoredItemList = useMemo(

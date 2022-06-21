@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import { v4 as uuidv4 } from 'uuid';
 
-type SetMessageFunction = (message: string | JSX.Element) => string;
-type RemoveMessageFunction = (id: string) => void;
+export type SetMessageFunction = (message: string | JSX.Element) => string;
+export type RemoveMessageFunction = (id: string) => void;
 
 /**
  * Custom hook for error/warning messages. Provides UI for showing

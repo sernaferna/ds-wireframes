@@ -2,11 +2,13 @@ import React, { useCallback, useMemo } from 'react';
 import { ActionsForDay } from '@devouringscripture/common';
 import { ActionCheckItem } from './ActionCheckItem';
 import { useMarkItemReadForDayMutation } from '../../services/ActionsService';
+import { SetMessageFunction } from '../../hooks/ErrorsAndWarning';
 
 interface IActionWidgetForm {
   day: ActionsForDay;
+  setErrorMessage: SetMessageFunction;
 }
-export function ActionWidgetForm({ day }: IActionWidgetForm) {
+export function ActionWidgetForm({ day, setErrorMessage }: IActionWidgetForm) {
   const [markReadUnread] = useMarkItemReadForDayMutation();
 
   const itemClicked = useCallback(
@@ -16,10 +18,10 @@ export function ActionWidgetForm({ day }: IActionWidgetForm) {
         idForItem: id,
         dataForDay: day,
       }).catch((err) => {
-        console.log(err);
+        setErrorMessage('Error changing status of item');
       });
     },
-    [markReadUnread, day]
+    [markReadUnread, day, setErrorMessage]
   );
 
   const defaultItems = useMemo(
