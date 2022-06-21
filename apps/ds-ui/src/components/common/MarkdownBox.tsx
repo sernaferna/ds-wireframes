@@ -199,7 +199,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           hideToolbar={!showToolbar}
         />
         <Button
-          variant="secondary"
+          variant="link"
           size="sm"
           onClick={() => {
             setShowMDTutorial(true);
