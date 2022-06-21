@@ -6,7 +6,7 @@ import { ErrorLoadingDataMessage } from '../common/loading';
 import { paginateItems } from '../../helpers/pagination';
 import { PrayerListItem, UserAttributes } from '@devouringscripture/common';
 import { getPrayerIcon } from './PrayerCards';
-import { MarkdownPreview } from '../common/MarkdownBox';
+import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
 
 const PlaceholderList = () => {
   return (

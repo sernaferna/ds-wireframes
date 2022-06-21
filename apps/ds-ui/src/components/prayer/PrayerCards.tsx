@@ -15,7 +15,7 @@ import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import { paginateItems } from '../../helpers/pagination';
-import { MarkdownPreview } from '../common/MarkdownBox';
+import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
 
