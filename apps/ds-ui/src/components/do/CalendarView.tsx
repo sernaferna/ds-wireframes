@@ -6,7 +6,7 @@ import { updateDateShowingInActions } from '../../stores/UISlice';
 import Calendar, { CalendarTileProperties } from 'react-calendar';
 import { DateTime } from 'luxon';
 import { ActionsForDay } from '@devouringscripture/common';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
   const actionsSet = new Set<string>();

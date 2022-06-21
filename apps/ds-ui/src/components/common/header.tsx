@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Image, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 const links = [
   { label: 'Home', href: '/' },

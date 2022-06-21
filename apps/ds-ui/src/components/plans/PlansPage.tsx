@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { PlanSidebar } from './PlanSidebar';
-import { paginateItems } from '../../helpers/pagination';
+import { paginateItems } from '../../hooks/pagination';
 import { PlanSummaryView } from './PlanSummaryView';
 import { useGetAllInstantiatedPlanItemsQuery } from '../../services/InstantiatedPlanService';
 import { getDateForActions } from '../../stores/UISlice';

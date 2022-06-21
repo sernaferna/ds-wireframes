@@ -1,7 +1,7 @@
 import React from 'react';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { ReadPageSettings } from './ReadPageSettings';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { CurrentReadingPlan } from '../plans/read/CurrentReadingPlan';
 

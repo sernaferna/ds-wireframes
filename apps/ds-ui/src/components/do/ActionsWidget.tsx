@@ -8,7 +8,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ActionsForDay } from '@devouringscripture/common';
 import { ActionWidgetForm } from './ActionWidgetForm';
 import { DateTime } from 'luxon';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 interface IActionsWidget {
   showTitle?: boolean;

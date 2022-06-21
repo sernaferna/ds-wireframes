@@ -9,12 +9,12 @@ import {
   sortPrayerItems,
   useDeletePrayerItemMutation,
 } from '../../services/PrayerService';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { PrayerTypes, UserAttributes, PrayerListItem } from '@devouringscripture/common';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
-import { paginateItems } from '../../helpers/pagination';
+import { paginateItems } from '../../hooks/pagination';
 import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';

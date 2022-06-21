@@ -2,7 +2,7 @@ import React, { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { ListGroup, Card } from 'react-bootstrap';
 import { useGetSubscribedPlansQuery } from '../../../services/InstantiatedPlanService';
-import { useUserSettings } from '../../../helpers/UserSettings';
+import { useUserSettings } from '../../../hooks/UserSettings';
 import { getDateForReadingPlan, updateDateShowingInReadingPlan } from '../../../stores/UISlice';
 import { ReadingPlanItem } from './ReadingPlanItem';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';

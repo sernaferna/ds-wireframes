@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { PrayerSettings } from './PrayerSettings';

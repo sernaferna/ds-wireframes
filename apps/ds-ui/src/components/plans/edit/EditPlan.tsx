@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Verse, isReferenceValid, getRefForVerses, getOSISForReference } from '@devouringscripture/common';
-import { useUserSettings } from '../../../helpers/UserSettings';
+import { useUserSettings } from '../../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage, generateErrorStringFromError } from '../../common/loading';
 import { DayForPlan, generateDayList, getValue, generatePlanForUpload } from './Helpers';
-import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
+import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import { useLazyGetVersesForOSISQuery } from '../../../services/VapiService';
 import {
   useSavePlanMutation,

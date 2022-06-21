@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { ReadSidebar } from './ReadSidebar';
 import { PassageCards } from './PassageCards';
 import { PassageLauncher } from './PassageLauncher';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { useLazyGetNoteByIdQuery } from '../../services/VapiService';
 import { useLazyGetPassageByIdQuery } from '../../services/PassagesService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export function DoPageSettings() {

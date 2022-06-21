@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { Card, Form, Placeholder } from 'react-bootstrap';
 import { useGetAllItemsQuery, useMarkReadMutation, sortPrayerItems } from '../../services/PrayerService';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { ErrorLoadingDataMessage } from '../common/loading';
-import { paginateItems } from '../../helpers/pagination';
+import { paginateItems } from '../../hooks/pagination';
 import { PrayerListItem, UserAttributes } from '@devouringscripture/common';
 import { getPrayerIcon } from './PrayerCards';
 import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
