@@ -1,15 +1,16 @@
 import { Pagination } from 'react-bootstrap';
 
 /**
- * Helper function to paginate a list of items in an array (of
- * any kind). Calling component is responsible for using the arrays
- * properly. Returns a tuple containing the subset of the array
- * that should be shown, as well as a list of Pagination tags
- * to be used in a <Paginate> element.
+ * Helper function to paginate an array of items (of any kind). Returns
+ * a tuple containing the subset of the array that should be shown on
+ * the current screen, as well as React Bootstrap Pagination controls.
  *
  * Does NOT control pagination from the perspective of calling an
  * external API; works with a full list of items that have already been
  * retrieved.
+ *
+ * May or may not technically be a "hook," but close enough to be in the
+ * hooks folder.
  *
  * @param itemList The array of items; agnostic as to type
  * @param lengthToShow Number of items to be shown per "page"
@@ -17,11 +18,12 @@ import { Pagination } from 'react-bootstrap';
  * @param clickFunction A function (taking a number) to call when an
  *     item is clicked. Typically would be called by components leveraging
  *     useState, in which case simply use the setting function returned by
- * useState
- * @returns Tuple containing: The filteres list of array items to be shown
- *     on the screen, and the <Pagination> element. If only one screen is
+ *     useState
+ * @returns Tuple containing: The filtered list of array items to be shown
+ *     on the screen, and the Pagination controls. If only one screen is
  *     needed, undefined is returned for the Pagination element, which will
- *     still render fine.
+ *     still render fine on the target screen (no special logic required to
+ *     check for undefined).
  */
 export const paginateItems = (
   itemList: any[],
