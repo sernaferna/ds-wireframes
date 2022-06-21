@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonGroup, Card, Button } from 'react-bootstrap';
 import { DisplayFill, LaptopFill, PhoneFill, PhoneLandscapeFill, TabletFill } from 'react-bootstrap-icons';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 export const SizeIndicator = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();

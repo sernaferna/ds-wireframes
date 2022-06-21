@@ -3,7 +3,7 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { HomeSettings } from './HomeSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ToastTester } from '../common/toasts/ToastTester';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 export function HomeSidebar() {
   const [userData, userResponseError, userLoading, , updateBoolCallback] = useUserSettings();

@@ -8,7 +8,7 @@ import { OldVsNew } from './graphs/OldVsNew';
 import { AllActivities } from './graphs/AllActivities';
 import { Prayed } from './graphs/Prayed';
 import { VisualizationCard } from './VisualizationCard';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { useGetActionStatsQuery } from '../../services/ActionsService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { GraphSorter } from './GraphSorter/GraphSorter';

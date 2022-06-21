@@ -3,7 +3,7 @@ import { Button, Alert } from 'react-bootstrap';
 import { useGetAllNotesQuery } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { NotesSnippet } from './NotesSnippet';
-import { paginateItems } from '../../../helpers/pagination';
+import { paginateItems } from '../../../hooks/pagination';
 import { Note } from '@devouringscripture/common';
 import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 

@@ -7,12 +7,16 @@ import { getDateForActions } from '../../stores/UISlice';
 import { CalendarView } from './CalendarView';
 import { CustomActionList } from './CustomActionList';
 import { DateTime } from 'luxon';
+import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
 
 export function DoPage() {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
+  const [AlertUI, setErrorMessage] = useErrorsAndWarnings();
 
   return (
     <Container fluid={true} className="page-main-container">
+      <AlertUI />
+
       <Row>
         <Col className="page-sidebar-container-col">
           <DoSidebar />
@@ -21,7 +25,7 @@ export function DoPage() {
           <Row>
             <Col xs="12" md="8" lg="6">
               <CalendarView dateToShow={dateToShow} />
-              <ActionsWidget />
+              <ActionsWidget setErrorMessage={setErrorMessage} />
             </Col>
             <Col xs="12" md="4" lg="6">
               <CustomActionList />

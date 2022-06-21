@@ -3,7 +3,7 @@ import { useGetCurrentItemsQuery } from '../../services/PassagesService';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import { PlaceholderCard, PassageCard } from './PassageCard';
 import { Row, Alert } from 'react-bootstrap';
-import { paginateItems } from '../../helpers/pagination';
+import { paginateItems } from '../../hooks/pagination';
 import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
 
 interface IPassageCards {

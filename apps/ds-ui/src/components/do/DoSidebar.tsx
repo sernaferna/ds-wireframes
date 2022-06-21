@@ -2,7 +2,7 @@ import React from 'react';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { DoPageSettings } from './DoPageSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 export function DoSidebar() {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();

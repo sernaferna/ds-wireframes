@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'react-bootstrap';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 export const HomeSettings = () => {
   const [userData, userResponseError, userIsLoading, , flipUserBoolCallback] = useUserSettings();

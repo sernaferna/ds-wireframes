@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { LegendModal } from './LegendModal';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
 export const PlanSettings = () => {

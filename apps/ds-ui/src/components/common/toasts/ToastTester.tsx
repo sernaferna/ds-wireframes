@@ -3,7 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../loading';
 import { SidebarCollapseWidget } from '../SidebarCollapseWidget';
 import { getToastManager, ToastType } from './ToastManager';
-import { useUserSettings } from '../../../helpers/UserSettings';
+import { useUserSettings } from '../../../hooks/UserSettings';
 
 const executeTest = (toastType: string) => {
   return () => {

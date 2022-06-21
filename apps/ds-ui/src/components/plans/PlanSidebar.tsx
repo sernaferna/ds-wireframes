@@ -2,7 +2,7 @@ import React from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { PlanSettings } from './PlanSettings';
-import { useUserSettings } from '../../helpers/UserSettings';
+import { useUserSettings } from '../../hooks/UserSettings';
 
 export const PlanSidebar = () => {
   const [userData, userResponseError, userLoading, , flipUserBoolCallback] = useUserSettings();

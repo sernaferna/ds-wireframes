@@ -8,7 +8,7 @@ import {
   getOSISForReference,
 } from '@devouringscripture/common';
 import { useCreateNoteMutation, useUpdateNoteMutation } from '../../../services/VapiService';
-import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
+import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import { MarkdownBox } from '../../common/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';

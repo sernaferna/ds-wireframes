@@ -1,12 +1,12 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Row, Button } from 'react-bootstrap';
 import { VizualizationListItem, UserAttributes } from '@devouringscripture/common';
-import { useUserSettings } from '../../../helpers/UserSettings';
+import { useUserSettings } from '../../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ListItem } from './ListItem';
-import { useErrorsAndWarnings } from '../../../helpers/ErrorsAndWarning';
+import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 
 const sortVizList = (list: VizualizationListItem[]): VizualizationListItem[] => {
   return list.slice().sort((a, b) => {
