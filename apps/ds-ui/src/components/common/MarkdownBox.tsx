@@ -81,7 +81,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           Show Tutorial
         </Button>
         <Button variant="link" size="sm" onClick={() => setShowFullScreen(true)}>
-          Full Scren
+          Full Screen
         </Button>
       </div>
       <div className="d-grid gap-2">
