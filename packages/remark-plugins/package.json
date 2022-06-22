@@ -6,6 +6,8 @@
   "types": "./build/index.d.ts",
   "dependencies": {
     "@devouringscripture/common": "^1.0.0",
+    "retext": "^8.1.0",
+    "retext-smartypants": "^5.1.0",
     "unified": "^10.1.2",
     "unist-util-visit": "^4.1.0"
   },
