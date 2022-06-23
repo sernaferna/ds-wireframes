@@ -70,6 +70,8 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           visiableDragbar={false}
           commandsFilter={commandsFilter}
           hideToolbar={true}
+          textareaProps={{ style: { fontFamily: 'Courier New, monospace' } }}
+          style={{ fontFamily: 'Courier New, monospace' }}
         />
         <Button
           variant="link"
