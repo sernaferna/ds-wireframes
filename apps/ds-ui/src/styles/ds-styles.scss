@@ -28,6 +28,14 @@ body {
   padding-bottom: 62px;
 }
 
+b {
+  font-weight: 900;
+}
+
+strong {
+  font-weight: 900;
+}
+
 .reading-text {
   font-family: 'Merriweather', serif;
 }
@@ -170,3 +178,4 @@ footer {
 @import './calendar';
 @import './graphs';
 @import './toast';
+@import './markdown';
