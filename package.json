@@ -1,6 +1,6 @@
 {
   "name": "monorepo",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "scripts": {
     "start": "npm start -w ds-api & npm start -w ds-vapi & npm start -w ds-ui",
     "build": "npm run build -w @devouringscripture/common & npm run build -w @devouringscripture/remark-plugins",
