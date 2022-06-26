@@ -3,7 +3,7 @@ import { visit } from 'unist-util-visit';
 import { Literal, Data, Node } from 'unist';
 import { isReferenceValid, getFormattedReference } from '@devouringscripture/common';
 
-const bibleLinkRE = /\[\[([^\(]+)(?:\s+\((.*)\))?\]([^;]*)(?:;(.*))?\]/;
+const bibleLinkRE = /\[\[([^\(\]]+)(?:\s+\(([^\)]*)\))?\]([^;\]]*)(?:;([^\]]))?\]/;
 interface LinkFields {
   passage: string;
   toDisplay: string;
