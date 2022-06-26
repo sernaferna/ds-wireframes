@@ -32,7 +32,9 @@ The caret can be used for superscript text (such as in 21^st^ Century).
         
 A "strikethrough" effect can be created by surrounding it with ~~two tilde~~ characters.
         
-A hyperlink to another website can be created with square and round brackets; for example, a link to [Google](https://www.google.ca), where the square brackets are the text that will be displayed and the round brackets contain the URL for the link. A URL can also simply be included on its own, and a link will be rendered; e.g. https://www.google.ca will be a link that can be clicked in the formatted output.`,
+A hyperlink to another website can be created with square and round brackets; for example, a link to [Google](https://www.google.ca), where the square brackets are the text that will be displayed and the round brackets contain the URL for the link. A URL can also simply be included on its own, and a link will be rendered; e.g. https://www.google.ca will be a link that can be clicked in the formatted output.
+
+Finally, while no special markup is needed, it should be noted that some text will be made "prettier" in the formatted view. For example, quotation marks will show up as "smart 'quotation' marks," whereby the simple \`"\` and \`'\` characters become opening and closing quotation marks. Also, **dashes** will be rendered nicely; so those who like to use **m-dashes**---like this---will get nicely formatted dashes, as will those who prefer **n-dashes** -- like this.`,
         },
       ],
     },
