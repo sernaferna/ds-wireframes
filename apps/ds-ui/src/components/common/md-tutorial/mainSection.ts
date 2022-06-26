@@ -6,9 +6,11 @@ export const mdMainSection: SectionDocumentation = {
     parts: [
       {
         type: PartType.text,
-        content: `This text box accepts a notation called **markdown**, which is a simplified way of adding formatting to text. With markdown you can use formatting like **bold**, *italics* and even ==highlighting==, not to mention specialised formatting of use to the Christian (such as being able to use the name ^^^LORD^^^).
+        content: `This text box accepts a notation called **markdown**, which is a simplified way of adding formatting to text. The text can be "rendered" into a more visual form (via the **Show Preview** button), or simply viewed with simple, text-based formatting in place.
+
+"Standard" markdown provides for formatting like **bold**, *italics* and even ==highlighting==, and the **Devouring Scripture** app adds specialised formatting of use to the Christian (such as being able to use the name ^^^LORD^^^).
             
-You might be wondering, "Do I really need to learn this 'markdown' notation?" And the answer is no, you don't! Markdown is designed such that you only need to use the parts you want; if all you want to do is write some text with no formatting, you can! But if you ever decide to use italics, you can; if you want to create a link to a particular Bible verse, you can; if you want to highlight something, to come back to later, you can. You can learn just the parts of markdown you need, as you need them, without burdoning yourself with a huge learning endeavour.
+You might be wondering, "Do I really need to learn this 'markdown' notation?" And the answer is no, you don't! Markdown is designed such that you only need to use the parts you want; if all you want to do is write some text with no formatting, you can! But if you want to include multiple paragraphs you can, without having to think too much about it; and if you ever decide to use italics you can learn the very simple notation for doing so; and if you want to create a link to a particular Bible verse, you can learn the simple notation for that; and if you want to highlight something, to come back to later, you can. You can learn just the parts of markdown you need, as you need them, without burdoning yourself with a huge learning endeavour.
         
 **Note**: When the full-screen version of the text editor is used there is a toolbar with buttons for many of these formatting options and other markdown features.`,
       },
@@ -60,7 +62,7 @@ And this is a third, regardless of how many empty lines came before it!`,
       parts: [
         {
           type: PartType.text,
-          content: `Headers can also be created by using \`#\` characters at the beginning of the heading; one \`#\` for the largest heading, two for a smaller one, and three for a smaller one still:`,
+          content: `Headers can be created by using \`#\` characters at the beginning of the heading: one \`#\` for the largest heading, two for a smaller one, and three for a smaller one still:`,
         },
         {
           type: PartType.example,
@@ -110,7 +112,7 @@ Numbers (with periods) can be used to create numbered lists:
     1. This is a sub-item
 3. This is the final bullet in the list
         
-The numbers in a numbered list don't need to be properly in order:
+The numbers in a numbered list don't need to be properly in order; for simplicity, some just use \`1.\` for each item:
         
 1. This is the first item in a numbered list
 1. This is the second, regardless of the number used in markdown`,
@@ -122,7 +124,7 @@ The numbers in a numbered list don't need to be properly in order:
       parts: [
         {
           type: PartType.text,
-          content: `A table can be created with careful use of the \`|\` (pipe) character. Consider the following example, in which a header is created for the table followed by two "normal" rows:`,
+          content: `A table can be created with careful use of the \`|\` (pipe) character. Consider the following examples, headers are created for the table followed by two "normal" rows:`,
         },
         {
           type: PartType.example,
@@ -165,7 +167,12 @@ This paragraph continues on after the first one.`,
         {
           type: PartType.text,
           content:
-            'In the following formatted output, notice that the footnote will show up at the very bottom, regardless of where it was placed in the markdown text:',
+            'In the formatted output, notice that the footnotes show up at the very bottom, regardless of where they were placed in the markdown text.',
+        },
+        {
+          type: PartType.text,
+          content:
+            "As with numbered lists, the actual numbering used in the markdown doesn't matter, they will be rendered in the order they're found:",
         },
         {
           type: PartType.example,

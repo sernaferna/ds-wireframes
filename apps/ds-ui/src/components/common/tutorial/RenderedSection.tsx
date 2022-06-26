@@ -79,7 +79,7 @@ export const RenderedSection = ({ section }: IRenderedSection) => {
 
   return (
     <>
-      <h3>{section.mainSection.title}</h3>
+      <h3 className="mt-4">{section.mainSection.title}</h3>
       <RenderedParts parts={section.mainSection.parts} />
       {subSections}
     </>

@@ -1,4 +1,4 @@
-import { Accordion, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { Tutorial } from '../tutorial/Tutorial';
 import { SectionDocumentation } from '../tutorial/TutorialTypes';
 import { mdMainSection } from './mainSection';

@@ -66,17 +66,9 @@ When a specific version is desired, it can be specified as follows:`,
         },
         {
           type: PartType.example,
-          content: `It says in [[Rom 1:1]NIV] that Paul is an Apostle, even though he wasn't one of the *original* Apostles (as called out in [[Matt 10:5-15]ESV] or [[Mark 3:13-21]] or ==other examples==.)
+          content: `It says in [[Rom 1:1]NIV] that Paul is an Apostle, even though he wasn't one of the *original* Apostles (as called out in [[Matt 10:5-15]ESV;s] or [[Mark 3:13-21 (Mark 3)]NIV] or ==other examples==.)
             
 If you're interested, the **Apostles' Creed** can be found at the [Christian Reformed Church website](https://www.crcna.org/welcome/beliefs/creeds/apostles-creed)`,
-        },
-        {
-          type: PartType.text,
-          content: `Notice that the rendered version of the link has some formatting applied to it:
-            
-* Even if an abbreviation is used for the reference, a more complete, formatted version is used
-* The version is shown in parantheses after the passage
-* A small cross icon is also appended, to differentiate these specific Bible Gateway links from other, regular links (as opposed to the other link included in this example, that doesn't have that icon).`,
         },
       ],
     },
@@ -85,7 +77,9 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
       parts: [
         {
           type: PartType.text,
-          content: `Some words---especially proper names---appear in all capital letters in the Scriptures; the most common example is the name of the ^^^LORD^^^ in Old Testament Scriptures. For readability, these words are often written in **Small Caps**, as was used here, where the first letter is larger than the other letters, even though they're all capitalized. For the Christian, these words should always be in all uppercase, even if they're formatted differently. Surrounding text with three carets (such as \`^^^LORD^^^\`) will cause it to be rendered similar to ^^^LORD^^^; in the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in all uppercase in Small Caps format.
+          content: `Some words---especially proper names---appear in all capital letters in the Scriptures; the most common example is the name of the ^^^LORD^^^ in Old Testament Scriptures. For readability, these words are often written in **Small Caps**, as was used here, where the first letter is larger than the other letters, even though they're all capitalized. For the Christian, these words should always be in all uppercase, even if they're formatted differently.
+          
+Surrounding text with three carets (such as \`^^^LORD^^^\`) will cause it to be rendered similar to ^^^LORD^^^; in the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in all uppercase in Small Caps format.
             
 For example:`,
         },
@@ -106,6 +100,11 @@ For example:`,
           type: PartType.example,
           content: `From 1500^^B.C.^^ through to 2022^^A.D.^^ is a long time.`,
         },
+        {
+          type: PartType.text,
+          content:
+            'Just like with the `^^^` notation, the text is always in all capitals, and only on devices that support the advanced formatting will the capitalized letters be smaller.',
+        },
       ],
     },
     {
@@ -119,6 +118,11 @@ For example:`,
         {
           type: PartType.example,
           content: `This text includes an example of ^-^Small Caps^-^ in it.`,
+        },
+        {
+          type: PartType.text,
+          content:
+            "Small Caps would be used in cases where it's fine for the text to be in lowercase letters, in some instances; when people reading the markdown, or on devices that don't support advanced formatting, can see the text in lowercase (as opposed to the name of the ^^^LORD^^^ as written in Old Testament Scriptures, which should be capitalized).",
         },
       ],
     },
