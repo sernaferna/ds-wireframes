@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MDEditor, { ICommand } from '@uiw/react-md-editor';
 import { Button, Modal } from 'react-bootstrap';
-import { MarkdownTutorial } from './MarkdownTutorial';
+import { MarkdownTutorial } from './md-tutorial/MarkdownTutorial';
 import {
   lordCommand,
   esvLinkCommand,
