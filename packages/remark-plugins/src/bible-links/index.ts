@@ -19,7 +19,7 @@ const parseLink = (inputString: string): LinkFields | undefined => {
 
   const setSimple: boolean = result[4] !== undefined && result[4].includes('s') ? true : false;
 
-  const displayString = setSimple ? result[2] || result[1] : result[2] || getFormattedReference(result[1]);
+  const displayString = setSimple ? result[2] || result[1] : result[2] || getFormattedReference(result[1], false);
 
   const returnObj: LinkFields = {
     passage: result[1],
@@ -49,7 +49,7 @@ export function bibleLinks(): Transformer {
 
       const parseResult = bibleLinkRE.exec(value);
 
-      const searchString = encodeURIComponent(getFormattedReference(lf.passage));
+      const searchString = encodeURIComponent(getFormattedReference(lf.passage, false));
 
       const linkUrl = `https://www.biblegateway.com/passage/?search=${searchString}&version=${lf.version}`;
 
