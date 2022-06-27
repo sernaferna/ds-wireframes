@@ -16,8 +16,8 @@ const ReadOnlyMarkdownBox = ({ text }: IReadOnlyMarkdownBox) => {
       defaultTabEnable={false}
       visiableDragbar={false}
       hideToolbar={true}
-      textareaProps={{ style: { fontFamily: 'Courier New, monospace' } }}
-      style={{ fontFamily: 'Courier New, monospace' }}
+      textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
+      style={{ fontFamily: 'Courier Prime, monospace' }}
     />
   );
 };

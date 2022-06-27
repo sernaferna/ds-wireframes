@@ -72,8 +72,8 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           visiableDragbar={false}
           commandsFilter={commandsFilter}
           hideToolbar={true}
-          textareaProps={{ style: { fontFamily: 'Courier New, monospace' } }}
-          style={{ fontFamily: 'Courier New, monospace' }}
+          textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
+          style={{ fontFamily: 'Courier Prime, monospace' }}
         />
         <Button
           variant="link"
@@ -128,8 +128,8 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
               previewOptions={{
                 remarkPlugins: [tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
               }}
-              textareaProps={{ style: { fontFamily: 'Courier New, monospace' } }}
-              style={{ fontFamily: 'Courier New, monospace' }}
+              textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
+              style={{ fontFamily: 'Courier Prime, monospace' }}
             />
             <Button
               variant="link"
