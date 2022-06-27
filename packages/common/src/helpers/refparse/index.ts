@@ -37,8 +37,20 @@ export const getOSISForReference = (ref: string): string => {
   return osisString;
 };
 
-export const getReferenceForOSIS = (osisString: string): string => {
-  return osisToEn('esv-long', osisString);
+export const getReferenceForOSIS = (osisString: string, includeVerses: boolean = true): string => {
+  if (includeVerses) {
+    return osisToEn('esv-long', osisString);
+  }
+
+  const bcv = new bcv_parser();
+  bcv.set_options({
+    osis_compaction_strategy: 'bc',
+    book_sequence_strategy: 'include',
+    book_alone_strategy: 'full',
+    book_range_strategy: 'include',
+  });
+  const newOsis = bcv.parse(osisString).osis();
+  return osisToEn('esv-long', newOsis);
 };
 
 export const getRefForVerses = (verses: Verse[] | undefined): string => {
@@ -84,10 +96,10 @@ export const getPassagesForReference = (reference: string): OSISRange[] => {
   return getRangesForOSIS(osis);
 };
 
-export const getFormattedReference = (osisOrRef: string): string => {
+export const getFormattedReference = (osisOrRef: string, includeVerses: boolean = true): string => {
   if (!isReferenceValid(osisOrRef)) {
     return '';
   }
 
-  return getReferenceForOSIS(getOSISForReference(osisOrRef));
+  return getReferenceForOSIS(getOSISForReference(osisOrRef), includeVerses);
 };

@@ -56,4 +56,28 @@ describe('get formatted test suite', () => {
 
     expect(formatted).toEqual('');
   });
+
+  it('returns verse range when ref is to the chapter level', () => {
+    const formatted = getFormattedReference('Rom 1');
+
+    expect(formatted).toEqual('Romans 1:1–32');
+  });
+
+  it('does not return verse range when ref is to the chapter level but false is passed to verse param', () => {
+    const formatted = getFormattedReference('Rom 1', false);
+
+    expect(formatted).toEqual('Romans 1');
+  });
+
+  it('does not return chapters for a range of chapters in a book', () => {
+    const formatted = getFormattedReference('Gen', false);
+
+    expect(formatted).toEqual('Genesis 1—50');
+  });
+
+  it('still includes verses when a ref includes only part of a chapter', () => {
+    const formatted = getFormattedReference('Rom 1:1-5', false);
+
+    expect(formatted).toEqual('Romans 1:1–5');
+  });
 });
