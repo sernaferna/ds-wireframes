@@ -151,7 +151,7 @@ If desired, the spacing can be made more precise; it won't change the resultant 
       parts: [
         {
           type: PartType.text,
-          content: `Perhaps a niche capability, but **footnotes** can also be created. There are two parts to this markup:
+          content: `Footnotes can be created via two related notations in the markdown:
             
 1. In the body of the text include a footnote reference such as \`[^#]\`, where \`#\` is a number; \`[^1]\`, \`[^2]\`, etc.
 2. The footnote itself, which starts with \`[^#]:\`—that is, matching the footnote reference, with a \`:\`
@@ -174,7 +174,7 @@ This paragraph continues on after the first one.`,
         {
           type: PartType.text,
           content:
-            "As with numbered lists, the actual numbering used in the markdown doesn't matter, they will be rendered in the order they're found:",
+            "The actual numbering used in the markdown doesn't matter, they will be rendered in the order they're found, as long as the number in the footnote reference and the number in the footnot itself match:",
         },
         {
           type: PartType.example,
