@@ -13,8 +13,10 @@ import {
   superCommand,
 } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
+import supersub from 'remark-supersub';
+import { tac, lowerCaps, smallCaps, highlight, bibleLinks, smartquotes } from '@devouringscripture/remark-plugins';
 
-const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr', 'title2'];
+const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
 
 const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   if (isExtra) {
@@ -108,7 +110,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
               value={content}
               onChange={handleChangeEvent}
               highlightEnable={true}
-              preview="edit"
+              preview="live"
               defaultTabEnable={true}
               extraCommands={[
                 lordCommand,
@@ -123,6 +125,11 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
               visiableDragbar={true}
               commandsFilter={commandsFilter}
               hideToolbar={false}
+              previewOptions={{
+                remarkPlugins: [tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
+              }}
+              textareaProps={{ style: { fontFamily: 'Courier New, monospace' } }}
+              style={{ fontFamily: 'Courier New, monospace' }}
             />
             <Button
               variant="link"
@@ -133,12 +140,6 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
             >
               Show Tutorial
             </Button>
-          </div>
-          <div className="d-grid gap-2">
-            <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
-              {showPreviewState ? 'Hide Preview' : 'Show Preview'}
-            </Button>
-            {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
           </div>
         </Modal.Body>
       </Modal>
