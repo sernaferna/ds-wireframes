@@ -60,6 +60,53 @@ And this is a third, regardless of how many empty lines came before it!`,
       ],
     },
     {
+      title: 'Block Quotes',
+      parts: [
+        {
+          type: PartType.text,
+          content: `When quoting large sections of text, a **blockquote** section can be used. Blockquotes format the quoted text differently from other text, by indenting it further than regular text and placing a slight border to the left. For example:`,
+        },
+        {
+          type: PartType.example,
+          content: `Starting a paragraph with \`> \` (that is, a greater than sign followed by a space) makes it a blockquote:
+
+> This is a quotation`,
+        },
+        {
+          type: PartType.text,
+          content: `Quotes will sometimes break across multiple lines; it's up to the author whether to include the \`> \` before each line or not.`,
+        },
+        {
+          type: PartType.example,
+          content: `> This quote has
+> multiple lines
+
+is equivalent to
+
+> This quote has
+multiple lines
+
+However, as soon as a **paragraph break** is formed (i.e. multiple newlines), the \`> \` will be needed between.
+
+> This quote spans multiple paragraphs.
+> 
+> It's quite neat.`,
+        },
+        {
+          type: PartType.text,
+          content: `Blockquotes can also be **nested**, for cases where a quotation *itself* includes a quotation. Each new level of quotation gets a new \`> \` inserted, so \`> \` is one level of quotation, and \`> > \` is two levels.`,
+        },
+        {
+          type: PartType.example,
+          content: `A favourite author of mine once said:
+          
+> A great man once said:
+> 
+> > Do your thing, bro.`,
+        },
+      ],
+    },
+    {
       title: 'Headings',
       parts: [
         {

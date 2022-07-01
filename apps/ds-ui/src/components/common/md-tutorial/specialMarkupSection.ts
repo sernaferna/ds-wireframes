@@ -126,5 +126,48 @@ For example:`,
         },
       ],
     },
+    {
+      title: 'Biblical Poetry',
+      parts: [
+        {
+          type: PartType.text,
+          content: `Blockquotes (discussed above) can, of course, be used for quoting large sections of Scripture. A special case of quotation, however, is the way **poetry** is formatted in the Scripture, especially when it comes to indentation. In order to better support this, a blockquote notation specifically for Biblical poetry can be used, where \`|>\` is used instead of \`>\`.`,
+        },
+        {
+          type: PartType.example,
+          content: `We read in [[Psalm 1:1-2]ESV]:
+
+|> 1 Blessed is the man
+|> |> who walks not in the counsel of the wicked,
+|> nor stands in the way of sinners,
+|> |> nor sits in the seat of scoffers;
+|> 2 but his delight is in the law of the ^^^LORD^^^,
+|> |> and on his law he meditates day and night.`,
+        },
+        {
+          type: PartType.text,
+          content: `As illustrated above, it might be easiest to include the \`|>\` before each and every line in the stanza, to more easily differentiate between 1st level lines (\`|>\`) and second level lines (\`|> |>\`).`,
+        },
+        {
+          type: PartType.text,
+          content: `Because of the way spaces are ignored within this notation, you can, if you wish, clean up the way the text is typed into the markdown box, without impacting the way the formatted version is rendered. For example:`,
+        },
+        {
+          type: PartType.example,
+          content: `We read in [[Psalm 1:1-2]ESV]:
+
+|>      1 Blessed is the man
+|> |>      who walks not in the counsel of the wicked,
+|>      nor stands in the way of sinners,
+|> |>      nor sits in the seat of scoffers;
+|>      2 but his delight is in the law of the ^^^LORD^^^,
+|> |>      and on his law he meditates day and night.`,
+        },
+        {
+          type: PartType.text,
+          content: `As illustrated, the extra spaces before each line don't impact the way the text is finally rendered, as long as the proper number of \`|>\` headings come at the beginning of each line.`,
+        },
+      ],
+    },
   ],
 };
