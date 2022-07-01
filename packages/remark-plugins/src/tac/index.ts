@@ -60,7 +60,7 @@ export function tac(): Transformer {
             ],
           });
 
-          if (wordIndex <= individualWords.length) {
+          if (wordIndex < individualWords.length - 1) {
             children.push({
               type: 'text',
               value: ' ',
