@@ -11,6 +11,7 @@ import {
   scCommand,
   scstyleCommand,
   superCommand,
+  poetryQuoteCommand,
 } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
 import supersub from 'remark-supersub';
@@ -76,6 +77,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
             bibleLinkCommand,
             superCommand,
             highlightCommand,
+            poetryQuoteCommand,
           ]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
@@ -129,6 +131,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
                 bibleLinkCommand,
                 superCommand,
                 highlightCommand,
+                poetryQuoteCommand,
               ]}
               visiableDragbar={true}
               commandsFilter={commandsFilter}
