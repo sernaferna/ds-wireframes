@@ -10,7 +10,6 @@ interface LinkFields {
   version: string;
 }
 const parseLink = (inputString: string): LinkFields | undefined => {
-  console.log(inputString);
   const result = bibleLinkRE.exec(inputString);
 
   if (result === null) {
