@@ -3,6 +3,69 @@ import { visit } from 'unist-util-visit';
 import { Literal } from 'unist';
 
 const lineMatchRE = /^\|> /;
+const verseAtBeginningRE = /^(\d+)\s/;
+const verseInMiddleRE = /\s(\d+)\s/;
+
+const getTextWithNumbers = (text: string) => {
+  if (!verseAtBeginningRE.test(text) && !verseInMiddleRE.test(text)) {
+    return [
+      {
+        type: 'text',
+        value: text,
+      },
+    ];
+  }
+
+  const pieces: any[] = [];
+  let remainingText = text;
+
+  const firstMatch = verseAtBeginningRE.exec(remainingText);
+  if (firstMatch) {
+    pieces.push({
+      type: 'sup',
+      data: {
+        hName: 'sup',
+      },
+      children: [
+        {
+          type: 'text',
+          value: firstMatch[1],
+        },
+      ],
+    });
+
+    remainingText = remainingText.substring(firstMatch.index + firstMatch[0].length);
+  }
+
+  while (verseInMiddleRE.test(remainingText)) {
+    const newVerseMatch = verseInMiddleRE.exec(remainingText);
+    pieces.push({
+      type: 'text',
+      value: remainingText.substring(0, newVerseMatch!.index + 1),
+    });
+    pieces.push({
+      type: 'sup',
+      data: {
+        hName: 'sup',
+      },
+      children: [
+        {
+          type: 'text',
+          value: newVerseMatch![1],
+        },
+      ],
+    });
+
+    remainingText = remainingText.substring(newVerseMatch!.index + newVerseMatch![0].length);
+  }
+
+  pieces.push({
+    type: 'text',
+    value: remainingText,
+  });
+
+  return pieces;
+};
 
 export function poetryBlocks(): Transformer {
   return (tree) => {
@@ -28,6 +91,8 @@ export function poetryBlocks(): Transformer {
           fixedString = fixedString.replace(lineMatchRE, '');
         }
 
+        const childOutputs = getTextWithNumbers(fixedString);
+
         lines.push({
           type: 'paragraph',
           data: {
@@ -35,12 +100,7 @@ export function poetryBlocks(): Transformer {
               style: `margin-top: 0; margin-bottom: 0; padding-left: ${level}em;`,
             },
           },
-          children: [
-            {
-              type: 'text',
-              value: fixedString,
-            },
-          ],
+          children: childOutputs,
         });
       }
 

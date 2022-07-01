@@ -127,11 +127,43 @@ For example:`,
       ],
     },
     {
-      title: 'Biblical Poetry',
+      title: 'Biblical Quotations',
       parts: [
         {
           type: PartType.text,
-          content: `Blockquotes (discussed above) can, of course, be used for quoting large sections of Scripture. A special case of quotation, however, is the way **poetry** is formatted in the Scripture, especially when it comes to indentation. In order to better support this, a blockquote notation specifically for Biblical poetry can be used, where \`|>\` is used instead of \`>\`.`,
+          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting large sections of Scripture, or a special notation using \`|>\` instead of \`>\` can be used, which works the same as regular blockquotes but verse numbers will also be made **superscript** automatically.`,
+        },
+        {
+          type: PartType.example,
+          content: `It says in [[John 1:1-5]]:
+          
+|> 1 In the beginning was the Word, and the Word was with God, and the Word was God. 2 He was in the beginning with God. 3 All things were made through him, and without him was not any thing made that was made. 4 In him was life, and the life was the light of men. 5 The light shines in the darkness, and the darkness has not overcome it.`,
+        },
+        {
+          type: PartType.text,
+          content: `In order for the verse formatting to work, verse numbers have to be surrounded by whitespace (to distinguish verse numbers from any other text that has numbers in it); if the formatting is not working as desired, it may be easier to use standard blockquotes, and manually use \`^2^\` notation to make numbers superscript.`,
+        },
+        {
+          type: PartType.example,
+          content: `Because of the spacing, this works:
+          
+|> 1 some 2 text
+
+and this doesn't:
+
+|> 1some 2text
+
+and this partially does:
+
+|> 1 some 2text
+
+Standard blockquotes can always be used, allowing for more control over spacing:
+
+> ^1^ In the beginning was the Word, and the Word was with God, and the Word was God. ^2^ He was in the beginning with God. ^3^ All things were made through him, and without him was not any thing made that was made. ^4^ In him was life, and the life was the light of men. ^5^ The light shines in the darkness, and the darkness has not overcome it.`,
+        },
+        {
+          type: PartType.text,
+          content: `Where the special \`|>\` notation comes in especially handy is with Biblical **poetry**, especially when it comes to indentation. When quoting a block of poetry, multiple levels of indentation can be achieved by having multiple levels of \`|>\` notation, such as:`,
         },
         {
           type: PartType.example,
