@@ -137,7 +137,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
               commandsFilter={commandsFilter}
               hideToolbar={false}
               previewOptions={{
-                remarkPlugins: [tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes, poetryBlocks],
+                remarkPlugins: [poetryBlocks, tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
               }}
               textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
               style={{ fontFamily: 'Courier Prime, monospace' }}

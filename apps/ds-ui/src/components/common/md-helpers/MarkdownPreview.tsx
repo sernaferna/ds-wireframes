@@ -2,13 +2,13 @@ import React from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import supersub from 'remark-supersub';
 import {
+  poetryBlocks,
   tac,
   lowerCaps,
   smallCaps,
   highlight,
   bibleLinks,
   smartquotes,
-  poetryBlocks,
 } from '@devouringscripture/remark-plugins';
 
 interface IMarkdownPreview {
@@ -21,7 +21,7 @@ export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) =>
     <MDEditor.Markdown
       source={content}
       className={classNames}
-      remarkPlugins={[tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes, poetryBlocks]}
+      remarkPlugins={[poetryBlocks, tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes]}
     />
   );
 };
