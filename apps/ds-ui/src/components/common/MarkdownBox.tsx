@@ -14,7 +14,15 @@ import {
 } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
 import supersub from 'remark-supersub';
-import { tac, lowerCaps, smallCaps, highlight, bibleLinks, smartquotes } from '@devouringscripture/remark-plugins';
+import {
+  tac,
+  lowerCaps,
+  smallCaps,
+  highlight,
+  bibleLinks,
+  smartquotes,
+  poetryBlocks,
+} from '@devouringscripture/remark-plugins';
 
 const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
 
@@ -126,7 +134,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
               commandsFilter={commandsFilter}
               hideToolbar={false}
               previewOptions={{
-                remarkPlugins: [tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
+                remarkPlugins: [tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes, poetryBlocks],
               }}
               textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
               style={{ fontFamily: 'Courier Prime, monospace' }}
