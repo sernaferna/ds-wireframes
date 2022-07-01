@@ -1,11 +1,11 @@
 import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
-import { Literal, Data, Node } from 'unist';
+import { Literal } from 'unist';
 
 const lineMatchRE = /^\|> /;
 
 export function poetryBlocks(): Transformer {
-  const poetryFormatter = (tree: Node<Data>, firstVisit: boolean = true) => {
+  return (tree) => {
     visit(tree, ['text'], (node, i, parent: any) => {
       if (node.type !== 'text') {
         return;
@@ -47,22 +47,11 @@ export function poetryBlocks(): Transformer {
       const children = [
         {
           type: 'blockquote',
-          data: {
-            hProperties: {
-              style: '',
-            },
-          },
           children: lines,
         },
       ];
 
       parent.children.splice(i, 1, ...children);
-
-      poetryFormatter(tree, false);
     });
-  };
-
-  return (tree) => {
-    poetryFormatter(tree);
   };
 }
