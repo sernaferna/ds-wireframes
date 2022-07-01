@@ -11,6 +11,7 @@ import {
   scCommand,
   scstyleCommand,
   superCommand,
+  poetryQuoteCommand,
 } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
 import supersub from 'remark-supersub';
@@ -76,6 +77,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
             bibleLinkCommand,
             superCommand,
             highlightCommand,
+            poetryQuoteCommand,
           ]}
           visiableDragbar={false}
           commandsFilter={commandsFilter}
@@ -129,12 +131,13 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
                 bibleLinkCommand,
                 superCommand,
                 highlightCommand,
+                poetryQuoteCommand,
               ]}
               visiableDragbar={true}
               commandsFilter={commandsFilter}
               hideToolbar={false}
               previewOptions={{
-                remarkPlugins: [tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes, poetryBlocks],
+                remarkPlugins: [poetryBlocks, tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
               }}
               textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
               style={{ fontFamily: 'Courier Prime, monospace' }}
