@@ -6,7 +6,7 @@ export const specialMarkupSection: SectionDocumentation = {
     parts: [
       {
         type: PartType.text,
-        content: `All of the examples given so far are for "standard" markdown notation; anyone familiar with markdown would be familiar with the examples given, even if some (such as footnotes) might be less common than others (such as bold and italics). **Devouring Scripture** has also introduced some special notations that can be used specifically for the kind of text that often gets used in Christian contexts.`,
+        content: `All of the examples given so far are for "standard" markdown notation; anyone familiar with markdown would be familiar with the examples given, even if some (such as footnotes) might be less common than others (such as bold and italics). **Devouring Scripture** has also introduced some special notations that can be used specifically for the kind of text that often gets created in Christian contexts.`,
       },
     ],
   },
@@ -16,9 +16,7 @@ export const specialMarkupSection: SectionDocumentation = {
       parts: [
         {
           type: PartType.text,
-          content: `As mentioned above, **hyperlinks** can be created the normal \`[Hyperlink text](hyperlinkUrl)\` markdown notation, but for **Devouring Scripture** it's assumed that a common pattern will be the creation of links to specific passages of Scripture, using the **Bible Gateway** website. For this reason, a special notation was created in the format \`[[Reference]]\`. There are a few options that can be provided for creating these links.
-            
-For example, a simple link can be created by surrounding a Bible reference with \`[[\` and \`]]\` notation, such as:`,
+          content: `As mentioned above, **hyperlinks** can be created the standard \`[Hyperlink text](hyperlinkUrl)\` markdown notation, but for **Devouring Scripture** it's assumed that a common pattern will be the creation of links to passages of Scripture using the **Bible Gateway** website. For this reason, a special notation was created in the format \`[[Reference]]\`.`,
         },
         {
           type: PartType.example,
@@ -26,12 +24,12 @@ For example, a simple link can be created by surrounding a Bible reference with 
         },
         {
           type: PartType.text,
-          content: `This is a nice, compact notation in the markdown notation, but, as shown, a number of enhancements are made when the link is rendered into the formatted version:
+          content: `This is a nice, compact notation in markdown, but, as shown, a number of enhancements are made when the link is rendered into the formatted version:
 * A small cross icon is appended, to illustrate that this link goes specifically to the **Bible Gateway** for a passage of scripture, as opposed to a "normal" link
-* The reference is expanded to a more longform notation
-* The specific version of the Bible that's being used is appended in parentheses. As shown, the ESV version is used, if no other version is specified.
+* The reference is expanded to a longform notation
+* The specific version of the Bible that's being used is appended in parentheses.
 
-When a specific version is desired, it can be specified as follows:`,
+As shown, ESV is the default version used, but when a specific version is desired, it can be specified as follows:`,
         },
         {
           type: PartType.example,
@@ -40,12 +38,12 @@ When a specific version is desired, it can be specified as follows:`,
         {
           type: PartType.text,
           content:
-            "Any version can be used; **Devouring Scripture** won't validate the version, however, it will just pass it on to **Bible Gateway**, so `[[Rom 1]ABC]` would create the link as normal, but clicking the link would prompt an error from **Bible Gateway**.",
+            "Any version supported by Bible Gateway can be used. **Devouring Scripture** won't *validate* the version, however, it will just pass it on to **Bible Gateway** as specified in the markdown, so something like `[[Rom 1]ABC]` would create the link as normal, but clicking the link would prompt an error from **Bible Gateway**, since it doesn't know of a version of the Bible named `ABC`.",
         },
         {
           type: PartType.text,
           content:
-            'In case different text is desired to be shown to the reader, that can be added in parentheses, after the passage.',
+            'In case different text is desired to be shown to the reader, it can be added in parentheses after the passage.',
         },
         {
           type: PartType.example,
@@ -54,11 +52,11 @@ When a specific version is desired, it can be specified as follows:`,
         {
           type: PartType.text,
           content:
-            'Other options can be specified by placing a `;` after the version (or before the final `]` if no version is specified). The only option currently available is `s` (for "short"), which specifies that the reference shouldn\'t be expanded into a more readable form.',
+            'Other options can be specified by placing a `;` after the version (or before the final `]` if no version is specified). The only option currently available is `s` (for "short"), which specifies that the reference shouldn\'t be expanded into a more readable form, as long as it\'s valid.',
         },
         {
           type: PartType.example,
-          content: 'A link to [[Rom 1]ESV;s].',
+          content: 'A shortened link to [[Rom 1]ESV;s] as opposed to the longer version from [[Rom 1]ESV].',
         },
         {
           type: PartType.text,
@@ -77,7 +75,7 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
       parts: [
         {
           type: PartType.text,
-          content: `Some words---especially proper names---appear in all capital letters in the Scriptures; the most common example is the name of the ^^^LORD^^^ in Old Testament Scriptures. For readability, these words are often written in **Small Caps**, as was used here, where the first letter is larger than the other letters, even though they're all capitalized. For the Christian, these words should always be in all uppercase, even if they're formatted differently.
+          content: `Some proper names appear in all capital letters in the Scriptures; the most common example is the name of the LORD in Old Testament Scriptures. These words are often written in **Small Caps** for readability, such that LORD is shown as ^^^LORD^^^. For the Christian, these words should always be in all uppercase, even if they're formatted differently on the screen/page.
           
 Surrounding text with three carets (such as \`^^^LORD^^^\`) will cause it to be rendered similar to ^^^LORD^^^; in the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in all uppercase in Small Caps format.
             
@@ -94,7 +92,7 @@ For example:`,
       parts: [
         {
           type: PartType.text,
-          content: `This is similar to the case of all capitalized words, except that all of the letters are rendered in the smaller capitalized versions. For this notation two carets are used instead of three (e.g. \`^^A.D.^^\`) The best examples are the terms ^^A.D.^^ and ^^B.C.^^. For example:`,
+          content: `This is similar to the case of all capitalized words (such as ^^^LORD^^^), except that all of the letters are rendered in smaller capitals, such as the terms ^^A.D.^^ and ^^B.C.^^. For this notation two carets are used instead of three (e.g. \`^^A.D.^^\`).`,
         },
         {
           type: PartType.example,
@@ -103,7 +101,7 @@ For example:`,
         {
           type: PartType.text,
           content:
-            'Just like with the `^^^` notation, the text is always in all capitals, and only on devices that support the advanced formatting will the capitalized letters be smaller.',
+            "Just like with the `^^^` notation, the original text is in all capitals, it's in all capitals on devices that don't support advance formatting, and on devices that do support the advanced formatting the text will be rendered as the small version of Small Caps.",
         },
       ],
     },
@@ -131,7 +129,7 @@ For example:`,
       parts: [
         {
           type: PartType.text,
-          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting large sections of Scripture, or a special notation using \`|>\` instead of \`>\` can be used, which works the same as regular blockquotes but verse numbers will also be made **superscript** automatically.`,
+          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting passages of Scripture, but a special notation using \`|>\` instead of \`>\` can be used instead, which works the same as regular blockquotes but verse numbers will also be made **superscript** automatically.`,
         },
         {
           type: PartType.example,
@@ -167,7 +165,7 @@ Standard blockquotes can always be used, allowing for more control over spacing:
         },
         {
           type: PartType.example,
-          content: `We read in [[Psalm 1:1-2]ESV]:
+          content: `We read in [[Psalm 1:1-2]]:
 
 |> 1 Blessed is the man
 |> |> who walks not in the counsel of the wicked,
@@ -182,7 +180,7 @@ Standard blockquotes can always be used, allowing for more control over spacing:
         },
         {
           type: PartType.text,
-          content: `Because of the way spaces are ignored within this notation, you can, if you wish, clean up the way the text is typed into the markdown box, without impacting the way the formatted version is rendered. For example:`,
+          content: `Spaces at the beginning of the line are ignored within this notation, which allows the author to clean up the way the text is typed into the markdown box (if desired), without impacting the way the formatted version is rendered. For example:`,
         },
         {
           type: PartType.example,
@@ -191,13 +189,13 @@ Standard blockquotes can always be used, allowing for more control over spacing:
 |>      1 Blessed is the man
 |> |>      who walks not in the counsel of the wicked,
 |>      nor stands in the way of sinners,
-|> |>      nor sits in the seat of scoffers;
+|> |>   nor sits in the seat of scoffers;
 |>      2 but his delight is in the law of the ^^^LORD^^^,
 |> |>      and on his law he meditates day and night.`,
         },
         {
           type: PartType.text,
-          content: `As illustrated, the extra spaces before each line don't impact the way the text is finally rendered, as long as the proper number of \`|>\` headings come at the beginning of each line.`,
+          content: `As illustrated, the extra spaces before each line don't impact the way the text is finally rendered, as long as the proper number of \`|>\` headings come at the beginning of each line. In the example above, the author forgot to put extra spaces at the beginning of the 4^th^ line, but because the right number of \`|> |>\` entries were included it still renders correctly in the formatted version.`,
         },
       ],
     },

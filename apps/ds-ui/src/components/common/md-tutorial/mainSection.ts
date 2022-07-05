@@ -10,7 +10,15 @@ export const mdMainSection: SectionDocumentation = {
 
 "Standard" markdown provides for formatting like **bold**, *italics* and even ==highlighting==, and the **Devouring Scripture** app adds specialised formatting of use to the Christian (such as being able to use the name ^^^LORD^^^).
             
-You might be wondering, "Do I really need to learn this 'markdown' notation?" And the answer is no, you don't! Markdown is designed such that you only need to use the parts you want; if all you want to do is write some text with no formatting, you can! But if you want to include multiple paragraphs you can, without having to think too much about it; and if you ever decide to use italics you can learn the very simple notation for doing so; and if you want to create a link to a particular Bible verse, you can learn the simple notation for that; and if you want to highlight something, to come back to later, you can. You can learn just the parts of markdown you need, as you need them, without burdoning yourself with a huge learning endeavour.
+You might be wondering, "Do I really need to learn this 'markdown' notation?" And the answer is no, you don't! Markdown is designed such that you only need to use the parts you want, and ignore the rest.
+
+* If all you want to do is write some text with no formatting, you can do so. 
+* When you want to include multiple paragraphs you can, without having to remember any special notation.
+* And if you ever decide to use italics, it's intuitive to just surround the text with asterisks, like \`*this*\`.
+* If you want to highlight something you can use a similar notation \`==like this==\`. 
+* If you want to create a link to a particular Bible verse, you can learn a simple notation for that, and with very little typing let Devouring Scripture create a link to Bible Gateway.
+
+All of this is mix-and match; you can learn as much or little of markdown as you need without burdoning yourself with a huge learning endeavour.
         
 **Note**: When the full-screen version of the text editor is used there is a toolbar with buttons for many of these formatting options and other markdown features.`,
       },
@@ -26,15 +34,19 @@ You might be wondering, "Do I really need to learn this 'markdown' notation?" An
         },
         {
           type: PartType.example,
-          content: `Text can be made bold by surrounding it with **double asterisks** or __double underlines__. Italics can be applied by surrounding text with *single asterisks* or _single underlines_. Highlighting can be applied by surrounding it with ==two equal signs==.
-            
-The caret can be used for superscript text (such as in 21^st^ Century).
-        
-A "strikethrough" effect can be created by surrounding it with ~~two tilde~~ characters.
-        
-A hyperlink to another website can be created with square and round brackets; for example, a link to [Google](https://www.google.ca), where the square brackets are the text that will be displayed and the round brackets contain the URL for the link. A URL can also simply be included on its own, and a link will be rendered; e.g. https://www.google.ca will be a link that can be clicked in the formatted output.
+          content: `Here are some common formatting notations you might find helpful:
+          
+* Text can be made bold by surrounding it with \`**double asterisks**\` or \`__double underlines__\`
+* It can be italicized by surrounding it with \`*single asterisks*\` or \`_single underlines_\`
+* It can be highlighted with \`==two equal signs==\`.
+* The caret can be used for \`^superscript text^\`
+* A "strikethrough" effect can be created by surrounding it with \`~~two tilde~~\` characters
+* A link to another website (a **hyperlink**) can be created with square brackets (for the displayed text) and round brackets (for the URL), such as \`[Google](https://www.google.ca)\`
+    * A URL can also simply be included on its own, and a link will be rendered; e.g. https://www.google.ca will be a link that can be clicked in the formatted output
 
-Finally, while no special markup is needed, it should be noted that some text will be made "prettier" in the formatted view. For example, quotation marks will show up as "smart 'quotation' marks," whereby the simple \`"\` and \`'\` characters become opening and closing quotation marks. Also, **dashes** will be rendered nicely; so those who like to use **m-dashes**---like this---will get nicely formatted dashes, as will those who prefer **n-dashes** -- like this.`,
+Finally, it should be noted that some text will be made "prettier" in the formatted view. For example, quotation marks will show up as "smart 'quotation' marks," whereby the simple \`"\` and \`'\` characters become opening and closing quotation marks (no special notation is needed for this, it "just works"), and **dashes** will be rendered such that three hyphens in a row within a block of text (\`---\`) will be rendered as an m-dash and two (\`--\`) will be rendered as an n-dash.
+
+> "I say," he said, "If I may ==highlight== that I'm being so **bold** as to *italicize* my text, writing here in the 21^st^ Century---or is it the 20^th^?---I'm also happy that my smartquotes are showing -- without me having to do anything!."`,
         },
       ],
     },
@@ -64,13 +76,18 @@ And this is a third, regardless of how many empty lines came before it!`,
       parts: [
         {
           type: PartType.text,
-          content: `When quoting large sections of text, a **blockquote** section can be used. Blockquotes format the quoted text differently from other text, by indenting it further than regular text and placing a slight border to the left. For example:`,
+          content: `When quoting large sections of text a **blockquote** section can be used. Blockquotes format the quoted text differently from other text by indenting it and placing a slight border to the left. For example:`,
         },
         {
           type: PartType.example,
           content: `Starting a paragraph with \`> \` (that is, a greater than sign followed by a space) makes it a blockquote:
 
-> This is a quotation`,
+> This is a **quotation**`,
+        },
+        {
+          type: PartType.text,
+          content:
+            'Notice that formatting works within the blockquote, so bold, italics, and other formatting notations can still be used.',
         },
         {
           type: PartType.text,
@@ -86,7 +103,7 @@ is equivalent to
 > This quote has
 multiple lines
 
-However, as soon as a **paragraph break** is formed (i.e. multiple newlines), the \`> \` will be needed between.
+However, as soon as a **paragraph break** is formed (i.e. multiple newlines), the \`> \` will be needed between paragraphs to continue the blockquote section.
 
 > This quote spans multiple paragraphs.
 > 
@@ -111,7 +128,7 @@ However, as soon as a **paragraph break** is formed (i.e. multiple newlines), th
       parts: [
         {
           type: PartType.text,
-          content: `Headers can be created by using \`#\` characters at the beginning of the heading: one \`#\` for the largest heading, two for a smaller one, and three for a smaller one still:`,
+          content: `Headings can be created by using \`#\` characters at the beginning of a line: one \`#\` for the largest heading, two for a smaller one, and three for a smaller one still:`,
         },
         {
           type: PartType.example,
@@ -134,6 +151,22 @@ A paragraph under that heading
         
         
 Another paragraph, under the second heading`,
+        },
+        {
+          type: PartType.text,
+          content: `Multiple blocks of text can also be separated by a horizontal line (called a **horizontal rule** in HTML, using the \`<hr>\` tag), by putting three hyphens on their own line.`,
+        },
+        {
+          type: PartType.example,
+          content: `This is a paragraph---even though it contains some dashes---and will show up normally.
+          
+---
+
+This paragraph will show up after the line.`,
+        },
+        {
+          type: PartType.text,
+          content: 'Notice that the `---` sequence must be on its own, or else it will be treated like an m-dash.',
         },
       ],
     },
@@ -173,7 +206,7 @@ The numbers in a numbered list don't need to be properly in order; for simplicit
       parts: [
         {
           type: PartType.text,
-          content: `A table can be created with careful use of the \`|\` (pipe) character. Consider the following examples, headers are created for the table followed by two "normal" rows:`,
+          content: `A table can be created with careful use of the \`|\` (pipe) character. Consider the following examples, where header rows are created for the table followed by "normal" rows:`,
         },
         {
           type: PartType.example,
@@ -189,7 +222,9 @@ If desired, the spacing can be made more precise; it won't change the resultant 
 | Person   | Score |
 |----------|-------|
 | Suresh   | 15    |
-| Samantha | 20    |`,
+| Samantha | 20    |
+
+Both of these tables will look the same in the formatted output, even though the second is "prettier" in raw markdown`,
         },
       ],
     },
@@ -216,12 +251,12 @@ This paragraph continues on after the first one.`,
         {
           type: PartType.text,
           content:
-            'In the formatted output, notice that the footnotes show up at the very bottom, regardless of where they were placed in the markdown text.',
+            'In the formatted output, notice that the footnotes show up at the very bottom, regardless of where they were placed in the markdown text. In addition, the footnote reference is rendered as a link, which the user can click to go to the text of the actual footnote, and there is another link at the end of the footnote text to bring the reader back to the original spot in the text where the footnote reference resided. (This is typically only useful for very large amounts of text, where the reader might have a lot of scrolling to do, but the links are created regardless.)',
         },
         {
           type: PartType.text,
           content:
-            "The actual numbering used in the markdown doesn't matter, they will be rendered in the order they're found, as long as the number in the footnote reference and the number in the footnot itself match:",
+            "The actual numbering used in the markdown doesn't matter, footnotes will be rendered in the order they're found, as long as the number in the footnote reference and the number in the footnot itself match:",
         },
         {
           type: PartType.example,
@@ -229,7 +264,9 @@ This paragraph continues on after the first one.`,
             
 [^2]: This is the first footnote
     
-[^1]: This is the second`,
+[^1]: This is the second
+
+It also includes another paragraph of text.`,
         },
       ],
     },
