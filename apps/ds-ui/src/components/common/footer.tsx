@@ -18,12 +18,7 @@ export function Footer() {
             </NavLink>
           </Nav.Item>
           <Nav.Item>
-            <NavLink className={(isActive) => (isActive ? 'footer-navlink-active' : 'footer-navlink')} to="/faq">
-              FAQs
-            </NavLink>
-          </Nav.Item>
-          <Nav.Item>
-            <NavLink className={(isActive) => (isActive ? 'footer-navlink-active' : 'footer-navlink')} to="/about">
+            <NavLink className={(isActive) => (isActive ? 'footer-navlink-active' : 'footer-navlink')} to="/help">
               About
             </NavLink>
           </Nav.Item>
