@@ -31,7 +31,7 @@ router.get(
   async (req: Request, res: Response) => {
     const response = getActionForDateInternal(req.params.actionDate);
 
-    res.send(response);
+    res.json(response);
   }
 );
 

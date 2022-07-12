@@ -65,7 +65,7 @@ router.post(
       if (plan.status === PlanStatus.Unsaved) {
         plan.status = PlanStatus.Saved;
         db.push('/plans[]', plan);
-        return res.status(201).send(plan);
+        return res.status(201).json(plan);
       }
 
       if (plan.status === PlanStatus.Saved) {
@@ -84,7 +84,7 @@ router.post(
         db.push(`/plans[${oldIndex}]/status`, plan.status);
         db.push(`/plans[${oldIndex}]/version`, plan.version);
         db.push(`/plans[${oldIndex}]/days`, plan.days);
-        return res.send(plan);
+        return res.json(plan);
       }
 
       if (plan.status === PlanStatus.Deleted) {
@@ -110,7 +110,7 @@ router.post(
         days: plan.days,
       };
       db.push('/plans[]', newPlan);
-      return res.send(newPlan);
+      return res.json(newPlan);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

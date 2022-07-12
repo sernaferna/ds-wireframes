@@ -26,7 +26,7 @@ router.get(
     let item: Note | null = null;
     try {
       item = getNoteById(req.params.id);
-      res.send(item);
+      res.json(item);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('getNoteByID'));
     }

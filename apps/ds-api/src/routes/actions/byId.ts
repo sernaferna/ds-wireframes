@@ -20,7 +20,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const response: ActionsForDay = getActionByIdInternal(req.params.actionDayId);
-      res.send(response);
+      res.json(response);
     } catch (err) {
       const error = new NotFoundError('Action');
       return next(error);

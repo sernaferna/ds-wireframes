@@ -22,9 +22,9 @@ router.get(
       const response = allResults.filter((item) => {
         return item.passageStart >= lowerBound && item.passageEnd <= upperBound;
       });
-      res.send(response);
+      res.json(response);
     } catch (err) {
-      res.send([]);
+      res.json([]);
     }
   }
 );

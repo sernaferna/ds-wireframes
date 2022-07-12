@@ -29,7 +29,7 @@ router.get(
         );
       });
 
-      res.send(filteredList);
+      res.json(filteredList);
     } catch (err) {
       const error = new DatabaseError('getActionsForMonth');
       return next(error);

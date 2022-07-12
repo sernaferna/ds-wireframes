@@ -1,6 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator';
-import { validateRequest, NotFoundError, CustomError, DatabaseError, PlanStatus } from '@devouringscripture/common';
+import {
+  validateRequest,
+  NotFoundError,
+  CustomError,
+  DatabaseError,
+  PlanStatus,
+  ItemRemovedResponse,
+} from '@devouringscripture/common';
 import { db } from '../../services/db';
 
 const router = express.Router();
@@ -18,7 +25,7 @@ router.delete(
         throw new NotFoundError(`Plan ${planInstanceId}`);
       }
       db.push(`/plans[${index}]/status`, PlanStatus.Deleted);
-      res.send('Item removed');
+      res.json(ItemRemovedResponse);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

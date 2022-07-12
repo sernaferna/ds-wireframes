@@ -51,7 +51,7 @@ router.post(
       }
 
       const bounds: Bounds[] = await getBoundsForPassage(req.body.osis);
-      return res.send(bounds);
+      return res.json(bounds);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('getBoundsForPassage'));
     }

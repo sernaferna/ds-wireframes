@@ -27,7 +27,7 @@ router.post(
       return next(error);
     }
 
-    res.status(201).send(newItem);
+    res.status(201).json(newItem);
   }
 );
 

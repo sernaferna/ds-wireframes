@@ -15,7 +15,7 @@ router.get('/', async (req: Request, res: Response) => {
     db.push('/prayerItems', response);
   }
 
-  res.send(response);
+  res.json(response);
 });
 
 export { router as getAllPrayerItemsRouter };

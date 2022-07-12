@@ -37,7 +37,7 @@ router.get(
 
     try {
       const item = getPlanById(planInstanceId);
-      res.send(item);
+      res.json(item);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

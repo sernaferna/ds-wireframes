@@ -1,6 +1,6 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { body, param } from 'express-validator';
-import { validateRequest } from '@devouringscripture/common';
+import { validateRequest, CustomError, DatabaseError } from '@devouringscripture/common';
 import { Note } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 import { notesDB } from '../../services/notes-db';
@@ -16,7 +16,7 @@ router.put(
     body('osis').exists().withMessage('OSIS required'),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const newNote: Note = req.body;
 
     const bounds: Bounds[] = await getBoundsForPassage(newNote.osis);
@@ -28,9 +28,9 @@ router.put(
       notesDB.push(`/notes[${index}]/text`, newNote.text);
       notesDB.push(`/notes[${index}]/lastUpdateDate`, DateTime.now().toISODate());
       const updatedItem: Note = notesDB.getObject<Note>(`/notes[${index}]`);
-      res.send(updatedItem);
+      res.json(updatedItem);
     } catch (err) {
-      res.status(500).send('problem saving update');
+      return next(err instanceof CustomError ? err : new DatabaseError('updateNote'));
     }
   }
 );

@@ -27,7 +27,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
       }
     }
 
-    res.send(returnArray);
+    res.json(returnArray);
   } catch (err) {
     if (err instanceof CustomError) {
       return next(err);

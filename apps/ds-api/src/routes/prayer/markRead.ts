@@ -23,7 +23,7 @@ router.put(
       next(error);
     }
 
-    res.send(item);
+    res.json(item);
   }
 );
 
@@ -45,7 +45,7 @@ router.put(
       return next(error);
     }
 
-    res.send(item);
+    res.json(item);
   }
 );
 

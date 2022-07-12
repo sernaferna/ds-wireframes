@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/subscribed', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const plans = db.getObject<InstantiatedPlan[]>('/instantiatedPlans');
-    res.send(plans);
+    res.json(plans);
   } catch (err) {
     if (err instanceof CustomError) {
       return next(err);

@@ -16,7 +16,7 @@ router.get(
         throw new NotFoundError('Passage by ID');
       }
       const response: Passage = db.getObject<Passage>(`/passages[${index}]`);
-      res.send(response);
+      res.json(response);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

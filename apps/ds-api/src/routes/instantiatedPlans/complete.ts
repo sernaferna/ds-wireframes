@@ -56,7 +56,7 @@ router.put(
       }
       const percentComplete = (completedDays / plan.days!.length).toFixed(2);
       db.push(`/instantiatedPlans[${indexOfPlan}]/percentageComplete`, percentComplete);
-      res.send(day);
+      res.json(day);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

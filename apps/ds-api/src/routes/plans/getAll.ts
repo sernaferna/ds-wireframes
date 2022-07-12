@@ -7,9 +7,9 @@ const router = express.Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
-    res.send(publicPlans);
+    res.json(publicPlans);
   } catch (err) {
-    res.send([]);
+    res.json([]);
   }
 });
 

@@ -91,7 +91,7 @@ router.get(
         }
       });
 
-      res.send(stats);
+      res.json(stats);
     } catch (err) {
       const error = new DatabaseError('getStats');
       return next(error);

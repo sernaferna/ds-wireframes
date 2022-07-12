@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { PlanAttributes, BasePlanAttributes } from '@devouringscripture/common';
+import { PlanAttributes, BasePlanAttributes, ResponseMessage } from '@devouringscripture/common';
 
 export const planApi = createApi({
   reducerPath: 'plans',
@@ -36,7 +36,7 @@ export const planApi = createApi({
       },
       invalidatesTags: ['plans'],
     }),
-    deletePlan: builder.mutation<string, string>({
+    deletePlan: builder.mutation<ResponseMessage, string>({
       query(id) {
         return {
           url: `/${id}`,

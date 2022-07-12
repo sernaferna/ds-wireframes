@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     getVersesByNum()
-      .then((verses) => res.send(verses))
+      .then((verses) => res.json(verses))
       .catch((err) => {
         throw err;
       });

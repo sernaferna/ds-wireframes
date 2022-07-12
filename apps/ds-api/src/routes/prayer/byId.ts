@@ -27,7 +27,7 @@ router.get(
       return next(newErr);
     }
 
-    res.send(item);
+    res.json(item);
   }
 );
 

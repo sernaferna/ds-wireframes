@@ -17,7 +17,7 @@ router.put(
     db.delete('/users[0]');
     db.push('/users[]', newUser);
 
-    res.send(newUser);
+    res.json(newUser);
   }
 );
 

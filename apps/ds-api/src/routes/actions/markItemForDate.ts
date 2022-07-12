@@ -67,7 +67,7 @@ router.put(
     }
 
     const updatedItem = getActionByIdInternal(req.params.actionDayId);
-    res.send(updatedItem);
+    res.json(updatedItem);
   }
 );
 

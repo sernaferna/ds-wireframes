@@ -52,7 +52,7 @@ router.post(
       };
 
       db.push(`/instantiatedPlans[]`, newIP);
-      res.status(201).send(newIP);
+      res.status(201).json(newIP);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);
