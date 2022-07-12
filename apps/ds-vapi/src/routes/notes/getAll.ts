@@ -12,9 +12,9 @@ const router = express.Router();
 router.get('/', async (req: Request, res: Response) => {
   try {
     const response = getAllNotes();
-    res.send(response);
+    res.json(response);
   } catch (err) {
-    res.send([]);
+    res.json([]);
   }
 });
 

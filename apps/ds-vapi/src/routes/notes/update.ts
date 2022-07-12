@@ -28,9 +28,9 @@ router.put(
       notesDB.push(`/notes[${index}]/text`, newNote.text);
       notesDB.push(`/notes[${index}]/lastUpdateDate`, DateTime.now().toISODate());
       const updatedItem: Note = notesDB.getObject<Note>(`/notes[${index}]`);
-      res.send(updatedItem);
+      res.json(updatedItem);
     } catch (err) {
-      res.status(500).send('problem saving update');
+      res.status(500).send('problem saving update'); // TODO throw
     }
   }
 );

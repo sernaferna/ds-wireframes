@@ -19,7 +19,6 @@ import { markActionItemForDateRouter } from './routes/actions/markItemForDate';
 import { getActionByIdRouter } from './routes/actions/byId';
 import { getActionsForMonthRouter } from './routes/actions/getForMonth';
 import { getActionStatsRouter } from './routes/actions/getStats';
-import { markReadingHelpersRouter } from './routes/actions/markReadingHelpers';
 import { deleteCustomActionRouter } from './routes/actions/custom/delete';
 
 import { getCurrentlyReadingPassages } from './routes/read/passages/getCurrent';
@@ -68,7 +67,6 @@ app.use('/api/actions/entries', [
   getActionsForMonthRouter,
   getActionStatsRouter,
   getActionByIdRouter,
-  markReadingHelpersRouter,
 ]);
 app.use('/api/actions/custom', [getAllCustomActionsRouter, newCustomActionTypeRouter, deleteCustomActionRouter]);
 app.use('/api/read/current', [

@@ -28,10 +28,10 @@ router.post(
     try {
       notesDB.push('/notes[]', newItem);
     } catch (err) {
-      res.status(500).send('Error saving to DB');
+      res.status(500).send('Error saving to DB'); // TODO throw
     }
 
-    res.status(201).send(newItem);
+    res.status(201).json(newItem);
   }
 );
 

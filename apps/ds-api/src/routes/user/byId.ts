@@ -30,7 +30,7 @@ router.get(
       }
     }
 
-    res.send(user);
+    res.json(user);
   }
 );
 

@@ -15,7 +15,7 @@ router.get('/recent', async (req: Request, res: Response) => {
     db.push('/actions/entries', response);
   }
 
-  res.send(response);
+  res.json(response);
 });
 
 export { router as getRecentActionsRouter };

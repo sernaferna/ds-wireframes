@@ -30,7 +30,7 @@ router.put(
 
       db.push(`/instantiatedPlans[${planIndex}]/percentageComplete`, newIP.percentageComplete);
 
-      res.send(newIP);
+      res.json(newIP);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

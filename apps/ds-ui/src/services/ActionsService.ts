@@ -86,42 +86,6 @@ export const actionsApi = createApi({
       },
       invalidatesTags: (result) => (result ? [{ type: 'actions', id: result.id }] : []),
     }),
-    otShortPassageReadForDay: builder.mutation<string, string>({
-      query(date) {
-        return {
-          url: `entries/markPassageRead/${date}/ot/short`,
-          method: 'PUT',
-        };
-      },
-      invalidatesTags: ['actions'],
-    }),
-    otLongPassageReadForDay: builder.mutation<string, string>({
-      query(date) {
-        return {
-          url: `entries/markPassageRead/${date}/ot/long`,
-          method: 'PUT',
-        };
-      },
-      invalidatesTags: ['actions'],
-    }),
-    ntShortPassageReadForDay: builder.mutation<string, string>({
-      query(date) {
-        return {
-          url: `entries/markPassageRead/${date}/nt/short`,
-          method: 'PUT',
-        };
-      },
-      invalidatesTags: ['actions'],
-    }),
-    ntLongPassageReadForDay: builder.mutation<string, string>({
-      query(date) {
-        return {
-          url: `entries/markPassageRead/${date}/nt/long`,
-          method: 'PUT',
-        };
-      },
-      invalidatesTags: ['actions'],
-    }),
     newCustomAction: builder.mutation<ActionType, BaseActionType>({
       query(data) {
         return {
@@ -154,8 +118,4 @@ export const {
   useNewCustomActionMutation,
   useDeleteCustomActionMutation,
   useGetActionStatsQuery,
-  useNtLongPassageReadForDayMutation,
-  useNtShortPassageReadForDayMutation,
-  useOtLongPassageReadForDayMutation,
-  useOtShortPassageReadForDayMutation,
 } = actionsApi;

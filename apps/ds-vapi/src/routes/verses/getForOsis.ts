@@ -32,7 +32,7 @@ router.post(
         response = response.concat(verses);
       }
 
-      res.send(response);
+      res.json(response);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

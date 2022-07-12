@@ -23,7 +23,7 @@ router.post(
       return next(new DatabaseError('newCustomAction'));
     }
 
-    res.status(201).send(newItem);
+    res.status(201).json(newItem);
   }
 );
 

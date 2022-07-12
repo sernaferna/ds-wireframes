@@ -18,7 +18,7 @@ router.get(
 
     try {
       getVersesByNum(lowerBound, upperBound)
-        .then((result) => res.send(result))
+        .then((result) => res.json(result))
         .catch((err) => {
           throw err;
         });

@@ -13,7 +13,7 @@ router.get('/', async (req: Request, res: Response) => {
     response = [];
   }
 
-  res.send(response);
+  res.json(response);
 });
 
 export { router as getCurrentlyReadingPassages };

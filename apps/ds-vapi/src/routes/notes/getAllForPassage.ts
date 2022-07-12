@@ -24,7 +24,7 @@ router.post('/notesForPassage', async (req: Request, res: Response, next: NextFu
       return false;
     });
 
-    return res.send(response);
+    return res.json(response);
   } catch (err) {
     return next(err instanceof CustomError ? err : new DatabaseError('getNotesForPassage'));
   }

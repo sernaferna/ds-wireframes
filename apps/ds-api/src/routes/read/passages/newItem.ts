@@ -25,10 +25,10 @@ router.post(
     try {
       db.push('/passages[]', newItem);
     } catch (err) {
-      res.status(500).send('Error saving item');
+      res.status(500).send('Error saving item'); // TODO throw
     }
 
-    res.status(201).send(newItem);
+    res.status(201).json(newItem);
   }
 );
 
