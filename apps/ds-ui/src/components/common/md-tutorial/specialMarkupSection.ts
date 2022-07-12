@@ -155,7 +155,7 @@ and this partially does:
 
 |> 1 some 2text
 
-Standard blockquotes can always be used, allowing for more control over spacing:
+Standard blockquotes can always be used, allowing for more control over spacing. The \`^\` character can be used for superscript for verse numbers, if desired.
 
 > ^1^ In the beginning was the Word, and the Word was with God, and the Word was God. ^2^ He was in the beginning with God. ^3^ All things were made through him, and without him was not any thing made that was made. ^4^ In him was life, and the life was the light of men. ^5^ The light shines in the darkness, and the darkness has not overcome it.`,
         },

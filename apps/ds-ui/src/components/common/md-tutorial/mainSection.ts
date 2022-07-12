@@ -16,11 +16,13 @@ You might be wondering, "Do I really need to learn this 'markdown' notation?" An
 * When you want to include multiple paragraphs you can, without having to remember any special notation.
 * And if you ever decide to use italics, it's intuitive to just surround the text with asterisks, like \`*this*\`.
 * If you want to highlight something you can use a similar notation \`==like this==\`. 
-* If you want to create a link to a particular Bible verse, you can learn a simple notation for that, and with very little typing let Devouring Scripture create a link to Bible Gateway.
+* If you want to create a link to a particular Bible verse, you can learn a simple notation for that (such as \`[[Mark 1]]\`), whereby Devouring Scripture will create a link to Bible Gateway
 
 All of this is mix-and match; you can learn as much or little of markdown as you need without burdoning yourself with a huge learning endeavour.
         
-**Note**: When the full-screen version of the text editor is used there is a toolbar with buttons for many of these formatting options and other markdown features.`,
+**Note**: When the full-screen version of the text editor is used there is a toolbar with buttons for many of these formatting options and other markdown features.
+
+The following sections go into more details, with examples. (Note: the examples are given as markdown boxes; in some cases you might need to scroll to see the entire example.)`,
       },
     ],
   },
@@ -176,7 +178,7 @@ This paragraph will show up after the line.`,
         {
           type: PartType.text,
           content:
-            'Numbered and bulleted lists can be created by putting an asterisk or number at the beginning of each item in the list. Asterisks will create bullets, and numbers will create a numbered list.',
+            'Bulleted lists can be created by putting an asterisk (`*`) or hyphen (`-`), followed by a space, at the beginning of the line for each item in the list. Similarly, numbered lists can be created with `1.` notation. Adding 4 spaces at the beginning of the line (before the `*` or `-` or `1.`) will cause that item to be a sub-item, under the one above.',
         },
         {
           type: PartType.example,
@@ -185,7 +187,7 @@ This paragraph will show up after the line.`,
 * This is the first item in a bulleted list.
 * This is the second
     * This is a sub-bullet
-* This is a final bullet in the list
+* This is a *final* bullet in the list---and additional asterisks (such as for italics) are fine within the text of the bullet; it won't confuse the formatting
         
 Numbers (with periods) can be used to create numbered lists:
         
@@ -199,6 +201,29 @@ The numbers in a numbered list don't need to be properly in order; for simplicit
 1. This is the first item in a numbered list
 1. This is the second, regardless of the number used in markdown`,
         },
+        {
+          type: PartType.text,
+          content: `It's up to the author as to whether asterisks or hyphens are used for bullets, however, they shouldn't be mixed and matched. In markdown, mixing and matching items like that would cause the markdown formatter to think that a new list is being created.`,
+        },
+        {
+          type: PartType.example,
+          content: `Asterisks can be used for bullets:
+          
+* First item
+* Second item
+
+Hyphens can be used instead:
+
+- First item
+- Second item
+
+However, mixing and matching will confuse the renderer when creating formatted output:
+
+* First item in the list
+* Second item in the list
+- Was supposed to be the third item in the list, but markdown thinks this is a new list
+- Will become the second item in the *second* list`,
+        },
       ],
     },
     {
@@ -206,7 +231,7 @@ The numbers in a numbered list don't need to be properly in order; for simplicit
       parts: [
         {
           type: PartType.text,
-          content: `A table can be created with careful use of the \`|\` (pipe) character. Consider the following examples, where header rows are created for the table followed by "normal" rows:`,
+          content: `A table can be created with careful use of the \`|\` (pipe) character to delineate cells within the table. Consider the following examples, where header rows are created for the table followed by "normal" rows:`,
         },
         {
           type: PartType.example,
