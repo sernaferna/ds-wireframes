@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { PrayerListItem, BasePrayerListItem } from '@devouringscripture/common';
+import { PrayerListItem, BasePrayerListItem, ResponseMessage } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 
 export const prayerApi = createApi({
@@ -36,7 +36,7 @@ export const prayerApi = createApi({
       },
       invalidatesTags: (result) => (result ? [{ type: 'prayerItems', id: result.id }] : []),
     }),
-    deletePrayerItem: builder.mutation<string, string>({
+    deletePrayerItem: builder.mutation<ResponseMessage, string>({
       query(id) {
         return {
           url: `${id}`,

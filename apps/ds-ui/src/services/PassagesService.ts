@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BasePassage, Passage } from '@devouringscripture/common';
+import { BasePassage, Passage, ResponseMessage } from '@devouringscripture/common';
 
 export const passageApi = createApi({
   reducerPath: 'passages',
@@ -30,7 +30,7 @@ export const passageApi = createApi({
       },
       invalidatesTags: ['currentPassages'],
     }),
-    deletePassageItem: builder.mutation<string, string>({
+    deletePassageItem: builder.mutation<ResponseMessage, string>({
       query(id) {
         return {
           url: `/${id}`,

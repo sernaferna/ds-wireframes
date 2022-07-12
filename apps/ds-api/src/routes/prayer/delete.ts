@@ -1,6 +1,12 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { param } from 'express-validator';
-import { validateRequest, NotFoundError, DatabaseError, CustomError } from '@devouringscripture/common';
+import {
+  validateRequest,
+  NotFoundError,
+  DatabaseError,
+  CustomError,
+  ItemRemovedResponse,
+} from '@devouringscripture/common';
 import { db } from '../../services/db';
 
 const router = express.Router();
@@ -16,7 +22,7 @@ router.delete(
         throw new NotFoundError('Prayer item');
       }
       db.delete(`/prayerItems[${indexOfItem}]`);
-      res.send('Item removed');
+      res.json(ItemRemovedResponse);
     } catch (err) {
       if (err instanceof CustomError) {
         return next(err);

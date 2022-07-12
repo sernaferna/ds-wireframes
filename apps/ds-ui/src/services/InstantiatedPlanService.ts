@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BaseInstantiatedPlan, InstantiatedPlan, InstantiatedPlanDay } from '@devouringscripture/common';
+import {
+  BaseInstantiatedPlan,
+  InstantiatedPlan,
+  InstantiatedPlanDay,
+  ResponseMessage,
+} from '@devouringscripture/common';
 
 interface ICompletePlanItem {
   planId: string;
@@ -36,7 +41,7 @@ export const instantiatedPlanApi = createApi({
       },
       invalidatesTags: ['instantiatedPlans', 'plans'],
     }),
-    deleteInstantiatedPlan: builder.mutation<string, string>({
+    deleteInstantiatedPlan: builder.mutation<ResponseMessage, string>({
       query(id) {
         return {
           url: `/${id}`,

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Note, BaseNote, Verse } from '@devouringscripture/common';
+import { Note, BaseNote, Verse, ResponseMessage } from '@devouringscripture/common';
 
 export interface Bounds {
   lowerBound: number;
@@ -68,7 +68,7 @@ export const vapiApi = createApi({
           ? [...result.map(({ id }) => ({ type: 'notes' as const, id: id })), { type: 'notes', id: 'LIST' }]
           : [{ type: 'notes', id: 'LIST' }],
     }),
-    deleteNote: builder.mutation<string, string>({
+    deleteNote: builder.mutation<ResponseMessage, string>({
       query(id) {
         return {
           url: `/n/${id}`,

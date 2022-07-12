@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ActionsForDay, ActionType, BaseActionType, ActionStats } from '@devouringscripture/common';
+import { ActionsForDay, ActionType, BaseActionType, ActionStats, ResponseMessage } from '@devouringscripture/common';
 
 interface MarkItemReadForDayServiceInterface {
   idForDay: string;
@@ -97,7 +97,7 @@ export const actionsApi = createApi({
       invalidatesTags: (result) =>
         result ? [{ type: 'customActionTypes', id: result.id }] : [{ type: 'customActionTypes', id: 'LIST' }],
     }),
-    deleteCustomAction: builder.mutation<string, string>({
+    deleteCustomAction: builder.mutation<ResponseMessage, string>({
       query(data) {
         return {
           url: `custom/${data}`,
