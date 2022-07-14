@@ -42,10 +42,16 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
 interface IMarkdownBox {
   content: string;
   changeCallback: (newValue: string) => void;
-  showPreview?: boolean;
+  showToolbar?: boolean;
+  showSidePreview?: boolean;
 }
-export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IMarkdownBox) => {
-  const [showPreviewState, setShowPreviewState] = useState(showPreview);
+export const MarkdownBox = ({
+  content,
+  changeCallback,
+  showToolbar = false,
+  showSidePreview = false,
+}: IMarkdownBox) => {
+  const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
   const [showFullScreen, setShowFullScreen] = useState<boolean>(false);
 
@@ -66,7 +72,7 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           value={content}
           onChange={handleChangeEvent}
           highlightEnable={true}
-          preview="edit"
+          preview={showSidePreview ? 'live' : 'edit'}
           defaultTabEnable={true}
           extraCommands={[
             lordCommand,
@@ -79,11 +85,14 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
             highlightCommand,
             poetryQuoteCommand,
           ]}
-          visiableDragbar={false}
+          visiableDragbar={true}
           commandsFilter={commandsFilter}
-          hideToolbar={true}
+          hideToolbar={!showToolbar}
           textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
           style={{ fontFamily: 'Courier Prime, monospace' }}
+          previewOptions={{
+            remarkPlugins: [poetryBlocks, tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
+          }}
         />
         <Button
           variant="link"
