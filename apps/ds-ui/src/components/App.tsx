@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-bootstrap';
 import { PrayerPage } from './prayer/PrayerPage';
 import { PlansPage } from './plans/PlansPage';
 import { EditPlan } from './plans/edit/EditPlan';
+import { WritePage } from './write/WritePage';
 
 export function App() {
   return (
@@ -24,6 +25,7 @@ export function App() {
             <Route key="/" path="/" element={<Home />} />
             <Route key="/prayer" path="/prayer" element={<PrayerPage />} />
             <Route key="/read" path="/read" element={<ReadPage />} />
+            <Route key="/write" path="/write" element={<WritePage />} />
             <Route key="/do" path="/do" element={<DoPage />} />
             <Route key="/plans" path="/plans" element={<PlansPage />} />
             <Route key="/stats" path="/stats" element={<Stats />} />

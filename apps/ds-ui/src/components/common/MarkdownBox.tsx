@@ -23,7 +23,11 @@ import {
   bibleLinks,
   smartquotes,
   poetryBlocks,
+  allCapReplacements,
+  adbcReplacements,
 } from '@devouringscripture/remark-plugins';
+import { useUserSettings } from '../../hooks/UserSettings';
+import { ErrorLoadingDataMessage, LoadingMessage } from './loading';
 
 const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
 
@@ -39,15 +43,72 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   return command;
 };
 
+/**
+ * Helper function to return a list of remark plugins to be used in rendering MD to HTML
+ *
+ * @param autoSmallCap Setting controlling whether uppercase text should be auto Small Caps
+ * @param autoADBC Setting controlling whether A.D. / B.C. should be autoformatted
+ * @returns List of plugins to be used for formatting MD, in the correct order they should be applied
+ */
+export const getPluginList = (autoSmallCap: boolean, autoADBC: boolean) => {
+  const pluginList = [poetryBlocks];
+  if (autoSmallCap) {
+    pluginList.push(allCapReplacements);
+  }
+  if (autoADBC) {
+    pluginList.push(adbcReplacements);
+  }
+  pluginList.push(tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes);
+
+  return pluginList;
+};
+
+/**
+ * Helper function to get a list of commands to show in the MD Editor toolbar
+ *
+ * @param autoSmallCap Indicates whether small caps are automatically being converted (in which case the commmand won't show)
+ * @param autoADBC Indicates whether A.D./B.C./B.C.E. are automatically being converted (in which case the command won't show)
+ * @returns List of commands to show in the MD editor toolbar
+ */
+export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): ICommand[] => {
+  const commandList: ICommand[] = [];
+
+  if (!autoSmallCap) {
+    commandList.push(lordCommand);
+  }
+  if (!autoADBC) {
+    commandList.push(scCommand);
+  }
+
+  commandList.push(
+    scstyleCommand,
+    esvLinkCommand,
+    nivLinkCommand,
+    bibleLinkCommand,
+    superCommand,
+    highlightCommand,
+    poetryQuoteCommand
+  );
+
+  return commandList;
+};
+
 interface IMarkdownBox {
   content: string;
   changeCallback: (newValue: string) => void;
-  showPreview?: boolean;
+  showToolbar?: boolean;
+  showSidePreview?: boolean;
 }
-export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IMarkdownBox) => {
-  const [showPreviewState, setShowPreviewState] = useState(showPreview);
+export const MarkdownBox = ({
+  content,
+  changeCallback,
+  showToolbar = false,
+  showSidePreview = false,
+}: IMarkdownBox) => {
+  const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
   const [showFullScreen, setShowFullScreen] = useState<boolean>(false);
+  const [userData, userResponseError, userLoading] = useUserSettings();
 
   const reversePreviewState = () => {
     return () => {
@@ -59,6 +120,16 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
     changeCallback(newValue || '');
   };
 
+  if (userLoading) {
+    return <LoadingMessage />;
+  }
+  if (userResponseError) {
+    return <ErrorLoadingDataMessage theError={userResponseError} />;
+  }
+
+  const pluginList = getPluginList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
+  const commandList = getCommandList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
+
   return (
     <div>
       <div className="mb-2">
@@ -66,24 +137,17 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
           value={content}
           onChange={handleChangeEvent}
           highlightEnable={true}
-          preview="edit"
+          preview={showSidePreview ? 'live' : 'edit'}
           defaultTabEnable={true}
-          extraCommands={[
-            lordCommand,
-            scCommand,
-            scstyleCommand,
-            esvLinkCommand,
-            nivLinkCommand,
-            bibleLinkCommand,
-            superCommand,
-            highlightCommand,
-            poetryQuoteCommand,
-          ]}
-          visiableDragbar={false}
+          extraCommands={commandList}
+          visiableDragbar={true}
           commandsFilter={commandsFilter}
-          hideToolbar={true}
+          hideToolbar={!showToolbar}
           textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
           style={{ fontFamily: 'Courier Prime, monospace' }}
+          previewOptions={{
+            remarkPlugins: pluginList,
+          }}
         />
         <Button
           variant="link"
@@ -122,22 +186,12 @@ export const MarkdownBox = ({ content, changeCallback, showPreview = false }: IM
               highlightEnable={true}
               preview="live"
               defaultTabEnable={true}
-              extraCommands={[
-                lordCommand,
-                scCommand,
-                scstyleCommand,
-                esvLinkCommand,
-                nivLinkCommand,
-                bibleLinkCommand,
-                superCommand,
-                highlightCommand,
-                poetryQuoteCommand,
-              ]}
+              extraCommands={commandList}
               visiableDragbar={true}
               commandsFilter={commandsFilter}
               hideToolbar={false}
               previewOptions={{
-                remarkPlugins: [poetryBlocks, tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes],
+                remarkPlugins: pluginList,
               }}
               textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
               style={{ fontFamily: 'Courier Prime, monospace' }}

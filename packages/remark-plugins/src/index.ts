@@ -5,3 +5,5 @@ export * from './highlight/index';
 export * from './bible-links/index';
 export * from './smartquotes/index';
 export * from './bible-poetry/index';
+export * from './all-cap-replacements/index';
+export * from './ad-bc-replacements/index';

@@ -9,6 +9,7 @@ const links = [
   { label: 'Pray', href: '/prayer' },
   { label: 'Read', href: '/read' },
   { label: 'Do', href: '/do' },
+  { label: 'Write', href: '/write' },
   { label: 'Plans', href: '/plans' },
   { label: 'Stats', href: '/stats' },
 ].map(({ label, href }) => {

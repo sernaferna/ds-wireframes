@@ -37,6 +37,11 @@ export interface UserAttributes {
       defaultVersion: string;
       showReadingPlan: boolean;
     };
+    write: {
+      showSettings: boolean;
+      autoSmallCaps: boolean;
+      autoADBC: boolean;
+    };
     plans: {
       showSettings: boolean;
     };

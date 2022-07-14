@@ -33,6 +33,11 @@
           "defaultVersion": "ESV",
           "showReadingPlan": true
         },
+        "write": {
+          "showSettings": true,
+          "autoSmallCaps": true,
+          "autoADBC": true
+        },
         "plans": {
           "showSettings": true
         },
