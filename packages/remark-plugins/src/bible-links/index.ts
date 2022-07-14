@@ -8,6 +8,8 @@ interface LinkFields {
   passage: string;
   toDisplay: string;
   version: string;
+  index: number;
+  matchedLength: number;
 }
 const parseLink = (inputString: string): LinkFields | undefined => {
   const result = bibleLinkRE.exec(inputString);
@@ -24,6 +26,8 @@ const parseLink = (inputString: string): LinkFields | undefined => {
     passage: result[1],
     toDisplay: displayString,
     version: result[3] || 'ESV',
+    index: result.index,
+    matchedLength: result[0].length,
   };
 
   return returnObj;
@@ -45,8 +49,6 @@ export function bibleLinks(): Transformer {
       if (!isReferenceValid(lf.passage)) {
         return;
       }
-
-      const parseResult = bibleLinkRE.exec(value);
 
       const searchString = encodeURIComponent(getFormattedReference(lf.passage, false));
 
@@ -72,12 +74,12 @@ export function bibleLinks(): Transformer {
       const returnChildren = [
         {
           type: 'text',
-          value: value.substring(0, parseResult!.index),
+          value: value.substring(0, lf.index),
         },
         newLink,
         {
           type: 'text',
-          value: value.substring(parseResult!.index + parseResult![0].length),
+          value: value.substring(lf.index + lf.matchedLength),
         },
       ];
 
