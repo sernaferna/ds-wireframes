@@ -37,6 +37,9 @@ export interface UserAttributes {
       defaultVersion: string;
       showReadingPlan: boolean;
     };
+    write: {
+      showSettings: boolean;
+    };
     plans: {
       showSettings: boolean;
     };
