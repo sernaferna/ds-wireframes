@@ -112,50 +112,10 @@ export const poetryQuoteCommand: ICommand = {
     <svg width="12" height="12">
       <g>
         <title>Layer 1</title>
-        <line
-          stroke-linecap="undefined"
-          stroke-linejoin="undefined"
-          id="svg_5"
-          y2="7.02992"
-          x2="11.07632"
-          y1="7.09242"
-          x1="1.01383"
-          stroke="#000"
-          fill="none"
-        />
-        <line
-          stroke-linecap="undefined"
-          stroke-linejoin="undefined"
-          id="svg_6"
-          y2="8.46742"
-          x2="10.95132"
-          y1="8.46742"
-          x1="3.01383"
-          stroke="#000"
-          fill="none"
-        />
-        <line
-          stroke-linecap="undefined"
-          stroke-linejoin="undefined"
-          id="svg_7"
-          y2="4.09243"
-          x2="11.07632"
-          y1="4.15493"
-          x1="1.01383"
-          stroke="#000"
-          fill="none"
-        />
-        <line
-          stroke-linecap="undefined"
-          stroke-linejoin="undefined"
-          id="svg_8"
-          y2="5.52992"
-          x2="10.95132"
-          y1="5.52992"
-          x1="3.01383"
-          stroke="#000"
-          fill="none"
-        />
+        <line id="svg_5" y2="7.02992" x2="11.07632" y1="7.09242" x1="1.01383" stroke="#000" fill="none" />
+        <line id="svg_6" y2="8.46742" x2="10.95132" y1="8.46742" x1="3.01383" stroke="#000" fill="none" />
+        <line id="svg_7" y2="4.09243" x2="11.07632" y1="4.15493" x1="1.01383" stroke="#000" fill="none" />
+        <line id="svg_8" y2="5.52992" x2="10.95132" y1="5.52992" x1="3.01383" stroke="#000" fill="none" />
       </g>
     </svg>
   ),

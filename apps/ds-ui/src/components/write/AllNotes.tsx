@@ -33,8 +33,8 @@ export const AllNotes = () => {
       notes = data!;
     }
 
-    return notes.map((item) => (
-      <div className="my-4">
+    return notes.map((item, index) => (
+      <div key={`note-item-${index}`} className="my-4">
         <MarkdownPreview content={item.text} />
       </div>
     ));

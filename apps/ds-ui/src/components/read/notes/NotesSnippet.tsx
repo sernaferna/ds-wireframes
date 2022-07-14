@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
 import { useGetNoteByIdQuery } from '../../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import MDEditor from '@uiw/react-md-editor';
 import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
+import { MarkdownPreview } from '../../common/md-helpers/MarkdownPreview';
 
 interface INotesSnippet {
   noteID: string;
@@ -40,7 +40,7 @@ export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPa
   const textToDisplay = noteID === userSelectedID ? '[Editing] ' + data!.text : data!.text;
   const noteSnippet = textToDisplay.length > 99 ? textToDisplay.substring(0, 99) + '...' : textToDisplay;
 
-  let noteSnippetClass = 'p-2 bg-light my-2 border border-2';
+  let noteSnippetClass = 'my-4';
   if (noteID === userSelectedID) {
     noteSnippetClass += ' text-muted fst-italic';
   }
@@ -50,7 +50,7 @@ export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPa
 
   return (
     <div className={noteSnippetClass} style={noteSnippetStyles} onClick={selectNote()}>
-      <MDEditor.Markdown source={noteSnippet} />
+      <MarkdownPreview content={noteSnippet} shaded={true} />
     </div>
   );
 };

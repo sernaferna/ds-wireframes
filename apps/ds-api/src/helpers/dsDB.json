@@ -34,7 +34,9 @@
           "showReadingPlan": true
         },
         "write": {
-          "showSettings": true
+          "showSettings": true,
+          "autoSmallCaps": true,
+          "autoADBC": true
         },
         "plans": {
           "showSettings": true

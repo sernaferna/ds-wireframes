@@ -23,6 +23,23 @@ export const WriteSettings = () => {
         checked={userData!.settings.showSizeIndicator}
         onChange={flipBoolCallback('settings.showSizeIndicator')}
       />
+
+      <h6>Markdown Settings</h6>
+      <Form.Text>The following settings apply to how markdown text is formatted.</Form.Text>
+      <Form.Check
+        type="checkbox"
+        id="autoSmallCapsSetting"
+        label="Automatically use Small Caps"
+        checked={userData!.settings.write.autoSmallCaps}
+        onChange={flipBoolCallback('settings.write.autoSmallCaps')}
+      />
+      <Form.Check
+        type="checkbox"
+        id="autoADBCSetting"
+        label="Automatically Convert A.D./B.C. to Small Caps"
+        checked={userData!.settings.write.autoADBC}
+        onChange={flipBoolCallback('settings.write.autoADBC')}
+      />
     </Form>
   );
 };
