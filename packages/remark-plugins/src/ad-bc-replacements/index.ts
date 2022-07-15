@@ -2,7 +2,7 @@ import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal } from 'unist';
 
-const eraRE = /[\d\s]((?:A\.?D\.?)|(?:(?:B\.?)?C\.?E?\.?))/;
+const eraRE = /[\d\s]((?:A\.?D\.?)|(?:B\.?C\.?)|(?:B\.?C\.?E\.?)|(?:C\.?E\.?))/;
 
 export function adbcReplacements(): Transformer {
   return (tree) => {
