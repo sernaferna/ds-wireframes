@@ -16,6 +16,11 @@ export function tac(): Transformer {
         return;
       }
 
+      const pbDS: boolean = parent.processedByDS || false;
+      if (pbDS) {
+        return;
+      }
+
       const children: any[] = [];
 
       values.forEach((item, index) => {
@@ -31,6 +36,7 @@ export function tac(): Transformer {
         individualWords.forEach((word, wordIndex) => {
           children.push({
             type: 'element',
+            processedByDS: true,
             data: {
               hName: 'span',
               hProperties: {
@@ -46,6 +52,7 @@ export function tac(): Transformer {
           });
           children.push({
             type: 'element',
+            processedByDS: true,
             data: {
               hName: 'span',
               hProperties: {

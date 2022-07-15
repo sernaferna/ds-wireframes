@@ -51,14 +51,14 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
  * @returns List of plugins to be used for formatting MD, in the correct order they should be applied
  */
 export const getPluginList = (autoSmallCap: boolean, autoADBC: boolean) => {
-  const pluginList = [poetryBlocks];
-  if (autoSmallCap) {
-    pluginList.push(allCapReplacements);
-  }
+  const pluginList = [poetryBlocks, tac, lowerCaps, smallCaps, bibleLinks];
   if (autoADBC) {
     pluginList.push(adbcReplacements);
   }
-  pluginList.push(tac, lowerCaps, smallCaps, highlight, supersub, bibleLinks, smartquotes);
+  if (autoSmallCap) {
+    pluginList.push(allCapReplacements);
+  }
+  pluginList.push(highlight, supersub, smartquotes);
 
   return pluginList;
 };

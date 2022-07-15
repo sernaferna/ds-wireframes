@@ -2,7 +2,7 @@ import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal } from 'unist';
 
-const bibleLinkRE = /\b([\p{Lu}\p{Lt}]{1})([\p{Lu}\p{Lt}]+)\b/u;
+const capitalizedRE = /\b([\p{Lu}\p{Lt}]{1})([\p{Lu}\p{Lt}]+)\b/u;
 
 export function allCapReplacements(): Transformer {
   return (tree) => {
@@ -13,13 +13,13 @@ export function allCapReplacements(): Transformer {
 
       const { value } = node as Literal<string>;
 
-      const reResult = bibleLinkRE.exec(value);
+      const reResult = capitalizedRE.exec(value);
       if (reResult === null) {
         return;
       }
 
-      const pbac: boolean = parent.processedByDS || false;
-      if (pbac) {
+      const pbDS: boolean = parent.processedByDS || false;
+      if (pbDS) {
         return;
       }
 

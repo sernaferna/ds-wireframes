@@ -12,6 +12,62 @@ export const specialMarkupSection: SectionDocumentation = {
   },
   subSections: [
     {
+      title: 'Special Formatting for Christian Use: Words in UPPERCASE',
+      parts: [
+        {
+          type: PartType.text,
+          content: `Markdown provides a number of options for **formatting text**, such as bold and italics and even highlighting. **Devouring Scripture** provides a number of special formatting of interest to writing about (and quoting) Scripture. First is the case of words (often, but not always, proper names) that appear in the Scriptures in all capital letters. The most common example is the personal name of God in Old Testament Scriptures, usually written as \`LORD\` but often formatted as ^^^LORD^^^ -- that is, in **Small Caps**, for readability. For the Christian, these words should always be in all uppercase, even if they're formatted differently on the screen/page.
+
+By default, any words written \`ALL IN UPPERCASE\` will be rendered as Small Caps, with the first letter of each word being larger than the rest. In the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in all uppercase in Small Caps format.
+            
+For example:`,
+        },
+        {
+          type: PartType.example,
+          content: `[[Rev 11:17]KJV] says:
+          
+|> Saying, We give thee thanks, O LORD God Almighty, which art, and wast, and art to come; because thou hast taken to thee thy great power, and hast reigned.
+
+which relates back to [[Ps 2:2]ESV], which says:
+
+|> 2 The kings of the earth set themselves,
+|> |> and the rulers take counsel together,
+|> |> against the LORD and against his Anointed, saying,`,
+        },
+        {
+          type: PartType.text,
+          content: `This behaviour is controlled by a setting (under the **Settings** sidebar in the **Write** page), so it can be turned off if desired. Whether the behaviour is on or off by default, it can also be manually accomplished by surrounding text with \`^^^\` notation. For example:`,
+        },
+        {
+          type: PartType.example,
+          content: `The word UPPER may or may not render as small caps depending on the setting, but the words ^^^ALWAYS UPPER^^^ will render as small caps, regardless of the setting.`,
+        },
+      ],
+    },
+    {
+      title: 'Special Formatting for Christian Use: Writing Eras for Dates',
+      parts: [
+        {
+          type: PartType.text,
+          content: `Another example of this type of formatting is for cases where the **era** is being specified for a date; for example, the year 100^^B.C.^^. The **era** (\`A.D.\`, \`B.C.\`, \`C.E.\`, or \`B.C.E.\`) is often written in small capitals.
+          
+The same as with words that show up all in uppercase, Devouring Scripture will attempt to recognize era notation in text (also controllable by a global setting), and render it appropriately. For example:`,
+        },
+        {
+          type: PartType.example,
+          content: `The year AD2020 was a rough one around the world because of the pandemic, but there was an even worse pandemic around 3000BC in China.`,
+        },
+        {
+          type: PartType.text,
+          content: `If the setting is turned off, or if the same formatting is desired for other text, the \`^^\` notation can be used (two carets instead of three).`,
+        },
+        {
+          type: PartType.example,
+          content: `Text can be renered in small Small Caps by ^^SURROUNDING WITH TWO CARETS^^.`,
+        },
+      ],
+    },
+    {
       title: 'Links to the Bible Gateway',
       parts: [
         {
@@ -67,41 +123,6 @@ As shown, ESV is the default version used, but when a specific version is desire
           content: `It says in [[Rom 1:1]NIV] that Paul is an Apostle, even though he wasn't one of the *original* Apostles (as called out in [[Matt 10:5-15]ESV;s] or [[Mark 3:13-21 (Mark 3)]NIV] or ==other examples==.)
             
 If you're interested, the **Apostles' Creed** can be found at the [Christian Reformed Church website](https://www.crcna.org/welcome/beliefs/creeds/apostles-creed)`,
-        },
-      ],
-    },
-    {
-      title: 'All Capitalized Words/Names',
-      parts: [
-        {
-          type: PartType.text,
-          content: `Some proper names appear in all capital letters in the Scriptures; the most common example is the name of the LORD in Old Testament Scriptures. These words are often written in **Small Caps** for readability, such that LORD is shown as ^^^LORD^^^. For the Christian, these words should always be in all uppercase, even if they're formatted differently on the screen/page.
-          
-Surrounding text with three carets (such as \`^^^LORD^^^\`) will cause it to be rendered similar to ^^^LORD^^^; in the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in all uppercase in Small Caps format.
-            
-For example:`,
-        },
-        {
-          type: PartType.example,
-          content: `The ^^^LORD GOD^^^ is good.`,
-        },
-      ],
-    },
-    {
-      title: 'Smaller (but still capitalized) Terms',
-      parts: [
-        {
-          type: PartType.text,
-          content: `This is similar to the case of all capitalized words (such as ^^^LORD^^^), except that all of the letters are rendered in smaller capitals, such as the terms ^^A.D.^^ and ^^B.C.^^. For this notation two carets are used instead of three (e.g. \`^^A.D.^^\`).`,
-        },
-        {
-          type: PartType.example,
-          content: `From 1500^^B.C.^^ through to 2022^^A.D.^^ is a long time.`,
-        },
-        {
-          type: PartType.text,
-          content:
-            "Just like with the `^^^` notation, the original text is in all capitals, it's in all capitals on devices that don't support advance formatting, and on devices that do support the advanced formatting the text will be rendered as the small version of Small Caps.",
         },
       ],
     },

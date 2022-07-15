@@ -16,6 +16,11 @@ export function lowerCaps(): Transformer {
         return;
       }
 
+      const pbDS: boolean = parent.processedByDS || false;
+      if (pbDS) {
+        return;
+      }
+
       const children: Node<Data>[] = values.map((str, i) =>
         i % 2 === 0
           ? {
@@ -24,6 +29,7 @@ export function lowerCaps(): Transformer {
             }
           : {
               type: 'span',
+              processedByDS: true,
               data: {
                 hName: 'span',
                 hProperties: {
