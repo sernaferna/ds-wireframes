@@ -56,6 +56,7 @@ export function bibleLinks(): Transformer {
 
       const newLink = {
         type: 'link',
+        processedByDS: true,
         title: `${lf.passage} (${lf.version})`,
         url: linkUrl,
         data: {
