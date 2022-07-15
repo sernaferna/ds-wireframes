@@ -53,6 +53,19 @@ Finally, it should be noted that some text will be made "prettier" in the format
       ],
     },
     {
+      title: 'Emoji',
+      parts: [
+        {
+          type: PartType.text,
+          content: `Emoji can be used in your content as much as desired. No special formatting is required; as long as your device supports emoji, they can be included in your content.`,
+        },
+        {
+          type: PartType.example,
+          content: `Can emoji be included? 🤔 They sure can! 😀`,
+        },
+      ],
+    },
+    {
       title: 'Paragraphs',
       parts: [
         {
