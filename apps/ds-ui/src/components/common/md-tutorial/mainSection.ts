@@ -251,6 +251,39 @@ If desired, the spacing can be made more precise; it won't change the resultant 
 
 Both of these tables will look the same in the formatted output, even though the second is "prettier" in raw markdown`,
         },
+        {
+          type: PartType.text,
+          content: `Tables *can* get very large, in which case attempting to format them can be nearly impossible, but as long as the notation is followed the table can still be rendered into the formatted version.`,
+        },
+        {
+          type: PartType.example,
+          content: `A more complex table might look like this:
+
+| Man | Situation | Reaction |
+|--|--|--|
+| Peter | Cornelius bows down to worship him | Immediately stops Cornelius, saying he's only a man just like Cornelius |
+| Paul and Barnabas | Called "gods" because of a miracle they've performed | Tear their garments in an act of distress, and rush to tell the crowds that they're only men, and it's God whom the people should be worshipping |
+| Herod | Called "a god" by a crowd | Says, yeah, that sounds about right |`,
+        },
+        {
+          type: PartType.text,
+          content: `Notice the three parts of the table:
+          
+1. Header cells for the table come at the top
+1. A separator row of dashes
+1. As many rows as desired of cells for the body of the table.
+
+In most cases that second row of dashes appears purely so that markdown can separate the header from the other cells, but they can also be used to control alignment for the column:
+
+* Putting a colon at the beginning of the dashes such as \`:--\` will cause the text to be left justified (which is also the default)
+* Putting a colon on either end of the dashes such as \`:--:\` will cause the text to be centred
+* Putting a colon at the end of the dashes such as \`--:\` will cause the text to be right justified.
+
+| Left | Centre | Right |
+| :-- | :--: | --: |
+| This text is left justified | This text is centered | This text is right justified |
+| Still left justified | Still centred | Still right justified |`,
+        },
       ],
     },
     {
