@@ -24,7 +24,7 @@ export const WriteSettings = () => {
         onChange={flipBoolCallback('settings.showSizeIndicator')}
       />
 
-      <h6>Markdown Settings</h6>
+      <h6 className="mt-3">Markdown Settings</h6>
       <Form.Text>The following settings apply to how markdown text is formatted.</Form.Text>
       <Form.Check
         type="checkbox"
