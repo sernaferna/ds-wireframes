@@ -35,7 +35,7 @@ export const AllNotes = () => {
 
     return notes.map((item, index) => (
       <div key={`note-item-${index}`} className="my-4">
-        <MarkdownPreview content={item.text} />
+        <MarkdownPreview content={item.text.length > 99 ? item.text.substring(0, 99) + '...' : item.text} />
       </div>
     ));
   }, [data, filterString]);
