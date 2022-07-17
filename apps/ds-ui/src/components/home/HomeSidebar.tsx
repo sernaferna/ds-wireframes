@@ -5,7 +5,12 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { ToastTester } from '../common/toasts/ToastTester';
 import { useUserSettings } from '../../hooks/UserSettings';
 
-export function HomeSidebar() {
+/**
+ * Sidebar for the **Home** section of the application. Includes only
+ * the `ToastTester` component (which takes care of showing/hiding
+ * itself), and the Settings.
+ */
+export const HomeSidebar = () => {
   const [userData, userResponseError, userLoading, , updateBoolCallback] = useUserSettings();
 
   if (userLoading) {
@@ -28,4 +33,4 @@ export function HomeSidebar() {
       </SidebarCollapseWidget>
     </>
   );
-}
+};

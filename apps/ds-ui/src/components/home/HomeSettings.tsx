@@ -3,6 +3,9 @@ import { Form } from 'react-bootstrap';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useUserSettings } from '../../hooks/UserSettings';
 
+/**
+ * Settings for the **Home** section of the application.
+ */
 export const HomeSettings = () => {
   const [userData, userResponseError, userIsLoading, , flipUserBoolCallback] = useUserSettings();
 

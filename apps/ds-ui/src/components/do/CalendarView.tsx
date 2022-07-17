@@ -43,6 +43,15 @@ const getActionSet = (data: ActionsForDay[] | undefined): Set<string> => {
 interface ICalendarView {
   dateToShow: DateTime;
 }
+
+/**
+ * Displays a `react-calendar` component with appropriately highlighted
+ * days to indicate when **Actions** have been completed or not. Allows
+ * the user to select a given day, to more easily complete / uncomplete
+ * **Actions** for that day.
+ *
+ * @param dateToShow The [initial] date to be shown in the calendar
+ */
 export function CalendarView({ dateToShow }: ICalendarView) {
   const [monthToShow, updateMonthToShow] = useState(dateToShow);
   const dispatch = useDispatch();

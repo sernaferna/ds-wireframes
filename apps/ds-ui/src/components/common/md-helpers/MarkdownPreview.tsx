@@ -8,6 +8,13 @@ interface IMarkdownPreview {
   content: string;
   shaded?: boolean;
 }
+
+/**
+ * Displays markdown content, in its formatted version.
+ *
+ * @param content The text (markdown format) to be displayed
+ * @param shaded Indicates whether the output should have a shaded background and border (defaults to true)
+ */
 export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) => {
   const [userData, userResponseError, userLoading] = useUserSettings();
 

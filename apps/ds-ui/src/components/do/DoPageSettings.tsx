@@ -3,7 +3,10 @@ import { Form } from 'react-bootstrap';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
-export function DoPageSettings() {
+/**
+ * Settings component for the **Do** section.
+ */
+export const DoPageSettings = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 
   if (userLoading) {
@@ -25,4 +28,4 @@ export function DoPageSettings() {
       />
     </Form>
   );
-}
+};

@@ -12,6 +12,14 @@ import { CaretLeftFill, CaretRightFill } from 'react-bootstrap-icons';
 interface ICurrentReadingPlan {
   showTitle?: boolean;
 }
+
+/**
+ * Widget to show the list of reading plans for the currently selected
+ * day (via the `getDateForReadingPlan` selector). Provides a full
+ * version with a title or a compact version without.
+ *
+ * @param showTitle Indicates if the title should be displayed; defaults to false
+ */
 export const CurrentReadingPlan = ({ showTitle = false }: ICurrentReadingPlan) => {
   const dateToShow = DateTime.fromISO(useSelector(getDateForReadingPlan));
   const dispatch = useDispatch();

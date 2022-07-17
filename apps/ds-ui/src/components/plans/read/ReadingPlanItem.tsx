@@ -35,6 +35,21 @@ interface IReadingPlanItem {
   dateToShow: string;
   version: string;
 }
+
+/**
+ * Called by `CurrentReadingPlan` widget to render a given plan, with
+ * the completed or incomplete indicator. In this case, callbacks aren't
+ * used for completing/un-completing an item, this component makes its
+ * own calls to the API to do so.
+ *
+ * When an item is clicked a `ShowPassageModal` is shown, allowing the
+ * user to mark it complete/incomplete, to **Save** it (to the **Read**
+ * page), and to mark **Actions** complete/incomplete.
+ *
+ * @param plan The reading plan to show
+ * @param dateToShow The date being displayed
+ * @param version The Bible version being used (e.g. ESV, NIV, ...)
+ */
 export const ReadingPlanItem = ({ plan, dateToShow, version }: IReadingPlanItem) => {
   const { data, error, isLoading } = useGetPlanByInstanceIdQuery(plan.planInstanceId);
   const [modalShowing, setModalShowing] = useState(false);

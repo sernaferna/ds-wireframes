@@ -7,6 +7,16 @@ interface ISidebarCollapseWidget {
   clickFunction(): void;
   children: JSX.Element;
 }
+
+/**
+ * Commonly used widget for sidebars, for a set of content that can be
+ * collapsed or shown at the user's desire.
+ *
+ * @param title Title to be shown in the Collapse title
+ * @param visible Whether the content is currently visible
+ * @param clickFunction Callback function to be called when the title is clicked
+ * @param children The content to be shown within the widget (when visible is true)
+ */
 export const SidebarCollapseWidget = ({ title, visible, clickFunction, children }: ISidebarCollapseWidget) => (
   <div className="sidebar-collapse-widget">
     <div className="header-div" aria-expanded={visible} aria-controls="contentDiv" onClick={clickFunction}>

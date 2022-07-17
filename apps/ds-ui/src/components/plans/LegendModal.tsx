@@ -6,6 +6,14 @@ interface ILegendModal {
   closeFunction(): void;
   show: boolean;
 }
+
+/**
+ * Modal with a **Legend** indicating what all of the UI elements
+ * indicate in the **Plans** page.
+ *
+ * @param closeFunction Callback function to call when the Modal is closed
+ * @param show Whether the modal should be shown
+ */
 export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
   return (
     <Modal show={show} onHide={closeFunction} size="xl" aria-labelledby="modal-title" centered>

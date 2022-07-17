@@ -37,6 +37,12 @@ const generateList = ({ data, deleteCallback }: IGenerateList) => {
   return list;
 };
 
+/**
+ * Displays any custom **Actions** that have been created by the user.
+ *
+ * These aren't used in the actual **Actions** functionality, so this
+ * isn't "working" functionality for the demo.
+ */
 export const CustomActionList = () => {
   const { data, error, isLoading } = useGetCustomActionTypesQuery();
   const [actionType, setActonType] = useState('');

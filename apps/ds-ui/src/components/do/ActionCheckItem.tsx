@@ -7,6 +7,14 @@ interface IActionCheckItem {
   item: ActionEntry;
   clickFunction(id: string): void;
 }
+
+/**
+ * Shows a line item in the list of potential actions, with checked/
+ * unchecked indicator.
+ *
+ * @param item ActionEntry item to be displayed
+ * @param clickFunction Callback function to call when the user clicks the item
+ */
 export function ActionCheckItem({ item, clickFunction }: IActionCheckItem) {
   const icon = useMemo(
     () => (item.completed ? <Check2Circle className="text-success" /> : <Circle className="text-secondary" />),

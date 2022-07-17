@@ -3,7 +3,10 @@ import { Image, Nav, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import packageJson from '../../../package.json';
 
-export function Footer() {
+/**
+ * Footer component for the application
+ */
+export const Footer = () => {
   return (
     <footer>
       <Navbar className="footer-navbar">
@@ -26,4 +29,4 @@ export function Footer() {
       </Navbar>
     </footer>
   );
-}
+};

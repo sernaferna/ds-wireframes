@@ -5,7 +5,14 @@ interface IWeeksDropdown {
   numWeeks: number;
   updateWeeksCallback(newValue: number): void;
 }
-export const WeeksDropdown = ({ numWeeks, updateWeeksCallback }: IWeeksDropdown) => {
+
+/**
+ * Renders a dropdown item for the "num weeks" dropdown.
+ *
+ * @param numWeeks The number to be shown in this item
+ * @param updateWeeksCallback Callback to be called if this item is chosen
+ */
+export const WeeksDropdownItem = ({ numWeeks, updateWeeksCallback }: IWeeksDropdown) => {
   const displayString = `${numWeeks} weeks`;
 
   const handleClick = (numWeeks: number) => {

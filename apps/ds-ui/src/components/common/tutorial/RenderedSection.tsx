@@ -7,6 +7,13 @@ import { Accordion } from 'react-bootstrap';
 interface IReadOnlyMarkdownBox {
   text: string;
 }
+
+/**
+ * Wrapper component for MDEditor, which has some styling applied and is
+ * read-only.
+ *
+ * @param text The text to be rendered
+ */
 const ReadOnlyMarkdownBox = ({ text }: IReadOnlyMarkdownBox) => {
   return (
     <MDEditor
@@ -25,6 +32,14 @@ const ReadOnlyMarkdownBox = ({ text }: IReadOnlyMarkdownBox) => {
 interface IRenderedParts {
   parts: SectionPart[];
 }
+
+/**
+ * Renders a set of SectionPart objects with a combination of MarkdownPreview
+ * and ReadOnlyMarkdownBox components, differentiating 'text' from 'example'
+ * parts.
+ *
+ * @param parts List of parts to be rendered
+ */
 const RenderedParts = ({ parts }: IRenderedParts): JSX.Element => {
   const response: JSX.Element[] = [];
 
@@ -60,6 +75,12 @@ const RenderedParts = ({ parts }: IRenderedParts): JSX.Element => {
 interface IRenderedSection {
   section: SectionDocumentation;
 }
+/**
+ * Renders a SectionDocumentation object to the screen, by creating the
+ * appropriate Accordion item for it.
+ *
+ * @param section The section to be rendered
+ */
 export const RenderedSection = ({ section }: IRenderedSection) => {
   const subSections =
     section.subSections.length < 1 ? (

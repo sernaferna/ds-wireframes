@@ -4,7 +4,10 @@ import { DoPageSettings } from './DoPageSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useUserSettings } from '../../hooks/UserSettings';
 
-export function DoSidebar() {
+/**
+ * Sidebar for the **Do** section. Only includes Settings.
+ */
+export const DoSidebar = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 
   if (userLoading) {
@@ -25,4 +28,4 @@ export function DoSidebar() {
       </SidebarCollapseWidget>
     </>
   );
-}
+};

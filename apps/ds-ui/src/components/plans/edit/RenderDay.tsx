@@ -13,6 +13,33 @@ interface IRenderDay {
   downFunction(day: number, cascade?: boolean): void;
   updateCallback(day: DayForPlan): void;
 }
+
+/**
+ * Renders a `DayForPlan` object to the screen, with the logic needed
+ * to show the day properly. Only performs logic for rendering; updates
+ * are handled via callbacks.
+ *
+ * It *does,* however, have logic for rendering the value that
+ * should be shown, which could come from a calculation based on
+ * the array of `Verse` objects on the day (if any), or could
+ * come from the `osis` stored for that day. Whichever is chosen,
+ * `getFormattedReference()` is used to show a "pretty" version
+ * to the user.
+ *
+ * A set of callbacks are defined for moving verses up/down, but
+ * these are wrappers to the `upFunction` and `downFunction` params.
+ *
+ * The `dayNum` and `maxDays` params are used to know when to show
+ * 1/2/3/4 verse up/down buttons for the day.
+ *
+ * @param dayNum This day's index in the overall list of days
+ * @param maxDays The number of days in the overall list.
+ * @param isFreeform Day should have its own, self-contained reference (true) or use the embedded list of verses (false)
+ * @param day The `DayForPlan` object to be displayed
+ * @param upFunction Callback function when a verse is moved "up" from one day to another
+ * @param downFunction Callback function when a verse is moved "down" from one day to another
+ * @param updateCallback Callback function to call when the data is updated
+ */
 export const RenderDay = ({
   dayNum,
   maxDays,
