@@ -5,7 +5,10 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { UserAttributes } from '@devouringscripture/common';
 import { PrayerViewFilterComponent } from './PrayerViewFilterComponent';
 
-export function PrayerSettings() {
+/**
+ * Settings component for the **Pray** section of the site
+ */
+export const PrayerSettings = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback, updateStringProp, , getUserCopy, updateUser] =
     useUserSettings();
 
@@ -156,4 +159,4 @@ export function PrayerSettings() {
       <PrayerViewFilterComponent />
     </Form>
   );
-}
+};

@@ -6,7 +6,12 @@ import { CreatePrayerItem } from './CreatePrayerItem';
 import { PrayerSnapshot } from './PrayerSnapshot';
 import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
 
-export function PrayerPage() {
+/**
+ * Main page/component for the **Pray** section of the app. Sets up
+ * the `AlertUI` component and passes the `addErrorMessage()`
+ * callback to child components.
+ */
+export const PrayerPage = () => {
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
   return (
@@ -36,4 +41,4 @@ export function PrayerPage() {
       </Row>
     </Container>
   );
-}
+};

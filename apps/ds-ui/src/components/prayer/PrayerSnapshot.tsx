@@ -70,7 +70,15 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
 interface IPrayerSnapshot {
   showTitle?: boolean;
 }
-export function PrayerSnapshot({ showTitle = false }: IPrayerSnapshot) {
+
+/**
+ * Widget to display a snapshot view of all prayer items. There is a
+ * full version of the widget with a title shown (`showTitle` param
+ * set to `true`), and a compact version without title (the defailt).
+ *
+ * @param showTitle Indicates if the full version of the widget should be shown, with the title
+ */
+export const PrayerSnapshot = ({ showTitle = false }: IPrayerSnapshot) => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();
@@ -107,4 +115,4 @@ export function PrayerSnapshot({ showTitle = false }: IPrayerSnapshot) {
       </Card.Body>
     </Card>
   );
-}
+};

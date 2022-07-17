@@ -128,6 +128,12 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
 interface IPrayerCards {
   errorFunction: SetMessageFunction;
 }
+
+/**
+ * Lists all saved prayer items as paginated cards.
+ *
+ * @param errorFunction Callback function for setting error messages in the parent UI
+ */
 export const PrayerCards = ({ errorFunction }: IPrayerCards) => {
   const { data, error, isLoading } = useGetAllItemsQuery();
   const [markRead] = useMarkReadMutation();

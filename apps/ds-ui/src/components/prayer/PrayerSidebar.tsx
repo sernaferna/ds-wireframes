@@ -4,7 +4,10 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { PrayerSettings } from './PrayerSettings';
 
-export function PrayerSidebar() {
+/**
+ * Sidebar component for the **Pray** section of the app
+ */
+export const PrayerSidebar = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 
   if (userLoading) {
@@ -25,4 +28,4 @@ export function PrayerSidebar() {
       </SidebarCollapseWidget>
     </>
   );
-}
+};
