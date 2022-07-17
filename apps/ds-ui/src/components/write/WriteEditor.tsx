@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { MarkdownBox } from '../common/MarkdownBox';
 
+/**
+ * Displays the markdown editor for the **Write** section of the app
+ */
 export const WriteEditor = () => {
   const [content, setContent] = useState('');
 
