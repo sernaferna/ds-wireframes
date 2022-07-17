@@ -5,6 +5,12 @@ import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 interface IReadScripture {
   stats: ActionStats;
 }
+
+/**
+ * Graph for statistics around Scripture readings
+ *
+ * @param stats Statistics to be rendered
+ */
 export const ReadScripture = ({ stats }: IReadScripture) => {
   const readUnreadData = [
     { name: 'Read', value: stats.readScripture },

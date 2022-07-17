@@ -41,6 +41,11 @@ const updateOrderNoInList = (initialList: VizualizationListItem[]): Vizualizatio
   return newList;
 };
 
+/**
+ * Allows the user to reorder and enable/disable various graphs in the
+ * **Stats** section. Leverages `react-dnd` for its functionality,
+ * including the `moveListItem()` callback that is passed to `ListItem`.
+ */
 export const GraphSorter = () => {
   const [userData, userResponseError, userLoading, , , , , getUserCopy, updateBulkUser] = useUserSettings();
   const [vizItems, updateVizItems] = useState<VizualizationListItem[]>([]);

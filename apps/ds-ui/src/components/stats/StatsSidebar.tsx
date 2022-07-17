@@ -4,6 +4,9 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { StatsSettings } from './StatsSettings';
 
+/**
+ * Sidebar component for **Stats** section of the app
+ */
 export const StatsSidebar = () => {
   const [userData, userResponseError, userLoading, , toggleBoolCallback] = useUserSettings();
 
