@@ -5,6 +5,12 @@ import { ResponsiveContainer, PieChart, Pie, Tooltip, Cell } from 'recharts';
 interface IPrayed {
   stats: ActionStats;
 }
+
+/**
+ * Graph for prayer activity
+ *
+ * @param stats Statistics to be rendered
+ */
 export const Prayed = ({ stats }: IPrayed) => {
   const dataset = [
     { name: 'Prayed', value: stats.prayed },

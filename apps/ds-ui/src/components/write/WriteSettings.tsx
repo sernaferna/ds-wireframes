@@ -3,6 +3,9 @@ import { Form } from 'react-bootstrap';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 
+/**
+ * Settings component for the **Write** section of the app
+ */
 export const WriteSettings = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 

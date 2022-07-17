@@ -5,10 +5,20 @@ import { Alert } from 'react-bootstrap';
 import { ErrorResponse } from '@devouringscripture/common';
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Component to display a consistent message when content is loading
+ */
 export function LoadingMessage() {
   return <Alert className="loading-message">Loading...</Alert>;
 }
 
+/**
+ * Helper function to get appropriate HTML to be displayed for an
+ * `ErrorResponse` error, including child errors (if any).
+ *
+ * @param er The error to be displayed
+ * @returns HTML to be displayed for the error, including code and details
+ */
 export const generateErrorStringFromError = (er: ErrorResponse): JSX.Element => {
   return (
     <div className="details" key={uuidv4()}>
@@ -27,6 +37,14 @@ export const generateErrorStringFromError = (er: ErrorResponse): JSX.Element => 
 interface IErrorLoadingDataMessage {
   theError?: Error | FetchBaseQueryError | SerializedError;
 }
+
+/**
+ * Renders a consistent error message for cases where an API returns an error.
+ * Handles different types of errors that can be returned from RTK API calls,
+ * including (but not limited to) `ErrorResponse` errors.
+ *
+ * @param theError The error object to be displayed, if any
+ */
 export function ErrorLoadingDataMessage({ theError }: IErrorLoadingDataMessage) {
   let message: string | JSX.Element = '';
   if (theError) {

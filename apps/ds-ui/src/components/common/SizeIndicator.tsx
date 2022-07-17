@@ -3,6 +3,11 @@ import { ButtonGroup, Card, Button } from 'react-bootstrap';
 import { DisplayFill, LaptopFill, PhoneFill, PhoneLandscapeFill, TabletFill } from 'react-bootstrap-icons';
 import { useUserSettings } from '../../hooks/UserSettings';
 
+/**
+ * Simple floating (position-absolute) box on the screen that indicates
+ * the current size of the screen, in Bootstrap terms (xs, sm, md, lg,
+ * xl, xxl).
+ */
 export const SizeIndicator = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
 

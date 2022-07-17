@@ -8,6 +8,13 @@ interface IActionWidgetForm {
   day: ActionsForDay;
   setErrorMessage: SetMessageFunction;
 }
+
+/**
+ * Displays a set of actions for the day; mostly a list of `<ActionCheckItem>` components.
+ *
+ * @param day The `ActionsForDay` object for the day being rendered
+ * @param setErrorMessage Callback function to call when errors are raised (when completing / uncompleting an item)
+ */
 export function ActionWidgetForm({ day, setErrorMessage }: IActionWidgetForm) {
   const [markReadUnread] = useMarkItemReadForDayMutation();
 

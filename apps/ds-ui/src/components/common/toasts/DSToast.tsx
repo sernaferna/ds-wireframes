@@ -34,6 +34,16 @@ export interface IDSToast {
   duration?: number;
   type?: ToastType;
 }
+
+/**
+ * Component used for displaying Toast messages.
+ *
+ * @param destroy Callback function to call when the Toast expires or is closed
+ * @param content The body of the Toast
+ * @param title The title of the Toast
+ * @param duration The amount of time (in milliseconds) the Toast should remain on the screen
+ * @param type Type of Toast to show, using the ToastType enum
+ */
 const DSToast = ({ destroy, content, title, duration = 0, type = ToastType.None }: IDSToast) => {
   useEffect(() => {
     if (!duration) return;

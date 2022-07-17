@@ -9,6 +9,11 @@ import { CustomActionList } from './CustomActionList';
 import { DateTime } from 'luxon';
 import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
 
+/**
+ * Main page/component for the **Do** section of the application. Sets
+ * up the `AlertUI` component, and passes on the `setErrorMessage()`
+ * function to some child components.
+ */
 export function DoPage() {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
   const [AlertUI, setErrorMessage] = useErrorsAndWarnings();

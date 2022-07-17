@@ -44,6 +44,10 @@ const executeTest = (toastType: string) => {
   };
 };
 
+/**
+ * Gives a list of types of toasts, and shows sample, hard-coded toasts
+ * on demand.
+ */
 export const ToastTester = () => {
   const [toastType, setToastType] = useState('primary');
   const [userData, userResponseError, userLoading] = useUserSettings();

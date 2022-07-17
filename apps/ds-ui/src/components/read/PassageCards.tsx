@@ -11,6 +11,14 @@ interface IPassageCards {
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
 }
+
+/**
+ * Displays all saved passages, via `PassageCard` components.
+ *
+ * @param passageDetails Details about current passage (pass-through)
+ * @param fetchNote Callback to fetch a note (pass-through)
+ * @param fetchPassage Callback to fetch a passage (pass-through)
+ */
 export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassageCards) => {
   const { data, error, isLoading } = useGetCurrentItemsQuery();
   const [currentPage, setCurrentPage] = useState(1);

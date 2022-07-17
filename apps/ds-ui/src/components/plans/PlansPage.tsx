@@ -27,6 +27,9 @@ const getItemList = (data: BaseInstantiatedPlan[] | undefined) => {
   ));
 };
 
+/**
+ * Main page/component for the **Plans** section of the site
+ */
 export const PlansPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { data, error, isLoading } = useGetAllInstantiatedPlanItemsQuery();

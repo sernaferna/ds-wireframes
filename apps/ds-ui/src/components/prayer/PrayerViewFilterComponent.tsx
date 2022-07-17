@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getPrayerViewFilter, updatePrayerViewFilter } from '../../stores/UISlice';
 import { Form, FloatingLabel } from 'react-bootstrap';
 
+/**
+ * Filter box for filtering prayer items
+ */
 export const PrayerViewFilterComponent = () => {
   const filterString = useSelector(getPrayerViewFilter);
   const dispatch = useDispatch();

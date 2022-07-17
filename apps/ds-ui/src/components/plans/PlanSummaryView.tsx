@@ -17,6 +17,14 @@ interface IPlanSummaryView {
   planId: string;
   percentageComplete?: number;
 }
+
+/**
+ * Displays a summary view of a given reading plan. Loads the plan data
+ * from the API, given the ID (passed as a param).
+ *
+ * @param planId ID of the plan to be displayed
+ * @param percentageComplete What percentage of the plan the user has completed (if any)
+ */
 export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPlanSummaryView) => {
   const { data, error, isLoading } = useGetPlanByInstanceIdQuery(planId);
   const [sendNewPlan] = useNewInstantiatedPlanMutation();

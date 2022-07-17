@@ -7,6 +7,11 @@ import { ActionsWidget } from '../do/ActionsWidget';
 import { CreatePrayerItem } from '../prayer/CreatePrayerItem';
 import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
 
+/**
+ * Main page/component for the **Home** section of teh application. Sets
+ * up the `AlertUI` widget, and passes on `setErrorMessage()` function
+ * to some child components.
+ */
 export const Home = () => {
   const [AlertUI, setErrorMessage] = useErrorsAndWarnings();
 

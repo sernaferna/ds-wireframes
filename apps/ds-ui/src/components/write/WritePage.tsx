@@ -4,6 +4,9 @@ import { AllNotes } from './AllNotes';
 import { WriteEditor } from './WriteEditor';
 import { WriteSidebar } from './WriteSidebar';
 
+/**
+ * Main page/component for the **Write** section of the app
+ */
 export const WritePage = () => {
   return (
     <Container fluid={true} className="page-main-container">

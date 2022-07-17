@@ -18,6 +18,12 @@ import { initialPlanValues, PlanValues, validate } from './EditPlanValidations';
 import { EditPlanForm } from './EditPlanForm';
 import { v4 as uuidv4 } from 'uuid';
 
+/**
+ * Allows the user to edit a **Plan**. This component mainly sets up
+ * all of the functionality, including a number of callback functions
+ * and data validation logic, and then passes the callbacks to
+ * `EditPlanForm` where the UI resides.
+ */
 export const EditPlan = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
   const [versesTrigger, versesResult] = useLazyGetVersesForOSISQuery();

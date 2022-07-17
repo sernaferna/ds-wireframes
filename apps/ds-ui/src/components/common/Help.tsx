@@ -158,6 +158,9 @@ Again, it's worth a reminder that nobody can see your data but you. Not even the
   },
 ];
 
+/**
+ * Shows a tutorial for the Help screen
+ */
 export const Help = () => {
   return (
     <Container>

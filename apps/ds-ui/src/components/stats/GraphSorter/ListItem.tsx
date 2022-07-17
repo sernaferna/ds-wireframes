@@ -9,6 +9,17 @@ interface IListItem {
   moveListItem(dragIndex: number, hoverIndex: number): void;
   handleActiveInactive(itemName: string): () => void;
 }
+
+/**
+ * An item to be rendered within the `GraphSorter` component, leveraging
+ * the `react-dnd` library for the drag-n-drop capabilities.
+ *
+ * @param text The text to be shown for this item
+ * @param index The index of the item within the overall list
+ * @param isActive Whether the item is active (the graph is displayed in the UI) or not
+ * @param moveListItem Callback function to be called when the item is moved within the list
+ * @param handleActiveInactive Callback function to handle the user clicking the active checkbox
+ */
 export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInactive }: IListItem) => {
   const ref = useRef<HTMLDivElement>(null);
 

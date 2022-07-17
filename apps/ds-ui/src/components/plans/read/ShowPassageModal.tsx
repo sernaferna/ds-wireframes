@@ -20,6 +20,25 @@ interface IShowPassageModal {
   show: boolean;
   dateForReading: string;
 }
+
+/**
+ * Modal dialogue from the `ReadingPlanItem` component, with some
+ * activities the user might want to perform (e.g. saving the
+ * passage to the **Read** page, marking the reading plan item
+ * complete, completing other **Actions**).
+ *
+ * Uses the `completeFunction` callback for marking the Reading
+ * Plan item complete, but handles its own API callbacks for other
+ * complete/incomplete indicators.
+ *
+ * @param passage The passage being read for this reading plan item
+ * @param closeFunction Callback function called when the Modal is closed
+ * @param saveFunction Callback function for saving this passage to the **Read** page
+ * @param completeFunction Callback function for marking this Reading Plan item complete/incomplete
+ * @param isComplete Indicates whether this item is complete or not
+ * @param show Indicates whether the Modal should be shown or not
+ * @param dateForReading The date for this Reading Plan item
+ */
 export const ShowPassageModal = ({
   passage,
   closeFunction,

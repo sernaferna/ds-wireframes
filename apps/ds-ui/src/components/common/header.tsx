@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 import { useUserSettings } from '../../hooks/UserSettings';
 
+/**
+ * Set of links to be displayed across the top of the header
+ */
 const links = [
   { label: 'Home', href: '/' },
   { label: 'Pray', href: '/prayer' },
@@ -20,6 +23,9 @@ const links = [
   );
 });
 
+/**
+ * Set of links to be displayed for Admin users
+ */
 const adminLinks = [].map(({ label, href }) => {
   return (
     <NavLink key={href} className="nav-link" to={href}>
@@ -28,7 +34,10 @@ const adminLinks = [].map(({ label, href }) => {
   );
 });
 
-export function Header() {
+/**
+ * Header displayed at the top of the application
+ */
+export const Header = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
 
   if (userLoading) {
@@ -55,4 +64,4 @@ export function Header() {
       </Container>
     </Navbar>
   );
-}
+};

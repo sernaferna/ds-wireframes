@@ -10,6 +10,22 @@ interface INotesForPassage {
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
 }
+
+/**
+ * Displays a list of notes that match the start/end reference for the
+ * selected passage. Leverages the `getNoteList()` function defined in
+ * `ReadPage` for consistency in rendering the list.
+ *
+ * There are a number of interrelated pages to be aware of:
+ *
+ * * **ReadPage** includes **PassageNotes**
+ * * PassageNotes displays **MDNoteTaker** and *NotesForPassage*
+ *
+ * @param osis The OSIS string for the currently selected passage
+ * @param noteDetails Details for the currently downloaded/downloading note (for properly rendering the note that's currently selected, if any)
+ * @param fetchNote Callback for getting a note from the server by ID
+ * @param fetchPassage Callback for getting a passage from the server by ID
+ */
 export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: INotesForPassage) => {
   const [trigger, result] = useLazyGetAllNotesForPassageQuery();
 

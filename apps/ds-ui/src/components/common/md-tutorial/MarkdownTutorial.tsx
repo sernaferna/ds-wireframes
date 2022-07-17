@@ -10,6 +10,14 @@ interface IMarkdownTutorial {
   show: boolean;
   handleClose(): void;
 }
+
+/**
+ * Component to display the Markdown Tutorial as a Modal dialog.
+ *
+ * @param show Indicates whether the modal should be shown
+ * @param handleClose Callback function to call when the modal is closed
+ * @returns
+ */
 export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
   return (
     <Modal show={show} onHide={handleClose} centered size="xl" fullscreen="xl-down">

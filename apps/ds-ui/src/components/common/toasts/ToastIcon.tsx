@@ -6,6 +6,13 @@ interface IToastIcon {
   type: ToastType;
   className?: string;
 }
+
+/**
+ * Component to handle the logic for choosing the right icon for a Toast header
+ *
+ * @param type Type of Toast being displayed, using the ToastType enum
+ * @param className CSS class(es) to be used on the icon, defaults to empty string
+ */
 export const ToastIcon = ({ type, className = '' }: IToastIcon) => {
   const theIcon = useMemo(() => {
     switch (type) {

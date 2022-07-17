@@ -4,6 +4,9 @@ import { WriteSettings } from './WriteSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { useUserSettings } from '../../hooks/UserSettings';
 
+/**
+ * Sidebar component for the **Write** section of the app
+ */
 export const WriteSidebar = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 

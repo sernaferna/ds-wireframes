@@ -8,6 +8,9 @@ import { Note } from '@devouringscripture/common';
 import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
 import { paginateItems } from '../../hooks/pagination';
 
+/**
+ * Displays a list of all captured notes, for the **Write** section of the app
+ */
 export const AllNotes = () => {
   const filterString = useSelector(getNotesFilter);
   const dispatch = useDispatch();

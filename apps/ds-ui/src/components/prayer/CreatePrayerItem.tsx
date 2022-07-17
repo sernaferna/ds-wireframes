@@ -35,7 +35,20 @@ const schema = yup.object({
 });
 type ValuesSchema = yup.InferType<typeof schema>;
 
-export function CreatePrayerItem({ confession = false }) {
+/**
+ * Form for creating a prayer item. Allows the user to choose the
+ * type of prayer item (using the `PrayerTypes` enum), or, via param,
+ * can be hard-coded as a **confession** item, which has a slightly
+ * different UI (and hides the ability for the user to choose the type).
+ *
+ * The `confession` param renders a special view of the component, but
+ * if it is set to `false` and the user *chooses* **confession** it doesn't
+ * change the way the component is rendered; the `confession` attribute is
+ * a design-time param, not a runtime param.
+ *
+ * @param confession Indicates if this should be specifically rendered as a **confession** item (defaults to false)
+ */
+export const CreatePrayerItem = ({ confession = false }) => {
   const [newPrayer] = useNewItemMutation();
 
   const handleSubmit = useCallback(
@@ -154,4 +167,4 @@ export function CreatePrayerItem({ confession = false }) {
       </Formik>
     </Alert>
   );
-}
+};

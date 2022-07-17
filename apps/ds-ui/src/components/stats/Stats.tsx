@@ -64,6 +64,9 @@ const getVisualizationList = (userData: UserAttributes | undefined, data: Action
     });
 };
 
+/**
+ * Main page/component for the **Stats** section of the app.
+ */
 export const Stats = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
   const { data, error, isLoading } = useGetActionStatsQuery(userData?.settings.stats.statsFilter);

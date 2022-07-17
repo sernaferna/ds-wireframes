@@ -99,6 +99,17 @@ interface IMarkdownBox {
   showToolbar?: boolean;
   showSidePreview?: boolean;
 }
+
+/**
+ * Displays an editable text box accepting **Markdown** format, with
+ * capabilities for handling some special MD formats (e.g. highlighting)
+ * as well as plugins specific to Devouring Scripture.
+ *
+ * @param content The MD text to be displayed
+ * @param changeCallback Callback function to be called as the text is modified
+ * @param showToolbar Whether the toolbar should be shown (defaults to no)
+ * @param showSidePreview  Whether the sidebar preview should be shown (defaults to no)
+ */
 export const MarkdownBox = ({
   content,
   changeCallback,

@@ -73,6 +73,13 @@ const getStatuses = (plans: InstantiatedPlan[] | undefined): [Set<string>, Set<s
 interface IPlanCalendarView {
   dateToShow: DateTime;
 }
+
+/**
+ * Displays a `react-calendar` component, displaying appropriate
+ * indicators as to which days have been completed and which haven't.
+ *
+ * @param dateToShow The day to have highlighted in the calendar (Luxon `DateTime`)
+ */
 export const PlanCalendarView = ({ dateToShow }: IPlanCalendarView) => {
   const { data, error, isLoading } = useGetSubscribedPlansQuery();
   const dispatch = useDispatch();

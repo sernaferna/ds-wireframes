@@ -5,6 +5,12 @@ import { ResponsiveContainer, BarChart, Bar, YAxis, XAxis, Tooltip } from 'recha
 interface IDetailedReading {
   stats: ActionStats;
 }
+
+/**
+ * Graph for detailed reading activities.
+ *
+ * @param stats Stats to be rendered
+ */
 export const DetailedReading = ({ stats }: IDetailedReading) => {
   const data = [
     {

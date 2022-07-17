@@ -3,7 +3,10 @@ import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Form } from 'react-bootstrap';
 
-export function ReadPageSettings() {
+/**
+ * Settings component for **Read** section of the app
+ */
+export const ReadPageSettings = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback, , updateStringCallback] = useUserSettings();
 
   if (userLoading) {
@@ -63,4 +66,4 @@ export function ReadPageSettings() {
       <p className="mt-3">Passage rendering via BibleGateway.</p>
     </>
   );
-}
+};

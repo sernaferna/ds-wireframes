@@ -5,6 +5,12 @@ import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from 'recharts';
 interface IOldVsNew {
   stats: ActionStats;
 }
+
+/**
+ * Graph for Old Testament vs. New Testament readings.
+ *
+ * @param stats Statistics to be rendered
+ */
 export const OldVsNew = ({ stats }: IOldVsNew) => {
   const data = [
     { name: 'Old Testament', value: stats.readLongOT + stats.readShortOT },

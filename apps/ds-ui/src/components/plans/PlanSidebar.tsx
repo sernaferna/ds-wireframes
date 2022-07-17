@@ -4,6 +4,9 @@ import { SidebarCollapseWidget } from '../common/SidebarCollapseWidget';
 import { PlanSettings } from './PlanSettings';
 import { useUserSettings } from '../../hooks/UserSettings';
 
+/**
+ * Sidebar page for the **Plans** section of the app
+ */
 export const PlanSidebar = () => {
   const [userData, userResponseError, userLoading, , flipUserBoolCallback] = useUserSettings();
 

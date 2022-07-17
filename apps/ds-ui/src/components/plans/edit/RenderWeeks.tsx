@@ -10,6 +10,25 @@ interface IRenderWeeks {
   downFunc(day: number, cascade?: boolean): void;
   update(day: DayForPlan): void;
 }
+
+/**
+ * Given an array of `DayForPlan` objects, renders out all of the
+ * `RenderDay` items required. For better UI, the days are broken
+ * down by Weeks, with a heading inserted at the beginning of each
+ * week, since much of the UI revolves around a number of **weeks**,
+ * not a number of **days**.
+ *
+ * Mostly a passthrough to the `RenderDay` component, to render each
+ * day, so most of the callbacks are simply passed through to that
+ * component, not used here.
+ *
+ * @param days Array of `DayForPlan` objects to be rendered
+ * @param includeWeekends Whether weekends should be included
+ * @param isFreeform Whether the references are freeform (true) or simply a distributed set of verses (false)
+ * @param upFunc Callback when a verse is moved "up" from one day to another
+ * @param downFunc Callback when a verse is moved "down" from one day to another
+ * @param update Callback for when a day's data is updated
+ */
 export const RenderWeeks = ({ days, includeWeekends, isFreeform, upFunc, downFunc, update }: IRenderWeeks) => {
   const daysPerWeek = useMemo(() => (includeWeekends ? 7 : 5), [includeWeekends]);
 

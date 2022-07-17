@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FocusEvent } from 'react';
 import { Form, Row, Col, Alert, Container, DropdownButton, Button, ButtonGroup, InputGroup } from 'react-bootstrap';
 import { PlanValues } from './EditPlanValidations';
 import { DayForPlan } from './Helpers';
-import { WeeksDropdown } from './WeeksDropdown';
+import { WeeksDropdownItem } from './WeeksDropdown';
 import { RenderWeeks } from './RenderWeeks';
 import { UserAttributes, getFormattedReference, PlanStatus } from '@devouringscripture/common';
 
@@ -23,6 +23,38 @@ interface IEditPlanForm {
   moveVerseDown(dayNum: number, cascade?: boolean): void;
   updateDay(update: DayForPlan): void;
 }
+
+/**
+ * The form used for editing a **Plan**. Most of the functionality
+ * was put together in `EditPlan` and passed to this component via
+ * params and callback functions. This component has very little
+ * functionality of its own, other than UI-focused, letting `EditPlan`
+ * handle the logic and validation.
+ *
+ * Any data passed (user, values, errors, touched, days) are considered
+ * read-only; callback functions are used for passing data back through
+ * the validation in `EditPlan`.
+ *
+ * The `errors` and `touched` values, while maintained in `EditPlan`,
+ * are used in this component for visually displaying errors and
+ * valid/invalid states to the user.
+ *
+ * @param user The current user
+ * @param values The current 'state' of the data being edited
+ * @param errors The list of errors that have been captured (if any)
+ * @param touched The list of values that have been touched (if any)
+ * @param days The list of days being edited; logic demands that this be treated separately from `values`
+ * @param handleSubmit Callback to be called when the user **publishes**
+ * @param handleSave Callback to be called when the user **saves**
+ * @param handleReset Callback to reset the form to its original state
+ * @param handleChange Callback function called when any of the data (other than days) is changed
+ * @param handleBlur Callback function called when the user nagivates off any data field (other than days)
+ * @param fetchVerses Callback function to get the list of verses for the current OSIS
+ * @param updateWeeks Callback function called when the number of weeks changes (handles re-rendering Days)
+ * @param moveVerseUp Callback function when the user moves a verse "up" from one day to another (with or without cascading)
+ * @param moveVerseDown Callback function when the user moves a verse "down" from one day to another (with or without cascading)
+ * @param updateDay Callback function used for updating the data in a given Day
+ */
 export const EditPlanForm = ({
   user,
   values,
@@ -113,11 +145,11 @@ export const EditPlanForm = ({
                   title="Presets"
                   size="sm"
                 >
-                  <WeeksDropdown numWeeks={2} updateWeeksCallback={updateWeeks} />
-                  <WeeksDropdown numWeeks={4} updateWeeksCallback={updateWeeks} />
-                  <WeeksDropdown numWeeks={26} updateWeeksCallback={updateWeeks} />
-                  <WeeksDropdown numWeeks={52} updateWeeksCallback={updateWeeks} />
-                  <WeeksDropdown numWeeks={156} updateWeeksCallback={updateWeeks} />
+                  <WeeksDropdownItem numWeeks={2} updateWeeksCallback={updateWeeks} />
+                  <WeeksDropdownItem numWeeks={4} updateWeeksCallback={updateWeeks} />
+                  <WeeksDropdownItem numWeeks={26} updateWeeksCallback={updateWeeks} />
+                  <WeeksDropdownItem numWeeks={52} updateWeeksCallback={updateWeeks} />
+                  <WeeksDropdownItem numWeeks={156} updateWeeksCallback={updateWeeks} />
                 </DropdownButton>
               </Col>
               <Col xs="12" md="6" xl="2" className="mb-2">

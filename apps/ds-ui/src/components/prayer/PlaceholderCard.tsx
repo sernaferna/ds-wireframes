@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card, Placeholder } from 'react-bootstrap';
 
+/**
+ * Visual placeholder UI for cases when prayer is still being loaded
+ */
 export const PlaceholderCard = () => {
   return (
     <Card className="h-100 shadow reading-text">

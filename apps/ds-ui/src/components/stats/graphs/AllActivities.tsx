@@ -5,6 +5,12 @@ import { ResponsiveContainer, Treemap, Tooltip } from 'recharts';
 interface IAllActivities {
   stats: ActionStats;
 }
+
+/**
+ * Graph for all activities.
+ *
+ * @param stats ActionStats to be rendered
+ */
 export const AllActivities = ({ stats }: IAllActivities) => {
   const data = [
     {

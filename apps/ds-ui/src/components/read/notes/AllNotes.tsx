@@ -7,6 +7,15 @@ import { paginateItems } from '../../../hooks/pagination';
 import { Note } from '@devouringscripture/common';
 import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 
+/**
+ * Helper to generate a set of `NotesSnippet` components, given an array of `Note` objects.
+ *
+ * @param data Array of `Note` objects to be rendered
+ * @param downloadedNoteDetails Object with details about the note that has been (or is being) downloaded
+ * @param fetchNote Callback to get a note based on ID
+ * @param fetchPassage Callback to fetch a passage based on ID
+ * @returns Array of `NotesSnippet` components
+ */
 export const getNoteList = (
   data: Note[] | undefined,
   downloadedNoteDetails: DownloadedNoteDetails,
@@ -33,6 +42,18 @@ interface IAllNotes {
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
 }
+
+/**
+ * Component that displays a list of *all* saved notes, regardless of
+ * what passages they do or do not cover.
+ *
+ * Depending on the size of the form factor, this may not be shown by
+ * default, and the user may need to click a button to show it.
+ *
+ * @param noteDetails Details about the note that has been (or is being) downloaded, if any
+ * @param fetchNote Callback function for retrieving a given note
+ * @param fetchPassage Callback function for retrieving a given passage
+ */
 export const AllNotes = ({ noteDetails, fetchNote, fetchPassage }: IAllNotes) => {
   const { data, error, isLoading } = useGetAllNotesQuery();
   const [currentPage, setCurrentPage] = useState(1);

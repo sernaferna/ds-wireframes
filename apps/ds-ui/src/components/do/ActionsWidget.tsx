@@ -15,6 +15,15 @@ interface IActionsWidget {
   showTitle?: boolean;
   setErrorMessage: SetMessageFunction;
 }
+
+/**
+ * Widget for displaying **Actions** for the currently selected day
+ * (per `getDateForActions` selector). Can be used in a "full" display
+ * (with title) or a more compact display without title.
+ *
+ * @param setErrorMessage Callback function to be called if an error is raised (passed through to `<ActionWidgetForm>`)
+ * @param showTitle Whether the title for the form should be shown
+ */
 export function ActionsWidget({ setErrorMessage, showTitle = false }: IActionsWidget) {
   const dateToShow = DateTime.fromISO(useSelector(getDateForActions));
   const dispatch = useDispatch();
