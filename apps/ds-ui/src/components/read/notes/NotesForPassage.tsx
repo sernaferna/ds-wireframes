@@ -17,7 +17,7 @@ export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: 
     if (osis && osis.length > 0) {
       trigger(osis);
     }
-  }, [osis, result, trigger]);
+  }, [osis, trigger]);
 
   const notesList = useMemo(
     () => getNoteList(result.data, noteDetails, fetchNote, fetchPassage),
