@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import MDEditor, { ICommand } from '@uiw/react-md-editor';
+import MDEditor, { ICommand, commands } from '@uiw/react-md-editor';
 import { Button, Modal } from 'react-bootstrap';
 import { MarkdownTutorial } from './md-tutorial/MarkdownTutorial';
 import {
   lordCommand,
-  esvLinkCommand,
-  nivLinkCommand,
   bibleLinkCommand,
   highlightCommand,
   scCommand,
@@ -71,7 +69,7 @@ export const getPluginList = (autoSmallCap: boolean, autoADBC: boolean) => {
  * @returns List of commands to show in the MD editor toolbar
  */
 export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): ICommand[] => {
-  const commandList: ICommand[] = [];
+  const commandList: ICommand[] = [highlightCommand, superCommand, commands.divider];
 
   if (!autoSmallCap) {
     commandList.push(lordCommand);
@@ -80,15 +78,7 @@ export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): IComma
     commandList.push(scCommand);
   }
 
-  commandList.push(
-    scstyleCommand,
-    esvLinkCommand,
-    nivLinkCommand,
-    bibleLinkCommand,
-    superCommand,
-    highlightCommand,
-    poetryQuoteCommand
-  );
+  commandList.push(scstyleCommand, bibleLinkCommand, poetryQuoteCommand);
 
   return commandList;
 };
@@ -110,12 +100,7 @@ interface IMarkdownBox {
  * @param showToolbar Whether the toolbar should be shown (defaults to no)
  * @param showSidePreview  Whether the sidebar preview should be shown (defaults to no)
  */
-export const MarkdownBox = ({
-  content,
-  changeCallback,
-  showToolbar = false,
-  showSidePreview = false,
-}: IMarkdownBox) => {
+export const MarkdownBox = ({ content, changeCallback, showToolbar = true, showSidePreview = false }: IMarkdownBox) => {
   const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
   const [showFullScreen, setShowFullScreen] = useState<boolean>(false);
