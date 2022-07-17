@@ -8,12 +8,21 @@ const verseInMiddleRE = /\s(\d+)\s/;
 
 const getTextWithNumbers = (text: string) => {
   if (!verseAtBeginningRE.test(text) && !verseInMiddleRE.test(text)) {
-    return [
-      {
-        type: 'text',
-        value: text,
-      },
-    ];
+    if (/^\s*$/.test(text)) {
+      return [
+        {
+          type: 'html',
+          value: '&nbsp;',
+        },
+      ];
+    } else {
+      return [
+        {
+          type: 'text',
+          value: text,
+        },
+      ];
+    }
   }
 
   const pieces: any[] = [];
@@ -85,6 +94,12 @@ export function poetryBlocks(): Transformer {
       for (let i = 0; i < splitNewValue.length; i++) {
         let fixedString = splitNewValue[i];
         let level = 0;
+
+        // when the line is just |> at the beginning, the space is being stripped out, so...
+        if (fixedString === '|>') {
+          fixedString = ' ';
+          level = 1;
+        }
 
         while (lineMatchRE.test(fixedString)) {
           level++;
