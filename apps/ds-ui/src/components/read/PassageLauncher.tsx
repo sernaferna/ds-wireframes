@@ -24,6 +24,13 @@ type LauncherSchema = yup.InferType<typeof schema>;
 interface IPassageLauncher {
   defaultVersion: string;
 }
+
+/**
+ * Allows a user to choose a passage and launch it in Bible Gateway
+ * and/or save it. Passages are rendered via `PassageLauncherModal`.
+ *
+ * @param defaultVersion Default Bible version to use in the UI
+ */
 export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [newItem] = useNewItemMutation();

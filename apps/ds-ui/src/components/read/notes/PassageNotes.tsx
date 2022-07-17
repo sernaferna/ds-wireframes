@@ -11,6 +11,26 @@ interface IPassageNotes {
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
 }
+
+/**
+ * Component for taking notes for a given passage, as well as
+ * displaying any previously captured notes that apply to that
+ * passage.
+ *
+ * If no passage has been selected, a simple message is shown.
+ * If a passage *is* selected, the `MDNoteTaker` and
+ * `NotesForPassage` components are displayed.
+ *
+ * There are a number of interrelated pages to be aware of:
+ *
+ * * **ReadPage** includes *PassageNotes*
+ * * *PassageNotes* displays **MDNoteTaker** and **NotesForPassage**
+ *
+ * @param noteDetails Details about the currently selected/downloaded note (if any)
+ * @param passageDetails Details about the currently selected/downloaded passage (if any)
+ * @param fetchNote Callback function to fetch a note by ID
+ * @param fetchPassage Callback function to fetch a passage by ID
+ */
 export const PassageNotes = ({ noteDetails, passageDetails, fetchNote, fetchPassage }: IPassageNotes) => {
   if (noteDetails.isLoading || passageDetails.isLoading) {
     return <LoadingMessage />;

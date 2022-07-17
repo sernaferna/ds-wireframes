@@ -10,6 +10,19 @@ interface INotesSnippet {
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
 }
+
+/**
+ * Displays a preview of a note, leveraging the `MarkdownPreview`
+ * component for rendering.
+ *
+ * Leverages the `downloadedNoteDetails` object to render differently
+ * if the user has selected the same note in the UI.
+ *
+ * @param noteID ID of the note to be displayed
+ * @param downloadedNoteDetails Details about the currently selected Note in the UI (if any)
+ * @param fetchNote Callback function for fetching a note (called when the item is selected by the user)
+ * @param fetchPassage  Callback function for fetching a passage (called with an empty string to reset it if the user selects this note)
+ */
 export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPassage }: INotesSnippet) => {
   const { data, error, isLoading } = useGetNoteByIdQuery(noteID);
 

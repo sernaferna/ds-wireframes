@@ -32,6 +32,27 @@ interface IMDNoteTaker {
   passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
 }
+
+/**
+ * Component for taking notes for a given passage (in Markdown
+ * format).
+ *
+ * There is some logic in this component to determine if a note is
+ * downloaded or not (via the `noteDetails` param) as well as what
+ * the start/end reference should be (via the `passageDetails`
+ * param).
+ *
+ * Provides ability to save the note to the server via the API.
+ *
+ * There are a number of interrelated pages to be aware of:
+ *
+ * * **ReadPage** includes **PassageNotes**
+ * * PassageNotes displays *MDNoteTaker* and **NotesForPassage**
+ *
+ * @param noteDetails Details about the downloaded note (if any)
+ * @param passageDetails Details about the selected/downloaded passage
+ * @param fetchNote Callback for fetching a note from the server; in this case, only called with an empty string, which serves to reset the currently selected note to nothing
+ */
 export const MDNoteTaker = ({ noteDetails, passageDetails, fetchNote }: IMDNoteTaker) => {
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();

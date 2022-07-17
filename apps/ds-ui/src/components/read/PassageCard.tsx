@@ -29,6 +29,18 @@ interface IPassageCard {
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
 }
+
+/**
+ * Displays a card for a particular passage. Renders appropriately
+ * if the passage has been selected by the user or not. The `fetchNote`
+ * and `fetchPassage` callbacks are just used for when the user selects
+ * or unselects the passage.
+ *
+ * @param passage Passage to be displayed
+ * @param downloadedPassageDetails Details about the downloaded / selected passage
+ * @param fetchNote Callback function to get a note by ID (only called with empty string to reset)
+ * @param fetchPassage Callback function to get a passage by ID
+ */
 export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetchPassage }: IPassageCard) => {
   const [deleteItem] = useDeletePassageItemMutation();
 
