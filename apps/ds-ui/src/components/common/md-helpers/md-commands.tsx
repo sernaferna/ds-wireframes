@@ -6,11 +6,12 @@ import {
   getBreaksNeededForEmptyLineBefore,
   getBreaksNeededForEmptyLineAfter,
 } from '@uiw/react-md-editor';
+import { TextRight } from 'react-bootstrap-icons';
 
 export const lordCommand: ICommand = {
   name: 'LORD',
   keyCommand: 'LORD',
-  buttonProps: { 'aria-label': 'Insert LORD' },
+  buttonProps: { 'aria-label': 'Insert LORD', title: 'ALL CAPS' },
   icon: (
     <>
       <b>L</b>
@@ -26,7 +27,7 @@ export const lordCommand: ICommand = {
 export const scCommand: ICommand = {
   name: 'SC',
   keyCommand: 'SC',
-  buttonProps: { 'aria-label': 'Insert all SMALL CAPS' },
+  buttonProps: { 'aria-label': 'Insert all SMALL CAPS', title: 'Insert all SMALL CAPS' },
   icon: <b style={{ fontVariant: 'small-caps', textTransform: 'lowercase', display: 'inline-block' }}>A.D.</b>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^^${state.selectedText ? state.selectedText : 'A.D.'}^^`;
@@ -37,7 +38,7 @@ export const scCommand: ICommand = {
 export const scstyleCommand: ICommand = {
   name: 'SmallCaps',
   keyCommand: 'SmallCaps',
-  buttonProps: { 'aria-label': 'Insert Small Caps' },
+  buttonProps: { 'aria-label': 'Insert Small Caps', title: 'Small Caps' },
   icon: <span style={{ fontVariant: 'small-caps' }}>SmCa</span>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `^-^${state.selectedText}^-^`;
@@ -48,7 +49,7 @@ export const scstyleCommand: ICommand = {
 export const superCommand: ICommand = {
   name: 'Superscript',
   keyCommand: 'Superscript',
-  buttonProps: { 'aria-label': 'Superscript' },
+  buttonProps: { 'aria-label': 'Superscript', title: 'Superscript' },
   icon: (
     <b>
       2<sup>2</sup>
@@ -63,7 +64,7 @@ export const superCommand: ICommand = {
 export const highlightCommand: ICommand = {
   name: 'Highlight',
   keyCommand: 'Highlight',
-  buttonProps: { 'aria-label': 'Highlight' },
+  buttonProps: { 'aria-label': 'Highlight', title: 'Highlight' },
   icon: <mark>abc</mark>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `==${state.selectedText}==`;
@@ -74,7 +75,7 @@ export const highlightCommand: ICommand = {
 export const esvLinkCommand: ICommand = {
   name: 'ESVLink',
   keyCommand: 'ESVLink',
-  buttonProps: { 'aria-label': 'Bible link' },
+  buttonProps: { 'aria-label': 'Bible link', title: 'ESV Bible Link' },
   icon: <u>ESV✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `[[${state.selectedText}]ESV]`;
@@ -85,7 +86,7 @@ export const esvLinkCommand: ICommand = {
 export const nivLinkCommand: ICommand = {
   name: 'NIVLink',
   keyCommand: 'NIVLink',
-  buttonProps: { 'aria-label': 'Bible link' },
+  buttonProps: { 'aria-label': 'Bible link', title: 'NIV Bible Link' },
   icon: <u>NIV✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `[[${state.selectedText}]NIV]`;
@@ -96,7 +97,7 @@ export const nivLinkCommand: ICommand = {
 export const bibleLinkCommand: ICommand = {
   name: 'BibleLink',
   keyCommand: 'BibleLink',
-  buttonProps: { 'aria-label': 'Bible link' },
+  buttonProps: { 'aria-label': 'Bible link', title: 'Insert Bible Link' },
   icon: <u>BG✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `[[${state.selectedText}]]`;
@@ -107,18 +108,8 @@ export const bibleLinkCommand: ICommand = {
 export const poetryQuoteCommand: ICommand = {
   name: 'PoetryQuote',
   keyCommand: 'PoetryQuote',
-  buttonProps: { 'aria-label': 'Biblical Poetry' },
-  icon: (
-    <svg width="12" height="12">
-      <g>
-        <title>Layer 1</title>
-        <line id="svg_5" y2="7.02992" x2="11.07632" y1="7.09242" x1="1.01383" stroke="#000" fill="none" />
-        <line id="svg_6" y2="8.46742" x2="10.95132" y1="8.46742" x1="3.01383" stroke="#000" fill="none" />
-        <line id="svg_7" y2="4.09243" x2="11.07632" y1="4.15493" x1="1.01383" stroke="#000" fill="none" />
-        <line id="svg_8" y2="5.52992" x2="10.95132" y1="5.52992" x1="3.01383" stroke="#000" fill="none" />
-      </g>
-    </svg>
-  ),
+  buttonProps: { 'aria-label': 'Biblical Poetry', title: 'Scripture Quotation' },
+  icon: <TextRight className="border" />,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const selectedText = state.selectedText ? state.selectedText : 'QUOTE HERE';
     const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
