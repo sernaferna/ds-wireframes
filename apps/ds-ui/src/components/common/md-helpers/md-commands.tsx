@@ -120,7 +120,7 @@ export const poetryQuoteCommand: ICommand = {
     </svg>
   ),
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const selectedText = state.selectedText ? state.selectedText : 'QUOTE';
+    const selectedText = state.selectedText ? state.selectedText : 'QUOTE HERE';
     const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
     const state1 = api.setSelectionRange(newSelectionRange);
     const breaksBeforeCount = getBreaksNeededForEmptyLineBefore(state1.text, state1.selection.start);
@@ -129,8 +129,11 @@ export const poetryQuoteCommand: ICommand = {
     const breaksAfterCount = getBreaksNeededForEmptyLineAfter(state1.text, state1.selection.end);
     const breaksAfter = Array(breaksAfterCount + 1).join('\n');
 
+    let newText = '|> ' + selectedText.replaceAll('\n', '\n|> ');
+    newText = newText.replaceAll('|>  ', '|> |> ');
+
     //replaces the current selection with the poetry quote mark
-    api.replaceSelection(`${breaksBefore}|>${' '}${selectedText}${breaksAfter}`);
+    api.replaceSelection(`${breaksBefore}${newText}${breaksAfter}`);
 
     const selectionStart = state1.selection.start + breaksBeforeCount + 2;
     const selectionEnd = selectionStart + selectedText.length;
