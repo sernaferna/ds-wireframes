@@ -28,7 +28,7 @@ export const AllNotes = () => {
     }
 
     if (filterString.length > 0) {
-      notes = data!.filter((item) => item.text.includes(filterString));
+      notes = data!.filter((item) => item.text.toLocaleLowerCase().includes(filterString.toLocaleLowerCase()));
     } else {
       notes = data!;
     }
