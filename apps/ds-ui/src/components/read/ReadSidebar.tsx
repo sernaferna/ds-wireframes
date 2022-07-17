@@ -5,6 +5,9 @@ import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { CurrentReadingPlan } from '../plans/read/CurrentReadingPlan';
 
+/**
+ * Sidebar component for the **Read** section of the app
+ */
 export const ReadSidebar = () => {
   const [userData, userResponseError, userLoading, , flipBoolCallback] = useUserSettings();
 

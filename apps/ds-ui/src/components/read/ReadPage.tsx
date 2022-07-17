@@ -11,6 +11,11 @@ import { PassageNotes } from './notes/PassageNotes';
 import { AllNotes } from './notes/AllNotes';
 import { Note, Passage } from '@devouringscripture/common';
 
+/**
+ * Used to track the currently downloaded/downloading `Note` (if any).
+ * For a number of components this is as much about whether a note is
+ * **selected** as it is about the downloaded note details.
+ */
 export interface DownloadedNoteDetails {
   isLoading: boolean;
   isDownloaded: boolean;
@@ -18,6 +23,13 @@ export interface DownloadedNoteDetails {
   note?: Note;
 }
 
+/**
+ * Used to track the currently downloaded/downloading `Passage` (if
+ * any). For a number of components this is as much about whether a
+ * passage is **selected** as it is about the downloaded passage
+ * details, however, the downloaded passage does have some details
+ * that are used as well.
+ */
 export interface DownloadedPassageDetails {
   isLoading: boolean;
   isDownloaded: boolean;
@@ -25,8 +37,37 @@ export interface DownloadedPassageDetails {
   passage?: Passage;
 }
 
+/**
+ * Generic type for a function that can be used for fetching
+ * a note or a passage.
+ */
 export type FetchFunction = (id: string) => void;
 
+/**
+ * Main page/component for the **Read** section of the app.
+ *
+ * There are a number of interrelated components coming under this one,
+ * all of which need to know if a passage has been selected and/or if a
+ * note has been selected. For this reason, this component has state
+ * for the currently downloaded/downloading note and passage, as well
+ * as callback functions for initiating those downloads, and these objects
+ * and callbacks are passed through the tree of child components, so that
+ * they are all up to date with each other. When a passage is selected
+ * in any component, for example, the callback is called, which updates
+ * the central object, which causes the tree of components to be rerendered.
+ *
+ * The overall tree of components is:
+ *
+ * * ReadPage: this page
+ *   * PassageCards: list of all saved passages
+ *     * PassageCard: Details about a particular passage
+ *   * PassageNotes: Notes for a given passage
+ *     * MDNoteTaker: Captures markdown notes for the given passage
+ *     * NotesForPassage: List of previously captured notes for the given passage
+ *       * NotesSnippet: Truncated view of note
+ *   * AllNotes: Paginated list of all saved notes, regardless of passage
+ *     * NotesSnippet: Truncated view of note
+ */
 export const ReadPage = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
   const [noteTrigger] = useLazyGetNoteByIdQuery();

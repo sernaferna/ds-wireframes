@@ -9,6 +9,16 @@ interface IPassageLauncherModal {
   saveFunction(): void;
   passage: BasePassage;
 }
+
+/**
+ * Modal dialog to show a passage that's being launched; leverages
+ * `PassageLinkBody` for the actual body to be rendered.
+ *
+ * @param show Indicates if the modal should be shown
+ * @param closeFunction Callback function to call when the modal is closed
+ * @param saveFunction Callback function to call if the user choosed to save the passage
+ * @param passage The passage to be rendered
+ */
 export const PassageLauncherModal = ({ show, closeFunction, saveFunction, passage }: IPassageLauncherModal) => {
   return (
     <Modal show={show} onHide={closeFunction} aria-labelledby="modal-title" centered>
