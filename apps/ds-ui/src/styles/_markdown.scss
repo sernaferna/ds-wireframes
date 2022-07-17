@@ -1,3 +1,11 @@
 .wmde-markdown {
   font-family: 'Merriweather', serif !important;
 }
+
+.w-md-editor-toolbar {
+  @extend .btn-toolbar;
+
+  ul {
+    @extend .btn-group;
+  }
+}
