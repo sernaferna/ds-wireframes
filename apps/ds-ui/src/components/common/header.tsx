@@ -10,9 +10,8 @@ import { useUserSettings } from '../../hooks/UserSettings';
 const links = [
   { label: 'Home', href: '/' },
   { label: 'Pray', href: '/prayer' },
-  { label: 'Read', href: '/read' },
+  { label: 'Read / Write', href: '/read' },
   { label: 'Do', href: '/do' },
-  { label: 'Write', href: '/write' },
   { label: 'Plans', href: '/plans' },
   { label: 'Stats', href: '/stats' },
 ].map(({ label, href }) => {
