@@ -62,6 +62,31 @@ export const ReadPageSettings = () => {
           disabled
           onChange={updateStringCallback('settings.read.defaultVersion', 'KJV')}
         />
+
+        <h6 className="mt-3">Writing Settings</h6>
+        <Form.Check
+          type="checkbox"
+          id="autoSmallCaps"
+          label={
+            <p>
+              Automatic <span style={{ fontVariant: 'small-caps' }}>Small Caps</span>
+            </p>
+          }
+          checked={userData!.settings.write.autoSmallCaps}
+          onChange={flipBoolCallback('settings.write.autoSmallCaps')}
+        />
+        <Form.Check
+          type="checkbox"
+          id="autoADBC"
+          label={
+            <p>
+              Autoformat eras (e.g. <span style={{ fontVariant: 'small-caps' }}>a.d.</span>2020, 1000
+              <span style={{ fontVariant: 'small-caps' }}>b.c.</span>)
+            </p>
+          }
+          checked={userData!.settings.write.autoADBC}
+          onChange={flipBoolCallback('settings.write.autoADBC')}
+        />
       </Form>
       <p className="mt-3">Passage rendering via BibleGateway.</p>
     </>

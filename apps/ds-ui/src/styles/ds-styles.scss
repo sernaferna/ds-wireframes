@@ -153,20 +153,6 @@ footer {
   @extend .w-100;
 }
 
-.loading-message {
-  @extend .alert-primary;
-}
-
-.error-message {
-  @extend .alert-danger;
-
-  .details {
-    p {
-      @extend .fw-bold;
-    }
-  }
-}
-
 .alter-content-field {
   @extend .text-dark;
   @extend .border-dark;

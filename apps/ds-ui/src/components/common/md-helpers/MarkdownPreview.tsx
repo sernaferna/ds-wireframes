@@ -2,7 +2,7 @@ import React from 'react';
 import MDEditor from '@uiw/react-md-editor';
 import { useUserSettings } from '../../../hooks/UserSettings';
 import { ErrorLoadingDataMessage, LoadingMessage } from '../loading';
-import { getPluginList } from '../MarkdownBox';
+import { getPluginList } from './md-commands';
 
 interface IMarkdownPreview {
   content: string;

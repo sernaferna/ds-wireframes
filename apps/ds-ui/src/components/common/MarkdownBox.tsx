@@ -1,31 +1,12 @@
-import React, { useState } from 'react';
-import MDEditor, { ICommand, commands } from '@uiw/react-md-editor';
-import { Button, Modal } from 'react-bootstrap';
+import React, { useState, useMemo } from 'react';
+import MDEditor, { ICommand } from '@uiw/react-md-editor';
+import { Button } from 'react-bootstrap';
 import { MarkdownTutorial } from './md-tutorial/MarkdownTutorial';
-import {
-  lordCommand,
-  bibleLinkCommand,
-  highlightCommand,
-  scCommand,
-  scstyleCommand,
-  superCommand,
-  poetryQuoteCommand,
-} from './md-helpers/md-commands';
+import { getCommandList, getPluginList } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
-import supersub from 'remark-supersub';
-import {
-  tac,
-  lowerCaps,
-  smallCaps,
-  highlight,
-  bibleLinks,
-  smartquotes,
-  poetryBlocks,
-  allCapReplacements,
-  adbcReplacements,
-} from '@devouringscripture/remark-plugins';
 import { useUserSettings } from '../../hooks/UserSettings';
-import { ErrorLoadingDataMessage, LoadingMessage } from './loading';
+import { ClientSideErrorLoading, ErrorLoadingDataMessage, LoadingMessage } from './loading';
+import { useWindowSize } from '../../hooks/WindowSize';
 
 const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
 
@@ -41,53 +22,14 @@ const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
   return command;
 };
 
-/**
- * Helper function to return a list of remark plugins to be used in rendering MD to HTML
- *
- * @param autoSmallCap Setting controlling whether uppercase text should be auto Small Caps
- * @param autoADBC Setting controlling whether A.D. / B.C. should be autoformatted
- * @returns List of plugins to be used for formatting MD, in the correct order they should be applied
- */
-export const getPluginList = (autoSmallCap: boolean, autoADBC: boolean) => {
-  const pluginList = [poetryBlocks, tac, lowerCaps, smallCaps, bibleLinks];
-  if (autoADBC) {
-    pluginList.push(adbcReplacements);
-  }
-  if (autoSmallCap) {
-    pluginList.push(allCapReplacements);
-  }
-  pluginList.push(highlight, supersub, smartquotes);
-
-  return pluginList;
-};
-
-/**
- * Helper function to get a list of commands to show in the MD Editor toolbar
- *
- * @param autoSmallCap Indicates whether small caps are automatically being converted (in which case the commmand won't show)
- * @param autoADBC Indicates whether A.D./B.C./B.C.E. are automatically being converted (in which case the command won't show)
- * @returns List of commands to show in the MD editor toolbar
- */
-export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): ICommand[] => {
-  const commandList: ICommand[] = [highlightCommand, superCommand, commands.divider];
-
-  if (!autoSmallCap) {
-    commandList.push(lordCommand);
-  }
-  if (!autoADBC) {
-    commandList.push(scCommand);
-  }
-
-  commandList.push(scstyleCommand, bibleLinkCommand, poetryQuoteCommand);
-
-  return commandList;
-};
-
 interface IMarkdownBox {
   content: string;
   changeCallback: (newValue: string) => void;
   showToolbar?: boolean;
   showSidePreview?: boolean;
+  fullscreenOption?: boolean;
+  showFullScreen?: boolean;
+  setFullScreen?: (fs: boolean) => void;
 }
 
 /**
@@ -99,12 +41,43 @@ interface IMarkdownBox {
  * @param changeCallback Callback function to be called as the text is modified
  * @param showToolbar Whether the toolbar should be shown (defaults to no)
  * @param showSidePreview  Whether the sidebar preview should be shown (defaults to no)
+ * @param fullscreenOption Whether the UI should include a fullscreen option
+ * @param showFullScreen Show in fullscreen mode (if `fullscreenOption` is `true`)
+ * @param setFullScreen Callback called when fullscreen mode is switched
  */
-export const MarkdownBox = ({ content, changeCallback, showToolbar = true, showSidePreview = false }: IMarkdownBox) => {
+export const MarkdownBox = ({
+  content,
+  changeCallback,
+  showToolbar = true,
+  showSidePreview = false,
+  fullscreenOption = false,
+  showFullScreen = false,
+  setFullScreen = undefined,
+}: IMarkdownBox) => {
   const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
-  const [showFullScreen, setShowFullScreen] = useState<boolean>(false);
   const [userData, userResponseError, userLoading] = useUserSettings();
+  const windowSize = useWindowSize();
+
+  const fsButton = useMemo(() => {
+    if (!fullscreenOption) {
+      return <></>;
+    }
+
+    if (showFullScreen) {
+      return (
+        <Button variant="link" size="sm" onClick={() => setFullScreen!(false)}>
+          Show normal view
+        </Button>
+      );
+    } else {
+      return (
+        <Button variant="link" size="sm" onClick={() => setFullScreen!(true)}>
+          Show full screen
+        </Button>
+      );
+    }
+  }, [fullscreenOption, showFullScreen, setFullScreen]);
 
   const reversePreviewState = () => {
     return () => {
@@ -121,6 +94,13 @@ export const MarkdownBox = ({ content, changeCallback, showToolbar = true, showS
   }
   if (userResponseError) {
     return <ErrorLoadingDataMessage theError={userResponseError} />;
+  }
+  if (fullscreenOption && !setFullScreen) {
+    return (
+      <ClientSideErrorLoading>
+        <p>Error loading page; bad configuration.</p>
+      </ClientSideErrorLoading>
+    );
   }
 
   const pluginList = getPluginList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
@@ -144,6 +124,7 @@ export const MarkdownBox = ({ content, changeCallback, showToolbar = true, showS
           previewOptions={{
             remarkPlugins: pluginList,
           }}
+          height={showFullScreen ? windowSize.height - 250 : 200}
         />
         <Button
           variant="link"
@@ -154,56 +135,24 @@ export const MarkdownBox = ({ content, changeCallback, showToolbar = true, showS
         >
           Show Tutorial
         </Button>
-        <Button variant="link" size="sm" onClick={() => setShowFullScreen(true)}>
-          Full Screen
-        </Button>
+        {fsButton}
       </div>
-      <div className="d-grid gap-2">
-        <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
-          {showPreviewState ? 'Hide Preview' : 'Show Preview'}
-        </Button>
-        {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
-      </div>
+      {!showFullScreen && (
+        <>
+          <div className="d-grid gap-2">
+            <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
+              {showPreviewState ? 'Hide Preview' : 'Show Preview'}
+            </Button>
+            {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
+          </div>
+        </>
+      )}
       <MarkdownTutorial
         show={showMDTutorial}
         handleClose={() => {
           setShowMDTutorial(false);
         }}
       />
-      <Modal show={showFullScreen} fullscreen="md-down" size="lg" onHide={() => setShowFullScreen(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="mb-2">
-            <MDEditor
-              value={content}
-              onChange={handleChangeEvent}
-              highlightEnable={true}
-              preview="live"
-              defaultTabEnable={true}
-              extraCommands={commandList}
-              visiableDragbar={true}
-              commandsFilter={commandsFilter}
-              hideToolbar={false}
-              previewOptions={{
-                remarkPlugins: pluginList,
-              }}
-              textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
-              style={{ fontFamily: 'Courier Prime, monospace' }}
-            />
-            <Button
-              variant="link"
-              size="sm"
-              onClick={() => {
-                setShowMDTutorial(true);
-              }}
-            >
-              Show Tutorial
-            </Button>
-          </div>
-        </Modal.Body>
-      </Modal>
     </div>
   );
 };
