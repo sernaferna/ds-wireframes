@@ -15,8 +15,8 @@ interface ITutorial {
 export const Tutorial = ({ sections }: ITutorial) => {
   return (
     <>
-      {sections.map((section) => (
-        <RenderedSection section={section} />
+      {sections.map((section, index) => (
+        <RenderedSection section={section} key={`rendered-section-${index}`} />
       ))}
     </>
   );

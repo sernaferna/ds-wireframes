@@ -46,23 +46,23 @@ const RenderedParts = ({ parts }: IRenderedParts): JSX.Element => {
   for (let i = 0; i < parts.length; i++) {
     if (parts[i].type === PartType.text) {
       response.push(
-        <div className="mb-3">
+        <div className="mb-3" key={`text-part-${i}`}>
           <MarkdownPreview content={parts[i].content} shaded={false} />
         </div>
       );
     } else {
       response.push(
-        <div className="mb-3">
+        <div className="mb-3" key={`example-md-${i}`}>
           <ReadOnlyMarkdownBox text={parts[i].content} />
         </div>
       );
       response.push(
-        <div className="mb-3">
+        <div className="mb-3" key={`example-divider-${i}`}>
           <MarkdownPreview content="will render as:" shaded={false} />
         </div>
       );
       response.push(
-        <div className="mb-3">
+        <div className="mb-3" key={`example-view-${i}`}>
           <MarkdownPreview content={parts[i].content} shaded={true} />
         </div>
       );
@@ -88,7 +88,7 @@ export const RenderedSection = ({ section }: IRenderedSection) => {
     ) : (
       <Accordion>
         {section.subSections.map((ss, index) => (
-          <Accordion.Item eventKey={`${index}`}>
+          <Accordion.Item key={`rendered-subsection-${index}`} eventKey={`${index}`}>
             <Accordion.Header>{ss.title}</Accordion.Header>
             <Accordion.Body>
               <RenderedParts parts={ss.parts} />
