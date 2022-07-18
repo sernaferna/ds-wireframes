@@ -5,7 +5,20 @@ import {
   selectWord,
   getBreaksNeededForEmptyLineBefore,
   getBreaksNeededForEmptyLineAfter,
+  commands,
 } from '@uiw/react-md-editor';
+import {
+  poetryBlocks,
+  tac,
+  lowerCaps,
+  smallCaps,
+  smartquotes,
+  bibleLinks,
+  adbcReplacements,
+  allCapReplacements,
+  highlight,
+} from '@devouringscripture/remark-plugins';
+import supersub from 'remark-supersub';
 import { TextRight } from 'react-bootstrap-icons';
 
 export const lordCommand: ICommand = {
@@ -134,4 +147,46 @@ export const poetryQuoteCommand: ICommand = {
       end: selectionEnd,
     });
   },
+};
+
+/**
+ * Helper function to return a list of remark plugins to be used in rendering MD to HTML
+ *
+ * @param autoSmallCap Setting controlling whether uppercase text should be auto Small Caps
+ * @param autoADBC Setting controlling whether A.D. / B.C. should be autoformatted
+ * @returns List of plugins to be used for formatting MD, in the correct order they should be applied
+ */
+export const getPluginList = (autoSmallCap: boolean, autoADBC: boolean) => {
+  const pluginList = [poetryBlocks, tac, lowerCaps, smallCaps, bibleLinks];
+  if (autoADBC) {
+    pluginList.push(adbcReplacements);
+  }
+  if (autoSmallCap) {
+    pluginList.push(allCapReplacements);
+  }
+  pluginList.push(highlight, supersub, smartquotes);
+
+  return pluginList;
+};
+
+/**
+ * Helper function to get a list of commands to show in the MD Editor toolbar
+ *
+ * @param autoSmallCap Indicates whether small caps are automatically being converted (in which case the commmand won't show)
+ * @param autoADBC Indicates whether A.D./B.C./B.C.E. are automatically being converted (in which case the command won't show)
+ * @returns List of commands to show in the MD editor toolbar
+ */
+export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): ICommand[] => {
+  const commandList: ICommand[] = [highlightCommand, superCommand, commands.divider];
+
+  if (!autoSmallCap) {
+    commandList.push(lordCommand);
+  }
+  if (!autoADBC) {
+    commandList.push(scCommand);
+  }
+
+  commandList.push(scstyleCommand, bibleLinkCommand, poetryQuoteCommand);
+
+  return commandList;
 };
