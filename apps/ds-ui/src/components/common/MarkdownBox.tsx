@@ -1,12 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import MDEditor, { ICommand } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
 import { MarkdownTutorial } from './md-tutorial/MarkdownTutorial';
-import { getCommandList, getPluginList } from './md-helpers/md-commands';
+import { getCommandList } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { ClientSideErrorLoading, ErrorLoadingDataMessage, LoadingMessage } from './loading';
 import { useWindowSize } from '../../hooks/WindowSize';
+import { getHTMLForMD, getPluginList } from '@devouringscripture/remark-plugins';
+import fileDownload from 'js-file-download';
 
 const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
 
@@ -89,6 +91,11 @@ export const MarkdownBox = ({
     changeCallback(newValue || '');
   };
 
+  const handleHTMLDownload = useCallback(() => {
+    const formattedHTML = getHTMLForMD(content);
+    fileDownload(formattedHTML, 'notes.html');
+  }, [content]);
+
   if (userLoading) {
     return <LoadingMessage />;
   }
@@ -126,6 +133,7 @@ export const MarkdownBox = ({
           }}
           height={showFullScreen ? windowSize.height - 250 : 200}
         />
+
         <Button
           variant="link"
           size="sm"
@@ -135,7 +143,12 @@ export const MarkdownBox = ({
         >
           Show Tutorial
         </Button>
+
         {fsButton}
+
+        <Button variant="link" size="sm" onClick={handleHTMLDownload}>
+          Export HTML
+        </Button>
       </div>
       {!showFullScreen && (
         <>
@@ -143,10 +156,12 @@ export const MarkdownBox = ({
             <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
               {showPreviewState ? 'Hide Preview' : 'Show Preview'}
             </Button>
+
             {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
           </div>
         </>
       )}
+
       <MarkdownTutorial
         show={showMDTutorial}
         handleClose={() => {
