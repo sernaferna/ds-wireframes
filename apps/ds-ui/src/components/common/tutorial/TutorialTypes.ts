@@ -1,6 +1,7 @@
 export enum PartType {
   text = 'text',
   example = 'example',
+  heading = 'heading',
 }
 
 export interface SectionPart {

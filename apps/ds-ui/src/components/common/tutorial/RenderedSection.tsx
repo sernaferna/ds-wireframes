@@ -50,6 +50,12 @@ const RenderedParts = ({ parts }: IRenderedParts): JSX.Element => {
           <MarkdownPreview content={parts[i].content} shaded={false} />
         </div>
       );
+    } else if (parts[i].type === PartType.heading) {
+      response.push(
+        <h6 className="mt-4" key={`heading-part-${i}`}>
+          {parts[i].content}
+        </h6>
+      );
     } else {
       response.push(
         <div className="mb-3" key={`example-md-${i}`}>
