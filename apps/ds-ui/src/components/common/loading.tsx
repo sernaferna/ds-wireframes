@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Component to display a consistent message when content is loading
  */
 export function LoadingMessage() {
-  return <Alert className="loading-message">Loading...</Alert>;
+  return <Alert variant="primary">Loading...</Alert>;
 }
 
 /**
@@ -21,8 +21,8 @@ export function LoadingMessage() {
  */
 export const generateErrorStringFromError = (er: ErrorResponse): JSX.Element => {
   return (
-    <div className="details" key={uuidv4()}>
-      <p>{`Error ${er.errorCode}`}</p>
+    <div key={uuidv4()}>
+      <p className="fw-bold">{`Error ${er.errorCode}`}</p>
       <ul>
         {er.errors.map((item, index) => (
           <li key={`error-msg-detail-${index}`}>
@@ -60,10 +60,29 @@ export function ErrorLoadingDataMessage({ theError }: IErrorLoadingDataMessage) 
   }
 
   return (
-    <Alert className="error-message">
+    <Alert variant="danger">
       <Alert.Heading>Error!</Alert.Heading>
       <div>Error loading data from server</div>
       <div>{message}</div>
     </Alert>
   );
 }
+
+interface IClientSideErrorLoading {
+  children: JSX.Element;
+}
+
+/**
+ * Component for showing client-side alerts (as opposed to ones that are returned from APIs).
+ *
+ * @param children Content to show in the error message
+ */
+export const ClientSideErrorLoading = ({ children }: IClientSideErrorLoading) => {
+  return (
+    <Alert variant="danger">
+      <Alert.Heading>Error!</Alert.Heading>
+      <div>Error loading component</div>
+      <div>{children}</div>
+    </Alert>
+  );
+};
