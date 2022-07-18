@@ -133,6 +133,7 @@ export const MarkdownBox = ({
           }}
           height={showFullScreen ? windowSize.height - 250 : 200}
         />
+
         <Button
           variant="link"
           size="sm"
@@ -142,7 +143,9 @@ export const MarkdownBox = ({
         >
           Show Tutorial
         </Button>
+
         {fsButton}
+
         <Button variant="link" size="sm" onClick={handleHTMLDownload}>
           Export HTML
         </Button>
@@ -153,10 +156,12 @@ export const MarkdownBox = ({
             <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
               {showPreviewState ? 'Hide Preview' : 'Show Preview'}
             </Button>
+
             {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
           </div>
         </>
       )}
+
       <MarkdownTutorial
         show={showMDTutorial}
         handleClose={() => {
