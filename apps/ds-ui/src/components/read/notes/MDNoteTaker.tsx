@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 import {
   BaseNote,
@@ -67,6 +67,15 @@ export const MDNoteTaker = ({
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
+  const mdRef = useRef<HTMLDivElement>(null);
+
+  const switchFS = useCallback(
+    (fs: boolean) => {
+      setShowMDFullScreen(fs);
+      mdRef.current!.scrollIntoView({ behavior: 'smooth' });
+    },
+    [setShowMDFullScreen]
+  );
 
   const downloadedNote = useMemo(() => {
     if (noteDetails.isDownloaded) {
@@ -145,7 +154,7 @@ export const MDNoteTaker = ({
               <AlertUI />
             </Col>
           </Row>
-          <Row>
+          <Row ref={mdRef}>
             <Col>
               <Row>
                 <Form.Label column="lg" lg="3">
@@ -193,7 +202,7 @@ export const MDNoteTaker = ({
             }}
             fullscreenOption={true}
             showFullScreen={showMDFullScreen}
-            setFullScreen={setShowMDFullScreen}
+            setFullScreen={switchFS}
             showSidePreview={showMDFullScreen ? true : false}
           />
           <div className="m-2 d-flex flex-row-reverse">

@@ -6,6 +6,7 @@ import { getCommandList, getPluginList } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { ClientSideErrorLoading, ErrorLoadingDataMessage, LoadingMessage } from './loading';
+import { useWindowSize } from '../../hooks/WindowSize';
 
 const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
 
@@ -56,6 +57,7 @@ export const MarkdownBox = ({
   const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
   const [userData, userResponseError, userLoading] = useUserSettings();
+  const windowSize = useWindowSize();
 
   const fsButton = useMemo(() => {
     if (!fullscreenOption) {
@@ -122,7 +124,7 @@ export const MarkdownBox = ({
           previewOptions={{
             remarkPlugins: pluginList,
           }}
-          height={showFullScreen ? 500 : 200}
+          height={showFullScreen ? windowSize.height - 250 : 200}
         />
         <Button
           variant="link"
