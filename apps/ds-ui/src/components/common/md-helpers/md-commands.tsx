@@ -150,26 +150,6 @@ export const poetryQuoteCommand: ICommand = {
 };
 
 /**
- * Helper function to return a list of remark plugins to be used in rendering MD to HTML
- *
- * @param autoSmallCap Setting controlling whether uppercase text should be auto Small Caps
- * @param autoADBC Setting controlling whether A.D. / B.C. should be autoformatted
- * @returns List of plugins to be used for formatting MD, in the correct order they should be applied
- */
-export const getPluginList = (autoSmallCap: boolean, autoADBC: boolean) => {
-  const pluginList = [poetryBlocks, tac, lowerCaps, smallCaps, bibleLinks];
-  if (autoADBC) {
-    pluginList.push(adbcReplacements);
-  }
-  if (autoSmallCap) {
-    pluginList.push(allCapReplacements);
-  }
-  pluginList.push(highlight, supersub, smartquotes);
-
-  return pluginList;
-};
-
-/**
  * Helper function to get a list of commands to show in the MD Editor toolbar
  *
  * @param autoSmallCap Indicates whether small caps are automatically being converted (in which case the commmand won't show)
