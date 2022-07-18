@@ -91,7 +91,7 @@ export const esvLinkCommand: ICommand = {
   buttonProps: { 'aria-label': 'Bible link', title: 'ESV Bible Link' },
   icon: <u>ESV✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `[[${state.selectedText}]ESV]`;
+    const modifyText = `[|${state.selectedText}|ESV]`;
     api.replaceSelection(modifyText);
   },
 };
@@ -102,7 +102,7 @@ export const nivLinkCommand: ICommand = {
   buttonProps: { 'aria-label': 'Bible link', title: 'NIV Bible Link' },
   icon: <u>NIV✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `[[${state.selectedText}]NIV]`;
+    const modifyText = `[|${state.selectedText}|NIV]`;
     api.replaceSelection(modifyText);
   },
 };
@@ -113,7 +113,7 @@ export const bibleLinkCommand: ICommand = {
   buttonProps: { 'aria-label': 'Bible link', title: 'Insert Bible Link' },
   icon: <u>BG✞</u>,
   execute: (state: TextState, api: TextAreaTextApi) => {
-    const modifyText = `[[${state.selectedText}]]`;
+    const modifyText = `[|${state.selectedText}|]`;
     api.replaceSelection(modifyText);
   },
 };

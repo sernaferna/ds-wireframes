@@ -24,11 +24,11 @@ For example:`,
         },
         {
           type: PartType.example,
-          content: `[[Rev 11:17]KJV] says:
+          content: `[|Rev 11:17|KJV] says:
           
 |> Saying, We give thee thanks, O LORD God Almighty, which art, and wast, and art to come; because thou hast taken to thee thy great power, and hast reigned.
 
-which relates back to [[Ps 2:2]ESV], which says:
+which relates back to [|Ps 2:2|ESV], which says:
 
 |> 2 The kings of the earth set themselves,
 |> |> and the rulers take counsel together,
@@ -72,11 +72,11 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
       parts: [
         {
           type: PartType.text,
-          content: `As mentioned above, **hyperlinks** can be created the standard \`[Hyperlink text](hyperlinkUrl)\` markdown notation, but for **Devouring Scripture** it's assumed that a common pattern will be the creation of links to passages of Scripture using the **Bible Gateway** website. For this reason, a special notation was created in the format \`[[Reference]]\`.`,
+          content: `As mentioned above, **hyperlinks** can be created the standard \`[Hyperlink text](hyperlinkUrl)\` markdown notation, but for **Devouring Scripture** it's assumed that a common pattern will be the creation of links to passages of Scripture using the **Bible Gateway** website. For this reason, a special notation was created in the format \`[|Reference|]\`.`,
         },
         {
           type: PartType.example,
-          content: 'A link to [[Rom 1]]',
+          content: 'A link to [|Rom 1|]',
         },
         {
           type: PartType.text,
@@ -85,25 +85,31 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
 * The reference is expanded to a longform notation
 * The specific version of the Bible that's being used is appended in parentheses.
 
-As shown, ESV is the default version used, but when a specific version is desired, it can be specified as follows:`,
+*Other notations were considered, such as \`[[REF]]\` or \`||REF||\`, but these notations might have caused confusion with other flavours of markdown. For example, the \`[[link]]\` notation is often used in wikis for in-wiki links, and \`||some text||\` is used for "spoilers" on some sites (e.g. Discord). So \`[|REF|]\` was deemed the least confusing, in a larger context.*`,
+        },
+        {
+          type: PartType.text,
+
+          content: `As shown, \`ESV\` is the default version used, but when a specific version is desired, it can be specified as follows:`,
         },
         {
           type: PartType.example,
-          content: 'A link to [[Rom 1]NIV]',
+          content: 'A link to [|Rom 1|NIV]',
+        },
+        {
+          type: PartType.text,
+          content: `Any version supported by Bible Gateway can be used. 
+            
+**Devouring Scripture** won't *validate* the version, however, it will just pass it on to **Bible Gateway** as specified in the markdown, so something like \`[|Rom 1|ABC]\` would create the link as normal, but clicking the link would prompt an error from **Bible Gateway** because it doesn't recognize a version of the Bible named \`ABC\`.`,
         },
         {
           type: PartType.text,
           content:
-            "Any version supported by Bible Gateway can be used. **Devouring Scripture** won't *validate* the version, however, it will just pass it on to **Bible Gateway** as specified in the markdown, so something like `[[Rom 1]ABC]` would create the link as normal, but clicking the link would prompt an error from **Bible Gateway**, since it doesn't know of a version of the Bible named `ABC`.",
-        },
-        {
-          type: PartType.text,
-          content:
-            'In case different text is desired to be shown to the reader, it can be added in parentheses after the passage.',
+            'In case different text is desired to be shown to the reader, it can be added in parentheses after the passage but before the second pipe.',
         },
         {
           type: PartType.example,
-          content: 'A link to [[Rom 1:1 (verse 1)]] of Romans 1',
+          content: 'A link to [|Rom 1:1 (verse 1)|] of Romans 1',
         },
         {
           type: PartType.text,
@@ -112,7 +118,7 @@ As shown, ESV is the default version used, but when a specific version is desire
         },
         {
           type: PartType.example,
-          content: 'A shortened link to [[Rom 1]ESV;s] as opposed to the longer version from [[Rom 1]ESV].',
+          content: 'A shortened link to [|Rom 1|ESV;s] as opposed to the longer version from [|Rom 1]|ESV].',
         },
         {
           type: PartType.text,
@@ -120,7 +126,7 @@ As shown, ESV is the default version used, but when a specific version is desire
         },
         {
           type: PartType.example,
-          content: `It says in [[Rom 1:1]NIV] that Paul is an Apostle, even though he wasn't one of the *original* Apostles (as called out in [[Matt 10:5-15]ESV;s] or [[Mark 3:13-21 (Mark 3)]NIV] or ==other examples==.)
+          content: `It says in [|Rom 1:1|NIV] that Paul is an Apostle, even though he wasn't one of the *original* Apostles (as called out in [|Matt 10:5-15|ESV;s] or [|Mark 3:13-21 (Mark 3)|NIV] or ==other examples==.)
             
 If you're interested, the **Apostles' Creed** can be found at the [Christian Reformed Church website](https://www.crcna.org/welcome/beliefs/creeds/apostles-creed)`,
         },
@@ -154,7 +160,7 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
         },
         {
           type: PartType.example,
-          content: `It says in [[John 1:1-5]]:
+          content: `It says in [|John 1:1-5|]:
           
 |> 1 In the beginning was the Word, and the Word was with God, and the Word was God. 2 He was in the beginning with God. 3 All things were made through him, and without him was not any thing made that was made. 4 In him was life, and the life was the light of men. 5 The light shines in the darkness, and the darkness has not overcome it.`,
         },
@@ -186,7 +192,7 @@ Standard blockquotes can always be used, allowing for more control over spacing.
         },
         {
           type: PartType.example,
-          content: `We read in [[Psalm 1:1-2]]:
+          content: `We read in [|Psalm 1:1-2|]:
 
 |> 1 Blessed is the man
 |> |> who walks not in the counsel of the wicked,
@@ -205,7 +211,7 @@ Standard blockquotes can always be used, allowing for more control over spacing.
         },
         {
           type: PartType.example,
-          content: `We read in [[Psalm 1:1-2]ESV]:
+          content: `We read in [|Psalm 1:1-2|ESV]:
 
 |>      1 Blessed is the man
 |> |>      who walks not in the counsel of the wicked,
