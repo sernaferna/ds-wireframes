@@ -3,8 +3,15 @@ import { Tutorial } from '../tutorial/Tutorial';
 import { SectionDocumentation } from '../tutorial/TutorialTypes';
 import { mdMainSection } from './mainSection';
 import { specialMarkupSection } from './specialMarkupSection';
+import { mdCheatsheetSection } from './cheatsheetSection';
+import { mdIntroSection } from './introSection';
 
-const mdTutorialSections: SectionDocumentation[] = [mdMainSection, specialMarkupSection];
+const mdTutorialSections: SectionDocumentation[] = [
+  mdIntroSection,
+  mdCheatsheetSection,
+  mdMainSection,
+  specialMarkupSection,
+];
 
 interface IMarkdownTutorial {
   show: boolean;
