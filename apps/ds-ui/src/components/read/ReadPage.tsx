@@ -80,6 +80,7 @@ export const ReadPage = () => {
     isLoading: false,
     isDownloaded: false,
   });
+  const [showMDFullScreen, setShowMDFullScreen] = useState<boolean>(false);
 
   const getNoteCallback = useCallback(
     (noteId: string) => {
@@ -148,6 +149,14 @@ export const ReadPage = () => {
     },
     [passageTrigger, updateDownloadedPassageDetails, downloadedPassageDetails]
   );
+
+  const switchMDFullScreen = useCallback(
+    (fs: boolean) => {
+      setShowMDFullScreen(fs);
+    },
+    [setShowMDFullScreen]
+  );
+
   if (userLoading) {
     return <LoadingMessage />;
   }
@@ -167,22 +176,24 @@ export const ReadPage = () => {
             <Col xs="12" className="mb-2">
               <PassageLauncher defaultVersion={userData!.settings.read.defaultVersion} />
             </Col>
-            <Col xs="12" lg="6">
+            <Col xs="12" lg="6" className={showMDFullScreen ? 'd-none' : ''}>
               <PassageCards
                 fetchNote={getNoteCallback}
                 fetchPassage={getPassageCallback}
                 passageDetails={downloadedPassageDetails}
               />
             </Col>
-            <Col xs="12" lg="6">
+            <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
               <PassageNotes
                 fetchNote={getNoteCallback}
                 fetchPassage={getPassageCallback}
                 noteDetails={downloadedNoteDetails}
                 passageDetails={downloadedPassageDetails}
+                setShowMDFullScreen={switchMDFullScreen}
+                showMDFullScreen={showMDFullScreen}
               />
             </Col>
-            <Col xs="12" className="mt-4">
+            <Col xs="12" className={showMDFullScreen ? 'd-none' : 'mt-4'}>
               <AllNotes
                 noteDetails={downloadedNoteDetails}
                 fetchNote={getNoteCallback}

@@ -31,6 +31,8 @@ interface IMDNoteTaker {
   noteDetails: DownloadedNoteDetails;
   passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
+  showMDFullScreen: boolean;
+  setShowMDFullScreen(fs: boolean): void;
 }
 
 /**
@@ -52,8 +54,16 @@ interface IMDNoteTaker {
  * @param noteDetails Details about the downloaded note (if any)
  * @param passageDetails Details about the selected/downloaded passage
  * @param fetchNote Callback for fetching a note from the server; in this case, only called with an empty string, which serves to reset the currently selected note to nothing
+ * @param showMDFullScreen Indicates if the MD editor should be shown full screen
+ * @param setShowMDFullScreen Callback function to call when switching between full and non-full screen MD mode
  */
-export const MDNoteTaker = ({ noteDetails, passageDetails, fetchNote }: IMDNoteTaker) => {
+export const MDNoteTaker = ({
+  noteDetails,
+  passageDetails,
+  fetchNote,
+  showMDFullScreen,
+  setShowMDFullScreen,
+}: IMDNoteTaker) => {
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
@@ -181,6 +191,10 @@ export const MDNoteTaker = ({ noteDetails, passageDetails, fetchNote }: IMDNoteT
               fp.setFieldValue('value', content);
               fp.setFieldTouched('value', true);
             }}
+            fullscreenOption={true}
+            showFullScreen={showMDFullScreen}
+            setFullScreen={setShowMDFullScreen}
+            showSidePreview={showMDFullScreen ? true : false}
           />
           <div className="m-2 d-flex flex-row-reverse">
             <Button variant="danger" className="ms-2" onClick={newNoteBtn}>

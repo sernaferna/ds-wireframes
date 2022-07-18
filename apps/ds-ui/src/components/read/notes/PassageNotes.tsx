@@ -10,6 +10,8 @@ interface IPassageNotes {
   passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
+  showMDFullScreen: boolean;
+  setShowMDFullScreen(fs: boolean): void;
 }
 
 /**
@@ -30,8 +32,17 @@ interface IPassageNotes {
  * @param passageDetails Details about the currently selected/downloaded passage (if any)
  * @param fetchNote Callback function to fetch a note by ID
  * @param fetchPassage Callback function to fetch a passage by ID
+ * @param showMDFullScreen Whether the MD editor should be shown full screen
+ * @param setShowMDFullScreen Callback function to call when switching in/out of MD fullscreen
  */
-export const PassageNotes = ({ noteDetails, passageDetails, fetchNote, fetchPassage }: IPassageNotes) => {
+export const PassageNotes = ({
+  noteDetails,
+  passageDetails,
+  fetchNote,
+  fetchPassage,
+  showMDFullScreen,
+  setShowMDFullScreen,
+}: IPassageNotes) => {
   if (noteDetails.isLoading || passageDetails.isLoading) {
     return <LoadingMessage />;
   }
@@ -54,7 +65,13 @@ export const PassageNotes = ({ noteDetails, passageDetails, fetchNote, fetchPass
   return (
     <>
       <h4>Notes</h4>
-      <MDNoteTaker fetchNote={fetchNote} noteDetails={noteDetails} passageDetails={passageDetails} />
+      <MDNoteTaker
+        fetchNote={fetchNote}
+        noteDetails={noteDetails}
+        passageDetails={passageDetails}
+        showMDFullScreen={showMDFullScreen}
+        setShowMDFullScreen={setShowMDFullScreen}
+      />
 
       {passageDetails.isDownloaded ? (
         <NotesForPassage
