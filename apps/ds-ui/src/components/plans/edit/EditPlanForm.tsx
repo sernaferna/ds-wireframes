@@ -198,7 +198,7 @@ export const EditPlanForm = ({
                 <Form.Control.Feedback type="invalid">{errors['description']}</Form.Control.Feedback>
               </Col>
               <Col xs="12" lg="4" xl="2">
-                {user.isAdmin ? (
+                {user.isAdmin && (
                   <>
                     <Form.Check
                       name="isAdmin"
@@ -215,8 +215,6 @@ export const EditPlanForm = ({
                       Available to all users
                     </Form.Text>
                   </>
-                ) : (
-                  <></>
                 )}
                 <Form.Check
                   name="includeApocrypha"
@@ -246,7 +244,7 @@ export const EditPlanForm = ({
               onBlur={handleFreeformBlur}
             />
 
-            {!values.isFreeform ? (
+            {!values.isFreeform && (
               <div>
                 <Form.Label htmlFor="reference" className="h4">
                   Passage(s)
@@ -272,8 +270,6 @@ export const EditPlanForm = ({
                   <Form.Control.Feedback type="invalid">{errors['reference']}</Form.Control.Feedback>
                 </InputGroup>
               </div>
-            ) : (
-              ''
             )}
             <RenderWeeks
               days={days}
@@ -291,12 +287,10 @@ export const EditPlanForm = ({
               <Button variant="primary" onClick={handleSave}>
                 Save
               </Button>
-              {user.isAdmin ? (
+              {user.isAdmin && (
                 <Button variant="primary" onClick={handleSubmit}>
                   Publish
                 </Button>
-              ) : (
-                <></>
               )}
               <Button variant="danger" onClick={handleReset}>
                 New

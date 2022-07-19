@@ -124,7 +124,7 @@ export const CreatePrayerItem = ({ confession = false }) => {
                 }}
               />
             </Form.Group>
-            {confession ? null : (
+            {!confession && (
               <Stack direction="horizontal" className="h1 m-3">
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>

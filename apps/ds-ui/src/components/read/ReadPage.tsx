@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react';
-import { ReadSidebar } from './ReadSidebar';
 import { PassageCards } from './PassageCards';
 import { PassageLauncher } from './PassageLauncher';
 import { useUserSettings } from '../../hooks/UserSettings';
@@ -167,40 +166,28 @@ export const ReadPage = () => {
   return (
     <Container fluid={true} className="page-main-container">
       <Row>
-        <Col className="page-sidebar-container-col">
-          <ReadSidebar />
+        <Col xs="12" className="mb-2">
+          <PassageLauncher defaultVersion={userData!.settings.read.defaultVersion} />
         </Col>
-        <Col className="page-main-content-col">
-          <h1 className="d-none d-md-block">Read the Scripture</h1>
-          <Row>
-            <Col xs="12" className="mb-2">
-              <PassageLauncher defaultVersion={userData!.settings.read.defaultVersion} />
-            </Col>
-            <Col xs="12" lg="6" className={showMDFullScreen ? 'd-none' : ''}>
-              <PassageCards
-                fetchNote={getNoteCallback}
-                fetchPassage={getPassageCallback}
-                passageDetails={downloadedPassageDetails}
-              />
-            </Col>
-            <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
-              <PassageNotes
-                fetchNote={getNoteCallback}
-                fetchPassage={getPassageCallback}
-                noteDetails={downloadedNoteDetails}
-                passageDetails={downloadedPassageDetails}
-                setShowMDFullScreen={switchMDFullScreen}
-                showMDFullScreen={showMDFullScreen}
-              />
-            </Col>
-            <Col xs="12" className={showMDFullScreen ? 'd-none' : 'mt-4'}>
-              <AllNotes
-                noteDetails={downloadedNoteDetails}
-                fetchNote={getNoteCallback}
-                fetchPassage={getPassageCallback}
-              />
-            </Col>
-          </Row>
+        <Col xs="12" lg="6" className={showMDFullScreen ? 'd-none' : ''}>
+          <PassageCards
+            fetchNote={getNoteCallback}
+            fetchPassage={getPassageCallback}
+            passageDetails={downloadedPassageDetails}
+          />
+        </Col>
+        <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
+          <PassageNotes
+            fetchNote={getNoteCallback}
+            fetchPassage={getPassageCallback}
+            noteDetails={downloadedNoteDetails}
+            passageDetails={downloadedPassageDetails}
+            setShowMDFullScreen={switchMDFullScreen}
+            showMDFullScreen={showMDFullScreen}
+          />
+        </Col>
+        <Col xs="12" className={showMDFullScreen ? 'd-none' : 'mt-4'}>
+          <AllNotes noteDetails={downloadedNoteDetails} fetchNote={getNoteCallback} fetchPassage={getPassageCallback} />
         </Col>
       </Row>
     </Container>

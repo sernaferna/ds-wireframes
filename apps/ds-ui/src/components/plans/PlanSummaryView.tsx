@@ -132,9 +132,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
           />
         </Col>
         <Col xs="4">
-          {data!.status === PlanStatus.Deleted ? (
-            ''
-          ) : (
+          {data!.status !== PlanStatus.Deleted && (
             <Button variant="danger" onClick={() => deletePlanOnServer(planId)}>
               Delete
             </Button>

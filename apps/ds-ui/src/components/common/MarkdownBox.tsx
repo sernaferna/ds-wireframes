@@ -157,7 +157,7 @@ export const MarkdownBox = ({
               {showPreviewState ? 'Hide Preview' : 'Show Preview'}
             </Button>
 
-            {showPreviewState ? <MarkdownPreview content={content} /> : <></>}
+            {showPreviewState && <MarkdownPreview content={content} />}
           </div>
         </>
       )}

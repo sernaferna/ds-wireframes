@@ -73,15 +73,13 @@ export const PassageNotes = ({
         setShowMDFullScreen={setShowMDFullScreen}
       />
 
-      {passageDetails.isDownloaded ? (
+      {passageDetails.isDownloaded && (
         <NotesForPassage
           fetchNote={fetchNote}
           fetchPassage={fetchPassage}
           noteDetails={noteDetails}
           osis={passageDetails.passage!.osis}
         />
-      ) : (
-        <></>
       )}
     </>
   );

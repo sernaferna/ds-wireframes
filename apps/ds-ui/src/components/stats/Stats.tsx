@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { StatsSidebar } from './StatsSidebar';
 import { UserAttributes, ActionStats } from '@devouringscripture/common';
 import { ReadScripture } from './graphs/ReadScripture';
 import { DetailedReading } from './graphs/DetailedReading';
@@ -86,20 +85,13 @@ export const Stats = () => {
   return (
     <Container fluid={true} className="page-main-container">
       <Row>
-        <Col className="page-sidebar-container-col">
-          <StatsSidebar />
-        </Col>
-        <Col className="page-main-content-col">
-          <Row>
-            <Col xs="12">
-              <Row xs="1" md="2" xxl="3">
-                {vizList}
-              </Row>
-            </Col>
-            <Col xs="12" className="mt-4">
-              <GraphSorter />
-            </Col>
+        <Col xs="12">
+          <Row xs="1" md="2" xxl="3">
+            {vizList}
           </Row>
+        </Col>
+        <Col xs="12" className="mt-4">
+          <GraphSorter />
         </Col>
       </Row>
     </Container>

@@ -107,7 +107,7 @@ export function ActionsWidget({ setErrorMessage, showTitle = false }: IActionsWi
   return (
     <Card className="m-0 border-0">
       <Card.Body>
-        {showTitle ? <h4>Action List</h4> : <></>}
+        {showTitle && <h4>Action List</h4>}
         <h6>
           <span className={`p-0 m-0 ${showPrevButton ? 'text-dark btn btn-lg fs-4' : 'text-muted'}`}>
             <CaretLeftFill className="align-middle" onClick={handleLeftClick()} />

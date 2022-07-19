@@ -73,17 +73,7 @@ export const PrayerSettings = () => {
   }
 
   return (
-    <Form>
-      <h6>General Settings</h6>
-      <Form.Check
-        type="checkbox"
-        id="showSizeIndicatorSetting"
-        label="Show Size Indicator"
-        checked={userData!.settings.showSizeIndicator}
-        onChange={flipBoolCallback('settings.showSizeIndicator')}
-      />
-
-      <h6 className="mt-3">Prayer Settings</h6>
+    <>
       <Form.Group className="p-2">
         <Form.Text muted>Settings here apply across the entire site.</Form.Text>
       </Form.Group>
@@ -157,6 +147,6 @@ export const PrayerSettings = () => {
       </Form.Group>
 
       <PrayerViewFilterComponent />
-    </Form>
+    </>
   );
 };
