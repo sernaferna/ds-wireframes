@@ -5,8 +5,27 @@ import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 import { useUserSettings } from '../../hooks/UserSettings';
 
 /**
- * Set of links to be displayed across the top of the header
+ * Mini interface for defining links to show up in the header
  */
+interface HeaderLink {
+  label: string;
+  href: string;
+}
+
+/**
+ * Helper function used to map arrays of link objects to links for the header.
+ *
+ * @param link The link to be rendered
+ * @returns A `NavLink` component
+ */
+const getLinks = (link: HeaderLink) => {
+  return (
+    <NavLink key={link.href} className="nav-link" to={link.href}>
+      {link.label}
+    </NavLink>
+  );
+};
+
 const links = [
   { label: 'Home', href: '/' },
   { label: 'Pray', href: '/prayer' },
@@ -14,24 +33,9 @@ const links = [
   { label: 'Do', href: '/do' },
   { label: 'Plans', href: '/plans' },
   { label: 'Stats', href: '/stats' },
-].map(({ label, href }) => {
-  return (
-    <NavLink key={href} className="nav-link" to={href}>
-      {label}
-    </NavLink>
-  );
-});
+].map(getLinks);
 
-/**
- * Set of links to be displayed for Admin users
- */
-const adminLinks = [].map(({ label, href }) => {
-  return (
-    <NavLink key={href} className="nav-link" to={href}>
-      {label}
-    </NavLink>
-  );
-});
+const adminLinks = [].map(getLinks);
 
 /**
  * Header displayed at the top of the application
@@ -57,7 +61,7 @@ export const Header = () => {
         <Navbar.Collapse id="ds-header-navbar">
           <Nav>
             {links}
-            {userData!.isAdmin ? adminLinks : ''}
+            {userData!.isAdmin && adminLinks}
           </Nav>
         </Navbar.Collapse>
       </Container>
