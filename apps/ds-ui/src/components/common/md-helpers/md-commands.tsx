@@ -7,18 +7,6 @@ import {
   getBreaksNeededForEmptyLineAfter,
   commands,
 } from '@uiw/react-md-editor';
-import {
-  poetryBlocks,
-  tac,
-  lowerCaps,
-  smallCaps,
-  smartquotes,
-  bibleLinks,
-  adbcReplacements,
-  allCapReplacements,
-  highlight,
-} from '@devouringscripture/remark-plugins';
-import supersub from 'remark-supersub';
 import { TextRight } from 'react-bootstrap-icons';
 
 export const lordCommand: ICommand = {
