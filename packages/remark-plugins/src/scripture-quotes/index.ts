@@ -1,6 +1,7 @@
 import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal } from 'unist';
+import { is } from 'unist-util-is';
 
 const lineMatchRE = /^\|> /;
 const verseAtBeginningRE = /^(\d+)\s/;
@@ -76,14 +77,17 @@ const getTextWithNumbers = (text: string) => {
   return pieces;
 };
 
-export function poetryBlocks(): Transformer {
+export function scriptureQuotes(): Transformer {
   return (tree) => {
-    visit(tree, ['text'], (node, i, parent: any) => {
-      if (node.type !== 'text') {
+    visit(tree, ['paragraph'], (node, i, parent: any) => {
+      const { children } = node;
+
+      const textNode = children && children[0];
+      if (!is(textNode, 'text')) {
         return;
       }
 
-      const { value } = node as Literal<string>;
+      const { value } = textNode as Literal<string>;
 
       if (!lineMatchRE.test(value)) {
         return;
@@ -119,14 +123,12 @@ export function poetryBlocks(): Transformer {
         });
       }
 
-      const children = [
-        {
-          type: 'blockquote',
-          children: lines,
-        },
-      ];
-
-      parent.children.splice(i, 1, ...children);
+      node.type = 'blockquote';
+      node.processedByDS = true;
+      node.data = {
+        hName: 'blockquote',
+      };
+      node.children = lines.slice();
     });
   };
 }

@@ -4,7 +4,6 @@ import html from 'rehype-stringify';
 import remark2Rehype from 'remark-rehype';
 import supersub from 'remark-supersub';
 import gfm from 'remark-gfm';
-import { poetryBlocks } from '../bible-poetry';
 import { tac } from '../tac';
 import { lowerCaps } from '../lower-caps';
 import { smallCaps } from '../small-caps';
@@ -13,6 +12,7 @@ import { adbcReplacements } from '../ad-bc-replacements';
 import { allCapReplacements } from '../all-cap-replacements';
 import { highlight } from '../highlight';
 import { smartquotes } from '../smartquotes';
+import { scriptureQuotes } from '../scripture-quotes';
 
 /**
  * Helper function to get a properly ordered list of Remark Plugins, for use in converting markdown to HTML.
@@ -22,7 +22,7 @@ import { smartquotes } from '../smartquotes';
  * @returns List of plugins to be used in rendering markdown to HTML
  */
 export const getPluginList = (autoSmallcap: boolean = true, autoADBC: boolean = true) => {
-  const pluginList = [poetryBlocks, tac, lowerCaps, smallCaps, bibleLinks];
+  const pluginList = [scriptureQuotes, tac, lowerCaps, smallCaps, bibleLinks];
 
   if (autoADBC) {
     pluginList.push(adbcReplacements);
