@@ -12,6 +12,16 @@ For a description of what each plugin can do see the Markdown Tutorial included 
 - Highlight (`highlight`): Highlights text surrounded by `==` (using the HTML `<mark>` tag). Other markdown editors also use this convention.
 - Bible Links (`bibleLinks`): Special case for rendering a link to a Bible passage on the **Bible Gateway** website, The link will also be decorated with the version in parentheses as well as a cross icon to visually distinguish these links from other links.
 - Smartquotes (`smartquotes`): Simply renders quotation marks as "smart" quotes; no special markup required by the markdown author
-- Bible Poetry (`poetryBlocks`): Renders larger Bible quotations in a slightly smarter way; essentially a `blockquote` with the following additions:
+- Quotes from Scripture (`scriptureQuotes`): Renders larger Bible quotations in a slightly smarter way; essentially a `blockquote` with the following additions:
   - Verse numbers are superscripted, and
   - Nesting works well for including Biblical poetry (with the indentation required)
+- All Cap Replacements (`allCapReplacements`): Replaces any text in ALL CAPS with Small Cap versions
+- Era Replacements (`adbcReplacements`): Replaces any "eras" (B.C., A.D., B.C.E., C.E.) with smallcap versions.
+
+## Helper Functions
+
+Two functions are also exposed from this library:
+
+`getPluginList(autoSmallCap, autoADBC)` returns a list of plugins (in the correct order) suitable for rendering markdown to HTML.
+
+`getHTMLForMD(md)` takes a string containing markdown and returns HTML format.
