@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActionsWidget } from './ActionsWidget';
-import { DoSidebar } from './DoSidebar';
 import { Col, Row, Container } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { getDateForActions } from '../../stores/UISlice';
@@ -23,19 +22,12 @@ export function DoPage() {
       <AlertUI />
 
       <Row>
-        <Col className="page-sidebar-container-col">
-          <DoSidebar />
+        <Col xs="12" md="8" lg="6">
+          <CalendarView dateToShow={dateToShow} />
+          <ActionsWidget setErrorMessage={setErrorMessage} />
         </Col>
-        <Col className="page-main-content-col">
-          <Row>
-            <Col xs="12" md="8" lg="6">
-              <CalendarView dateToShow={dateToShow} />
-              <ActionsWidget setErrorMessage={setErrorMessage} />
-            </Col>
-            <Col xs="12" md="4" lg="6">
-              <CustomActionList />
-            </Col>
-          </Row>
+        <Col xs="12" md="4" lg="6">
+          <CustomActionList />
         </Col>
       </Row>
     </Container>

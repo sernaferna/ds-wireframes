@@ -42,23 +42,7 @@ strong {
 
 .page-main-container {
   @extend .m-0;
-  @extend .p-1;
-}
-
-.page-main-content-col {
-  @extend .col-12;
-  @extend .col-lg-9;
-  @extend .col-xxl-10;
-}
-
-.page-sidebar-container-col {
-  @extend .order-last;
-  @extend .col-12;
-  @extend .col-sm-12;
-  @extend .col-md-12;
-  @extend .col-lg-3;
-  @extend .col-xl-3;
-  @extend .col-xxl-2;
+  @extend .p-3;
 }
 
 .sidebar-collapse-widget {

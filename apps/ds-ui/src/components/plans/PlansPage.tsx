@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { PlanSidebar } from './PlanSidebar';
 import { paginateItems } from '../../hooks/pagination';
 import { PlanSummaryView } from './PlanSummaryView';
 import { useGetAllInstantiatedPlanItemsQuery } from '../../services/InstantiatedPlanService';
@@ -48,34 +47,27 @@ export const PlansPage = () => {
 
   return (
     <Container fluid={true} className="page-main-container">
-      <Row>
-        <Col className="page-sidebar-container-col">
-          <PlanSidebar />
+      <Row className="mb-3">
+        <Col>
+          <NavLink className="btn btn-primary" key="/plans/edit" to="/plans/edit">
+            New Plan
+          </NavLink>
         </Col>
-        <Col className="page-main-content-col">
-          <Row className="mb-3">
+      </Row>
+      <Row>
+        <Col xs="12" xl="7">
+          {paginatedItems}
+          {paginationElement}
+        </Col>
+        <Col xs="12" xl="5">
+          <Row>
             <Col>
-              <NavLink className="btn btn-primary" key="/plans/edit" to="/plans/edit">
-                New Plan
-              </NavLink>
+              <CurrentReadingPlan />
             </Col>
           </Row>
-          <Row>
-            <Col xs="12" xl="7">
-              {paginatedItems}
-              {paginationElement}
-            </Col>
-            <Col xs="12" xl="5">
-              <Row>
-                <Col>
-                  <CurrentReadingPlan />
-                </Col>
-              </Row>
-              <Row className="mt-3">
-                <Col className="d-flex justify-content-center">
-                  <PlanCalendarView dateToShow={dateToShow} />
-                </Col>
-              </Row>
+          <Row className="mt-3">
+            <Col className="d-flex justify-content-center">
+              <PlanCalendarView dateToShow={dateToShow} />
             </Col>
           </Row>
         </Col>

@@ -7,7 +7,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
  * Settings component for **Stats** section of the app
  */
 export const StatsSettings = () => {
-  const [userData, userResponseError, userLoading, , flipBoolCallback, , updateStringCallback] = useUserSettings();
+  const [userData, userResponseError, userLoading, , , , updateStringCallback] = useUserSettings();
 
   if (userLoading) {
     return <LoadingMessage />;
@@ -19,17 +19,7 @@ export const StatsSettings = () => {
   const dataFilter = userData!.settings.stats.statsFilter;
 
   return (
-    <Form>
-      <h6>General Settings</h6>
-      <Form.Check
-        type="checkbox"
-        id="showSizeIndicatorSetting"
-        label="Show Size Indicator"
-        checked={userData!.settings.showSizeIndicator}
-        onChange={flipBoolCallback('settings.showSizeIndicator')}
-      />
-
-      <h6 className="mt-3">Stat Settings</h6>
+    <>
       <Form.Label>Choose Filter Option:</Form.Label>
       <Form.Check
         type="radio"
@@ -66,6 +56,6 @@ export const StatsSettings = () => {
         checked={dataFilter === 'alltime'}
         onChange={updateStringCallback('settings.stats.statsFilter', 'alltime')}
       />
-    </Form>
+    </>
   );
 };
