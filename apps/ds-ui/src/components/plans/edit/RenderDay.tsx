@@ -137,40 +137,30 @@ export const RenderDay = ({
   const buttonGroup = useMemo(() => {
     return (
       <>
-        {!isFreeform ? (
+        {!isFreeform && (
           <>
-            {dayNum > 1 ? (
+            {dayNum > 1 && (
               <Button variant="outline-secondary" onClick={handleDown(dayNum)}>
                 <ChevronDown />
               </Button>
-            ) : (
-              <></>
             )}
-            {dayNum > 2 ? (
+            {dayNum > 2 && (
               <Button variant="outline-secondary" onClick={handleDoubleDown(dayNum)}>
                 <ChevronDoubleDown />
               </Button>
-            ) : (
-              <></>
             )}
-            {dayNum < maxDays ? (
+            {dayNum < maxDays && (
               <Button variant="outline-secondary" onClick={handleUp(dayNum)}>
                 <ChevronUp />
               </Button>
-            ) : (
-              <></>
             )}
-            {dayNum < maxDays - 1 ? (
+            {dayNum < maxDays - 1 && (
               <Button variant="outline-secondary" onClick={handleDoubleUp(dayNum)}>
                 <ChevronDoubleUp />
               </Button>
-            ) : (
-              <></>
             )}
-            {day.verses ? <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div> : <></>}
+            {day.verses && <div className="fw-bold ms-2 text-muted">{`${day.verses.length} verses`}</div>}
           </>
-        ) : (
-          <></>
         )}
       </>
     );

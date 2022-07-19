@@ -108,7 +108,7 @@ export const PrayerSnapshot = ({ showTitle = false }: IPrayerSnapshot) => {
   return (
     <Card className="m-0 border-0">
       <Card.Body>
-        {showTitle ? <h4>Prayer Items</h4> : <></>}
+        {showTitle && <h4>Prayer Items</h4>}
         <Form className="reading-text">{paginatedItems}</Form>
 
         {paginationElement}
