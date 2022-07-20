@@ -18,17 +18,17 @@ export const mdCheatsheetSection: SectionDocumentation = {
           type: PartType.text,
           content: `A few simple notations provide 90% of what you might want to do with markdown.
                 
-| Notation | Syntax |
-| --- | --- |
-| **Bold** text | \`**Bold** text\` or \`__Bold__ text\` |
-| *Italicised* text | \`*Italicised* text\` or \`_Italicised_ text\` |
-| ==Highlighted== text | \`==Highlighted== text\` |
-| Superscript: 1^st^ | \`Superscript: 1^st^\` |
-| UPPERCASE (if user setting **on**) | \`UPPERCASE\` (no special notation necessary) |
-| UPPERCASE (if user setting **off**) | \`^^^UPPERCASE^^^\` |
-| Era: 2020^^A.D.^^ (if user setting **on**) | \`2020AD\` or \`2020A.D.\` (no special notation necessary) |
-| Era: 2020^^A.D.^^ (if user setting **off**) | \`2020^^A.D.^^\` |
-| ^-^Small Caps^-^ | \`^-^Small Caps^-^\` |`,
+| Notation | Syntax | Comment |
+| --- | --- | --- |
+| **Bold** | \`**Bold**\` or \`__Bold__\` | |
+| *Italics* | \`*Italics*\` or \`_Italics_\` | |
+| ==Highlight== | \`==Highlight==\` | |
+| Superscript: 1^st^ | \`Superscript: 1^st^\` | |
+| UPPERCASE | \`UPPERCASE\` | If user setting **on** no special notation necessary |
+| UPPERCASE | \`^^^UPPERCASE^^^\` | If user setting **off** |
+| Era: 2020^^A.D.^^ | \`2020AD\` or \`2020A.D.\` | If user setting **on**; no special notation necessary but must be uppercase |
+| Era: 2020^^A.D.^^ | \`2020^^A.D.^^\` | If user setting **off** |
+| ^-^Small Caps^-^ | \`^-^Small Caps^-^\` | |`,
         },
       ],
     },
@@ -57,7 +57,7 @@ Leaving multiple lines between will create two paragraphs.`,
       parts: [
         {
           type: PartType.example,
-          content: `A link to [Google](https://www.google.ca) and a link to the Bible Gateway to [|Acts 2:1|]`,
+          content: `A link to [Google](https://www.google.ca) and a link to the **Bible Gateway** to [|Acts 2:1|]`,
         },
       ],
     },

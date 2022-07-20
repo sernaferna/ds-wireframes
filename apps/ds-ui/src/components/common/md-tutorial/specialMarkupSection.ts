@@ -20,7 +20,7 @@ export const specialMarkupSection: SectionDocumentation = {
           
 Scripture sometimes contains words that appear \`IN ALL CAPITAL LETTERS\` (often, but not always, proper names, such as the name of the ^^^LORD^^^). In printed Bibles, and on some websites, such text is often formatted as ^^^SMALL CAPS^^^ for readability. For the Christian, these words should always be in all uppercase, even if they're formatted differently on the screen/page.
 
-**Devouring Scripture** follows this notation -- *where possible.* By default, any words written \`ALL IN UPPERCASE\` will be rendered as Small Caps, with the first letter of each word being larger than the rest. No special notation is needed, the app will just format any words it finds in all uppercase. In the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in Small Caps format.
+**Devouring Scripture** uses ^-^Small Caps^-^ where possible. By default, any words written \`ALL IN UPPERCASE\` will be rendered as ^^^SMALL CAPS^^^, with the first letter of each word being larger than the rest. No special notation is needed, the app will just format any words it finds in all uppercase. In the markdown the letters will be all uppercase, on devices that don't support advanced formatting it will also be all uppercase, and on devices that support more advanced formatting it will be rendered in ^^^SMALL CAPS^^^ format.
             
 For example:`,
         },
@@ -37,12 +37,20 @@ which relates back to [|Ps 2:2|ESV], which says:
 |> |> against the LORD and against his Anointed, saying,`,
         },
         {
+          type: PartType.heading,
+          content: 'Manual vs. Automatic',
+        },
+        {
           type: PartType.text,
-          content: `This behaviour is controlled by a setting (under the **Settings** sidebar in the **Write** page), so it can be turned off if desired. Whether the behaviour is on or off by default, it can also be manually accomplished by surrounding text with \`^^^\` notation. For example:`,
+          content: `This behaviour is controlled by a setting, so it can be turned off if desired. Whether the setting is on or off the formatting can be manually applied by surrounding text with \`^^^\` notation. For example:`,
         },
         {
           type: PartType.example,
           content: `The word UPPER may or may not render as small caps depending on the setting, but the words ^^^ALWAYS UPPER^^^ will render as small caps, regardless of the setting.`,
+        },
+        {
+          type: PartType.text,
+          content: `Text surrounded with the \`^^^\` notation doesn't *have* to be written all in uppercase---the text \`^^^this is some text^^^\` will still render as ^^^this is some text^^^---however, the usual intent is to use this type of formatting for text that's all uppercase in the original, such as the name of the ^^^LORD^^^ in Old Testament Scriptures.`,
         },
       ],
     },
@@ -51,7 +59,7 @@ which relates back to [|Ps 2:2|ESV], which says:
       parts: [
         {
           type: PartType.text,
-          content: `Another example of this type of formatting is for cases where the **era** is being specified for a date; for example, the year 100^^B.C.^^. The **era** (\`A.D.\`, \`B.C.\`, \`C.E.\`, or \`B.C.E.\`) is often written in small capitals. (That is, Small Caps, but where all of the letters are the small version of Small Caps.)
+          content: `Another example of this type of formatting is for cases where the **era** is being specified for a date; for example, the year 100^^B.C.^^. The **era** (\`A.D.\`, \`B.C.\`, \`C.E.\`, or \`B.C.E.\`) is often written in small capitals. (That is, ^^^SMALL CAPS^^^, but where all of the letters are the small version of ^^SMALL CAPS^^.)
           
 The same as with words that show up all in uppercase, Devouring Scripture will attempt to recognize era notation in text (also controllable by a global setting), and render it appropriately. For example:`,
         },
@@ -66,6 +74,10 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
         {
           type: PartType.example,
           content: `Text can be renered in small Small Caps by ^^SURROUNDING WITH TWO CARETS^^.`,
+        },
+        {
+          type: PartType.text,
+          content: `When using the \`^^\` notation the text in markdown doesn't need to be uppercase, so \`^^a.d.^^\` will still be shown as ^^A.D.^^, but the notation is *usually* used for text that is all uppercase.`,
         },
       ],
     },
@@ -87,7 +99,7 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
 * The reference is expanded to a longform notation
 * The specific version of the Bible that's being used is appended in parentheses (in this case using the user's default version)
 
-*Other notations were considered, such as \`[[REF]]\` or \`||REF||\`, but these notations might have caused confusion with other flavours of markdown. For example, the \`[[link]]\` notation is often used in wikis for in-wiki links, and \`||some text||\` is used for "spoilers" on some sites (e.g. Discord). So \`[|REF|]\` was deemed the least confusing, in a larger context.*`,
+*Other notations were considered, such as \`[[REF]]\` or \`||REF||\`, but these notations might have caused confusion with other flavours of markdown. For example, the \`[[link]]\` notation is often used in wikis for in-wiki links, and \`||some text||\` is used for "spoilers" on some sites (e.g. Discord). So \`[|REF|]\` was deemed the least confusing, in the larger context of the web.*`,
         },
         {
           type: PartType.heading,
@@ -104,11 +116,7 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
         },
         {
           type: PartType.text,
-          content: `Any version supported by Bible Gateway can be used, but keep in mind that **Devouring Scripture** won't *validate* the version, it will just pass it on to **Bible Gateway** as specified in the markdown. So something like \`[|Rom 1|ABC]\` would create the link as normal, but clicking the link would prompt an error from **Bible Gateway** because it doesn't recognize a version of the Bible named \`ABC\`.`,
-        },
-        {
-          type: PartType.example,
-          content: `This link to [|Rom 1|ABC] will be rendered by **Devouring Scripture**, as if there really is an \`ABC\` version of the Bible, but clicking it would get an error from Bible Gateway.`,
+          content: `Any version supported by Bible Gateway can be used but keep in mind that **Devouring Scripture** won't *validate* it, any version specified will be passed to **Bible Gateway** as-is. So something like \`[|Rom 1|ABC]\` would create the link as normal, using the version \`ABC\`, but clicking the link would prompt an error from **Bible Gateway** because it doesn't recognize a version of the Bible named \`ABC\`.`,
         },
         {
           type: PartType.heading,
@@ -121,14 +129,15 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
         },
         {
           type: PartType.example,
-          content: 'A link to [|Rom 1:1 (verse 1)|] of Romans 1',
+          content:
+            'A link to [|Rom 1:1 (verse 1)|] of Romans 1, or [|John 3:16 (the most popular verse in the Bible)|]',
         },
         { type: PartType.heading, content: 'Other Options' },
         {
           type: PartType.text,
           content: `Other options can be specified by placing a \`;\` after the version (if specified) and specifying the options before the final \`]\`. 
             
-The only option currently available is \`s\` (for "short"), which specifies that the reference shouldn't be expanded into a more readable form, as long as it's valid.`,
+The only option currently available is \`s\` (for "short"), which specifies that the reference should not be expanded into a more readable form, as long as it's valid.`,
         },
         {
           type: PartType.example,
@@ -137,11 +146,24 @@ The only option currently available is \`s\` (for "short"), which specifies that
         },
         {
           type: PartType.heading,
+          content: 'Invalid References',
+        },
+        {
+          type: PartType.text,
+          content: `Although **Devouring Scripture** doesn't validate Bible versions, it *does* validate the **reference** specified. If the reference isn't valid, the link won't be created the the text will just be left alone.`,
+        },
+        {
+          type: PartType.example,
+          content: `The link to [|Ex 5:1|] will work, but [|Blah 5:1|] won't because \`Blah\` isn't a valid book in the Bible, and [|Rev 23|] won't work either because Revelations only has 22 chapters.`,
+        },
+        {
+          type: PartType.heading,
           content: 'Mixing and Matching',
         },
         {
           type: PartType.text,
-          content: 'Of course, these can all be combined together in the same text/note:',
+          content:
+            'All of these approaches and notations for creating **Bible Gateway** links can be mixed and matched in text as desired:',
         },
         {
           type: PartType.example,
@@ -189,12 +211,12 @@ and this partially does:
         },
         {
           type: PartType.example,
-          content: `> ^1^Standard blockquotes always ^2^work, when superscript ^3^notation is used for verse numbers`,
+          content: `> ^1^In the beginning was the Word, and the Word was with God, and the Word was God. ^2^He was in the beginning with God. 3 All things were made through him, and without him was not any thing made that was made. ^4^In him was life, and the life was the light of men. ^5^The light shines in the darkness, and the darkness has not overcome it.`,
         },
         { type: PartType.heading, content: 'Poetry' },
         {
           type: PartType.text,
-          content: `Where the special \`|>\` notation comes in especially handy is with **poetry** in the Scriptures, especially when it comes to indentation. When quoting a block of poetry, multiple levels of indentation can be achieved by having multiple levels of \`|>\` notation, such as:`,
+          content: `Where the special \`|>\` notation comes in especially handy is with **poetry** in the Scriptures, especially when it comes to **indentation**. Multiple levels of indentation can be achieved by having multiple levels of \`|>\` notation, such as:`,
         },
         {
           type: PartType.example,
@@ -209,9 +231,7 @@ and this partially does:
         },
         {
           type: PartType.text,
-          content: `As illustrated above, it might be easiest to include the \`|>\` before each and every line in the stanza, to more easily differentiate between 1st level lines (\`|>\`) and second level lines (\`|> |>\`). 
-          
-An easy way to accomplish this is to copy and paste the verses directly, select the entire block, and then click the **Scripture Quotation** button in the editor's toolbar; this will automatically insert the \`|>\` notation at the beginning of each line, and, in cases where lines are indented, add *multiple* \`|> |>\` notations as necesary.`,
+          content: `An easy way to quote large passages of Scripture is to copy and paste the verses directly, select the text, and then click the **Scripture Quotation** button in the editor's toolbar; this will automatically insert the \`|>\` notation at the beginning of each line, and, in cases where lines are indented, add *multiple* \`|> |>\` notations as necesary.`,
         },
         {
           type: PartType.text,

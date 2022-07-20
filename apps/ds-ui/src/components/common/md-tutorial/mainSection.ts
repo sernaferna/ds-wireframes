@@ -12,84 +12,11 @@ export const mdMainSection: SectionDocumentation = {
   },
   subSections: [
     {
-      title: 'Lists and Bullets',
-      parts: [
-        {
-          type: PartType.text,
-          content: `Bullets were mentioned in the cheat sheet above, but there's some extra formatting that can be applied.`,
-        },
-        {
-          type: PartType.heading,
-          content: 'Bullets',
-        },
-        {
-          type: PartType.text,
-          content: `Bulleted lists can be created with either asterisks (\`*\`) or hyphens (\`-\`), followed by a space, at the beginning of the line for each item in the list. Adding 4 spaces at the beginning of the line (before the \`*\` or \`-\`) will cause that item to be a sub-item, under the one above.`,
-        },
-        {
-          type: PartType.example,
-          content: `* This is the first item in a bulleted list.
-* This is the second
-    * This is a sub-bullet
-* This is a *final* bullet in the list---and additional asterisks (such as for italics) are fine within the text of the bullet; it won't confuse the formatting`,
-        },
-        {
-          type: PartType.heading,
-          content: 'Asterisks vs. Hyphens',
-        },
-        {
-          type: PartType.text,
-          content: `It's up to the author as to whether asterisks or hyphens are used for bullets, however, they shouldn't be mixed and matched. In markdown, mixing and matching items like that would cause the markdown formatter to think that a new list is being created.`,
-        },
-        {
-          type: PartType.example,
-          content: `Asterisks can be used for bullets:
-          
-* First item
-* Second item
-
-Hyphens can be used instead:
-
-- First item
-- Second item
-
-However, mixing and matching will confuse the renderer when creating formatted output:
-
-* First item in the list
-* Second item in the list
-- Was supposed to be the third item in the list, but markdown thinks this is a new list
-- Will become the second item in the *second* list`,
-        },
-        {
-          type: PartType.heading,
-          content: 'Numbered Lists',
-        },
-        {
-          type: PartType.text,
-          content: `Numbered lists can be created with \`1.\` notation. The numbers in markdown can be incremented (e.g. \`1.\`, \`2.\`, \`3.\`) or \`1\` can be used for each item (e.g. \`1.\`, \`1.\`, \`1.\`). As with bullets, adding 4 spaces at the beginning of the line will cause that item to be a sub-item, under the one above.`,
-        },
-        {
-          type: PartType.example,
-          content: `Numbers (with periods) can be used to create numbered lists:
-        
-1. This is the first item in a numbered list
-2. This is the second
-    1. This is a sub-item
-3. This is the final bullet in the list
-        
-Or, for simplicity:
-        
-1. This is the first item in a numbered list
-1. This is the second, regardless of the number used in markdown`,
-        },
-      ],
-    },
-    {
       title: 'Tables',
       parts: [
         {
           type: PartType.text,
-          content: `A table can be created with careful use of the \`|\` (pipe) character to delineate cells within the table. Consider the following examples:`,
+          content: `A table can be created with careful use of the \`|\` (pipe) character to delineate cells within the table.`,
         },
         {
           type: PartType.example,
@@ -103,7 +30,7 @@ Or, for simplicity:
           content: `Notice the three parts of the table:
           
 1. Header cells for the table come at the top
-1. A separator row of dashes
+1. A separator row (with dashes inside the cells)
 1. As many rows as desired of cells for the body of the table.`,
         },
         {
