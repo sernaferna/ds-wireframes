@@ -31,7 +31,8 @@
         "read": {
           "showSettings": true,
           "defaultVersion": "ESV",
-          "showReadingPlan": true
+          "showReadingPlan": true,
+          "autosavePassageNotes": true
         },
         "write": {
           "showSettings": true,
