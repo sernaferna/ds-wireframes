@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectShowSettings, showSettingsPanel } from '../../stores/UISlice';
-import { Container, Image, Nav, Navbar, Offcanvas } from 'react-bootstrap';
+import { Button, Container, Image, Nav, Navbar, Offcanvas } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { LoadingMessage, ErrorLoadingDataMessage } from './loading';
 import { useUserSettings } from '../../hooks/UserSettings';
@@ -61,10 +61,10 @@ export const Header = () => {
   }
 
   return (
-    <Navbar id="header-navbar" expand="md">
+    <Navbar variant="dark" bg="primary" expand="md">
       <Navbar.Brand href="/">
         <Image src="/logo192.png" height="50" width="50" />
-        <strong>Devouring Scripture</strong>
+        <strong className="ms-2">Devouring Scripture</strong>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="ds-header-navbar" />
       <Container fluid>
@@ -73,8 +73,10 @@ export const Header = () => {
             {links}
             {userData!.isAdmin && adminLinks}
           </Nav>
-          <Navbar.Text>
-            <Gear width="25" height="25" onClick={toggleSettings} />
+          <Navbar.Text className="w-100 text-end">
+            <Button variant="primary" onClick={toggleSettings}>
+              <Gear width="25" height="25" />
+            </Button>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>
