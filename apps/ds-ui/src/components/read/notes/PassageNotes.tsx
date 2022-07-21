@@ -65,6 +65,8 @@ export const PassageNotes = ({
     );
   }
 
+  const showNotesForPassage = passageDetails.isDownloaded && !showMDFullScreen;
+
   return (
     <>
       <h4>Notes</h4>
@@ -77,7 +79,7 @@ export const PassageNotes = ({
         autosaveNotes={autosaveNotes}
       />
 
-      {passageDetails.isDownloaded && (
+      {showNotesForPassage && (
         <NotesForPassage
           fetchNote={fetchNote}
           fetchPassage={fetchPassage}
