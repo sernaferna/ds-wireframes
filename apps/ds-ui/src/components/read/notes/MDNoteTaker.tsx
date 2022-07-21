@@ -13,6 +13,7 @@ import { MarkdownBox } from '../../common/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
+import { generateErrorStringFromError } from '../../common/loading';
 
 const getStartEndForOsis = (osis: string): [string, string] => {
   const range = getRangesForOSIS(osis)[0];
@@ -133,10 +134,17 @@ export const MDNoteTaker = ({
           text: textToSend,
           osis: osisToSend,
         };
-        submitNote(newNote);
+        submitNote(newNote)
+          .unwrap()
+          .then((note) => {
+            fetchNote(note.id);
+          })
+          .catch((error) => {
+            addErrorMessage(generateErrorStringFromError(error));
+          });
       }
     },
-    [addErrorMessage, updateNote, submitNote, noteDetails]
+    [addErrorMessage, updateNote, submitNote, noteDetails, fetchNote]
   );
 
   return (
