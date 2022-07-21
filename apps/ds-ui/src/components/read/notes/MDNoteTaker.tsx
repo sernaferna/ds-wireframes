@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 import {
   BaseNote,
@@ -14,6 +14,8 @@ import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
 import { generateErrorStringFromError } from '../../common/loading';
+
+const AUTOSAVE_INTERVAL = 3000;
 
 const getStartEndForOsis = (osis: string): [string, string] => {
   const range = getRangesForOSIS(osis)[0];
@@ -34,6 +36,7 @@ interface IMDNoteTaker {
   fetchNote: FetchFunction;
   showMDFullScreen: boolean;
   setShowMDFullScreen(fs: boolean): void;
+  autosaveNotes: boolean;
 }
 
 /**
@@ -45,7 +48,9 @@ interface IMDNoteTaker {
  * the start/end reference should be (via the `passageDetails`
  * param).
  *
- * Provides ability to save the note to the server via the API.
+ * Provides ability to save the note to the server via the API, with
+ * the optional ability to *auto* save notes every few seconds. (The
+ * `AUTOSAVE_INTERVAL` const controls how often saves occur.)
  *
  * There are a number of interrelated pages to be aware of:
  *
@@ -57,6 +62,7 @@ interface IMDNoteTaker {
  * @param fetchNote Callback for fetching a note from the server; in this case, only called with an empty string, which serves to reset the currently selected note to nothing
  * @param showMDFullScreen Indicates if the MD editor should be shown full screen
  * @param setShowMDFullScreen Callback function to call when switching between full and non-full screen MD mode
+ * @param autosaveNotes Indicates whether notes should be automatically saved every few seconds
  */
 export const MDNoteTaker = ({
   noteDetails,
@@ -64,11 +70,15 @@ export const MDNoteTaker = ({
   fetchNote,
   showMDFullScreen,
   setShowMDFullScreen,
+  autosaveNotes,
 }: IMDNoteTaker) => {
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
   const mdRef = useRef<HTMLDivElement>(null);
+  const formikRef = useRef<FormikProps<ValuesSchema>>(null);
+  const [dirty, setDirty] = useState<boolean>(false);
+  const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
 
   const switchFS = useCallback(
     (fs: boolean) => {
@@ -128,12 +138,14 @@ export const MDNoteTaker = ({
           text: textToSend,
           osis: osisToSend,
         };
+        setDirty(false);
         updateNote(newNote);
       } else {
         const newNote: BaseNote = {
           text: textToSend,
           osis: osisToSend,
         };
+        setDirty(false);
         submitNote(newNote)
           .unwrap()
           .then((note) => {
@@ -147,6 +159,15 @@ export const MDNoteTaker = ({
     [addErrorMessage, updateNote, submitNote, noteDetails, fetchNote]
   );
 
+  const autoSaveFunc = () => {
+    if (!dirty) {
+      return;
+    }
+
+    formikRef.current!.handleSubmit();
+    setTimer(null);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -154,6 +175,7 @@ export const MDNoteTaker = ({
       onSubmit={formSubmit}
       validateOnBlur={false}
       validateOnChange={true}
+      innerRef={formikRef}
     >
       {(fp: FormikProps<ValuesSchema>) => (
         <Form noValidate onSubmit={fp.handleSubmit}>
@@ -205,8 +227,16 @@ export const MDNoteTaker = ({
           <MarkdownBox
             content={fp.values.value || ''}
             changeCallback={(content) => {
+              if (timer) {
+                clearTimeout(timer);
+              }
+
+              setDirty(true);
               fp.setFieldValue('value', content);
               fp.setFieldTouched('value', true);
+              if (autosaveNotes) {
+                setTimer(setTimeout(autoSaveFunc, AUTOSAVE_INTERVAL));
+              }
             }}
             fullscreenOption={true}
             showFullScreen={showMDFullScreen}
@@ -217,7 +247,7 @@ export const MDNoteTaker = ({
             <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
               {passageDetails.isDownloaded ? 'New' : 'Close'}
             </Button>
-            <Button variant="primary" className="ms-2" type="submit">
+            <Button disabled={!dirty} variant="primary" className="ms-2" type="submit">
               {noteDetails.isDownloaded ? 'Update' : 'Save'}
             </Button>
           </div>

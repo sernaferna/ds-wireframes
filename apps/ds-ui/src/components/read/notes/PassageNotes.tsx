@@ -12,6 +12,7 @@ interface IPassageNotes {
   fetchPassage: FetchFunction;
   showMDFullScreen: boolean;
   setShowMDFullScreen(fs: boolean): void;
+  autosaveNotes: boolean;
 }
 
 /**
@@ -34,6 +35,7 @@ interface IPassageNotes {
  * @param fetchPassage Callback function to fetch a passage by ID
  * @param showMDFullScreen Whether the MD editor should be shown full screen
  * @param setShowMDFullScreen Callback function to call when switching in/out of MD fullscreen
+ * @param autosaveNotes Indicates whether notes should be autosaved (passthrough to `MDNoteTaker`)
  */
 export const PassageNotes = ({
   noteDetails,
@@ -42,6 +44,7 @@ export const PassageNotes = ({
   fetchPassage,
   showMDFullScreen,
   setShowMDFullScreen,
+  autosaveNotes,
 }: IPassageNotes) => {
   if (noteDetails.isLoading || passageDetails.isLoading) {
     return <LoadingMessage />;
@@ -71,6 +74,7 @@ export const PassageNotes = ({
         passageDetails={passageDetails}
         showMDFullScreen={showMDFullScreen}
         setShowMDFullScreen={setShowMDFullScreen}
+        autosaveNotes={autosaveNotes}
       />
 
       {passageDetails.isDownloaded && (

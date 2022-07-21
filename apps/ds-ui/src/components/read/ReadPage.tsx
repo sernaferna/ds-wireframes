@@ -89,6 +89,13 @@ export const ReadPage = () => {
           isDownloaded: false,
         });
       } else {
+        if (
+          downloadedNoteDetails.note &&
+          downloadedNoteDetails.note.id === noteId &&
+          downloadedNoteDetails.isDownloaded
+        ) {
+          return;
+        }
         updateDownloadedNoteDetails({
           ...downloadedNoteDetails,
           isLoading: true,
@@ -184,6 +191,7 @@ export const ReadPage = () => {
             passageDetails={downloadedPassageDetails}
             setShowMDFullScreen={switchMDFullScreen}
             showMDFullScreen={showMDFullScreen}
+            autosaveNotes={userData!.settings.read.autosavePassageNotes}
           />
         </Col>
         <Col xs="12" className={showMDFullScreen ? 'd-none' : 'mt-4'}>
