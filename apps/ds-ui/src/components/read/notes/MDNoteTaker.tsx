@@ -7,7 +7,7 @@ import {
   getRangesForOSIS,
   getOSISForReference,
 } from '@devouringscripture/common';
-import { useCreateNoteMutation, useUpdateNoteMutation } from '../../../services/VapiService';
+import { useCreateNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation } from '../../../services/VapiService';
 import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import { MarkdownBox } from '../../common/MarkdownBox';
 import * as yup from 'yup';
@@ -74,6 +74,7 @@ export const MDNoteTaker = ({
 }: IMDNoteTaker) => {
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
+  const [deleteNote] = useDeleteNoteMutation();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
   const mdRef = useRef<HTMLDivElement>(null);
   const formikRef = useRef<FormikProps<ValuesSchema>>(null);
@@ -158,6 +159,15 @@ export const MDNoteTaker = ({
     },
     [addErrorMessage, updateNote, submitNote, noteDetails, fetchNote]
   );
+
+  const deleteNoteCallback = useCallback(() => {
+    if (!noteDetails.note) {
+      return;
+    }
+
+    deleteNote(noteDetails.note!.id);
+    fetchNote('');
+  }, []);
 
   const autoSaveFunc = () => {
     if (!dirty) {
@@ -244,7 +254,12 @@ export const MDNoteTaker = ({
             showSidePreview={showMDFullScreen ? true : false}
           />
           <div className="m-2 d-flex flex-row-reverse">
-            <Button variant="danger" className="ms-2" onClick={newNoteBtn}>
+            {noteDetails.isDownloaded && (
+              <Button variant="danger" className="ms-2" onClick={deleteNoteCallback}>
+                Delete
+              </Button>
+            )}
+            <Button variant="secondary" className="ms-2" onClick={newNoteBtn}>
               {passageDetails.isDownloaded ? 'New' : 'Close'}
             </Button>
             <Button disabled={!dirty} variant="primary" className="ms-2" type="submit">
