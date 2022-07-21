@@ -18,8 +18,14 @@ interface ISidebarCollapseWidget {
  * @param children The content to be shown within the widget (when visible is true)
  */
 export const SidebarCollapseWidget = ({ title, visible, clickFunction, children }: ISidebarCollapseWidget) => (
-  <div className="sidebar-collapse-widget">
-    <div className="header-div" aria-expanded={visible} aria-controls="contentDiv" onClick={clickFunction}>
+  <div className="mb-3">
+    <div
+      className="bg-primary bg-opacity-25 text-primary h5"
+      style={{ cursor: 'pointer' }}
+      aria-expanded={visible}
+      aria-controls="contentDiv"
+      onClick={clickFunction}
+    >
       {title}
     </div>
     <Collapse in={visible}>

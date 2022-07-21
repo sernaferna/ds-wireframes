@@ -95,7 +95,7 @@ export const paginateItems = (
 
   return [
     currentItems,
-    <div className="pagination-div">
+    <div className="mt-2 w-100">
       <Pagination size={size}>{returnArray}</Pagination>
     </div>,
   ];
