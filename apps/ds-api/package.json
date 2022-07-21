@@ -1,6 +1,6 @@
 {
   "name": "ds-api",
-  "version": "7.1.0",
+  "version": "7.2.0",
   "description": "Hard-coded API for ds-wireframe",
   "main": "index.js",
   "scripts": {
