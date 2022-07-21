@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Form } from 'react-bootstrap';
@@ -7,7 +7,16 @@ import { Form } from 'react-bootstrap';
  * Settings component for **Read** section of the app
  */
 export const ReadPageSettings = () => {
-  const [userData, userResponseError, userLoading, , flipBoolCallback, , updateStringCallback] = useUserSettings();
+  const [userData, userResponseError, userLoading, , flipBoolCallback, updateStringProp, updateStringCallback] =
+    useUserSettings();
+
+  const changeSortOption = useCallback(() => {
+    if (userData!.settings.read.sortPassages === 'date-desc') {
+      updateStringProp('settings.read.sortPassages', 'date-asc');
+    } else {
+      updateStringProp('settings.read.sortPassages', 'date-desc');
+    }
+  }, [userData, updateStringProp]);
 
   if (userLoading) {
     return <LoadingMessage />;
@@ -17,6 +26,11 @@ export const ReadPageSettings = () => {
   }
 
   const versionToUse = userData!.settings.read.defaultVersion;
+
+  let sortOption = userData!.settings.read.sortPassages;
+  if (sortOption !== 'date-asc' && sortOption !== 'date-desc') {
+    sortOption = 'date-desc';
+  }
 
   return (
     <>
@@ -51,6 +65,14 @@ export const ReadPageSettings = () => {
         disabled
         onChange={updateStringCallback('settings.read.defaultVersion', 'KJV')}
       />
+
+      <Form.Group>
+        <Form.Text>Sort order?</Form.Text>
+        <Form.Select aria-label="Sort By?" onChange={changeSortOption} value={sortOption}>
+          <option value="date-asc">Date Ascending</option>
+          <option value="date-desc">Date Descending</option>
+        </Form.Select>
+      </Form.Group>
 
       <h6 className="mt-3">Writing Settings</h6>
       <Form.Check

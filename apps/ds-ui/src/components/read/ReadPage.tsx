@@ -181,6 +181,7 @@ export const ReadPage = () => {
             fetchNote={getNoteCallback}
             fetchPassage={getPassageCallback}
             passageDetails={downloadedPassageDetails}
+            sortOrder={userData!.settings.read.sortPassages}
           />
         </Col>
         <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>

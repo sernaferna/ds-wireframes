@@ -39,6 +39,13 @@ export const generateDefaultUser = (): UserAttributes => {
         showSettings: true,
         showReadingPlan: true,
         defaultVersion: 'ESV',
+        autosavePassageNotes: true,
+        sortPassages: 'date-desc',
+      },
+      write: {
+        showSettings: true,
+        autoSmallCaps: true,
+        autoADBC: true,
       },
       plans: {
         showSettings: true,

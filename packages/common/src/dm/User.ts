@@ -37,6 +37,7 @@ export interface UserAttributes {
       defaultVersion: string;
       showReadingPlan: boolean;
       autosavePassageNotes: boolean;
+      sortPassages: string;
     };
     write: {
       showSettings: boolean;
