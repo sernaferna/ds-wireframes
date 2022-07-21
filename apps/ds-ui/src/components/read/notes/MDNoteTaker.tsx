@@ -15,6 +15,8 @@ import { Formik, FormikProps } from 'formik';
 import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
 import { generateErrorStringFromError } from '../../common/loading';
 
+const AUTOSAVE_INTERVAL = 3000;
+
 const getStartEndForOsis = (osis: string): [string, string] => {
   const range = getRangesForOSIS(osis)[0];
 
@@ -46,7 +48,9 @@ interface IMDNoteTaker {
  * the start/end reference should be (via the `passageDetails`
  * param).
  *
- * Provides ability to save the note to the server via the API.
+ * Provides ability to save the note to the server via the API, with
+ * the optional ability to *auto* save notes every few seconds. (The
+ * `AUTOSAVE_INTERVAL` const controls how often saves occur.)
  *
  * There are a number of interrelated pages to be aware of:
  *
@@ -231,7 +235,7 @@ export const MDNoteTaker = ({
               fp.setFieldValue('value', content);
               fp.setFieldTouched('value', true);
               if (autosaveNotes) {
-                setTimer(setTimeout(autoSaveFunc, 3000));
+                setTimer(setTimeout(autoSaveFunc, AUTOSAVE_INTERVAL));
               }
             }}
             fullscreenOption={true}
