@@ -32,7 +32,8 @@
           "showSettings": true,
           "defaultVersion": "ESV",
           "showReadingPlan": true,
-          "autosavePassageNotes": true
+          "autosavePassageNotes": true,
+          "sortPassages": "date-desc"
         },
         "write": {
           "showSettings": true,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGetCurrentItemsQuery } from '../../services/PassagesService';
+import { useGetCurrentItemsQuery, sortPassageItems } from '../../services/PassagesService';
 import { ErrorLoadingDataMessage } from '../common/loading';
 import { PlaceholderCard, PassageCard } from './PassageCard';
 import { Row, Alert } from 'react-bootstrap';
@@ -10,6 +10,7 @@ interface IPassageCards {
   passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
   fetchPassage: FetchFunction;
+  sortOrder: string;
 }
 
 /**
@@ -18,8 +19,9 @@ interface IPassageCards {
  * @param passageDetails Details about current passage (pass-through)
  * @param fetchNote Callback to fetch a note (pass-through)
  * @param fetchPassage Callback to fetch a passage (pass-through)
+ * @param sortOrder Indicates how the passages should be sorted
  */
-export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassageCards) => {
+export const PassageCards = ({ passageDetails, fetchNote, fetchPassage, sortOrder }: IPassageCards) => {
   const { data, error, isLoading } = useGetCurrentItemsQuery();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,7 +37,10 @@ export const PassageCards = ({ passageDetails, fetchNote, fetchPassage }: IPassa
     return <ErrorLoadingDataMessage theError={error} />;
   }
 
-  const items = data!.map((item) => {
+  const sortAsc = sortOrder === 'date-asc' ? true : false;
+  const sortedItems = sortPassageItems(data!.slice(), sortAsc);
+
+  const items = sortedItems.map((item) => {
     return (
       <PassageCard
         downloadedPassageDetails={passageDetails}

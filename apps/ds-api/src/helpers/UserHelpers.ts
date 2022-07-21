@@ -40,6 +40,7 @@ export const generateDefaultUser = (): UserAttributes => {
         showReadingPlan: true,
         defaultVersion: 'ESV',
         autosavePassageNotes: true,
+        sortPassages: 'date-desc',
       },
       write: {
         showSettings: true,
