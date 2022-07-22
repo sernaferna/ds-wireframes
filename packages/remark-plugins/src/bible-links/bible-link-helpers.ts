@@ -5,8 +5,6 @@ export const bibleLinkRE = /\[\|([^\(\|]+)(?:\s+\(([^\)]*)\))?\|([^;\]]*)(?:;([^
 /**
  * Represents the different pieces of information retrieved from a MD
  * bible link.
- *
- * @
  */
 export interface LinkFields {
   passage: string;
