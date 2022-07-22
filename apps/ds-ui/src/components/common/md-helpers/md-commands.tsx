@@ -123,6 +123,8 @@ export const poetryQuoteCommand: ICommand = {
 
     let newText = '|> ' + selectedText.replaceAll('\n', '\n|> ');
     newText = newText.replaceAll('|>  ', '|> |> ');
+    newText = newText.replaceAll(/^(\d+)\s/g, ' ^$1^');
+    newText = newText.replaceAll(/\s(\d+)\s/g, ' ^$1^');
 
     //replaces the current selection with the poetry quote mark
     api.replaceSelection(`${breaksBefore}${newText}${breaksAfter}`);

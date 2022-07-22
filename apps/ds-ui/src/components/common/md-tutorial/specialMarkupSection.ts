@@ -32,7 +32,7 @@ For example:`,
 
 which relates back to [|Ps 2:2|ESV], which says:
 
-|> 2 The kings of the earth set themselves,
+|> The kings of the earth set themselves,
 |> |> and the rulers take counsel together,
 |> |> against the LORD and against his Anointed, saying,`,
         },
@@ -59,13 +59,13 @@ which relates back to [|Ps 2:2|ESV], which says:
       parts: [
         {
           type: PartType.text,
-          content: `Another example of this type of formatting is for cases where the **era** is being specified for a date; for example, the year 100^^B.C.^^. The **era** (\`A.D.\`, \`B.C.\`, \`C.E.\`, or \`B.C.E.\`) is often written in small capitals. (That is, ^^^SMALL CAPS^^^, but where all of the letters are the small version of ^^SMALL CAPS^^.)
+          content: `Another example of this type of formatting is for cases where the **era** is being specified for a date; for example, the year 100^^B.C.^^. The **era** is often written in small capitals. (That is, ^^SMALL CAPS^^, where all of the letters are the small version of ^^^SMALL CAPS^^^.)
           
-The same as with words that show up all in uppercase, Devouring Scripture will attempt to recognize era notation in text (also controllable by a global setting), and render it appropriately. For example:`,
+The same as with words that show up all in uppercase, Devouring Scripture will attempt to recognize era notation (one of \`A.D.\`, \`B.C.\`, \`C.E.\`, or \`B.C.E.\`, complete with capital letters and periods)  in text (also controllable by a global setting), and render it appropriately. For example:`,
         },
         {
           type: PartType.example,
-          content: `The year AD2020 was a rough one around the world because of the pandemic, but there was an even worse pandemic around 3000BC in China.`,
+          content: `The year A.D.2020 was a rough one around the world because of the pandemic, but there was an even worse pandemic around 3000B.C. in China.`,
         },
         {
           type: PartType.text,
@@ -137,7 +137,7 @@ The same as with words that show up all in uppercase, Devouring Scripture will a
           type: PartType.text,
           content: `Other options can be specified by placing a \`;\` after the version (if specified) and specifying the options before the final \`]\`. 
             
-The only option currently available is \`s\` (for "short"), which specifies that the reference should not be expanded into a more readable form, as long as it's valid.`,
+The only option currently available is \`s\` (for "short"), which specifies that the reference should not be expanded into a more readable form; as long as it's valid, it will be rendered as-is.`,
         },
         {
           type: PartType.example,
@@ -178,93 +178,77 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
       parts: [
         {
           type: PartType.text,
-          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting passages of Scripture, but a special notation using \`|>\` instead of \`>\` can be used instead, which works the same as regular blockquotes but verse numbers will also be made **superscript** automatically.`,
+          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting passages of Scripture, but a special notation using \`|>\` instead of \`>\` can be used instead, which works the same as regular blockquotes but with some important additions specific to quoting Scripture.`,
         },
         {
           type: PartType.example,
-          content: `It says in [|John 1:1-5|]:
+          content: `To quote King David:
           
-|> 1 In the beginning was the Word, and the Word was with God, and the Word was God. 2 He was in the beginning with God. 3 All things were made through him, and without him was not any thing made that was made. 4 In him was life, and the life was the light of men. 5 The light shines in the darkness, and the darkness has not overcome it.`,
+|> (Ps 1:1-2) ^1^Blessed is the man
+|> |>  who walks not in the counsel of the wicked,
+|> nor stands in the way of sinners,
+|> |>  nor sits in the seat of scoffers;
+|> ^2^but his delight is in the law of the LORD,
+|> |>  and on his law he meditates day and night.`,
         },
-        { type: PartType.heading, content: 'Formatting of Verse Numbers' },
         {
           type: PartType.text,
-          content: `In order for the verse formatting to work, verse numbers have to be surrounded by whitespace (to distinguish verse numbers from any other text that has numbers in it).`,
-        },
-        {
-          type: PartType.example,
-          content: `Because of the spacing, this works:
+          content: `These special forms of blockquotes do a couple of things:
           
-|> 1 some 2 text
+1. Indentation works well for **poetry** when \`|> |>\` notations are nested
+1. Optional: If a passage reference is specified at the beginning, a link to the passage will come at the end of the quote
 
-and this doesn't:
-
-|> 1some 2text
-
-and this partially does:
-
-|> 1 some 2text`,
+Both of these will be discussed in more detail below.`,
+        },
+        {
+          type: PartType.heading,
+          content: 'Reference Citations',
         },
         {
           type: PartType.text,
-          content: `Standard blockquotes can always be used, allowing for more control over spacing. The \`^\` character can be used for superscript for verse numbers.`,
+          content: `As mentioned, a reference for the quote can be cited at the beginning of the quote in parentheses. It will be stripped out of the main quotation and then appended at the end, aligned to the right and in italics. If the citation is a valid reference to Scripture it will be inserted as a link.`,
         },
         {
           type: PartType.example,
-          content: `> ^1^In the beginning was the Word, and the Word was with God, and the Word was God. ^2^He was in the beginning with God. 3 All things were made through him, and without him was not any thing made that was made. ^4^In him was life, and the life was the light of men. ^5^The light shines in the darkness, and the darkness has not overcome it.`,
+          content: `References aren't necessary, so, for example, we could quote [|Ps 7:3-5|] without including the reference in the quote:
+
+|> ^3^O LORD my God, if I have done this,
+|> |>    if there is wrong in my hands,
+|> ^4^if I have repaid my friend with evil
+|> |>    or plundered my enemy without cause,
+|> ^5^let the enemy pursue my soul and overtake it,
+|> |>    and let him trample my life to the ground
+|> |>    and lay my glory in the dust.
+
+Or they can be specified within the quote in parentheses on the first line:
+
+|> (Ps 7:3-5) ^3^O LORD my God, if I have done this,
+|> |>    if there is wrong in my hands,
+|> ^4^if I have repaid my friend with evil
+|> |>    or plundered my enemy without cause,
+|> ^5^let the enemy pursue my soul and overtake it,
+|> |>    and let him trample my life to the ground
+|> |>    and lay my glory in the dust.
+
+Quotations might come from elsewhere than the Scriptures, as well, so a "reference" that's *not* a Scripture reference can also be included---it just won't be a link:
+
+|> (Wikipedia) Two ancient Israelite and Jewish places of worship on the Temple Mount in the Old City of Jerusalem have been called the Temple in Jerusalem, or the Holy Temple (Hebrew: בֵּית־הַמִּקְדָּשׁ, Modern: Bēt HaMīqdaš, Tiberian: Bēṯ HamMīqdāš; Arabic: بيت المقدس Bait al-Maqdis). The First Temple or Solomon's Temple was built in 957 B.C.E. and destroyed by the Babylonians in 587 or 586 B.C.E.. The Second Temple was completed in 515 B.C.E., and was destroyed by the Romans during the Siege of Jerusalem in 70 C.E.`,
         },
-        { type: PartType.heading, content: 'Poetry' },
+        { type: PartType.heading, content: 'Indentation for Poetry' },
         {
           type: PartType.text,
-          content: `Where the special \`|>\` notation comes in especially handy is with **poetry** in the Scriptures, especially when it comes to **indentation**. Multiple levels of indentation can be achieved by having multiple levels of \`|>\` notation, such as:`,
+          content: `Where the special \`|>\` notation comes in especially handy is with **poetry**, especially when it comes to **indentation**. Multiple levels of indentation can be achieved by having multiple levels of \`|>\` notation, such as:`,
         },
         {
           type: PartType.example,
-          content: `We read in [|Psalm 1:1-2|]:
+          content: `We read in the Psalms:
 
-|> 1 Blessed is the man
+|> (Ps 1:1-2) ^1^Blessed is the man
 |> |> who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |> nor sits in the seat of scoffers;
-|> 2 but his delight is in the law of the LORD,
+|> ^2^but his delight is in the law of the LORD,
 |> |> and on his law he meditates day and night.`,
-        },
-        {
-          type: PartType.text,
-          content: `An easy way to quote large passages of Scripture is to copy and paste the verses directly, select the text, and then click the **Scripture Quotation** button in the editor's toolbar; this will automatically insert the \`|>\` notation at the beginning of each line, and, in cases where lines are indented, add *multiple* \`|> |>\` notations as necesary.`,
-        },
-        {
-          type: PartType.text,
-          content: `For example, when initially pasting in [|Ps 1:1-2|] it will look like this:
-
-\`\`\`
-1 Blessed is the man
-    who walks not in the counsel of the wicked,
-nor stands in the way of sinners,
-    nor sits in the seat of scoffers;
-2 but his delight is in the law of the LORD,
-    and on his law he meditates day and night.
-\`\`\`
-
-If that block of text is selected and the **Scripture Quotation** button is clicked, it will look more like this:
-
-\`\`\`
-|> 1 Blessed is the man
-|> |>    who walks not in the counsel of the wicked,
-|> nor stands in the way of sinners,
-|> |>    nor sits in the seat of scoffers;
-|> 2 but his delight is in the law of the LORD,
-|> |>    and on his law he meditates day and night.
-\`\`\`
-
-Which will render similar to:
-
-|> 1 Blessed is the man
-|> |>    who walks not in the counsel of the wicked,
-|> nor stands in the way of sinners,
-|> |>    nor sits in the seat of scoffers;
-|> 2 but his delight is in the law of the LORD,
-|> |>    and on his law he meditates day and night.`,
         },
         {
           type: PartType.heading,
@@ -276,16 +260,101 @@ Which will render similar to:
         },
         {
           type: PartType.example,
-          content: `|>      1 Blessed is the man
+          content: `|>      ^1^Blessed is the man
 |> |>      who walks not in the counsel of the wicked,
 |>      nor stands in the way of sinners,
 |> |>   nor sits in the seat of scoffers;
-|>      2 but his delight is in the law of the ^^^LORD^^^,
+|>      ^2^but his delight is in the law of the ^^^LORD^^^,
 |> |>      and on his law he meditates day and night.`,
         },
         {
           type: PartType.text,
           content: `As illustrated, the extra spaces before each line don't impact the way the text is finally rendered, as long as the proper number of \`|>\` headings come at the beginning of each line. In the example above, the author forgot to put extra spaces at the beginning of the 4^th^ line, but because the right number of \`|> |>\` entries were included it still renders correctly in the formatted version.`,
+        },
+        {
+          type: PartType.heading,
+          content: 'Using the "Scripture Quotation" Button',
+        },
+        {
+          type: PartType.text,
+          content: `An easy way to quote large passages of Scripture is to copy and paste the verses directly, select the text, and then click the **Scripture Quotation** button in the editor's toolbar to apply the formatting necessary for quoting Scripture. The app will automatically insert the \`|>\` notation at the beginning of each line, and, in cases where lines are indented, add *multiple* \`|> |>\` notations as necesary.
+          
+It will also look for numbers in the text and superscript them, under the assumption that they're verse numbers.`,
+        },
+        {
+          type: PartType.text,
+          content: `For example, when initially pasting in Psalm 1:1--2 it will look like this:
+
+
+\`\`\`
+1 Blessed is the man[a]
+    who walks not in the counsel of the wicked,
+nor stands in the way of sinners,
+    nor sits in the seat of scoffers;
+2 but his delight is in the law[b] of the Lord,
+    and on his law he meditates day and night.
+\`\`\`
+
+The text may include footnote references (such as the \`[a]\` and \`[b]\` above), so these should be cleaned up. Additionally, some words that appear all in uppercase on the screen, such as the word ^^^LORD^^^ in verse 2, might *not* be all uppercase when copied and pasted, as illustrated above. This is due to the way some websites display text using \`HTML\` and \`CSS\`, which isn't worth going into in this tutorial.
+
+Once the text is cleaned up by removing those footnotes and making text uppercase again, it might look more like this:
+
+\`\`\`
+1 Blessed is the man
+    who walks not in the counsel of the wicked,
+nor stands in the way of sinners,
+    nor sits in the seat of scoffers;
+2 but his delight is in the law of the LORD,
+    and on his law he meditates day and night.
+\`\`\`
+
+If that block of text is selected and the **Scripture Quotation** button is clicked, it will be formatted like this:
+
+\`\`\`
+|> ^1^Blessed is the man
+|> |>    who walks not in the counsel of the wicked,
+|> nor stands in the way of sinners,
+|> |>    nor sits in the seat of scoffers;
+|> ^2^but his delight is in the law of the LORD,
+|> |>    and on his law he meditates day and night.
+\`\`\`
+
+Which will render similar to:
+
+|> ^1^Blessed is the man
+|> |>    who walks not in the counsel of the wicked,
+|> nor stands in the way of sinners,
+|> |>    nor sits in the seat of scoffers;
+|> ^2^but his delight is in the law of the LORD,
+|> |>    and on his law he meditates day and night.`,
+        },
+        {
+          type: PartType.text,
+          content:
+            'Citations/references are not automatically added, so these would need to be added manually to the beginning of the text if desired.',
+        },
+        {
+          type: PartType.text,
+          content:
+            'Be careful with passages that include numbers other than verse numbers, because the **Scripture Quotation** button will make the numbers superscript.',
+        },
+        {
+          type: PartType.text,
+          content: `Pasting Acts 13:20--21 would yield the following:
+
+\`\`\`
+20 All this took about 450 years. And after that he gave them judges until Samuel the prophet. 21 Then they asked for a king, and God gave them Saul the son of Kish, a man of the tribe of Benjamin, for forty years.
+\`\`\`
+
+Selecting that text and clicking the **Scripture Quotation** button would yield this:
+
+\`\`\`
+|> ^20^All this took about ^450^years. And after that he gave them judges until Samuel the prophet. ^21^Then they asked for a king, and God gave them Saul the son of Kish, a man of the tribe of Benjamin, for forty years.
+\`\`\``,
+        },
+        {
+          type: PartType.text,
+          content: `It would be necessary to remove the \`^\` characters from around the number **450** since, in this case, that's a number that shows in the text, as opposed to a verse number.`,
         },
       ],
     },

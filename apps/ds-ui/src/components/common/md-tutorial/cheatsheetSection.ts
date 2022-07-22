@@ -101,9 +101,9 @@ A line is above this paragraph.`,
 > 
 > this is the first quotation
 
-For a Scripture quotation, such as Ps 1:1:
+For a Scripture quotation, such as a Psalm:
 
-|> 1 Blessed is the man
+|> (Ps 1:1) ^1^Blessed is the man
 |> |>    who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |>    nor sits in the seat of scoffers;`,

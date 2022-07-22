@@ -2,7 +2,7 @@ import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal } from 'unist';
 
-const eraRE = /[\d\s]((?:A\.D\.)|(?:B\.C\.)|(?:B\.C\.E\.)|(?:C\.E\.))/;
+const eraRE = /[\d\s]((?:A\.D\.)|(?:B\.C\.(?:E\.)?)|(?:C\.E\.))/;
 
 export function adbcReplacements(): Transformer {
   return (tree) => {
@@ -23,11 +23,7 @@ export function adbcReplacements(): Transformer {
         return;
       }
 
-      const strippedResult: string = reResult[1].replace('.', '');
-      let newResult = '';
-      for (let i = 0; i < strippedResult.length; i++) {
-        newResult += strippedResult.charAt(i) + '.';
-      }
+      const newResult = reResult[1];
 
       const children: any[] = [];
 
