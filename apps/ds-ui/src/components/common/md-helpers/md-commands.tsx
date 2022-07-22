@@ -106,26 +106,10 @@ export const bibleLinkCommand: ICommand = {
   },
 };
 
-export const bibleCustomLinkCommand: ICommand = {
-  name: 'BibleCustomLink',
-  keyCommand: 'BibleCustomLink',
-  buttonProps: { 'aria-label': 'Bible Link', title: 'Insert Bible Link with custom text' },
-  icon: <u>v1✞</u>,
-  execute: (state: TextState, api: TextAreaTextApi) => {
-    const customText = prompt('Enter the custom text:');
-    if (!customText) {
-      return;
-    }
-
-    const modifyText = `[|${state.selectedText} (${customText})|]`;
-    api.replaceSelection(modifyText);
-  },
-};
-
-export const poetryQuoteCommand: ICommand = {
-  name: 'PoetryQuote',
-  keyCommand: 'PoetryQuote',
-  buttonProps: { 'aria-label': 'Biblical Poetry', title: 'Scripture Quotation' },
+export const scriptureQuoteCommand: ICommand = {
+  name: 'ScriptureQuotation',
+  keyCommand: 'ScriptureQuotation',
+  buttonProps: { 'aria-label': 'Scripture Quotation', title: 'Scripture Quotation' },
   icon: <TextRight className="border" />,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const selectedText = state.selectedText ? state.selectedText : 'QUOTE HERE';
@@ -142,7 +126,7 @@ export const poetryQuoteCommand: ICommand = {
     newText = newText.replaceAll(/^(\d+)\s/g, ' ^$1^');
     newText = newText.replaceAll(/\s(\d+)\s/g, ' ^$1^');
 
-    //replaces the current selection with the poetry quote mark
+    //replaces the current selection with the scripture quote mark
     api.replaceSelection(`${breaksBefore}${newText}${breaksAfter}`);
 
     const selectionStart = state1.selection.start + breaksBeforeCount + 2;
@@ -172,7 +156,7 @@ export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): IComma
     commandList.push(scCommand);
   }
 
-  commandList.push(scstyleCommand, bibleLinkCommand, bibleCustomLinkCommand, poetryQuoteCommand);
+  commandList.push(scstyleCommand, bibleLinkCommand, scriptureQuoteCommand);
 
   return commandList;
 };
