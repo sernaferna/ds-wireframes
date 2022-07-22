@@ -6,78 +6,6 @@ import { parseLink, getBibleLinkObj } from '../bible-links/bible-link-helpers';
 
 const lineMatchRE = /^\|> /;
 const firstLineMatchRE = /^\|> (?:\(([^\)]*)\) )?/;
-const verseAtBeginningRE = /^(\d+)\s/;
-const verseInMiddleRE = /\s(\d+)\s/;
-
-const getTextWithNumbers = (text: string) => {
-  if (!verseAtBeginningRE.test(text) && !verseInMiddleRE.test(text)) {
-    if (/^\s*$/.test(text)) {
-      return [
-        {
-          type: 'html',
-          value: '&nbsp;',
-        },
-      ];
-    } else {
-      return [
-        {
-          type: 'text',
-          value: text,
-        },
-      ];
-    }
-  }
-
-  const pieces: any[] = [];
-  let remainingText = text;
-
-  const firstMatch = verseAtBeginningRE.exec(remainingText);
-  if (firstMatch) {
-    pieces.push({
-      type: 'sup',
-      data: {
-        hName: 'sup',
-      },
-      children: [
-        {
-          type: 'text',
-          value: firstMatch[1],
-        },
-      ],
-    });
-
-    remainingText = remainingText.substring(firstMatch.index + firstMatch[0].length);
-  }
-
-  while (verseInMiddleRE.test(remainingText)) {
-    const newVerseMatch = verseInMiddleRE.exec(remainingText);
-    pieces.push({
-      type: 'text',
-      value: remainingText.substring(0, newVerseMatch!.index + 1),
-    });
-    pieces.push({
-      type: 'sup',
-      data: {
-        hName: 'sup',
-      },
-      children: [
-        {
-          type: 'text',
-          value: newVerseMatch![1],
-        },
-      ],
-    });
-
-    remainingText = remainingText.substring(newVerseMatch!.index + newVerseMatch![0].length);
-  }
-
-  pieces.push({
-    type: 'text',
-    value: remainingText,
-  });
-
-  return pieces;
-};
 
 export function scriptureQuotes(): Transformer {
   return (tree) => {
@@ -119,8 +47,6 @@ export function scriptureQuotes(): Transformer {
           fixedString = fixedString.replace(lineMatchRE, '');
         }
 
-        const childOutputs = getTextWithNumbers(fixedString);
-
         lines.push({
           type: 'paragraph',
           data: {
@@ -128,7 +54,7 @@ export function scriptureQuotes(): Transformer {
               style: `margin-top: 0; margin-bottom: 0; padding-left: ${level}em;`,
             },
           },
-          children: childOutputs,
+          children: [{ type: 'text', value: fixedString }],
         });
       }
 
