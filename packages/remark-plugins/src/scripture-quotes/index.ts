@@ -2,8 +2,10 @@ import { Transformer } from 'unified';
 import { visit } from 'unist-util-visit';
 import { Literal } from 'unist';
 import { is } from 'unist-util-is';
+import { parseLink, getBibleLinkObj } from '../bible-links/bible-link-helpers';
 
 const lineMatchRE = /^\|> /;
+const firstLineMatchRE = /^\|> (?:\(([^\)]*)\) )?/;
 const verseAtBeginningRE = /^(\d+)\s/;
 const verseInMiddleRE = /\s(\d+)\s/;
 
@@ -88,12 +90,19 @@ export function scriptureQuotes(): Transformer {
       }
 
       const { value } = textNode as Literal<string>;
+      let modifiedValue = value;
 
-      if (!lineMatchRE.test(value)) {
+      const flResult = firstLineMatchRE.exec(modifiedValue);
+      if (flResult === null) {
         return;
       }
 
-      const splitNewValue = value.toString().split('\n');
+      const passageRef: string | undefined = flResult[1];
+      if (passageRef) {
+        modifiedValue = modifiedValue.replace(flResult[0], '|> ');
+      }
+
+      const splitNewValue = modifiedValue.toString().split('\n');
       const lines: any[] = [];
       for (let i = 0; i < splitNewValue.length; i++) {
         let fixedString = splitNewValue[i];
@@ -120,6 +129,25 @@ export function scriptureQuotes(): Transformer {
             },
           },
           children: childOutputs,
+        });
+      }
+
+      if (passageRef) {
+        const lf = parseLink(`[|${passageRef}|]`);
+        const link = lf ? getBibleLinkObj(lf) : { type: 'text', value: passageRef };
+        lines.push({
+          type: 'paragraph',
+          data: {
+            hProperties: {
+              style: 'margin-top: 0; margin-bottom: 0; text-align: right;',
+            },
+          },
+          children: [
+            {
+              type: 'emphasis',
+              children: [link],
+            },
+          ],
         });
       }
 

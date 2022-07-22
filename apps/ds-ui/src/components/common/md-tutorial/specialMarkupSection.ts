@@ -178,13 +178,60 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
       parts: [
         {
           type: PartType.text,
-          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting passages of Scripture, but a special notation using \`|>\` instead of \`>\` can be used instead, which works the same as regular blockquotes but verse numbers will also be made **superscript** automatically.`,
+          content: `Standard markdown blockquotes (discussed above) can, of course, be used for quoting passages of Scripture, but a special notation using \`|>\` instead of \`>\` can be used instead, which works the same as regular blockquotes but with some important additions specific to quoting Scripture.`,
         },
         {
           type: PartType.example,
-          content: `It says in [|John 1:1-5|]:
+          content: `To quote King David:
           
-|> 1 In the beginning was the Word, and the Word was with God, and the Word was God. 2 He was in the beginning with God. 3 All things were made through him, and without him was not any thing made that was made. 4 In him was life, and the life was the light of men. 5 The light shines in the darkness, and the darkness has not overcome it.`,
+|> (Ps 1:1-2) 1 Blessed is the man
+|> |>  who walks not in the counsel of the wicked,
+|> nor stands in the way of sinners,
+|> |>  nor sits in the seat of scoffers;
+|> 2 but his delight is in the law[b] of the LORD,
+|> |>  and on his law he meditates day and night.`,
+        },
+        {
+          type: PartType.text,
+          content: `These special forms of blockquotes do a few things:
+          
+1. Verse numbers are made **superscript**
+1. Indentation works well for **poetry**
+1. Optional: If a passage reference is specified at the beginning, a link to the passage will come at the end of the quote`,
+        },
+        {
+          type: PartType.heading,
+          content: `As mentioned, a reference for the quote can be stated at the beginning of the quote, in parentheses. If a passage is specified, it will be stripped out of the main quotation and then inserted at the end; if the reference cited is a valid reference to Scripture, it will be inserted as a link.`,
+        },
+        {
+          type: PartType.example,
+          content: `References aren't necessary, so, for example, we could quote [|Ps 7:3-5|] without including the reference in the quote:
+
+|> 3 O LORD my God, if I have done this,
+|> |>    if there is wrong in my hands,
+|> 4 if I have repaid my friend with evil
+|> |>    or plundered my enemy without cause,
+|> 5 let the enemy pursue my soul and overtake it,
+|> |>    and let him trample my life to the ground
+|> |>    and lay my glory in the dust.
+
+Or they can be specified within the quote in parentheses on the first line:
+
+|> (Ps 7:3-5) 3 O LORD my God, if I have done this,
+|> |>    if there is wrong in my hands,
+|> 4 if I have repaid my friend with evil
+|> |>    or plundered my enemy without cause,
+|> 5 let the enemy pursue my soul and overtake it,
+|> |>    and let him trample my life to the ground
+|> |>    and lay my glory in the dust.
+
+Quotations might come from elsewhere than the Scriptures, as well, so a "reference" that's *not* a Scripture reference can also be included---it just won't be a link:
+
+|> (Wikipedia) Two ancient Israelite and Jewish places of worship on the Temple Mount in the Old City of Jerusalem have been called the Temple in Jerusalem, or the Holy Temple (Hebrew: בֵּית־הַמִּקְדָּשׁ, Modern: Bēt HaMīqdaš, Tiberian: Bēṯ HamMīqdāš; Arabic: بيت المقدس Bait al-Maqdis).`,
+        },
+        {
+          type: PartType.text,
+          content: `Be careful using this notation with non-Biblical texts, however, because any numbers that appear in the text will be treated like verse numbers.`,
         },
         { type: PartType.heading, content: 'Formatting of Verse Numbers' },
         {
