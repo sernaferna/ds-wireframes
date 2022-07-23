@@ -106,6 +106,22 @@ export const bibleLinkCommand: ICommand = {
   },
 };
 
+export const bibleCustomLinkCommand: ICommand = {
+  name: 'BibleCustomLink',
+  keyCommand: 'BibleCustomLink',
+  buttonProps: { 'aria-label': 'Bible Link', title: 'Insert Bible Link with custom text' },
+  icon: <u>v1✞</u>,
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const customText = prompt('Enter the custom text:');
+    if (!customText) {
+      return;
+    }
+
+    const modifyText = `[|${state.selectedText} (${customText})|]`;
+    api.replaceSelection(modifyText);
+  },
+};
+
 export const poetryQuoteCommand: ICommand = {
   name: 'PoetryQuote',
   keyCommand: 'PoetryQuote',
@@ -156,7 +172,7 @@ export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): IComma
     commandList.push(scCommand);
   }
 
-  commandList.push(scstyleCommand, bibleLinkCommand, poetryQuoteCommand);
+  commandList.push(scstyleCommand, bibleLinkCommand, bibleCustomLinkCommand, poetryQuoteCommand);
 
   return commandList;
 };
