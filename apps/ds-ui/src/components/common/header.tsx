@@ -61,7 +61,7 @@ export const Header = () => {
   }
 
   return (
-    <Navbar variant="dark" bg="primary" expand="md">
+    <Navbar variant="dark" bg="dark" expand="md">
       <Navbar.Brand href="/">
         <Image src="/logo192.png" height="50" width="50" />
         <strong className="ms-2">Devouring Scripture</strong>
@@ -74,7 +74,7 @@ export const Header = () => {
             {userData!.isAdmin && adminLinks}
           </Nav>
           <Navbar.Text className="w-100 text-end">
-            <Button variant="primary" onClick={toggleSettings}>
+            <Button variant="dark" onClick={toggleSettings}>
               <Gear width="25" height="25" />
             </Button>
           </Navbar.Text>
