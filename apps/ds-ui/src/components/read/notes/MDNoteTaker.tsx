@@ -167,7 +167,7 @@ export const MDNoteTaker = ({
 
     deleteNote(noteDetails.note!.id);
     fetchNote('');
-  }, []);
+  }, [deleteNote, fetchNote, noteDetails.note]);
 
   const autoSaveFunc = () => {
     if (!dirty) {
