@@ -171,42 +171,44 @@ export const ReadPage = () => {
   }
 
   return (
-    <Container fluid={true} className="page-main-container">
-      <Row>
-        <Col xs="12" className="mb-2">
-          <PassageLauncher defaultVersion={userData!.settings.read.defaultVersion} />
-        </Col>
-        {!showMDFullScreen && (
-          <Col xs="12" lg="6">
-            <PassageCards
+    <>
+      <Container fluid={true} className="m-0 p-0">
+        <PassageLauncher defaultVersion={userData!.settings.read.defaultVersion} />
+      </Container>
+      <Container fluid={true} className="page-main-container">
+        <Row>
+          {!showMDFullScreen && (
+            <Col xs="12" lg="6">
+              <PassageCards
+                fetchNote={getNoteCallback}
+                fetchPassage={getPassageCallback}
+                passageDetails={downloadedPassageDetails}
+                sortOrder={userData!.settings.read.sortPassages}
+              />
+            </Col>
+          )}
+          <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
+            <PassageNotes
               fetchNote={getNoteCallback}
               fetchPassage={getPassageCallback}
-              passageDetails={downloadedPassageDetails}
-              sortOrder={userData!.settings.read.sortPassages}
-            />
-          </Col>
-        )}
-        <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
-          <PassageNotes
-            fetchNote={getNoteCallback}
-            fetchPassage={getPassageCallback}
-            noteDetails={downloadedNoteDetails}
-            passageDetails={downloadedPassageDetails}
-            setShowMDFullScreen={switchMDFullScreen}
-            showMDFullScreen={showMDFullScreen}
-            autosaveNotes={userData!.settings.read.autosavePassageNotes}
-          />
-        </Col>
-        {!showMDFullScreen && (
-          <Col xs="12">
-            <AllNotes
               noteDetails={downloadedNoteDetails}
-              fetchNote={getNoteCallback}
-              fetchPassage={getPassageCallback}
+              passageDetails={downloadedPassageDetails}
+              setShowMDFullScreen={switchMDFullScreen}
+              showMDFullScreen={showMDFullScreen}
+              autosaveNotes={userData!.settings.read.autosavePassageNotes}
             />
           </Col>
-        )}
-      </Row>
-    </Container>
+          {!showMDFullScreen && (
+            <Col xs="12">
+              <AllNotes
+                noteDetails={downloadedNoteDetails}
+                fetchNote={getNoteCallback}
+                fetchPassage={getPassageCallback}
+              />
+            </Col>
+          )}
+        </Row>
+      </Container>
+    </>
   );
 };
