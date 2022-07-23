@@ -40,16 +40,16 @@
 // $danger: #ed0b49;
 
 // OPTION 4
-$white: #ffffff;
+// $white: #ffffff;
 
-$light: #ddd8f9;
-$dark: #100b0b;
-$primary: #2f2f63;
-$secondary: #8759dc;
-$info: #f9a99b;
-$success: #1ca664;
-$warning: #e1cc1c;
-$danger: #f0230d;
+// $light: #ddd8f9;
+// $dark: #100b0b;
+// $primary: #2f2f63;
+// $secondary: #8759dc;
+// $info: #f9a99b;
+// $success: #1ca664;
+// $warning: #e1cc1c;
+// $danger: #f0230d;
 
 // OPTION 5
 // $white: #ffffff;
@@ -62,6 +62,18 @@ $danger: #f0230d;
 // $success: #009c44;
 // $warning: #e9c500;
 // $danger: #f0002e;
+
+// VERY CUSTOM OPTION
+$white: #ffffff;
+
+$light: #dbc8ff;
+$dark: #220b4e;
+$primary: #410f70;
+$secondary: #102770;
+$info: #4e260b;
+$success: #47700f;
+$warning: #705d0f;
+$danger: #e58679;
 
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
