@@ -33,7 +33,7 @@ export const Settings = () => {
     <Form>
       <Form.Label>General Settings</Form.Label>
       <Form.Check
-        type="checkbox"
+        type="switch"
         id="showSizeIndicatorSetting"
         label="Show Size Indicator"
         checked={userData!.settings.showSizeIndicator}
@@ -41,7 +41,7 @@ export const Settings = () => {
       />
       <Form.Check
         className="mb-3"
-        type="checkbox"
+        type="switch"
         id="isAdmin"
         label="Admin user?"
         checked={userData!.isAdmin}

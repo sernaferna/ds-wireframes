@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrashFill } from 'react-bootstrap-icons';
+import { CloseButton } from 'react-bootstrap';
 
 interface IPrayerIconsContainer {
   itemId: string;
@@ -29,9 +29,7 @@ export const PrayerIconsContainer = ({ itemId, deleteItem, children }: IPrayerIc
   return (
     <div className="float-end text-primary">
       {children}
-      <span className="btn btn-lg p-0 ms-1">
-        <TrashFill className="text-danger" onClick={handleClick(itemId)} />
-      </span>
+      <CloseButton onClick={handleClick(itemId)} className="ms-2" />
     </div>
   );
 };

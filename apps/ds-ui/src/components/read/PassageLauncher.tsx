@@ -56,7 +56,7 @@ export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
   );
 
   return (
-    <Row className="bg-light m-1 p-1">
+    <Row className="bg-light bg-opacity-50 m-1 p-1">
       <Formik
         validationSchema={schema}
         onSubmit={(values) => {

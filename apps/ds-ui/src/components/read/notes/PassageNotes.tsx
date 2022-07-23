@@ -60,7 +60,7 @@ export const PassageNotes = ({
     return (
       <>
         <h4>Notes</h4>
-        <Alert variant="primary">Please select a passage or note to take notes.</Alert>
+        <Alert variant="light">Please select a passage or note to take notes.</Alert>
       </>
     );
   }
