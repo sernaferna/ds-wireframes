@@ -38,7 +38,7 @@ export function scriptureQuotes(): Transformer {
 
         // when the line is just |> at the beginning, the space is being stripped out, so...
         if (fixedString === '|>') {
-          fixedString = ' ';
+          fixedString = '|> &nbsp;';
           level = 1;
         }
 
@@ -54,7 +54,12 @@ export function scriptureQuotes(): Transformer {
               style: `margin-top: 0; margin-bottom: 0; padding-left: ${level}em;`,
             },
           },
-          children: [{ type: 'text', value: fixedString }],
+          children: [
+            {
+              type: fixedString === '&nbsp;' ? 'html' : 'text',
+              value: fixedString,
+            },
+          ],
         });
       }
 
