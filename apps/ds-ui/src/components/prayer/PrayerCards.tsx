@@ -26,11 +26,11 @@ export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   }
 
   if (type === PrayerTypes.praise) {
-    return <ShieldPlus className="d-inline me-1 text-primary" />;
+    return <ShieldPlus height="20" width="20" className="align-top mt-1" />;
   } else if (type === PrayerTypes.request) {
-    return <Tsunami />;
+    return <Tsunami height="20" width="20" className="align-top mt-1" />;
   } else if (type === PrayerTypes.confession) {
-    return <EyeFill />;
+    return <EyeFill height="20" width="20" className="align-top mt-1" />;
   }
 
   return <></>;
@@ -81,6 +81,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
   const items = sortedItems.map((item) => {
     const submitButton = item.completed ? (
       <Button
+        size="sm"
         variant="secondary"
         onClick={() => {
           handleCompleteButton(item.id, false);
@@ -90,6 +91,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
       </Button>
     ) : (
       <Button
+        size="sm"
         variant="primary"
         onClick={() => {
           handleCompleteButton(item.id, true);
@@ -114,7 +116,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
             <Card.Text as="div" className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
               <MarkdownPreview content={item.text} shaded={false} />
             </Card.Text>
-            {submitButton}
+            <Card.Text className="text-end">{submitButton}</Card.Text>
           </Card.Body>
           <Card.Footer>{item.date}</Card.Footer>
         </Card>

@@ -169,7 +169,7 @@ export const EditPlanForm = ({
               <Col xs="12" md="6" xl="2" className="mb-2">
                 <Form.Check
                   name="includeWeekends"
-                  type="checkbox"
+                  type="switch"
                   label="Include weekends?"
                   checked={values.includeWeekends}
                   onChange={handleChange}
@@ -203,7 +203,7 @@ export const EditPlanForm = ({
                     <Form.Check
                       name="isAdmin"
                       id="isAdmin"
-                      type="checkbox"
+                      type="switch"
                       label="Admin Plan"
                       aria-describedby="isPlanAdminHelpText"
                       checked={values.isAdmin}
@@ -218,7 +218,7 @@ export const EditPlanForm = ({
                 )}
                 <Form.Check
                   name="includeApocrypha"
-                  type="checkbox"
+                  type="switch"
                   label="Include Apocrypha"
                   aria-describedby="isApocHelpText"
                   checked={values.includeApocrypha}

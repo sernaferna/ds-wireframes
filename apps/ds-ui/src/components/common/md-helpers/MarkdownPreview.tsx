@@ -25,7 +25,7 @@ export const MarkdownPreview = ({ content, shaded = true }: IMarkdownPreview) =>
     return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  const classNames: string = shaded ? 'bg-light border mx-1 my-2' : '';
+  const classNames: string = shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '';
 
   const pluginList = getPluginList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
   return <MDEditor.Markdown source={content} className={classNames} remarkPlugins={pluginList} />;

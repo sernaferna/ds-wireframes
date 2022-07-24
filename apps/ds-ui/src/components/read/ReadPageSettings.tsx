@@ -76,14 +76,14 @@ export const ReadPageSettings = () => {
 
       <h6 className="mt-3">Writing Settings</h6>
       <Form.Check
-        type="checkbox"
+        type="switch"
         id="autosavePassageNotes"
         label="Auto-Save Passage Notes"
         checked={userData!.settings.read.autosavePassageNotes}
         onChange={flipBoolCallback('settings.read.autosavePassageNotes')}
       />
       <Form.Check
-        type="checkbox"
+        type="switch"
         id="autoSmallCaps"
         label={
           <p>
@@ -94,7 +94,7 @@ export const ReadPageSettings = () => {
         onChange={flipBoolCallback('settings.write.autoSmallCaps')}
       />
       <Form.Check
-        type="checkbox"
+        type="switch"
         id="autoADBC"
         label={
           <p>

@@ -153,7 +153,7 @@ export const MarkdownBox = ({
       {!showFullScreen && (
         <>
           <div className="d-grid gap-2">
-            <Button size="sm" variant="secondary" onClick={reversePreviewState()}>
+            <Button size="sm" variant="outline-secondary" onClick={reversePreviewState()}>
               {showPreviewState ? 'Hide Preview' : 'Show Preview'}
             </Button>
 

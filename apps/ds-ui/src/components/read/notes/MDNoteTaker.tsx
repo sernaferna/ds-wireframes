@@ -123,6 +123,7 @@ export const MDNoteTaker = ({
 
   const newNoteBtn = () => {
     fetchNote('');
+    setShowMDFullScreen(false);
   };
 
   const formSubmit = useCallback(
@@ -167,7 +168,7 @@ export const MDNoteTaker = ({
 
     deleteNote(noteDetails.note!.id);
     fetchNote('');
-  }, []);
+  }, [deleteNote, fetchNote, noteDetails.note]);
 
   const autoSaveFunc = () => {
     if (!dirty) {
@@ -259,9 +260,11 @@ export const MDNoteTaker = ({
                 Delete
               </Button>
             )}
-            <Button variant="secondary" className="ms-2" onClick={newNoteBtn}>
-              {passageDetails.isDownloaded ? 'New' : 'Close'}
-            </Button>
+            {noteDetails.isDownloaded && (
+              <Button variant="info" className="ms-2" onClick={newNoteBtn}>
+                Close
+              </Button>
+            )}
             <Button disabled={!dirty} variant="primary" className="ms-2" type="submit">
               {noteDetails.isDownloaded ? 'Update' : 'Save'}
             </Button>

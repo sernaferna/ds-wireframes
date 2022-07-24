@@ -81,15 +81,6 @@ export const CreatePrayerItem = ({ confession = false }) => {
     };
   };
 
-  const classNameFor = (type: string, p: FormikProps<ValuesSchema>, middle: boolean = false) => {
-    const mainClass = p.values.type === type ? 'text-light bg-success' : 'text-light bg-secondary';
-    if (middle) {
-      return `mx-3 mx-lg-2 mx-xxl-3 ${mainClass}`;
-    } else {
-      return mainClass;
-    }
-  };
-
   return (
     <Alert variant={confession ? 'danger' : 'primary'}>
       <h4>{confession ? 'Confession' : 'New Prayer Request'}</h4>
@@ -128,22 +119,29 @@ export const CreatePrayerItem = ({ confession = false }) => {
               <Stack direction="horizontal" className="h1 m-3">
                 <Form.Control type="hidden" id="type" />
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
-                  <ShieldPlus
-                    className={classNameFor(PrayerTypes.praise, formikProps)}
+                  <Button
+                    variant={formikProps.values.type === PrayerTypes.praise ? 'success' : 'outline-primary'}
                     onClick={clickPrayerType(PrayerTypes.praise, formikProps)}
-                  />
+                  >
+                    <ShieldPlus height="35" width="35" />
+                  </Button>
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
-                  <Tsunami
-                    className={classNameFor(PrayerTypes.request, formikProps, true)}
+                  <Button
+                    variant={formikProps.values.type === PrayerTypes.request ? 'success' : 'outline-primary'}
+                    className="mx-3 mx-lg-2 mx-xxl-3"
                     onClick={clickPrayerType(PrayerTypes.request, formikProps)}
-                  />
+                  >
+                    <Tsunami height="35" width="35" />
+                  </Button>
                 </OverlayTrigger>
                 <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={confessionPopover}>
-                  <EyeFill
-                    className={classNameFor(PrayerTypes.confession, formikProps)}
+                  <Button
+                    variant={formikProps.values.type === PrayerTypes.confession ? 'success' : 'outline-primary'}
                     onClick={clickPrayerType(PrayerTypes.confession, formikProps)}
-                  />
+                  >
+                    <EyeFill height="35" width="35" />
+                  </Button>
                 </OverlayTrigger>
               </Stack>
             )}
