@@ -7,7 +7,7 @@ import {
   getBreaksNeededForEmptyLineAfter,
   commands,
 } from '@uiw/react-md-editor';
-import { TextRight, BookHalf, BookFill, Link45deg, FileRichtextFill } from 'react-bootstrap-icons';
+import { BookHalf, BookFill, Link45deg, FileRichtextFill } from 'react-bootstrap-icons';
 
 export const lordCommand: ICommand = {
   name: 'LORD',
@@ -149,8 +149,8 @@ export const scriptureQuoteCommand: ICommand = {
 
     let newText = '|> ' + selectedText.replaceAll('\n', '\n|> ');
     newText = newText.replaceAll('|>  ', '|> |> ');
-    newText = newText.replaceAll(/^(\d+)\s/g, ' ^$1^');
-    newText = newText.replaceAll(/\s(\d+)\s/g, ' ^$1^');
+    newText = newText.replaceAll(/^(\d+)\s/g, ' ^$1^ ');
+    newText = newText.replaceAll(/\s(\d+)\s/g, ' ^$1^ ');
 
     //replaces the current selection with the scripture quote mark
     api.replaceSelection(`${breaksBefore}${newText}${breaksAfter}`);
