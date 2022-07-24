@@ -7,7 +7,7 @@ import {
   getBreaksNeededForEmptyLineAfter,
   commands,
 } from '@uiw/react-md-editor';
-import { TextRight } from 'react-bootstrap-icons';
+import { TextRight, BookHalf, BookFill, Link45deg, FileRichtextFill } from 'react-bootstrap-icons';
 
 export const lordCommand: ICommand = {
   name: 'LORD',
@@ -99,9 +99,35 @@ export const bibleLinkCommand: ICommand = {
   name: 'BibleLink',
   keyCommand: 'BibleLink',
   buttonProps: { 'aria-label': 'Bible link', title: 'Insert Bible Link' },
-  icon: <u>BG✞</u>,
+  icon: (
+    <span>
+      <BookHalf />
+      <Link45deg />
+    </span>
+  ),
   execute: (state: TextState, api: TextAreaTextApi) => {
     const modifyText = `[|${state.selectedText}|]`;
+    api.replaceSelection(modifyText);
+  },
+};
+
+export const bibleCustomLinkCommand: ICommand = {
+  name: 'BibleCustomLink',
+  keyCommand: 'BibleCustomLink',
+  buttonProps: { 'aria-label': 'Bible Link', title: 'Insert Bible Link with custom text' },
+  icon: (
+    <span>
+      <BookFill />
+      <Link45deg />
+    </span>
+  ),
+  execute: (state: TextState, api: TextAreaTextApi) => {
+    const customText = prompt('Enter the text you want to use:');
+    if (!customText) {
+      return;
+    }
+
+    const modifyText = `[|${state.selectedText} (${customText})|]`;
     api.replaceSelection(modifyText);
   },
 };
@@ -110,7 +136,7 @@ export const scriptureQuoteCommand: ICommand = {
   name: 'ScriptureQuotation',
   keyCommand: 'ScriptureQuotation',
   buttonProps: { 'aria-label': 'Scripture Quotation', title: 'Scripture Quotation' },
-  icon: <TextRight className="border" />,
+  icon: <FileRichtextFill />,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const selectedText = state.selectedText ? state.selectedText : 'QUOTE HERE';
     const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
@@ -156,7 +182,7 @@ export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): IComma
     commandList.push(scCommand);
   }
 
-  commandList.push(scstyleCommand, bibleLinkCommand, scriptureQuoteCommand);
+  commandList.push(scstyleCommand, bibleLinkCommand, bibleCustomLinkCommand, scriptureQuoteCommand);
 
   return commandList;
 };
