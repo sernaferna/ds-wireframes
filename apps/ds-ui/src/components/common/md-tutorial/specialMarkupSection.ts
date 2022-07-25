@@ -26,13 +26,13 @@ For example:`,
         },
         {
           type: PartType.example,
-          content: `[|Rev 11:17|KJV] says:
+          content: `Revelation says:
           
-|> Saying, We give thee thanks, O LORD God Almighty, which art, and wast, and art to come; because thou hast taken to thee thy great power, and hast reigned.
+|> ([|Rev 11:17|KJV]) Saying, We give thee thanks, O LORD God Almighty, which art, and wast, and art to come; because thou hast taken to thee thy great power, and hast reigned.
 
-which relates back to [|Ps 2:2|ESV], which says:
+which relates back to the Psalms, which say:
 
-|> The kings of the earth set themselves,
+|> (Ps 2:2) The kings of the earth set themselves,
 |> |> and the rulers take counsel together,
 |> |> against the LORD and against his Anointed, saying,`,
         },
@@ -184,11 +184,11 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
           type: PartType.example,
           content: `To quote King David:
           
-|> (Ps 1:1-2) ^1^Blessed is the man
+|> (Ps 1:1-2) ^1^ Blessed is the man
 |> |>  who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |>  nor sits in the seat of scoffers;
-|> ^2^but his delight is in the law of the LORD,
+|> ^2^ but his delight is in the law of the LORD,
 |> |>  and on his law he meditates day and night.`,
         },
         {
@@ -196,7 +196,7 @@ If you're interested, the **Apostles' Creed** can be found at the [Christian Ref
           content: `These special forms of blockquotes do a couple of things:
           
 1. Indentation works well for **poetry** when \`|> |>\` notations are nested
-1. Optional: If a passage reference is specified at the beginning, a link to the passage will come at the end of the quote
+1. Optional: If a citation is specified at the beginning it will be appended to the end of the quote, aligned on the right; if Devouring Scripture recognizes it as a Bible reference a link will automatically be created
 
 Both of these will be discussed in more detail below.`,
         },
@@ -206,27 +206,43 @@ Both of these will be discussed in more detail below.`,
         },
         {
           type: PartType.text,
-          content: `As mentioned, a reference for the quote can be cited at the beginning of the quote in parentheses. It will be stripped out of the main quotation and then appended at the end, aligned to the right and in italics. If the citation is a valid reference to Scripture it will be inserted as a link.`,
+          content: `As mentioned, a citation for the quote can be included at the beginning, in parentheses. It will be stripped out of the main quotation and re-appended at the end, aligned to the right and in italics.
+          
+Some formatting can be included, though formatting *can* confuse the rendering engine so use at your own risk. 
+
+A reference to Scripture can be included using the \`[|Ref|}\` notation, or, if the citation is a valid reference to Scripture, Devouring Scripture can create the link automatically.`,
         },
         {
           type: PartType.example,
-          content: `References aren't necessary, so, for example, we could quote [|Ps 7:3-5|] without including the reference in the quote:
+          content: `Citations aren't necessary, so, for example, we could quote [|Ps 7:3-5|] without including the reference in the quote:
 
-|> ^3^O LORD my God, if I have done this,
+|> ^3^ O LORD my God, if I have done this,
 |> |>    if there is wrong in my hands,
-|> ^4^if I have repaid my friend with evil
+|> ^4^ if I have repaid my friend with evil
 |> |>    or plundered my enemy without cause,
-|> ^5^let the enemy pursue my soul and overtake it,
+|> ^5^ let the enemy pursue my soul and overtake it,
 |> |>    and let him trample my life to the ground
 |> |>    and lay my glory in the dust.
 
 Or they can be specified within the quote in parentheses on the first line:
 
-|> (Ps 7:3-5) ^3^O LORD my God, if I have done this,
+|> (Ps 7:3-5) ^3^ O LORD my God, if I have done this,
 |> |>    if there is wrong in my hands,
-|> ^4^if I have repaid my friend with evil
+|> ^4^ if I have repaid my friend with evil
 |> |>    or plundered my enemy without cause,
-|> ^5^let the enemy pursue my soul and overtake it,
+|> ^5^ let the enemy pursue my soul and overtake it,
+|> |>    and let him trample my life to the ground
+|> |>    and lay my glory in the dust.
+
+Devouring Scripture will reconize the reference and create the link automatically.
+
+More complex content can be included, such as:
+
+|> ([|Ps 7:3-5|ESV], emphasis added) ^3^ O LORD my God, if I have done this,
+|> |>    if there is wrong in my hands,
+|> ^4^ if I have **repaid my friend with evil**
+|> |>    or plundered my enemy without cause,
+|> ^5^ let the enemy pursue my soul and overtake it,
 |> |>    and let him trample my life to the ground
 |> |>    and lay my glory in the dust.
 
@@ -243,11 +259,11 @@ Quotations might come from elsewhere than the Scriptures, as well, so a "referen
           type: PartType.example,
           content: `We read in the Psalms:
 
-|> (Ps 1:1-2) ^1^Blessed is the man
+|> (Ps 1:1-2) ^1^ Blessed is the man
 |> |> who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |> nor sits in the seat of scoffers;
-|> ^2^but his delight is in the law of the LORD,
+|> ^2^ but his delight is in the law of the LORD,
 |> |> and on his law he meditates day and night.`,
         },
         {
@@ -260,11 +276,11 @@ Quotations might come from elsewhere than the Scriptures, as well, so a "referen
         },
         {
           type: PartType.example,
-          content: `|>      ^1^Blessed is the man
+          content: `|>      ^1^ Blessed is the man
 |> |>      who walks not in the counsel of the wicked,
 |>      nor stands in the way of sinners,
 |> |>   nor sits in the seat of scoffers;
-|>      ^2^but his delight is in the law of the ^^^LORD^^^,
+|>      ^2^ but his delight is in the law of the ^^^LORD^^^,
 |> |>      and on his law he meditates day and night.`,
         },
         {
@@ -295,7 +311,7 @@ nor stands in the way of sinners,
     and on his law he meditates day and night.
 \`\`\`
 
-The text may include footnote references (such as the \`[a]\` and \`[b]\` above), so these should be cleaned up. Additionally, some words that appear all in uppercase on the screen, such as the word ^^^LORD^^^ in verse 2, might *not* be all uppercase when copied and pasted, as illustrated above. This is due to the way some websites display text using \`HTML\` and \`CSS\`, which isn't worth going into in this tutorial.
+The text may include footnote references (such as the \`[a]\` and \`[b]\` above), so these should be removed. Additionally, some words that appear all in uppercase on the screen, such as the word ^^^LORD^^^ in verse 2, might *not* be all uppercase when copied and pasted, as illustrated above. (This is due to the way some websites display text using \`HTML\` and \`CSS\`, which isn't worth going into in this tutorial.)
 
 Once the text is cleaned up by removing those footnotes and making text uppercase again, it might look more like this:
 
@@ -311,21 +327,21 @@ nor stands in the way of sinners,
 If that block of text is selected and the **Scripture Quotation** button is clicked, it will be formatted like this:
 
 \`\`\`
-|> ^1^Blessed is the man
+|> ^1^ Blessed is the man
 |> |>    who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |>    nor sits in the seat of scoffers;
-|> ^2^but his delight is in the law of the LORD,
+|> ^2^ but his delight is in the law of the LORD,
 |> |>    and on his law he meditates day and night.
 \`\`\`
 
 Which will render similar to:
 
-|> ^1^Blessed is the man
+|> ^1^ Blessed is the man
 |> |>    who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |>    nor sits in the seat of scoffers;
-|> ^2^but his delight is in the law of the LORD,
+|> ^2^ but his delight is in the law of the LORD,
 |> |>    and on his law he meditates day and night.`,
         },
         {
@@ -349,7 +365,7 @@ Which will render similar to:
 Selecting that text and clicking the **Scripture Quotation** button would yield this:
 
 \`\`\`
-|> ^20^All this took about ^450^years. And after that he gave them judges until Samuel the prophet. ^21^Then they asked for a king, and God gave them Saul the son of Kish, a man of the tribe of Benjamin, for forty years.
+|> ^20^ All this took about ^450^ years. And after that he gave them judges until Samuel the prophet. ^21^ Then they asked for a king, and God gave them Saul the son of Kish, a man of the tribe of Benjamin, for forty years.
 \`\`\``,
         },
         {
