@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGetCurrentItemsQuery, sortPassageItems } from '../../services/PassagesService';
 import { ErrorLoadingDataMessage } from '../common/loading';
-import { PlaceholderCard, PassageCard } from './PassageCard';
+import { PassageCard } from './PassageCard';
 import { Row, Alert } from 'react-bootstrap';
 import { paginateItems } from '../../hooks/pagination';
 import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
@@ -28,8 +28,8 @@ export const PassageCards = ({ passageDetails, fetchNote, fetchPassage, sortOrde
   if (isLoading) {
     return (
       <Row xs="1" xxl="2">
-        <PlaceholderCard />
-        <PlaceholderCard />
+        <PassageCard.Placeholder />
+        <PassageCard.Placeholder />
       </Row>
     );
   }
