@@ -5,7 +5,7 @@ import { useDeletePassageItemMutation } from '../../services/PassagesService';
 import { PassageLinkBody } from './PassageLinkBody';
 import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
 
-export const PlaceholderCard = () => {
+const PlaceholderCard = () => {
   return (
     <Col className="passage-card">
       <Card className="card-body">
@@ -41,7 +41,7 @@ interface IPassageCard {
  * @param fetchNote Callback function to get a note by ID (only called with empty string to reset)
  * @param fetchPassage Callback function to get a passage by ID
  */
-export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetchPassage }: IPassageCard) => {
+const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetchPassage }: IPassageCard) => {
   const [deleteItem] = useDeletePassageItemMutation();
 
   const selectedItemID = useMemo(() => {
@@ -71,13 +71,6 @@ export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetc
     }
   };
 
-  const bibleVersionLogo =
-    passage.version === 'NIV' ? (
-      <img className="ms-3" src="logos/niv_179x50.png" alt="NIV Logo" height={'25px'} />
-    ) : (
-      <img className="ms-3" src="logos/esv_95x50.png" alt="NIV Logo" height={'25px'} />
-    );
-
   return (
     <Col className="mt-2">
       <Card
@@ -97,11 +90,13 @@ export const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetc
             <PassageLinkBody passage={passage} selected={selectedItemID === passage.id ? true : false} />
           </Card.Text>
         </Card.Body>
-        <Card.Footer className="d-none d-lg-flex flex-row-reverse">
-          <img className="ms-3" src="logos/BibleGateway_263x50.png" height="25px" alt="Bible Gateway Logo" />
-          {bibleVersionLogo}
-        </Card.Footer>
       </Card>
     </Col>
   );
 };
+
+const PCInternal = Object.assign(PassageCard, {
+  Placeholder: PlaceholderCard,
+});
+
+export { PCInternal as PassageCard };
