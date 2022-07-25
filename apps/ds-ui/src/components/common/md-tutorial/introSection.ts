@@ -2,11 +2,11 @@ import { SectionDocumentation, PartType } from '../tutorial/TutorialTypes';
 
 export const mdIntroSection: SectionDocumentation = {
   mainSection: {
-    title: 'Formatted Text',
+    title: 'Formatting Text in Devouring Scripture: Markdown',
     parts: [
       {
         type: PartType.text,
-        content: `**Devouring Scripture** supports a notation called **markdown** to allow the user to add **formatting** to text such as prayer requests and notes. The text can be "rendered" into a more visual form or viewed with the simple, text-based formatting in place. (For example, seeing text rendered in *italics* is helpful, but seeing text \`*emphasized* with *asterisks*\` is still intuitive.)`,
+        content: `**Devouring Scripture** supports a notation called **markdown** that allows users to add **formatting** to some text (such as prayer requests and notes). The text can be "rendered" into a more visual form or viewed with the simple, text-based formatting in place. (For example, seeing text rendered in *italics* is helpful, but seeing text \`*emphasized* with *asterisks*\` is still intuitive.)`,
       },
       {
         type: PartType.text,
@@ -22,10 +22,10 @@ export const mdIntroSection: SectionDocumentation = {
           type: PartType.text,
           content: `You might be wondering, "Do I really *need* to learn this 'markdown' notation? All I want to do is capture a few notes on some Bible passages and remember my prayer items!" And the answer is no, you don't! 😀
           
-Markdown is designed such that you only need to use the parts you want, and ignore the rest.
+Markdown is designed such that you only need to use the parts you want---if any---and otherwise ignore the rest.
 
-* If all you want to do is write some text with no formatting, you can do so. No learning required!
-* When you want to include multiple paragraphs you can, without having to remember any special notation. Just press *Enter* and keep going!
+* If all you want to do is write some text with no formatting you can do so. No learning curve required!
+* When you want to break your text into multiple paragraphs you can. Press *Enter* and it just "works."
 * If you ever want to use *italics,* it's intuitive to just surround the text with asterisks, like \`*this*\` -- and then add **bold** like \`**this**\`
 * If you want to highlight something you can use a similar notation \`==like this==\`. 
 * If you want to create a link to a particular Bible verse, you can learn a simple notation for that (such as \`[|Mark 1|]\`), whereby Devouring Scripture will create a link to **Bible Gateway** for you

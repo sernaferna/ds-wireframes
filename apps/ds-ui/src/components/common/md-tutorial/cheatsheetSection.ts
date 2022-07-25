@@ -26,7 +26,7 @@ export const mdCheatsheetSection: SectionDocumentation = {
 | Superscript: 1^st^ | \`Superscript: 1^st^\` | |
 | UPPERCASE | \`UPPERCASE\` | If user setting **on** no special notation necessary |
 | UPPERCASE | \`^^^UPPERCASE^^^\` | If user setting **off** |
-| Era: 2020^^A.D.^^ | \`2020AD\` or \`2020A.D.\` | If user setting **on**; no special notation necessary but must be uppercase |
+| Era: 2020^^A.D.^^ | \`2020A.D.\` | If user setting **on**; no special notation necessary but must be uppercase and include periods; will work for \`A.D.\`, \`B.C.\`, \`C.E.\`, and  \`B.C.E.\` |
 | Era: 2020^^A.D.^^ | \`2020^^A.D.^^\` | If user setting **off** |
 | ^-^Small Caps^-^ | \`^-^Small Caps^-^\` | |`,
         },
@@ -48,7 +48,7 @@ export const mdCheatsheetSection: SectionDocumentation = {
           type: PartType.example,
           content: `No special formatting is required for paragraphs.
 
-Leaving multiple lines between will create two paragraphs.`,
+Leaving multiple lines between will create paragraphs, as one would expect.`,
         },
       ],
     },
@@ -103,7 +103,7 @@ A line is above this paragraph.`,
 
 For a Scripture quotation, such as a Psalm:
 
-|> (Ps 1:1) ^1^Blessed is the man
+|> (Ps 1:1) ^1^ Blessed is the man
 |> |>    who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |>    nor sits in the seat of scoffers;`,
