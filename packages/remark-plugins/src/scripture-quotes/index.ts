@@ -4,69 +4,100 @@ import { Literal } from 'unist';
 import { is } from 'unist-util-is';
 import { parseLink, getBibleLinkObj } from '../bible-links/bible-link-helpers';
 
-const lineMatchRE = /^\|> /;
 const firstLineMatchRE = /^\|> (?:\(([^\)]*)\) )?/;
+const lineMatchRE = /^\|> /;
+
+interface InternalParagraph {
+  level: number;
+  children: any[];
+}
 
 export function scriptureQuotes(): Transformer {
   return (tree) => {
     visit(tree, ['paragraph'], (node, i, parent: any) => {
       const { children } = node;
 
-      const textNode = children && children[0];
-      if (!is(textNode, 'text')) {
+      // first node should always be text, and may or may not
+      // include a `(passage ref)` at the beginning
+
+      const firstNode = children && children[0];
+      if (!is(firstNode, 'text')) {
         return;
       }
 
-      const { value } = textNode as Literal<string>;
-      let modifiedValue = value;
+      const { value } = firstNode as Literal<string>;
 
-      const flResult = firstLineMatchRE.exec(modifiedValue);
+      const flResult = firstLineMatchRE.exec(value);
       if (flResult === null) {
         return;
       }
 
       const passageRef: string | undefined = flResult[1];
-      if (passageRef) {
-        modifiedValue = modifiedValue.replace(flResult[0], '|> ');
+
+      const paragraphs: InternalParagraph[] = [];
+      let currentPara: InternalParagraph = { level: 0, children: [] };
+
+      for (let i = 0; i < children.length; i++) {
+        const thisNode = children[i];
+        if (!is(thisNode, 'text')) {
+          currentPara.children.push(thisNode);
+          continue;
+        }
+
+        const { value: thisValue } = thisNode as Literal<string>;
+        let thisString = thisValue;
+        if (passageRef && i === 0) {
+          thisString = thisString.replace(flResult[0], '|> ');
+        }
+
+        const splitNewValue = thisString.toString().split('\n');
+        for (let j = 0; j < splitNewValue.length; j++) {
+          let fixedString = splitNewValue[j];
+
+          // when the line is just |> at the beginning, the space is being stripped out, so...
+          if (fixedString === '|>') {
+            fixedString = '|> &nbsp;';
+          }
+
+          if (!lineMatchRE.test(fixedString)) {
+            currentPara.children.push({ type: 'text', value: fixedString });
+            continue;
+          }
+
+          // there is a |> at the beginning of the fixed string
+          // so we need to push the para and start a new one
+          paragraphs.push(currentPara);
+          currentPara = { level: 0, children: [] };
+
+          while (lineMatchRE.test(fixedString)) {
+            currentPara.level++;
+            fixedString = fixedString.replace(lineMatchRE, '');
+          }
+
+          currentPara.children.push({
+            type: fixedString === '&nbsp' ? 'html' : 'text',
+            value: fixedString,
+          });
+        }
       }
 
-      const splitNewValue = modifiedValue.toString().split('\n');
-      const lines: any[] = [];
-      for (let i = 0; i < splitNewValue.length; i++) {
-        let fixedString = splitNewValue[i];
-        let level = 0;
+      // final add for the para that was in process
+      paragraphs.push(currentPara);
 
-        // when the line is just |> at the beginning, the space is being stripped out, so...
-        if (fixedString === '|>') {
-          fixedString = '|> &nbsp;';
-          level = 1;
-        }
-
-        while (lineMatchRE.test(fixedString)) {
-          level++;
-          fixedString = fixedString.replace(lineMatchRE, '');
-        }
-
-        lines.push({
-          type: 'paragraph',
-          data: {
-            hProperties: {
-              style: `margin-top: 0; margin-bottom: 0; padding-left: ${level}em;`,
-            },
+      const paragraphNodes = paragraphs.map((item) => ({
+        type: 'paragraph',
+        data: {
+          hProperties: {
+            style: `margin-top: 0; margin-bottom: 0; padding-left: ${item.level}em;`,
           },
-          children: [
-            {
-              type: fixedString === '&nbsp;' ? 'html' : 'text',
-              value: fixedString,
-            },
-          ],
-        });
-      }
+        },
+        children: item.children.slice(),
+      }));
 
       if (passageRef) {
         const lf = parseLink(`[|${passageRef}|]`);
-        const link = lf ? getBibleLinkObj(lf) : { type: 'text', value: passageRef };
-        lines.push({
+        const citation = lf ? getBibleLinkObj(lf) : { type: 'text', value: passageRef };
+        paragraphNodes.push({
           type: 'paragraph',
           data: {
             hProperties: {
@@ -76,18 +107,17 @@ export function scriptureQuotes(): Transformer {
           children: [
             {
               type: 'emphasis',
-              children: [link],
+              children: [citation],
             },
           ],
         });
       }
 
       node.type = 'blockquote';
-      node.processedByDS = true;
       node.data = {
         hName: 'blockquote',
       };
-      node.children = lines.slice();
+      node.children = paragraphNodes.slice();
     });
   };
 }
