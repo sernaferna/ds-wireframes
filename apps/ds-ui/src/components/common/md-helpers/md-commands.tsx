@@ -65,14 +65,25 @@ export const superCommand: ICommand = {
 export const highlightCommand: ICommand = {
   name: 'Highlight',
   keyCommand: 'Highlight',
-  buttonProps: { 'aria-label': 'Highlight', title: 'Highlight' },
+  shortcuts: 'ctrl+shift+h',
+  buttonProps: { 'aria-label': 'Highlight', title: 'Highlight (Ctrl+Shift+H)' },
   icon: <mark>abc</mark>,
   execute: (state: TextState, api: TextAreaTextApi) => {
+    const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
+    const state1 = api.setSelectionRange(newSelectionRange);
     const modifyText = `==${state.selectedText}==`;
-    api.replaceSelection(modifyText);
+    const state2 = api.replaceSelection(modifyText);
+
+    api.setSelectionRange({
+      start: state2.selection.end - 2 - state1.selectedText.length,
+      end: state2.selection.end - 2,
+    });
   },
 };
 
+/**
+ * @deprecated
+ */
 export const esvLinkCommand: ICommand = {
   name: 'ESVLink',
   keyCommand: 'ESVLink',
@@ -84,6 +95,9 @@ export const esvLinkCommand: ICommand = {
   },
 };
 
+/**
+ * @deprecated
+ */
 export const nivLinkCommand: ICommand = {
   name: 'NIVLink',
   keyCommand: 'NIVLink',
@@ -98,7 +112,8 @@ export const nivLinkCommand: ICommand = {
 export const bibleLinkCommand: ICommand = {
   name: 'BibleLink',
   keyCommand: 'BibleLink',
-  buttonProps: { 'aria-label': 'Bible link', title: 'Insert Bible Link' },
+  shortcuts: 'ctrl+shift+s',
+  buttonProps: { 'aria-label': 'Bible link', title: 'Scripture Link (Ctrl+Shift+S)' },
   icon: (
     <span>
       <BookHalf />
@@ -114,7 +129,8 @@ export const bibleLinkCommand: ICommand = {
 export const bibleCustomLinkCommand: ICommand = {
   name: 'BibleCustomLink',
   keyCommand: 'BibleCustomLink',
-  buttonProps: { 'aria-label': 'Bible Link', title: 'Insert Bible Link with custom text' },
+  shortcuts: 'ctrl+alt+s',
+  buttonProps: { 'aria-label': 'Bible Link', title: 'Custom Scripture Link (Ctrl+Alt+S)' },
   icon: (
     <span>
       <BookFill />
@@ -138,7 +154,8 @@ const eraRE = /[\d\s]((?:A\.D\.)|(?:B\.C\.(?:E\.)?)|(?:C\.E\.))/g;
 export const scriptureQuoteCommand: ICommand = {
   name: 'ScriptureQuotation',
   keyCommand: 'ScriptureQuotation',
-  buttonProps: { 'aria-label': 'Scripture Quotation', title: 'Scripture Quotation' },
+  shortcuts: 'ctrl+shift+p',
+  buttonProps: { 'aria-label': 'Scripture Quotation', title: 'Scripture Quotation (Ctrl+Shift+P)' },
   icon: <FileRichtextFill />,
   execute: (state: TextState, api: TextAreaTextApi) => {
     const selectedText = state.selectedText ? state.selectedText : 'QUOTE HERE';

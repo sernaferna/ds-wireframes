@@ -22,7 +22,7 @@ export const mdCheatsheetSection: SectionDocumentation = {
 | --- | --- | --- |
 | **Bold** | \`**Bold**\` or \`__Bold__\` | *Ctrl+Shift+B* |
 | *Italics* | \`*Italics*\` or \`_Italics_\` | *Ctrl+Shift+I* |
-| ==Highlight== | \`==Highlight==\` |
+| ==Highlight== | \`==Highlight==\` | *Ctrl+Shift+H* |
 | Superscript: 1^st^ | \`Superscript: 1^st^\` |
 | UPPERCASE | \`^^^UPPERCASE^^^\` |  |
 | Era: 2020^^A.D.^^ | \`2020^^A.D.^^\` |  |
@@ -56,6 +56,18 @@ Leaving multiple lines between will create paragraphs, as one would expect.`,
         {
           type: PartType.example,
           content: `A link to [Google](https://www.google.ca) and a link to the **Bible Gateway** to [|Acts 2:1|]`,
+        },
+        {
+          type: PartType.heading,
+          content: 'Keyboard Shortcuts',
+        },
+        {
+          type: PartType.text,
+          content: `Selecting the text \`Google\` and pressing *Ctrl+Shift+K* will create a normal link, in the format, \`[Google](url)\`. If no text is selcted \`[](url)\` will be inserted. Either way, \`url\` must be replaced with a valid URL.
+
+Selecting the text \`Rev 1:1\` and pressing *Ctrl+Shift+S* will create a Scripture link, in the format \`[|Rev 1:1|]\`.
+
+Selecting the text \`Rev 1:1\`  and pressing *Ctrl+Alt+S* will pop up a prompt for custom text to be used; if the text \`verse 1\` is entered in that prompt, \`[|Rev 1:1 (verse 1)|]\` will be inserted.`,
         },
       ],
     },
@@ -105,6 +117,16 @@ For a Scripture quotation, such as a Psalm:
 |> |>    who walks not in the counsel of the wicked,
 |> nor stands in the way of sinners,
 |> |>    nor sits in the seat of scoffers;`,
+        },
+        {
+          type: PartType.heading,
+          content: 'Keyboard Shortcuts',
+        },
+        {
+          type: PartType.text,
+          content: `Selecting a block of text and pressing *Ctrl+Alt+Q* will make it a regular blockquote.
+          
+Selecting a block of text and pressing *Ctrl+Shift+P* will create a Scripture Quote.`,
         },
       ],
     },
