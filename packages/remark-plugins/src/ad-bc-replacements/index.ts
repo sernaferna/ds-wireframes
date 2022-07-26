@@ -4,6 +4,9 @@ import { Literal } from 'unist';
 
 const eraRE = /[\d\s]((?:A\.D\.)|(?:B\.C\.(?:E\.)?)|(?:C\.E\.))/;
 
+/**
+ * @deprecated since 12.6.4
+ */
 export function adbcReplacements(): Transformer {
   return (tree) => {
     visit(tree, ['text'], (node, i, parent: any) => {

@@ -4,6 +4,9 @@ import { Literal } from 'unist';
 
 const capitalizedRE = /\b([\p{Lu}\p{Lt}]{1})([\p{Lu}\p{Lt}]+)\b/u;
 
+/**
+ * @deprecated since 12.6.4
+ */
 export function allCapReplacements(): Transformer {
   return (tree) => {
     visit(tree, ['text'], (node, i, parent: any) => {
