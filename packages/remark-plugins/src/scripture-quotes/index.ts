@@ -75,7 +75,7 @@ export function scriptureQuotes(): Transformer {
           }
 
           currentPara.children.push({
-            type: fixedString === '&nbsp' ? 'html' : 'text',
+            type: fixedString === '&nbsp;' ? 'html' : 'text',
             value: fixedString,
           });
         }
