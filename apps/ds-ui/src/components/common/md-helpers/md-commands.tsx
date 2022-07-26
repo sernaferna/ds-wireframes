@@ -168,21 +168,19 @@ export const scriptureQuoteCommand: ICommand = {
 /**
  * Helper function to get a list of commands to show in the MD Editor toolbar
  *
- * @param autoSmallCap Indicates whether small caps are automatically being converted (in which case the commmand won't show)
- * @param autoADBC Indicates whether A.D./B.C./B.C.E. are automatically being converted (in which case the command won't show)
  * @returns List of commands to show in the MD editor toolbar
  */
-export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): ICommand[] => {
-  const commandList: ICommand[] = [highlightCommand, superCommand, commands.divider];
-
-  if (!autoSmallCap) {
-    commandList.push(lordCommand);
-  }
-  if (!autoADBC) {
-    commandList.push(scCommand);
-  }
-
-  commandList.push(scstyleCommand, bibleLinkCommand, bibleCustomLinkCommand, scriptureQuoteCommand);
-
-  return commandList;
+export const getCommandList = (): ICommand[] => {
+  return [
+    highlightCommand,
+    superCommand,
+    scstyleCommand,
+    commands.divider,
+    lordCommand,
+    scCommand,
+    commands.divider,
+    bibleLinkCommand,
+    bibleCustomLinkCommand,
+    scriptureQuoteCommand,
+  ];
 };
