@@ -132,6 +132,9 @@ export const bibleCustomLinkCommand: ICommand = {
   },
 };
 
+const capitalizedWordsRE = /\b([\p{Lu}\p{Lt}]{2,})\b/gu;
+const eraRE = /[\d\s]((?:A\.D\.)|(?:B\.C\.(?:E\.)?)|(?:C\.E\.))/g;
+
 export const scriptureQuoteCommand: ICommand = {
   name: 'ScriptureQuotation',
   keyCommand: 'ScriptureQuotation',
@@ -151,6 +154,8 @@ export const scriptureQuoteCommand: ICommand = {
     newText = newText.replaceAll('|>  ', '|> |> ');
     newText = newText.replaceAll(/^(\d+)\s/g, ' ^$1^ ');
     newText = newText.replaceAll(/\s(\d+)\s/g, ' ^$1^ ');
+    newText = newText.replaceAll(eraRE, '^^$1^^');
+    newText = newText.replaceAll(capitalizedWordsRE, '^^^$1^^^');
 
     //replaces the current selection with the scripture quote mark
     api.replaceSelection(`${breaksBefore}${newText}${breaksAfter}`);
