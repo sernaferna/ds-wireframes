@@ -44,8 +44,6 @@ export const generateDefaultUser = (): UserAttributes => {
       },
       write: {
         showSettings: true,
-        autoSmallCaps: true,
-        autoADBC: true,
       },
       plans: {
         showSettings: true,

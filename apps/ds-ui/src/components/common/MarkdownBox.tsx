@@ -4,8 +4,7 @@ import { Button } from 'react-bootstrap';
 import { MarkdownTutorial } from './md-tutorial/MarkdownTutorial';
 import { getCommandList } from './md-helpers/md-commands';
 import { MarkdownPreview } from './md-helpers/MarkdownPreview';
-import { useUserSettings } from '../../hooks/UserSettings';
-import { ClientSideErrorLoading, ErrorLoadingDataMessage, LoadingMessage } from './loading';
+import { ClientSideErrorLoading } from './loading';
 import { useWindowSize } from '../../hooks/WindowSize';
 import { getHTMLForMD, getPluginList } from '@devouringscripture/remark-plugins';
 import fileDownload from 'js-file-download';
@@ -58,7 +57,6 @@ export const MarkdownBox = ({
 }: IMarkdownBox) => {
   const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
-  const [userData, userResponseError, userLoading] = useUserSettings();
   const windowSize = useWindowSize();
 
   const fsButton = useMemo(() => {
@@ -96,12 +94,6 @@ export const MarkdownBox = ({
     fileDownload(formattedHTML, 'notes.html');
   }, [content]);
 
-  if (userLoading) {
-    return <LoadingMessage />;
-  }
-  if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
-  }
   if (fullscreenOption && !setFullScreen) {
     return (
       <ClientSideErrorLoading>
@@ -110,8 +102,8 @@ export const MarkdownBox = ({
     );
   }
 
-  const pluginList = getPluginList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
-  const commandList = getCommandList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
+  const pluginList = getPluginList();
+  const commandList = getCommandList();
 
   return (
     <div>

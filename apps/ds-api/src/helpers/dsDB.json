@@ -36,9 +36,7 @@
           "sortPassages": "date-desc"
         },
         "write": {
-          "showSettings": true,
-          "autoSmallCaps": true,
-          "autoADBC": true
+          "showSettings": true
         },
         "plans": {
           "showSettings": true

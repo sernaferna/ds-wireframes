@@ -82,29 +82,6 @@ export const ReadPageSettings = () => {
         checked={userData!.settings.read.autosavePassageNotes}
         onChange={flipBoolCallback('settings.read.autosavePassageNotes')}
       />
-      <Form.Check
-        type="switch"
-        id="autoSmallCaps"
-        label={
-          <p>
-            Automatic <span style={{ fontVariant: 'small-caps' }}>Small Caps</span>
-          </p>
-        }
-        checked={userData!.settings.write.autoSmallCaps}
-        onChange={flipBoolCallback('settings.write.autoSmallCaps')}
-      />
-      <Form.Check
-        type="switch"
-        id="autoADBC"
-        label={
-          <p>
-            Autoformat eras (e.g. <span style={{ fontVariant: 'small-caps' }}>a.d.</span>2020, 1000
-            <span style={{ fontVariant: 'small-caps' }}>b.c.</span>)
-          </p>
-        }
-        checked={userData!.settings.write.autoADBC}
-        onChange={flipBoolCallback('settings.write.autoADBC')}
-      />
     </>
   );
 };

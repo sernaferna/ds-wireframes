@@ -132,6 +132,9 @@ export const bibleCustomLinkCommand: ICommand = {
   },
 };
 
+const capitalizedWordsRE = /\b([\p{Lu}\p{Lt}]{2,})\b/gu;
+const eraRE = /[\d\s]((?:A\.D\.)|(?:B\.C\.(?:E\.)?)|(?:C\.E\.))/g;
+
 export const scriptureQuoteCommand: ICommand = {
   name: 'ScriptureQuotation',
   keyCommand: 'ScriptureQuotation',
@@ -151,6 +154,8 @@ export const scriptureQuoteCommand: ICommand = {
     newText = newText.replaceAll('|>  ', '|> |> ');
     newText = newText.replaceAll(/^(\d+)\s/g, ' ^$1^ ');
     newText = newText.replaceAll(/\s(\d+)\s/g, ' ^$1^ ');
+    newText = newText.replaceAll(eraRE, '^^$1^^');
+    newText = newText.replaceAll(capitalizedWordsRE, '^^^$1^^^');
 
     //replaces the current selection with the scripture quote mark
     api.replaceSelection(`${breaksBefore}${newText}${breaksAfter}`);
@@ -168,21 +173,19 @@ export const scriptureQuoteCommand: ICommand = {
 /**
  * Helper function to get a list of commands to show in the MD Editor toolbar
  *
- * @param autoSmallCap Indicates whether small caps are automatically being converted (in which case the commmand won't show)
- * @param autoADBC Indicates whether A.D./B.C./B.C.E. are automatically being converted (in which case the command won't show)
  * @returns List of commands to show in the MD editor toolbar
  */
-export const getCommandList = (autoSmallCap: boolean, autoADBC: boolean): ICommand[] => {
-  const commandList: ICommand[] = [highlightCommand, superCommand, commands.divider];
-
-  if (!autoSmallCap) {
-    commandList.push(lordCommand);
-  }
-  if (!autoADBC) {
-    commandList.push(scCommand);
-  }
-
-  commandList.push(scstyleCommand, bibleLinkCommand, bibleCustomLinkCommand, scriptureQuoteCommand);
-
-  return commandList;
+export const getCommandList = (): ICommand[] => {
+  return [
+    highlightCommand,
+    superCommand,
+    scstyleCommand,
+    commands.divider,
+    lordCommand,
+    scCommand,
+    commands.divider,
+    bibleLinkCommand,
+    bibleCustomLinkCommand,
+    scriptureQuoteCommand,
+  ];
 };

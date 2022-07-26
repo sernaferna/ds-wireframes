@@ -41,8 +41,6 @@ export interface UserAttributes {
     };
     write: {
       showSettings: boolean;
-      autoSmallCaps: boolean;
-      autoADBC: boolean;
     };
     plans: {
       showSettings: boolean;
