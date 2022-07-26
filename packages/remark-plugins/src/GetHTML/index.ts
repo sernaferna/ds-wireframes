@@ -8,8 +8,6 @@ import { tac } from '../tac';
 import { lowerCaps } from '../lower-caps';
 import { smallCaps } from '../small-caps';
 import { bibleLinks } from '../bible-links';
-import { adbcReplacements } from '../ad-bc-replacements';
-import { allCapReplacements } from '../all-cap-replacements';
 import { highlight } from '../highlight';
 import { smartquotes } from '../smartquotes';
 import { scriptureQuotes } from '../scripture-quotes';
@@ -17,24 +15,10 @@ import { scriptureQuotes } from '../scripture-quotes';
 /**
  * Helper function to get a properly ordered list of Remark Plugins, for use in converting markdown to HTML.
  *
- * @param autoSmallcap Indicates whether UPPERCASE text should be automatically re-rendered as Small Caps
- * @param autoADBC Indicates whether eras (B.C., A.D.) should be automaticlaly re-rendered as smallcaps
  * @returns List of plugins to be used in rendering markdown to HTML
  */
-export const getPluginList = (autoSmallcap: boolean = true, autoADBC: boolean = true) => {
-  const pluginList = [scriptureQuotes, tac, lowerCaps, smallCaps, bibleLinks];
-
-  if (autoADBC) {
-    pluginList.push(adbcReplacements);
-  }
-
-  if (autoSmallcap) {
-    pluginList.push(allCapReplacements);
-  }
-
-  pluginList.push(highlight, supersub, smartquotes);
-
-  return pluginList;
+export const getPluginList = () => {
+  return [scriptureQuotes, tac, lowerCaps, smallCaps, bibleLinks, highlight, supersub, smartquotes];
 };
 
 /**

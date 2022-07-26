@@ -110,7 +110,7 @@ export const MarkdownBox = ({
     );
   }
 
-  const pluginList = getPluginList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
+  const pluginList = getPluginList();
   const commandList = getCommandList(userData!.settings.write.autoSmallCaps, userData!.settings.write.autoADBC);
 
   return (
