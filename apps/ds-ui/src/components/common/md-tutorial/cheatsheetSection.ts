@@ -18,16 +18,14 @@ export const mdCheatsheetSection: SectionDocumentation = {
           type: PartType.text,
           content: `A few simple notations provide 90% of what you might want to do with markdown.
                 
-| Notation | Syntax | Comment |
+| Notation | Syntax | Keyboard Shortcut |
 | --- | --- | --- |
-| **Bold** | \`**Bold**\` or \`__Bold__\` | |
-| *Italics* | \`*Italics*\` or \`_Italics_\` | |
-| ==Highlight== | \`==Highlight==\` | |
-| Superscript: 1^st^ | \`Superscript: 1^st^\` | |
-| UPPERCASE | \`UPPERCASE\` | If user setting **on** no special notation necessary |
-| UPPERCASE | \`^^^UPPERCASE^^^\` | If user setting **off** |
-| Era: 2020^^A.D.^^ | \`2020A.D.\` | If user setting **on**; no special notation necessary but must be uppercase and include periods; will work for \`A.D.\`, \`B.C.\`, \`C.E.\`, and  \`B.C.E.\` |
-| Era: 2020^^A.D.^^ | \`2020^^A.D.^^\` | If user setting **off** |
+| **Bold** | \`**Bold**\` or \`__Bold__\` | *Ctrl+Shift+B* |
+| *Italics* | \`*Italics*\` or \`_Italics_\` | *Ctrl+Shift+I* |
+| ==Highlight== | \`==Highlight==\` |
+| Superscript: 1^st^ | \`Superscript: 1^st^\` |
+| UPPERCASE | \`^^^UPPERCASE^^^\` |  |
+| Era: 2020^^A.D.^^ | \`2020^^A.D.^^\` |  |
 | ^-^Small Caps^-^ | \`^-^Small Caps^-^\` | |`,
         },
       ],
@@ -37,7 +35,7 @@ export const mdCheatsheetSection: SectionDocumentation = {
       parts: [
         {
           type: PartType.example,
-          content: `Can emoji be included? 🤔 They sure can! 😀`,
+          content: `Can emoji be included? 🤔 They sure can! 😀 If the keyboard supports emoji, they can be inserted anywhere in the text! 👍🏻`,
         },
       ],
     },
