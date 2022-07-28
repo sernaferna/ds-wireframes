@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
+import { useGetAllNotesForPassageQuery } from '../../../services/VapiService';
 import { getNoteList } from './AllNotes';
 
 interface INotesForPassage {
@@ -20,21 +20,15 @@ interface INotesForPassage {
  * @param osis The OSIS string for the currently selected passage
  */
 export const NotesForPassage = ({ osis }: INotesForPassage) => {
-  const [trigger, result] = useLazyGetAllNotesForPassageQuery();
+  const { data, error, isLoading } = useGetAllNotesForPassageQuery(osis, { skip: osis.length > 0 ? false : true });
 
-  useEffect(() => {
-    if (osis && osis.length > 0) {
-      trigger(osis);
-    }
-  }, [osis, trigger]);
+  const notesList = useMemo(() => getNoteList(data), [data]);
 
-  const notesList = useMemo(() => getNoteList(result.data), [result.data]);
-
-  if (result.isUninitialized || result.isLoading) {
+  if (osis.length > 0 && isLoading) {
     return <LoadingMessage />;
   }
-  if (result.error) {
-    return <ErrorLoadingDataMessage theError={result.error} />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   return (
