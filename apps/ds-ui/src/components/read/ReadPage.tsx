@@ -3,7 +3,6 @@ import { PassageCards } from './PassageCards';
 import { PassageLauncher } from './PassageLauncher';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { useLazyGetNoteByIdQuery } from '../../services/VapiService';
-import { useLazyGetPassageByIdQuery } from '../../services/PassagesService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Row, Col, Container } from 'react-bootstrap';
 import { PassageNotes } from './notes/PassageNotes';
@@ -20,20 +19,6 @@ export interface DownloadedNoteDetails {
   isDownloaded: boolean;
   error?: any;
   note?: Note;
-}
-
-/**
- * Used to track the currently downloaded/downloading `Passage` (if
- * any). For a number of components this is as much about whether a
- * passage is **selected** as it is about the downloaded passage
- * details, however, the downloaded passage does have some details
- * that are used as well.
- */
-export interface DownloadedPassageDetails {
-  isLoading: boolean;
-  isDownloaded: boolean;
-  error?: any;
-  passage?: Passage;
 }
 
 /**
@@ -70,12 +55,7 @@ export type FetchFunction = (id: string) => void;
 export const ReadPage = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
   const [noteTrigger] = useLazyGetNoteByIdQuery();
-  const [passageTrigger] = useLazyGetPassageByIdQuery();
   const [downloadedNoteDetails, updateDownloadedNoteDetails] = useState<DownloadedNoteDetails>({
-    isLoading: false,
-    isDownloaded: false,
-  });
-  const [downloadedPassageDetails, updateDownloadedPassageDetails] = useState<DownloadedPassageDetails>({
     isLoading: false,
     isDownloaded: false,
   });
@@ -122,40 +102,6 @@ export const ReadPage = () => {
     [noteTrigger, updateDownloadedNoteDetails, downloadedNoteDetails]
   );
 
-  const getPassageCallback = useCallback(
-    (passageId: string) => {
-      if (passageId === '') {
-        updateDownloadedPassageDetails({
-          isLoading: false,
-          isDownloaded: false,
-        });
-      } else {
-        updateDownloadedPassageDetails({
-          ...downloadedPassageDetails,
-          isLoading: true,
-          isDownloaded: false,
-        });
-        passageTrigger(passageId)
-          .unwrap()
-          .then((response) => {
-            updateDownloadedPassageDetails({
-              isLoading: false,
-              isDownloaded: true,
-              passage: response,
-            });
-          })
-          .catch((err) => {
-            updateDownloadedPassageDetails({
-              isLoading: false,
-              isDownloaded: true,
-              error: err,
-            });
-          });
-      }
-    },
-    [passageTrigger, updateDownloadedPassageDetails, downloadedPassageDetails]
-  );
-
   const switchMDFullScreen = useCallback(
     (fs: boolean) => {
       setShowMDFullScreen(fs);
@@ -179,20 +125,13 @@ export const ReadPage = () => {
         <Row>
           {!showMDFullScreen && (
             <Col xs="12" lg="6">
-              <PassageCards
-                fetchNote={getNoteCallback}
-                fetchPassage={getPassageCallback}
-                passageDetails={downloadedPassageDetails}
-                sortOrder={userData!.settings.read.sortPassages}
-              />
+              <PassageCards fetchNote={getNoteCallback} sortOrder={userData!.settings.read.sortPassages} />
             </Col>
           )}
           <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
             <PassageNotes
               fetchNote={getNoteCallback}
-              fetchPassage={getPassageCallback}
               noteDetails={downloadedNoteDetails}
-              passageDetails={downloadedPassageDetails}
               setShowMDFullScreen={switchMDFullScreen}
               showMDFullScreen={showMDFullScreen}
               autosaveNotes={userData!.settings.read.autosavePassageNotes}
@@ -200,11 +139,7 @@ export const ReadPage = () => {
           </Col>
           {!showMDFullScreen && (
             <Col xs="12">
-              <AllNotes
-                noteDetails={downloadedNoteDetails}
-                fetchNote={getNoteCallback}
-                fetchPassage={getPassageCallback}
-              />
+              <AllNotes noteDetails={downloadedNoteDetails} fetchNote={getNoteCallback} />
             </Col>
           )}
         </Row>

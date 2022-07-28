@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 import {
   BaseNote,
@@ -8,12 +9,14 @@ import {
   getOSISForReference,
 } from '@devouringscripture/common';
 import { useCreateNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation } from '../../../services/VapiService';
+import { useGetPassageByIdQuery } from '../../../services/PassagesService';
+import { getSelectedPassage } from '../../../stores/UISlice';
 import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import { MarkdownBox } from '../../common/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
-import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
-import { generateErrorStringFromError } from '../../common/loading';
+import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
+import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';
 
 const AUTOSAVE_INTERVAL = 3000;
 
@@ -32,7 +35,6 @@ type ValuesSchema = yup.InferType<typeof schema>;
 
 interface IMDNoteTaker {
   noteDetails: DownloadedNoteDetails;
-  passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
   showMDFullScreen: boolean;
   setShowMDFullScreen(fs: boolean): void;
@@ -58,7 +60,6 @@ interface IMDNoteTaker {
  * * PassageNotes displays *MDNoteTaker* and **NotesForPassage**
  *
  * @param noteDetails Details about the downloaded note (if any)
- * @param passageDetails Details about the selected/downloaded passage
  * @param fetchNote Callback for fetching a note from the server; in this case, only called with an empty string, which serves to reset the currently selected note to nothing
  * @param showMDFullScreen Indicates if the MD editor should be shown full screen
  * @param setShowMDFullScreen Callback function to call when switching between full and non-full screen MD mode
@@ -66,12 +67,13 @@ interface IMDNoteTaker {
  */
 export const MDNoteTaker = ({
   noteDetails,
-  passageDetails,
   fetchNote,
   showMDFullScreen,
   setShowMDFullScreen,
   autosaveNotes,
 }: IMDNoteTaker) => {
+  const selectedPassageID = useSelector(getSelectedPassage);
+  const { data: passage, error: passageError, isLoading: passageIsLoading } = useGetPassageByIdQuery(selectedPassageID);
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
@@ -104,14 +106,14 @@ export const MDNoteTaker = ({
       const [s, e] = getStartEndForOsis(noteDetails.note!.osis);
       start = s;
       end = e;
-    } else if (passageDetails.isDownloaded) {
-      const [s, e] = getStartEndForOsis(passageDetails.passage!.osis);
+    } else if (passage) {
+      const [s, e] = getStartEndForOsis(passage.osis);
       start = s;
       end = e;
     }
 
     return [start, end];
-  }, [noteDetails, passageDetails]);
+  }, [noteDetails, passage]);
 
   const initialValues = useMemo((): ValuesSchema => {
     return {
@@ -178,6 +180,13 @@ export const MDNoteTaker = ({
     formikRef.current!.handleSubmit();
     setTimer(null);
   };
+
+  if (passageIsLoading) {
+    return <LoadingMessage />;
+  }
+  if (passageError) {
+    return <ErrorLoadingDataMessage theError={passageError} />;
+  }
 
   return (
     <Formik

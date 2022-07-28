@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { useGetNoteByIdQuery } from '../../../services/VapiService';
+import { updateSelectedPassage } from '../../../stores/UISlice';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 import { MarkdownPreview } from '../../common/md-helpers/MarkdownPreview';
@@ -8,7 +10,6 @@ interface INotesSnippet {
   noteID: string;
   downloadedNoteDetails: DownloadedNoteDetails;
   fetchNote: FetchFunction;
-  fetchPassage: FetchFunction;
 }
 
 /**
@@ -21,10 +22,10 @@ interface INotesSnippet {
  * @param noteID ID of the note to be displayed
  * @param downloadedNoteDetails Details about the currently selected Note in the UI (if any)
  * @param fetchNote Callback function for fetching a note (called when the item is selected by the user)
- * @param fetchPassage  Callback function for fetching a passage (called with an empty string to reset it if the user selects this note)
  */
-export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPassage }: INotesSnippet) => {
+export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote }: INotesSnippet) => {
   const { data, error, isLoading } = useGetNoteByIdQuery(noteID);
+  const dispatch = useDispatch();
 
   const userSelectedID = useMemo(() => {
     if (downloadedNoteDetails.isDownloaded) {
@@ -38,10 +39,10 @@ export const NotesSnippet = ({ noteID, downloadedNoteDetails, fetchNote, fetchPa
     return () => {
       if (noteID !== userSelectedID) {
         fetchNote(noteID);
-        fetchPassage('');
+        dispatch(updateSelectedPassage(''));
       }
     };
-  }, [fetchNote, fetchPassage, noteID, userSelectedID]);
+  }, [fetchNote, dispatch, noteID, userSelectedID]);
 
   if (isLoading) {
     return <LoadingMessage />;

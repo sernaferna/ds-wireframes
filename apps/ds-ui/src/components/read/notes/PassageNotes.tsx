@@ -1,15 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { getSelectedPassage } from '../../../stores/UISlice';
 import { MDNoteTaker } from './MDNoteTaker';
 import { NotesForPassage } from './NotesForPassage';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { DownloadedNoteDetails, DownloadedPassageDetails, FetchFunction } from '../ReadPage';
+import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 import { Alert } from 'react-bootstrap';
+import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 
 interface IPassageNotes {
   noteDetails: DownloadedNoteDetails;
-  passageDetails: DownloadedPassageDetails;
   fetchNote: FetchFunction;
-  fetchPassage: FetchFunction;
   showMDFullScreen: boolean;
   setShowMDFullScreen(fs: boolean): void;
   autosaveNotes: boolean;
@@ -30,33 +31,32 @@ interface IPassageNotes {
  * * *PassageNotes* displays **MDNoteTaker** and **NotesForPassage**
  *
  * @param noteDetails Details about the currently selected/downloaded note (if any)
- * @param passageDetails Details about the currently selected/downloaded passage (if any)
  * @param fetchNote Callback function to fetch a note by ID
- * @param fetchPassage Callback function to fetch a passage by ID
  * @param showMDFullScreen Whether the MD editor should be shown full screen
  * @param setShowMDFullScreen Callback function to call when switching in/out of MD fullscreen
  * @param autosaveNotes Indicates whether notes should be autosaved (passthrough to `MDNoteTaker`)
  */
 export const PassageNotes = ({
   noteDetails,
-  passageDetails,
   fetchNote,
-  fetchPassage,
   showMDFullScreen,
   setShowMDFullScreen,
   autosaveNotes,
 }: IPassageNotes) => {
-  if (noteDetails.isLoading || passageDetails.isLoading) {
+  const selectedPassageID = useSelector(getSelectedPassage);
+  const { data, error, isLoading } = useGetPassageByIdQuery(selectedPassageID);
+
+  if (noteDetails.isLoading || (selectedPassageID !== '' && isLoading)) {
     return <LoadingMessage />;
   }
   if (noteDetails.error) {
     return <ErrorLoadingDataMessage theError={noteDetails.error} />;
   }
-  if (passageDetails.error) {
-    return <ErrorLoadingDataMessage theError={passageDetails.error} />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
-  if (!noteDetails.isDownloaded && !passageDetails.isDownloaded) {
+  if (!noteDetails.isDownloaded && selectedPassageID === '') {
     return (
       <>
         <h4>Notes</h4>
@@ -65,7 +65,7 @@ export const PassageNotes = ({
     );
   }
 
-  const showNotesForPassage = passageDetails.isDownloaded && !showMDFullScreen;
+  const showNotesForPassage = selectedPassageID !== '' && !showMDFullScreen;
 
   return (
     <>
@@ -73,19 +73,13 @@ export const PassageNotes = ({
       <MDNoteTaker
         fetchNote={fetchNote}
         noteDetails={noteDetails}
-        passageDetails={passageDetails}
         showMDFullScreen={showMDFullScreen}
         setShowMDFullScreen={setShowMDFullScreen}
         autosaveNotes={autosaveNotes}
       />
 
       {showNotesForPassage && (
-        <NotesForPassage
-          fetchNote={fetchNote}
-          fetchPassage={fetchPassage}
-          noteDetails={noteDetails}
-          osis={passageDetails.passage!.osis}
-        />
+        <NotesForPassage fetchNote={fetchNote} noteDetails={noteDetails} osis={data ? data.osis : ''} />
       )}
     </>
   );

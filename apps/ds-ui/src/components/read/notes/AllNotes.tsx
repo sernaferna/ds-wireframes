@@ -13,34 +13,25 @@ import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
  * @param data Array of `Note` objects to be rendered
  * @param downloadedNoteDetails Object with details about the note that has been (or is being) downloaded
  * @param fetchNote Callback to get a note based on ID
- * @param fetchPassage Callback to fetch a passage based on ID
  * @returns Array of `NotesSnippet` components
  */
 export const getNoteList = (
   data: Note[] | undefined,
   downloadedNoteDetails: DownloadedNoteDetails,
-  fetchNote: FetchFunction,
-  fetchPassage: FetchFunction
+  fetchNote: FetchFunction
 ) => {
   if (data === undefined) {
     return [];
   }
 
   return data.map((item) => (
-    <NotesSnippet
-      fetchNote={fetchNote}
-      fetchPassage={fetchPassage}
-      downloadedNoteDetails={downloadedNoteDetails}
-      key={item.id}
-      noteID={item.id}
-    />
+    <NotesSnippet fetchNote={fetchNote} downloadedNoteDetails={downloadedNoteDetails} key={item.id} noteID={item.id} />
   ));
 };
 
 interface IAllNotes {
   noteDetails: DownloadedNoteDetails;
   fetchNote: FetchFunction;
-  fetchPassage: FetchFunction;
 }
 
 /**
@@ -52,17 +43,13 @@ interface IAllNotes {
  *
  * @param noteDetails Details about the note that has been (or is being) downloaded, if any
  * @param fetchNote Callback function for retrieving a given note
- * @param fetchPassage Callback function for retrieving a given passage
  */
-export const AllNotes = ({ noteDetails, fetchNote, fetchPassage }: IAllNotes) => {
+export const AllNotes = ({ noteDetails, fetchNote }: IAllNotes) => {
   const { data, error, isLoading } = useGetAllNotesQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [showAllNotesClicked, setShowAllNotesClicked] = useState<boolean>(false);
 
-  const noteList = useMemo(
-    () => getNoteList(data, noteDetails, fetchNote, fetchPassage),
-    [data, noteDetails, fetchNote, fetchPassage]
-  );
+  const noteList = useMemo(() => getNoteList(data, noteDetails, fetchNote), [data, noteDetails, fetchNote]);
 
   if (isLoading) {
     return <LoadingMessage />;

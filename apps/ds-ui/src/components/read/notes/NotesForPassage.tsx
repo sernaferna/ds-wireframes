@@ -8,7 +8,6 @@ interface INotesForPassage {
   osis: string;
   noteDetails: DownloadedNoteDetails;
   fetchNote: FetchFunction;
-  fetchPassage: FetchFunction;
 }
 
 /**
@@ -24,9 +23,8 @@ interface INotesForPassage {
  * @param osis The OSIS string for the currently selected passage
  * @param noteDetails Details for the currently downloaded/downloading note (for properly rendering the note that's currently selected, if any)
  * @param fetchNote Callback for getting a note from the server by ID
- * @param fetchPassage Callback for getting a passage from the server by ID
  */
-export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: INotesForPassage) => {
+export const NotesForPassage = ({ osis, noteDetails, fetchNote }: INotesForPassage) => {
   const [trigger, result] = useLazyGetAllNotesForPassageQuery();
 
   useEffect(() => {
@@ -36,8 +34,8 @@ export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: 
   }, [osis, trigger]);
 
   const notesList = useMemo(
-    () => getNoteList(result.data, noteDetails, fetchNote, fetchPassage),
-    [result.data, noteDetails, fetchNote, fetchPassage]
+    () => getNoteList(result.data, noteDetails, fetchNote),
+    [result.data, noteDetails, fetchNote]
   );
 
   if (result.isUninitialized || result.isLoading) {
