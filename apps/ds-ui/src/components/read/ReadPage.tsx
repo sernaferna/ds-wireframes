@@ -7,7 +7,7 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Row, Col, Container } from 'react-bootstrap';
 import { PassageNotes } from './notes/PassageNotes';
 import { AllNotes } from './notes/AllNotes';
-import { Note, Passage } from '@devouringscripture/common';
+import { Note } from '@devouringscripture/common';
 
 /**
  * Used to track the currently downloaded/downloading `Note` (if any).
