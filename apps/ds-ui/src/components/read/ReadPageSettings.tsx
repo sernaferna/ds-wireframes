@@ -1,14 +1,13 @@
 import React, { useCallback } from 'react';
 import { useUserSettings } from '../../hooks/UserSettings';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
-import { Form } from 'react-bootstrap';
+import { FloatingLabel, Form } from 'react-bootstrap';
 
 /**
  * Settings component for **Read** section of the app
  */
 export const ReadPageSettings = () => {
-  const [userData, userResponseError, userLoading, , flipBoolCallback, updateStringProp, updateStringCallback] =
-    useUserSettings();
+  const [userData, userResponseError, userLoading, , flipBoolCallback, updateStringProp] = useUserSettings();
 
   const changeSortOption = useCallback(() => {
     if (userData!.settings.read.sortPassages === 'date-desc') {
@@ -25,8 +24,6 @@ export const ReadPageSettings = () => {
     return <ErrorLoadingDataMessage theError={userResponseError} />;
   }
 
-  const versionToUse = userData!.settings.read.defaultVersion;
-
   let sortOption = userData!.settings.read.sortPassages;
   if (sortOption !== 'date-asc' && sortOption !== 'date-desc') {
     sortOption = 'date-desc';
@@ -34,37 +31,14 @@ export const ReadPageSettings = () => {
 
   return (
     <>
-      <Form.Label>Default Version for Passages:</Form.Label>
-      <Form.Check
-        type="radio"
-        label="English Standard Version (ESV)"
-        name="defaultVersion"
-        checked={versionToUse === 'ESV'}
-        onChange={updateStringCallback('settings.read.defaultVersion', 'ESV')}
-      />
-      <Form.Check
-        type="radio"
-        label="New International Version (NIV)"
-        name="defaultVersion"
-        checked={versionToUse === 'NIV'}
-        onChange={updateStringCallback('settings.read.defaultVersion', 'NIV')}
-      />
-      <Form.Check
-        type="radio"
-        label="New King James Version (NKJV)"
-        name="defaultVersion"
-        checked={versionToUse === 'NKJV'}
-        disabled
-        onChange={updateStringCallback('settings.read.defaultVersion', 'NKJV')}
-      />
-      <Form.Check
-        type="radio"
-        label="King James Version (KJV)"
-        name="defaultVersion"
-        checked={versionToUse === 'KJV'}
-        disabled
-        onChange={updateStringCallback('settings.read.defaultVersion', 'KJV')}
-      />
+      <FloatingLabel controlId="floatingVersion" label="Default Bible version">
+        <Form.Control
+          type="text"
+          placeholder="VER"
+          value={userData!.settings.read.defaultVersion}
+          onChange={(e) => updateStringProp('settings.read.defaultVersion', e.currentTarget.value)}
+        />
+      </FloatingLabel>
 
       <Form.Group>
         <Form.Text>Sort order?</Form.Text>
