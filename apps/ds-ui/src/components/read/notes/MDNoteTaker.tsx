@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 import {
   BaseNote,
@@ -8,19 +8,27 @@ import {
   getRangesForOSIS,
   getOSISForReference,
 } from '@devouringscripture/common';
-import { useCreateNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation } from '../../../services/VapiService';
+import {
+  useCreateNoteMutation,
+  useUpdateNoteMutation,
+  useDeleteNoteMutation,
+  useGetNoteByIdQuery,
+} from '../../../services/VapiService';
 import { useGetPassageByIdQuery } from '../../../services/PassagesService';
-import { getSelectedPassage } from '../../../stores/UISlice';
+import { getSelectedPassage, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
 import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import { MarkdownBox } from '../../common/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
-import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';
 
 const AUTOSAVE_INTERVAL = 3000;
 
 const getStartEndForOsis = (osis: string): [string, string] => {
+  if (!osis || osis.length < 1) {
+    return ['', ''];
+  }
+
   const range = getRangesForOSIS(osis)[0];
 
   return [getFormattedReference(range.startOsisString), getFormattedReference(range.endOsisString)];
@@ -34,8 +42,6 @@ const schema = yup.object({
 type ValuesSchema = yup.InferType<typeof schema>;
 
 interface IMDNoteTaker {
-  noteDetails: DownloadedNoteDetails;
-  fetchNote: FetchFunction;
   showMDFullScreen: boolean;
   setShowMDFullScreen(fs: boolean): void;
   autosaveNotes: boolean;
@@ -59,24 +65,29 @@ interface IMDNoteTaker {
  * * **ReadPage** includes **PassageNotes**
  * * PassageNotes displays *MDNoteTaker* and **NotesForPassage**
  *
- * @param noteDetails Details about the downloaded note (if any)
- * @param fetchNote Callback for fetching a note from the server; in this case, only called with an empty string, which serves to reset the currently selected note to nothing
  * @param showMDFullScreen Indicates if the MD editor should be shown full screen
  * @param setShowMDFullScreen Callback function to call when switching between full and non-full screen MD mode
  * @param autosaveNotes Indicates whether notes should be automatically saved every few seconds
  */
-export const MDNoteTaker = ({
-  noteDetails,
-  fetchNote,
-  showMDFullScreen,
-  setShowMDFullScreen,
-  autosaveNotes,
-}: IMDNoteTaker) => {
+export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNotes }: IMDNoteTaker) => {
   const selectedPassageID = useSelector(getSelectedPassage);
-  const { data: passage, error: passageError, isLoading: passageIsLoading } = useGetPassageByIdQuery(selectedPassageID);
+  const selectedNoteID = useSelector(getSelectedNote);
+  const {
+    data: passage,
+    error: passageError,
+    isLoading: passageIsLoading,
+  } = useGetPassageByIdQuery(selectedPassageID, {
+    skip: selectedPassageID === '' ? true : false,
+  });
+  const {
+    data: selectedNote,
+    error: noteError,
+    isLoading: noteIsLoading,
+  } = useGetNoteByIdQuery(selectedNoteID, { skip: selectedNoteID === '' ? true : false });
   const [submitNote] = useCreateNoteMutation();
   const [updateNote] = useUpdateNoteMutation();
   const [deleteNote] = useDeleteNoteMutation();
+  const dispatch = useDispatch();
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
   const mdRef = useRef<HTMLDivElement>(null);
   const formikRef = useRef<FormikProps<ValuesSchema>>(null);
@@ -91,19 +102,20 @@ export const MDNoteTaker = ({
     [setShowMDFullScreen]
   );
 
-  const downloadedNote = useMemo(() => {
-    if (noteDetails.isDownloaded) {
-      return noteDetails.note!.text;
+  const downloadedNoteText = useMemo(() => {
+    if (selectedNote && !noteIsLoading && selectedNoteID === selectedNote.id) {
+      return selectedNote.text;
     } else {
       return '';
     }
-  }, [noteDetails]);
+  }, [selectedNote, selectedNoteID, noteIsLoading]);
 
   const [downloadedStartRef, downloadedEndRef] = useMemo(() => {
     let start = '';
     let end = '';
-    if (noteDetails.isDownloaded) {
-      const [s, e] = getStartEndForOsis(noteDetails.note!.osis);
+
+    if (selectedNote && selectedNote.id === selectedNoteID) {
+      const [s, e] = getStartEndForOsis(selectedNote.osis);
       start = s;
       end = e;
     } else if (passage) {
@@ -113,18 +125,19 @@ export const MDNoteTaker = ({
     }
 
     return [start, end];
-  }, [noteDetails, passage]);
+  }, [selectedNote, passage, selectedNoteID]);
 
-  const initialValues = useMemo((): ValuesSchema => {
-    return {
-      value: downloadedNote,
+  const initialValues = useMemo(
+    (): ValuesSchema => ({
+      value: downloadedNoteText,
       startReference: downloadedStartRef,
       endReference: downloadedEndRef,
-    };
-  }, [downloadedNote, downloadedStartRef, downloadedEndRef]);
+    }),
+    [downloadedNoteText, downloadedStartRef, downloadedEndRef]
+  );
 
   const newNoteBtn = () => {
-    fetchNote('');
+    dispatch(updateSelectedNote(''));
     setShowMDFullScreen(false);
   };
 
@@ -136,9 +149,9 @@ export const MDNoteTaker = ({
       const textToSend = values.value!;
       const osisToSend = `${getOSISForReference(values.startReference!)}-${getOSISForReference(values.endReference!)}`;
 
-      if (noteDetails.isDownloaded) {
+      if (selectedNote) {
         const newNote: Note = {
-          ...noteDetails.note!,
+          ...selectedNote,
           text: textToSend,
           osis: osisToSend,
         };
@@ -153,24 +166,24 @@ export const MDNoteTaker = ({
         submitNote(newNote)
           .unwrap()
           .then((note) => {
-            fetchNote(note.id);
+            dispatch(updateSelectedNote(note.id));
           })
           .catch((error) => {
             addErrorMessage(generateErrorStringFromError(error));
           });
       }
     },
-    [addErrorMessage, updateNote, submitNote, noteDetails, fetchNote]
+    [addErrorMessage, updateNote, submitNote, dispatch, selectedNote]
   );
 
   const deleteNoteCallback = useCallback(() => {
-    if (!noteDetails.note) {
+    if (!selectedNote) {
       return;
     }
 
-    deleteNote(noteDetails.note!.id);
-    fetchNote('');
-  }, [deleteNote, fetchNote, noteDetails.note]);
+    deleteNote(selectedNote.id);
+    dispatch(updateSelectedNote(''));
+  }, [deleteNote, selectedNote, dispatch]);
 
   const autoSaveFunc = () => {
     if (!dirty) {
@@ -178,14 +191,20 @@ export const MDNoteTaker = ({
     }
 
     formikRef.current!.handleSubmit();
-    setTimer(null);
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
   };
 
-  if (passageIsLoading) {
+  if (passageIsLoading || noteIsLoading) {
     return <LoadingMessage />;
   }
   if (passageError) {
     return <ErrorLoadingDataMessage theError={passageError} />;
+  }
+  if (selectedNoteID !== '' && noteError) {
+    return <ErrorLoadingDataMessage theError={noteError} />;
   }
 
   return (
@@ -196,6 +215,7 @@ export const MDNoteTaker = ({
       validateOnBlur={false}
       validateOnChange={true}
       innerRef={formikRef}
+      enableReinitialize={true}
     >
       {(fp: FormikProps<ValuesSchema>) => (
         <Form noValidate onSubmit={fp.handleSubmit}>
@@ -264,18 +284,18 @@ export const MDNoteTaker = ({
             showSidePreview={showMDFullScreen ? true : false}
           />
           <div className="m-2 d-flex flex-row-reverse">
-            {noteDetails.isDownloaded && (
+            {selectedNote && (
               <Button variant="danger" className="ms-2" onClick={deleteNoteCallback}>
                 Delete
               </Button>
             )}
-            {noteDetails.isDownloaded && (
+            {selectedNote && (
               <Button variant="info" className="ms-2" onClick={newNoteBtn}>
                 Close
               </Button>
             )}
             <Button disabled={!dirty} variant="primary" className="ms-2" type="submit">
-              {noteDetails.isDownloaded ? 'Update' : 'Save'}
+              {selectedNote ? 'Update' : 'Save'}
             </Button>
           </div>
         </Form>

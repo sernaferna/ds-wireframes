@@ -2,30 +2,10 @@ import React, { useCallback, useState } from 'react';
 import { PassageCards } from './PassageCards';
 import { PassageLauncher } from './PassageLauncher';
 import { useUserSettings } from '../../hooks/UserSettings';
-import { useLazyGetNoteByIdQuery } from '../../services/VapiService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../common/loading';
 import { Row, Col, Container } from 'react-bootstrap';
 import { PassageNotes } from './notes/PassageNotes';
 import { AllNotes } from './notes/AllNotes';
-import { Note } from '@devouringscripture/common';
-
-/**
- * Used to track the currently downloaded/downloading `Note` (if any).
- * For a number of components this is as much about whether a note is
- * **selected** as it is about the downloaded note details.
- */
-export interface DownloadedNoteDetails {
-  isLoading: boolean;
-  isDownloaded: boolean;
-  error?: any;
-  note?: Note;
-}
-
-/**
- * Generic type for a function that can be used for fetching
- * a note or a passage.
- */
-export type FetchFunction = (id: string) => void;
 
 /**
  * Main page/component for the **Read** section of the app.
@@ -54,53 +34,7 @@ export type FetchFunction = (id: string) => void;
  */
 export const ReadPage = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
-  const [noteTrigger] = useLazyGetNoteByIdQuery();
-  const [downloadedNoteDetails, updateDownloadedNoteDetails] = useState<DownloadedNoteDetails>({
-    isLoading: false,
-    isDownloaded: false,
-  });
   const [showMDFullScreen, setShowMDFullScreen] = useState<boolean>(false);
-
-  const getNoteCallback = useCallback(
-    (noteId: string) => {
-      if (noteId === '') {
-        updateDownloadedNoteDetails({
-          isLoading: false,
-          isDownloaded: false,
-        });
-      } else {
-        if (
-          downloadedNoteDetails.note &&
-          downloadedNoteDetails.note.id === noteId &&
-          downloadedNoteDetails.isDownloaded
-        ) {
-          return;
-        }
-        updateDownloadedNoteDetails({
-          ...downloadedNoteDetails,
-          isLoading: true,
-          isDownloaded: false,
-        });
-        noteTrigger(noteId)
-          .unwrap()
-          .then((response) => {
-            updateDownloadedNoteDetails({
-              isLoading: false,
-              isDownloaded: true,
-              note: response,
-            });
-          })
-          .catch((err) => {
-            updateDownloadedNoteDetails({
-              isLoading: false,
-              isDownloaded: false,
-              error: err,
-            });
-          });
-      }
-    },
-    [noteTrigger, updateDownloadedNoteDetails, downloadedNoteDetails]
-  );
 
   const switchMDFullScreen = useCallback(
     (fs: boolean) => {
@@ -125,13 +59,11 @@ export const ReadPage = () => {
         <Row>
           {!showMDFullScreen && (
             <Col xs="12" lg="6">
-              <PassageCards fetchNote={getNoteCallback} sortOrder={userData!.settings.read.sortPassages} />
+              <PassageCards sortOrder={userData!.settings.read.sortPassages} />
             </Col>
           )}
           <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
             <PassageNotes
-              fetchNote={getNoteCallback}
-              noteDetails={downloadedNoteDetails}
               setShowMDFullScreen={switchMDFullScreen}
               showMDFullScreen={showMDFullScreen}
               autosaveNotes={userData!.settings.read.autosavePassageNotes}
@@ -139,7 +71,7 @@ export const ReadPage = () => {
           </Col>
           {!showMDFullScreen && (
             <Col xs="12">
-              <AllNotes noteDetails={downloadedNoteDetails} fetchNote={getNoteCallback} />
+              <AllNotes />
             </Col>
           )}
         </Row>

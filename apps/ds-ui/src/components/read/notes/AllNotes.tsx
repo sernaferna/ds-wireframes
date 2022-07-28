@@ -5,34 +5,20 @@ import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { NotesSnippet } from './NotesSnippet';
 import { paginateItems } from '../../../hooks/pagination';
 import { Note } from '@devouringscripture/common';
-import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 
 /**
  * Helper to generate a set of `NotesSnippet` components, given an array of `Note` objects.
  *
  * @param data Array of `Note` objects to be rendered
- * @param downloadedNoteDetails Object with details about the note that has been (or is being) downloaded
- * @param fetchNote Callback to get a note based on ID
  * @returns Array of `NotesSnippet` components
  */
-export const getNoteList = (
-  data: Note[] | undefined,
-  downloadedNoteDetails: DownloadedNoteDetails,
-  fetchNote: FetchFunction
-) => {
+export const getNoteList = (data: Note[] | undefined) => {
   if (data === undefined) {
     return [];
   }
 
-  return data.map((item) => (
-    <NotesSnippet fetchNote={fetchNote} downloadedNoteDetails={downloadedNoteDetails} key={item.id} noteID={item.id} />
-  ));
+  return data.map((item) => <NotesSnippet key={item.id} noteID={item.id} />);
 };
-
-interface IAllNotes {
-  noteDetails: DownloadedNoteDetails;
-  fetchNote: FetchFunction;
-}
 
 /**
  * Component that displays a list of *all* saved notes, regardless of
@@ -44,12 +30,12 @@ interface IAllNotes {
  * @param noteDetails Details about the note that has been (or is being) downloaded, if any
  * @param fetchNote Callback function for retrieving a given note
  */
-export const AllNotes = ({ noteDetails, fetchNote }: IAllNotes) => {
+export const AllNotes = () => {
   const { data, error, isLoading } = useGetAllNotesQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [showAllNotesClicked, setShowAllNotesClicked] = useState<boolean>(false);
 
-  const noteList = useMemo(() => getNoteList(data, noteDetails, fetchNote), [data, noteDetails, fetchNote]);
+  const noteList = useMemo(() => getNoteList(data), [data]);
 
   if (isLoading) {
     return <LoadingMessage />;

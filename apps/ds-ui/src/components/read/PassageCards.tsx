@@ -4,20 +4,17 @@ import { ErrorLoadingDataMessage } from '../common/loading';
 import { PassageCard } from './PassageCard';
 import { Row, Alert } from 'react-bootstrap';
 import { paginateItems } from '../../hooks/pagination';
-import { FetchFunction } from './ReadPage';
 
 interface IPassageCards {
-  fetchNote: FetchFunction;
   sortOrder: string;
 }
 
 /**
  * Displays all saved passages, via `PassageCard` components.
  *
- * @param fetchNote Callback to fetch a note (pass-through)
  * @param sortOrder Indicates how the passages should be sorted
  */
-export const PassageCards = ({ fetchNote, sortOrder }: IPassageCards) => {
+export const PassageCards = ({ sortOrder }: IPassageCards) => {
   const { data, error, isLoading } = useGetCurrentItemsQuery();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -37,7 +34,7 @@ export const PassageCards = ({ fetchNote, sortOrder }: IPassageCards) => {
   const sortedItems = sortPassageItems(data!.slice(), sortAsc);
 
   const items = sortedItems.map((item) => {
-    return <PassageCard passageID={item.id} key={item.id} fetchNote={fetchNote} />;
+    return <PassageCard passageID={item.id} key={item.id} />;
   });
 
   const [paginatedItems, paginateElement] = paginateItems(items, 6, currentPage, setCurrentPage);

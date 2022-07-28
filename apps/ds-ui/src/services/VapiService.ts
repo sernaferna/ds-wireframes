@@ -12,7 +12,7 @@ export const vapiApi = createApi({
   tagTypes: ['notes', 'verses'],
   endpoints: (builder) => ({
     getNoteById: builder.query<Note, string>({
-      query: (id) => `/n/${id}`,
+      query: (id) => `/n/${id ? id : 'no-id'}`,
       providesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : []),
     }),
     getAllNotes: builder.query<Note[], void>({

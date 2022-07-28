@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Placeholder, Col, CloseButton } from 'react-bootstrap';
 import { getFormattedReference } from '@devouringscripture/common';
 import { useDeletePassageItemMutation, useGetPassageByIdQuery } from '../../services/PassagesService';
-import { getSelectedPassage, updateSelectedPassage } from '../../stores/UISlice';
+import { getSelectedPassage, updateSelectedPassage, updateSelectedNote } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
-import { FetchFunction } from './ReadPage';
 import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
 
 const PlaceholderCard = () => {
@@ -28,7 +27,6 @@ const PlaceholderCard = () => {
 
 interface IPassageCard {
   passageID: string;
-  fetchNote: FetchFunction;
 }
 
 /**
@@ -38,9 +36,8 @@ interface IPassageCard {
  * or unselects the passage.
  *
  * @param passageID The passage to be rendered
- * @param fetchNote Callback function to get a note by ID (only called with empty string to reset)
  */
-const PassageCard = ({ passageID, fetchNote }: IPassageCard) => {
+const PassageCard = ({ passageID }: IPassageCard) => {
   const selectedPassageID = useSelector(getSelectedPassage);
   const { data, error, isLoading } = useGetPassageByIdQuery(passageID);
   const dispatch = useDispatch();
@@ -58,10 +55,10 @@ const PassageCard = ({ passageID, fetchNote }: IPassageCard) => {
   const titleClicked = (id: string) => {
     if (selectedPassageID === id) {
       dispatch(updateSelectedPassage(''));
-      fetchNote('');
+      dispatch(updateSelectedNote(''));
     } else {
       dispatch(updateSelectedPassage(id));
-      fetchNote('');
+      dispatch(updateSelectedNote(''));
     }
   };
 

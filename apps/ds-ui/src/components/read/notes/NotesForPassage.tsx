@@ -2,12 +2,9 @@ import React, { useEffect, useMemo } from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
 import { getNoteList } from './AllNotes';
-import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 
 interface INotesForPassage {
   osis: string;
-  noteDetails: DownloadedNoteDetails;
-  fetchNote: FetchFunction;
 }
 
 /**
@@ -21,10 +18,8 @@ interface INotesForPassage {
  * * PassageNotes displays **MDNoteTaker** and *NotesForPassage*
  *
  * @param osis The OSIS string for the currently selected passage
- * @param noteDetails Details for the currently downloaded/downloading note (for properly rendering the note that's currently selected, if any)
- * @param fetchNote Callback for getting a note from the server by ID
  */
-export const NotesForPassage = ({ osis, noteDetails, fetchNote }: INotesForPassage) => {
+export const NotesForPassage = ({ osis }: INotesForPassage) => {
   const [trigger, result] = useLazyGetAllNotesForPassageQuery();
 
   useEffect(() => {
@@ -33,10 +28,7 @@ export const NotesForPassage = ({ osis, noteDetails, fetchNote }: INotesForPassa
     }
   }, [osis, trigger]);
 
-  const notesList = useMemo(
-    () => getNoteList(result.data, noteDetails, fetchNote),
-    [result.data, noteDetails, fetchNote]
-  );
+  const notesList = useMemo(() => getNoteList(result.data), [result.data]);
 
   if (result.isUninitialized || result.isLoading) {
     return <LoadingMessage />;
