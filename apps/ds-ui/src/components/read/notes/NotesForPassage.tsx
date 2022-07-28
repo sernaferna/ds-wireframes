@@ -1,14 +1,10 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { useLazyGetAllNotesForPassageQuery } from '../../../services/VapiService';
+import { useGetAllNotesForPassageQuery } from '../../../services/VapiService';
 import { getNoteList } from './AllNotes';
-import { DownloadedNoteDetails, FetchFunction } from '../ReadPage';
 
 interface INotesForPassage {
   osis: string;
-  noteDetails: DownloadedNoteDetails;
-  fetchNote: FetchFunction;
-  fetchPassage: FetchFunction;
 }
 
 /**
@@ -22,29 +18,17 @@ interface INotesForPassage {
  * * PassageNotes displays **MDNoteTaker** and *NotesForPassage*
  *
  * @param osis The OSIS string for the currently selected passage
- * @param noteDetails Details for the currently downloaded/downloading note (for properly rendering the note that's currently selected, if any)
- * @param fetchNote Callback for getting a note from the server by ID
- * @param fetchPassage Callback for getting a passage from the server by ID
  */
-export const NotesForPassage = ({ osis, noteDetails, fetchNote, fetchPassage }: INotesForPassage) => {
-  const [trigger, result] = useLazyGetAllNotesForPassageQuery();
+export const NotesForPassage = ({ osis }: INotesForPassage) => {
+  const { data, error, isLoading } = useGetAllNotesForPassageQuery(osis, { skip: osis.length > 0 ? false : true });
 
-  useEffect(() => {
-    if (osis && osis.length > 0) {
-      trigger(osis);
-    }
-  }, [osis, trigger]);
+  const notesList = useMemo(() => getNoteList(data), [data]);
 
-  const notesList = useMemo(
-    () => getNoteList(result.data, noteDetails, fetchNote, fetchPassage),
-    [result.data, noteDetails, fetchNote, fetchPassage]
-  );
-
-  if (result.isUninitialized || result.isLoading) {
+  if (osis.length > 0 && isLoading) {
     return <LoadingMessage />;
   }
-  if (result.error) {
-    return <ErrorLoadingDataMessage theError={result.error} />;
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
   }
 
   return (

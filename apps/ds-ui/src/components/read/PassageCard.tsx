@@ -1,9 +1,11 @@
-import React, { SyntheticEvent, useCallback, useMemo } from 'react';
+import React, { SyntheticEvent, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Card, Placeholder, Col, CloseButton } from 'react-bootstrap';
-import { Passage, getFormattedReference } from '@devouringscripture/common';
-import { useDeletePassageItemMutation } from '../../services/PassagesService';
+import { getFormattedReference } from '@devouringscripture/common';
+import { useDeletePassageItemMutation, useGetPassageByIdQuery } from '../../services/PassagesService';
+import { getSelectedPassage, updateSelectedPassage, updateSelectedNote } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
-import { DownloadedPassageDetails, FetchFunction } from './ReadPage';
+import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
 
 const PlaceholderCard = () => {
   return (
@@ -24,10 +26,7 @@ const PlaceholderCard = () => {
 };
 
 interface IPassageCard {
-  passage: Passage;
-  downloadedPassageDetails: DownloadedPassageDetails;
-  fetchNote: FetchFunction;
-  fetchPassage: FetchFunction;
+  passageID: string;
 }
 
 /**
@@ -36,58 +35,57 @@ interface IPassageCard {
  * and `fetchPassage` callbacks are just used for when the user selects
  * or unselects the passage.
  *
- * @param passage Passage to be displayed
- * @param downloadedPassageDetails Details about the downloaded / selected passage
- * @param fetchNote Callback function to get a note by ID (only called with empty string to reset)
- * @param fetchPassage Callback function to get a passage by ID
+ * @param passageID The passage to be rendered
  */
-const PassageCard = ({ passage, downloadedPassageDetails, fetchNote, fetchPassage }: IPassageCard) => {
+const PassageCard = ({ passageID }: IPassageCard) => {
+  const selectedPassageID = useSelector(getSelectedPassage);
+  const { data, error, isLoading } = useGetPassageByIdQuery(passageID);
+  const dispatch = useDispatch();
   const [deleteItem] = useDeletePassageItemMutation();
-
-  const selectedItemID = useMemo(() => {
-    if (downloadedPassageDetails.isDownloaded) {
-      return downloadedPassageDetails.passage!.id;
-    } else {
-      return '';
-    }
-  }, [downloadedPassageDetails]);
 
   const removeItem = useCallback(
     (e: SyntheticEvent) => {
-      fetchPassage('');
-      deleteItem(passage.id);
+      dispatch(updateSelectedPassage(''));
+      deleteItem(data!.id);
       e.stopPropagation();
     },
-    [deleteItem, passage.id, fetchPassage]
+    [deleteItem, data, dispatch]
   );
 
   const titleClicked = (id: string) => {
-    if (selectedItemID === id) {
-      fetchPassage('');
-      fetchNote('');
+    if (selectedPassageID === id) {
+      dispatch(updateSelectedPassage(''));
+      dispatch(updateSelectedNote(''));
     } else {
-      fetchPassage(id);
-      fetchNote('');
+      dispatch(updateSelectedPassage(id));
+      dispatch(updateSelectedNote(''));
     }
   };
+
+  if (isLoading) {
+    return <LoadingMessage />;
+  }
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
 
   return (
     <Col className="mt-2">
       <Card
-        bg={selectedItemID === passage.id ? 'primary' : ''}
-        className={`h-100 shadow reading-text ${selectedItemID === passage.id ? 'text-white' : ''}`}
+        bg={selectedPassageID === data!.id ? 'primary' : ''}
+        className={`h-100 shadow reading-text ${selectedPassageID === data!.id ? 'text-white' : ''}`}
       >
         <Card.Body className="d-flex flex-column">
-          <Card.Title style={{ cursor: 'pointer' }} onClick={() => titleClicked(passage.id)}>
-            {getFormattedReference(passage.osis)}
+          <Card.Title style={{ cursor: 'pointer' }} onClick={() => titleClicked(data!.id)}>
+            {getFormattedReference(data!.osis)}
             <CloseButton
-              variant={selectedItemID === passage.id ? 'white' : undefined}
+              variant={selectedPassageID === data!.id ? 'white' : undefined}
               className="float-end"
               onClick={removeItem}
             />
           </Card.Title>
           <Card.Text as="div">
-            <PassageLinkBody passage={passage} selected={selectedItemID === passage.id ? true : false} />
+            <PassageLinkBody passage={data!} selected={selectedPassageID === data!.id ? true : false} />
           </Card.Text>
         </Card.Body>
       </Card>

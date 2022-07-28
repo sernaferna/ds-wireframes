@@ -9,6 +9,8 @@ export interface IUISlice {
   selectedPlan?: string;
   prayerViewFilter?: string;
   notesFilter?: string;
+  selectedPassage?: string;
+  selectedNote?: string;
 }
 
 const initialState: IUISlice = { settingsShowing: false };
@@ -35,6 +37,12 @@ export const uiSlice = createSlice({
     updateNotesFilter: (state: IUISlice, action: PayloadAction<string>) => {
       state.notesFilter = action.payload;
     },
+    updateSelectedPassage: (state: IUISlice, action: PayloadAction<string>) => {
+      state.selectedPassage = action.payload;
+    },
+    updateSelectedNote: (state: IUISlice, action: PayloadAction<string>) => {
+      state.selectedNote = action.payload;
+    },
   },
 });
 
@@ -45,6 +53,8 @@ export const {
   updateSelectedPlan,
   updatePrayerViewFilter,
   updateNotesFilter,
+  updateSelectedPassage,
+  updateSelectedNote,
 } = uiSlice.actions;
 export default uiSlice.reducer;
 
@@ -68,4 +78,12 @@ export const getPrayerViewFilter = (state: RootState) => {
 
 export const getNotesFilter = (state: RootState) => {
   return state.ui.notesFilter || '';
+};
+
+export const getSelectedPassage = (state: RootState): string => {
+  return state.ui.selectedPassage || '';
+};
+
+export const getSelectedNote = (state: RootState): string => {
+  return state.ui.selectedNote || '';
 };
