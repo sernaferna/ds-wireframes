@@ -13,6 +13,7 @@ import { ToastContainer } from 'react-bootstrap';
 import { PrayerPage } from './prayer/PrayerPage';
 import { PlansPage } from './plans/PlansPage';
 import { EditPlan } from './plans/edit/EditPlan';
+import { Content } from './admin/Content';
 
 export function App() {
   return (
@@ -29,6 +30,7 @@ export function App() {
             <Route key="/stats" path="/stats" element={<Stats />} />
             <Route key="/plans/edit" path="/plans/edit" element={<EditPlan />} />
             <Route key="/help" path="/help" element={<Help />} />
+            <Route key="/admin/content" path="/admin/content" element={<Content />} />
             <Route path="*" element={<FourOhFour />} />
           </Routes>
           <Footer />
