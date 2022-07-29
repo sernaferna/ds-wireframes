@@ -8,6 +8,7 @@ import { passageApi } from '../services/PassagesService';
 import { vapiApi } from '../services/VapiService';
 import { instantiatedPlanApi } from '../services/InstantiatedPlanService';
 import { planApi } from '../services/PlanService';
+import { tutorialApi } from '../services/TutorialService';
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     [vapiApi.reducerPath]: vapiApi.reducer,
     [instantiatedPlanApi.reducerPath]: instantiatedPlanApi.reducer,
     [planApi.reducerPath]: planApi.reducer,
+    [tutorialApi.reducerPath]: tutorialApi.reducer,
     ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -28,7 +30,8 @@ const store = configureStore({
       .concat(passageApi.middleware)
       .concat(vapiApi.middleware)
       .concat(instantiatedPlanApi.middleware)
-      .concat(planApi.middleware),
+      .concat(planApi.middleware)
+      .concat(tutorialApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

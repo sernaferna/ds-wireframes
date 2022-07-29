@@ -39,6 +39,8 @@ import { updateInstantiatedPlanRouter } from './routes/instantiatedPlans/update'
 import { getSubscribedIPRouter } from './routes/instantiatedPlans/getSubscribed';
 import { completeIPItemRouter } from './routes/instantiatedPlans/complete';
 
+import { getTutorialByIdRouter } from './routes/tutorials/byId';
+
 import { errorHandler, NotFoundError, logAPICall, writeLog } from '@devouringscripture/common';
 
 writeLog('API starting');
@@ -90,6 +92,7 @@ app.use('/api/ip', [
   getSubscribedIPRouter,
   completeIPItemRouter,
 ]);
+app.use('/api/tutorials', [getTutorialByIdRouter]);
 
 app.all('*', async (req, res, next) => {
   return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));

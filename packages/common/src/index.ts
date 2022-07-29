@@ -7,6 +7,7 @@ export * from './dm/Verse';
 export * from './dm/Note';
 export * from './dm/Plan';
 export * from './dm/API/Responses';
+export * from './dm/Tutorials';
 
 export * from './errors/CustomError';
 export * from './errors/RequestValidationError';
