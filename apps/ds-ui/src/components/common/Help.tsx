@@ -8,7 +8,7 @@ import { ErrorLoadingDataMessage, LoadingMessage } from './loading';
  * Shows a tutorial for the Help screen
  */
 export const Help = () => {
-  const { data, error, isLoading } = useGetTutorialByIdQuery('34bd1d65-ec01-4a0a-97d8-b3729f9ae18e');
+  const { data, error, isLoading } = useGetTutorialByIdQuery('1');
 
   if (isLoading) {
     return <LoadingMessage />;
