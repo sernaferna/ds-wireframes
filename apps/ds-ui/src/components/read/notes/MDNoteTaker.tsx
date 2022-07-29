@@ -17,7 +17,7 @@ import {
 import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { getSelectedPassage, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
 import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
-import { MarkdownBox } from '../../common/MarkdownBox';
+import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';

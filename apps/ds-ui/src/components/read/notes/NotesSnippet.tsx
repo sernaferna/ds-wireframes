@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGetNoteByIdQuery } from '../../../services/VapiService';
 import { updateSelectedPassage, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { MarkdownPreview } from '../../common/md-helpers/MarkdownPreview';
+import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 
 interface INotesSnippet {
   noteID: string;
@@ -49,7 +49,7 @@ export const NotesSnippet = ({ noteID }: INotesSnippet) => {
 
   return (
     <div className={noteSnippetClass} style={noteSnippetStyles} onClick={selectNote()}>
-      <MarkdownPreview content={noteSnippet} shaded={true} />
+      <MarkdownBox.Preview content={noteSnippet} shaded={true} />
     </div>
   );
 };

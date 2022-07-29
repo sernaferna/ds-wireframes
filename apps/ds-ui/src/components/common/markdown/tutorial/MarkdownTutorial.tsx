@@ -1,10 +1,10 @@
 import { Modal } from 'react-bootstrap';
-import { Tutorial } from '../tutorial/Tutorial';
-import { SectionDocumentation } from '../tutorial/TutorialTypes';
-import { mdMainSection } from './mainSection';
-import { specialMarkupSection } from './specialMarkupSection';
-import { mdCheatsheetSection } from './cheatsheetSection';
-import { mdIntroSection } from './introSection';
+import { Tutorial } from '../../tutorial/Tutorial';
+import { SectionDocumentation } from '../../../../dm/tutorials/TutorialTypes';
+import { mdMainSection } from '../../../../tutorials/markdown/mainSection';
+import { specialMarkupSection } from '../../../../tutorials/markdown/specialMarkupSection';
+import { mdCheatsheetSection } from '../../../../tutorials/markdown/cheatsheetSection';
+import { mdIntroSection } from '../../../../tutorials/markdown/introSection';
 
 const mdTutorialSections: SectionDocumentation[] = [
   mdIntroSection,

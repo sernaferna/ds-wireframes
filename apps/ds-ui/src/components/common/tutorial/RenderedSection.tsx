@@ -1,6 +1,6 @@
 import React from 'react';
-import { PartType, SectionDocumentation, SectionPart } from './TutorialTypes';
-import { MarkdownPreview } from '../md-helpers/MarkdownPreview';
+import { PartType, SectionDocumentation, SectionPart } from '../../../dm/tutorials/TutorialTypes';
+import { MarkdownBox } from '../markdown/MarkdownBox';
 import MDEditor from '@uiw/react-md-editor';
 import { Accordion } from 'react-bootstrap';
 
@@ -47,7 +47,7 @@ const RenderedParts = ({ parts }: IRenderedParts): JSX.Element => {
     if (parts[i].type === PartType.text) {
       response.push(
         <div className="mb-3" key={`text-part-${i}`}>
-          <MarkdownPreview content={parts[i].content} shaded={false} />
+          <MarkdownBox.Preview content={parts[i].content} shaded={false} />
         </div>
       );
     } else if (parts[i].type === PartType.heading) {
@@ -64,12 +64,12 @@ const RenderedParts = ({ parts }: IRenderedParts): JSX.Element => {
       );
       response.push(
         <div className="mb-3" key={`example-divider-${i}`}>
-          <MarkdownPreview content="will render as:" shaded={false} />
+          <MarkdownBox.Preview content="will render as:" shaded={false} />
         </div>
       );
       response.push(
         <div className="mb-3" key={`example-view-${i}`}>
-          <MarkdownPreview content={parts[i].content} shaded={true} />
+          <MarkdownBox.Preview content={parts[i].content} shaded={true} />
         </div>
       );
     }

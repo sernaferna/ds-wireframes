@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import MDEditor, { ICommand } from '@uiw/react-md-editor';
 import { Button } from 'react-bootstrap';
-import { MarkdownTutorial } from './md-tutorial/MarkdownTutorial';
-import { getCommandList } from './md-helpers/md-commands';
-import { MarkdownPreview } from './md-helpers/MarkdownPreview';
-import { ClientSideErrorLoading } from './loading';
-import { useWindowSize } from '../../hooks/WindowSize';
+import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
+import { getCommandList } from './helpers/md-commands';
+import { MarkdownPreview } from './MarkdownPreview';
+import { ClientSideErrorLoading } from '../loading';
+import { useWindowSize } from '../../../hooks/WindowSize';
 import { getHTMLForMD, getPluginList } from '@devouringscripture/remark-plugins';
 import fileDownload from 'js-file-download';
 
@@ -46,7 +46,7 @@ interface IMarkdownBox {
  * @param showFullScreen Show in fullscreen mode (if `fullscreenOption` is `true`)
  * @param setFullScreen Callback called when fullscreen mode is switched
  */
-export const MarkdownBox = ({
+const MarkdownBox = ({
   content,
   changeCallback,
   showToolbar = true,
@@ -163,3 +163,9 @@ export const MarkdownBox = ({
     </div>
   );
 };
+
+const InternalMDBox = Object.assign(MarkdownBox, {
+  Preview: MarkdownPreview,
+});
+
+export { InternalMDBox as MarkdownBox };
