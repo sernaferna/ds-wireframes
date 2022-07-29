@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get(
   '/:tutorialId',
-  [param('tutorialId').isUUID().withMessage('Tutorial ID Missing')],
+  [param('tutorialId').isInt().withMessage('Tutorial ID Missing')],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const tutorialId = req.params.tutorialId;
