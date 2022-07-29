@@ -5,6 +5,7 @@
   "dependencies": {
     "@devouringscripture/common": "^1.0.0",
     "@devouringscripture/remark-plugins": "^1.0.0",
+    "@devouringscripture/mdeditor": "^1.0.0",
     "@reduxjs/toolkit": "^1.8.2",
     "@uiw/react-md-editor": "^3.9.1",
     "bootstrap": "^5.1.3",

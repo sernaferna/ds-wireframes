@@ -11,7 +11,9 @@
       "@devouringscripture/common/*": ["./packages/common/src/*"],
       "@devouringscripture/common": ["./packages/common/src"],
       "@devouringscripture/remark-plugins/*": ["./packages/remark-plugins/src/*"],
-      "@devouringscripture/remark-plugins": ["./packages/remark-plugins/src"]
+      "@devouringscripture/remark-plugins": ["./packages/remark-plugins/src"],
+      "@devouringscripture/mdeditor/*": ["./packages/mdeditor/src/*"],
+      "@devouringscripture/mdeditor": ["./packages/mdeditor/src"]
     }
   }
 }
