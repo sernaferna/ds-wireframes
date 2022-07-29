@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionDocumentation } from './TutorialTypes';
+import { SectionDocumentation } from '../../../dm/tutorials/TutorialTypes';
 import { RenderedSection } from './RenderedSection';
 
 interface ITutorial {

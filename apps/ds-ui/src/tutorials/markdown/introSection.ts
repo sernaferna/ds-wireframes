@@ -1,4 +1,4 @@
-import { SectionDocumentation, PartType } from '../tutorial/TutorialTypes';
+import { SectionDocumentation, PartType } from '../../dm/tutorials/TutorialTypes';
 
 export const mdIntroSection: SectionDocumentation = {
   mainSection: {

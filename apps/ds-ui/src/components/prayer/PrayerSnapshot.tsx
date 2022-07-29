@@ -6,7 +6,7 @@ import { ErrorLoadingDataMessage } from '../common/loading';
 import { paginateItems } from '../../hooks/pagination';
 import { PrayerListItem, UserAttributes } from '@devouringscripture/common';
 import { getPrayerIcon } from './PrayerCards';
-import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
+import { MarkdownBox } from '../common/markdown/MarkdownBox';
 
 const PlaceholderList = () => {
   return (
@@ -47,7 +47,7 @@ const getInitialItems = ({ data, userData, handleCheck }: InitialItemsParams) =>
     const itemBody = (
       <div>
         {icon}
-        <span className="lead">{item.title}</span> <MarkdownPreview content={item.text} shaded={false} />
+        <span className="lead">{item.title}</span> <MarkdownBox.Preview content={item.text} shaded={false} />
       </div>
     );
 

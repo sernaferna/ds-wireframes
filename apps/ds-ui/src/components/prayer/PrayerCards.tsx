@@ -15,7 +15,7 @@ import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import { paginateItems } from '../../hooks/pagination';
-import { MarkdownPreview } from '../common/md-helpers/MarkdownPreview';
+import { MarkdownBox } from '../common/markdown/MarkdownBox';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
 import { SetMessageFunction } from '../../hooks/ErrorsAndWarning';
@@ -114,7 +114,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
               </PrayerIconsContainer>
             </Card.Title>
             <Card.Text as="div" className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
-              <MarkdownPreview content={item.text} shaded={false} />
+              <MarkdownBox.Preview content={item.text} shaded={false} />
             </Card.Text>
             <Card.Text className="text-end">{submitButton}</Card.Text>
           </Card.Body>
