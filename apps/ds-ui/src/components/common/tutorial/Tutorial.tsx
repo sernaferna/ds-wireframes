@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionDocumentation } from '../../../dm/tutorials/TutorialTypes';
+import { SectionDocumentation } from '@devouringscripture/common';
 import { RenderedSection } from './RenderedSection';
 
 interface ITutorial {

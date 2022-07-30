@@ -1,17 +1,7 @@
 import { Modal } from 'react-bootstrap';
 import { Tutorial } from '../../tutorial/Tutorial';
-import { SectionDocumentation } from '../../../../dm/tutorials/TutorialTypes';
-import { mdMainSection } from '../../../../tutorials/markdown/mainSection';
-import { specialMarkupSection } from '../../../../tutorials/markdown/specialMarkupSection';
-import { mdCheatsheetSection } from '../../../../tutorials/markdown/cheatsheetSection';
-import { mdIntroSection } from '../../../../tutorials/markdown/introSection';
-
-const mdTutorialSections: SectionDocumentation[] = [
-  mdIntroSection,
-  mdCheatsheetSection,
-  mdMainSection,
-  specialMarkupSection,
-];
+import { useGetTutorialByIdQuery } from '../../../../services/TutorialService';
+import { ErrorLoadingDataMessage, LoadingMessage } from '../../loading';
 
 interface IMarkdownTutorial {
   show: boolean;
@@ -26,13 +16,31 @@ interface IMarkdownTutorial {
  * @returns
  */
 export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
+  const { data, error, isLoading } = useGetTutorialByIdQuery('2');
+
+  if (isLoading) {
+    return (
+      <Modal show={show} onHide={handleClose} centered size="xl" fullscreen="xl-down">
+        <Modal.Header closeButton>
+          <Modal.Title>Markdown Tutorial</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <LoadingMessage />
+        </Modal.Body>
+      </Modal>
+    );
+  }
+  if (error) {
+    return <ErrorLoadingDataMessage theError={error} />;
+  }
+
   return (
     <Modal show={show} onHide={handleClose} centered size="xl" fullscreen="xl-down">
       <Modal.Header closeButton>
         <Modal.Title>Markdown Tutorial</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Tutorial sections={mdTutorialSections} />
+        <Tutorial sections={data!.sections} />
       </Modal.Body>
     </Modal>
   );
