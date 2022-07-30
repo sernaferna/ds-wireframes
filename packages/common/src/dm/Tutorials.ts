@@ -18,3 +18,8 @@ export interface SectionDocumentation {
   mainSection: Section;
   subSections: Section[];
 }
+
+export interface Tutorial {
+  id: string;
+  sections: SectionDocumentation[];
+}

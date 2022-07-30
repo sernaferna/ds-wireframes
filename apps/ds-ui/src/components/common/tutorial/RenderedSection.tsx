@@ -1,5 +1,5 @@
 import React from 'react';
-import { PartType, SectionDocumentation, SectionPart } from '../../../dm/tutorials/TutorialTypes';
+import { PartType, SectionDocumentation, SectionPart } from '@devouringscripture/common';
 import { MarkdownBox } from '../markdown/MarkdownBox';
 import MDEditor from '@uiw/react-md-editor';
 import { Accordion } from 'react-bootstrap';

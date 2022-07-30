@@ -39,7 +39,7 @@ const links = [
   { label: 'Stats', href: '/stats' },
 ].map(getLinks);
 
-const adminLinks = [].map(getLinks);
+const adminLinks = [{ label: 'Content', href: '/admin/content' }].map(getLinks);
 
 /**
  * Header displayed at the top of the application
