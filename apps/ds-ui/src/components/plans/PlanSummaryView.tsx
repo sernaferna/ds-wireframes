@@ -90,7 +90,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
     </OverlayTrigger>
   );
 
-  const variantStyle = data!.isAdmin ? 'primary' : 'info';
+  const variantStyle = data!.isAdmin ? 'secondary' : 'primary';
 
   return (
     <Alert variant={variantStyle} className={`shadow`}>
@@ -119,7 +119,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
       </Row>
       <Row className="mt-3">
         <Col xs="4">
-          <Button variant="primary" onClick={() => editPlan(planId)}>
+          <Button variant="outline-secondary" onClick={() => editPlan(planId)}>
             Edit
           </Button>
         </Col>
@@ -133,7 +133,7 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
         </Col>
         <Col xs="4">
           {data!.status !== PlanStatus.Deleted && (
-            <Button variant="danger" onClick={() => deletePlanOnServer(planId)}>
+            <Button variant="outline-danger" onClick={() => deletePlanOnServer(planId)}>
               Delete
             </Button>
           )}

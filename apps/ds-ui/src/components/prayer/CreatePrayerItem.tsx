@@ -82,7 +82,7 @@ export const CreatePrayerItem = ({ confession = false }) => {
   };
 
   return (
-    <Alert variant={confession ? 'danger' : 'primary'}>
+    <Alert variant={confession ? 'danger' : 'light'}>
       <h4>{confession ? 'Confession' : 'New Prayer Request'}</h4>
       <Formik
         initialValues={initialValues}
@@ -148,7 +148,7 @@ export const CreatePrayerItem = ({ confession = false }) => {
             <Form.Group>
               <Button
                 className="mt-2"
-                variant={confession ? 'danger' : 'primary'}
+                variant={confession ? 'outline-danger' : 'outline-secondary'}
                 type="submit"
                 disabled={
                   !formikProps.touched.body ||

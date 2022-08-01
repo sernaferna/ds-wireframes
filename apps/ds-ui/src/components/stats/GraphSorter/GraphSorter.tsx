@@ -131,7 +131,7 @@ export const GraphSorter = () => {
         </Row>
       </DndProvider>
 
-      <Button variant="primary" onClick={uploadChanges}>
+      <Button variant="outline-secondary" onClick={uploadChanges}>
         Upload
       </Button>
     </>

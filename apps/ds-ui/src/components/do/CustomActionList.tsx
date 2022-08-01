@@ -22,7 +22,7 @@ const generateList = ({ data, deleteCallback }: IGenerateList) => {
       <li key={item.id}>
         {item.displayName}{' '}
         <Button
-          variant="danger"
+          variant="outline-warning"
           size="sm"
           onClick={() => {
             deleteCallback(item.id);
@@ -97,7 +97,7 @@ export const CustomActionList = () => {
           <FloatingLabel controlId="floatingItem" label="Action Type">
             <Form.Control type="text" placeholder="Action" value={actionType} onChange={setText} />
           </FloatingLabel>
-          <Button variant="primary" type="submit">
+          <Button variant="outline-primary" type="submit">
             Send
           </Button>
         </Form>
