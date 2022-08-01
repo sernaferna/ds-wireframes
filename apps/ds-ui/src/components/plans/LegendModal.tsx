@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Button, Alert, Table } from 'react-bootstrap';
-import { Journal, JournalX } from 'react-bootstrap-icons';
+import { Modal, Button, Table, Card } from 'react-bootstrap';
+import { FlagFill, Journal, JournalX } from 'react-bootstrap-icons';
 
 interface ILegendModal {
   closeFunction(): void;
@@ -22,12 +22,22 @@ export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
       </Modal.Header>
       <Modal.Body>
         <div>
-          <h1>Plan Types</h1>
-          <Alert variant="primary">Standard plan, created by Devouring Scripture admins</Alert>
+          <h4>Plan Types</h4>
+          <Card bg="light" text="dark" className="my-3 shadow">
+            <Card.Header>
+              <Card.Title>
+                <FlagFill /> Standard plan, created by Devouring Scripture admins
+              </Card.Title>
+            </Card.Header>
+          </Card>
 
-          <Alert variant="info">User-created plan</Alert>
+          <Card bg="light" text="dark" className="my-3 shadow">
+            <Card.Header>
+              <Card.Title>User-created plan</Card.Title>
+            </Card.Header>
+          </Card>
 
-          <h1>Icons</h1>
+          <h4>Icons</h4>
           <Table>
             <tbody>
               <tr>
@@ -49,12 +59,12 @@ export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
             </tbody>
           </Table>
 
-          <h1>Buttons</h1>
+          <h4>Buttons</h4>
           <Table>
             <tbody>
               <tr>
                 <th>
-                  <Button disabled variant="primary">
+                  <Button disabled variant="outline-secondary">
                     Edit
                   </Button>
                 </th>
@@ -62,7 +72,7 @@ export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
               </tr>
               <tr>
                 <th>
-                  <Button disabled variant="primary">
+                  <Button disabled variant="outline-secondary">
                     Start
                   </Button>
                 </th>
@@ -70,7 +80,7 @@ export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
               </tr>
               <tr>
                 <th>
-                  <Button disabled variant="danger">
+                  <Button disabled variant="outline-secondary">
                     Leave
                   </Button>
                 </th>
@@ -78,7 +88,7 @@ export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
               </tr>
               <tr>
                 <th>
-                  <Button disabled variant="danger">
+                  <Button disabled variant="outline-warning">
                     Delete
                   </Button>
                 </th>
@@ -89,7 +99,9 @@ export const LegendModal = ({ closeFunction, show }: ILegendModal) => {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={closeFunction}>Close</Button>
+        <Button variant="outline-primary" onClick={closeFunction}>
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
   );

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Alert, Row, Col, ProgressBar, Popover, OverlayTrigger, Button, Badge } from 'react-bootstrap';
-import { Journal, JournalX } from 'react-bootstrap-icons';
+import { Row, Col, ProgressBar, Popover, OverlayTrigger, Button, Badge, Card } from 'react-bootstrap';
+import { Journal, JournalX, FlagFill } from 'react-bootstrap-icons';
 import { useGetPlanByInstanceIdQuery, useDeletePlanMutation } from '../../services/PlanService';
 import { updateSelectedPlan } from '../../stores/UISlice';
 import { useDispatch } from 'react-redux';
@@ -90,55 +90,61 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
     </OverlayTrigger>
   );
 
-  const variantStyle = data!.isAdmin ? 'secondary' : 'primary';
-
   return (
-    <Alert variant={variantStyle} className={`shadow`}>
-      <Alert.Heading>{data!.name}</Alert.Heading>
-      <Row>
-        <Col xs="1">{apocIcon}</Col>
-        <Col xs="11">
-          <p>{data!.description}</p>
-        </Col>
-      </Row>
+    <Card bg="light" text="dark" className="shadow my-3">
+      <Card.Header>
+        <Card.Title>
+          {data!.isAdmin && <FlagFill />} {data!.name}
+        </Card.Title>
+      </Card.Header>
+      <Card.Body>
+        <Row>
+          <Col xs="1">{apocIcon}</Col>
+          <Col xs="11">
+            <p>{data!.description}</p>
+          </Col>
+        </Row>
 
-      <Row>
-        <Col xs="2">
-          <Badge className={variantStyle}>v{data!.version}</Badge>
-        </Col>
-        <Col xs="2">
-          <Badge className={variantStyle}>{data!.length} weeks</Badge>
-        </Col>
-        <Col xs="8">
-          {percentageComplete !== undefined ? (
-            <ProgressBar variant={variantStyle} now={percentageComplete * 100} label={`${percentageComplete * 100}%`} />
-          ) : (
-            <i>Not subscribed</i>
-          )}
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col xs="4">
-          <Button variant="outline-secondary" onClick={() => editPlan(planId)}>
-            Edit
-          </Button>
-        </Col>
-        <Col xs="4">
-          <JoinLeaveButton
-            plan={data!}
-            percentageComplete={percentageComplete}
-            deleteIP={deleteIP}
-            createIP={createIP}
-          />
-        </Col>
-        <Col xs="4">
-          {data!.status !== PlanStatus.Deleted && (
-            <Button variant="outline-danger" onClick={() => deletePlanOnServer(planId)}>
-              Delete
+        <Row>
+          <Col xs="2">
+            <Badge className="primary">v{data!.version}</Badge>
+          </Col>
+          <Col xs="2">
+            <Badge className="primary">{data!.length} weeks</Badge>
+          </Col>
+          <Col xs="8">
+            {percentageComplete !== undefined ? (
+              <ProgressBar variant="primary" now={percentageComplete * 100} label={`${percentageComplete * 100}%`} />
+            ) : (
+              <i>Not subscribed</i>
+            )}
+          </Col>
+        </Row>
+      </Card.Body>
+      <Card.Footer>
+        <Row className="mt-3">
+          <Col xs="4">
+            <Button variant="outline-secondary" onClick={() => editPlan(planId)}>
+              Edit
             </Button>
-          )}
-        </Col>
-      </Row>
-    </Alert>
+          </Col>
+          <Col xs="4">
+            <JoinLeaveButton
+              plan={data!}
+              percentageComplete={percentageComplete}
+              deleteIP={deleteIP}
+              createIP={createIP}
+            />
+          </Col>
+          <Col xs="4">
+            {data!.status !== PlanStatus.Deleted && (
+              <Button variant="outline-warning" onClick={() => deletePlanOnServer(planId)}>
+                Delete
+              </Button>
+            )}
+          </Col>
+        </Row>
+      </Card.Footer>
+    </Card>
   );
 };

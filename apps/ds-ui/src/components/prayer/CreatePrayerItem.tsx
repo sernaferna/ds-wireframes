@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Form, Stack, Popover, OverlayTrigger, Alert, Button } from 'react-bootstrap';
+import { Form, Stack, Popover, OverlayTrigger, Button, Card } from 'react-bootstrap';
 import { useNewItemMutation } from '../../services/PrayerService';
 import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes, BasePrayerListItem } from '@devouringscripture/common';
@@ -82,87 +82,89 @@ export const CreatePrayerItem = ({ confession = false }) => {
   };
 
   return (
-    <Alert variant={confession ? 'danger' : 'light'}>
-      <h4>{confession ? 'Confession' : 'New Prayer Request'}</h4>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={schema}
-        onSubmit={formSubmit}
-        validateOnBlur={false}
-        validateOnChange={true}
-      >
-        {(formikProps: FormikProps<ValuesSchema>) => (
-          <Form noValidate onSubmit={formikProps.handleSubmit}>
-            <Form.Group>
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                id="title"
-                value={formikProps.values.title}
-                onChange={formikProps.handleChange}
-                onBlur={formikProps.handleBlur}
-                type="text"
-                placeholder="Title (optional)"
-                name="title"
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Text</Form.Label>
-              <MarkdownBox
-                content={formikProps.values.body}
-                changeCallback={(content) => {
-                  formikProps.setFieldValue('body', content);
-                  formikProps.setFieldTouched('body', true);
-                }}
-              />
-            </Form.Group>
-            {!confession && (
-              <Stack direction="horizontal" className="h1 m-3">
-                <Form.Control type="hidden" id="type" />
-                <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
-                  <Button
-                    variant={formikProps.values.type === PrayerTypes.praise ? 'success' : 'outline-primary'}
-                    onClick={clickPrayerType(PrayerTypes.praise, formikProps)}
-                  >
-                    <ShieldPlus height="35" width="35" />
-                  </Button>
-                </OverlayTrigger>
-                <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
-                  <Button
-                    variant={formikProps.values.type === PrayerTypes.request ? 'success' : 'outline-primary'}
-                    className="mx-3 mx-lg-2 mx-xxl-3"
-                    onClick={clickPrayerType(PrayerTypes.request, formikProps)}
-                  >
-                    <Tsunami height="35" width="35" />
-                  </Button>
-                </OverlayTrigger>
-                <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={confessionPopover}>
-                  <Button
-                    variant={formikProps.values.type === PrayerTypes.confession ? 'success' : 'outline-primary'}
-                    onClick={clickPrayerType(PrayerTypes.confession, formikProps)}
-                  >
-                    <EyeFill height="35" width="35" />
-                  </Button>
-                </OverlayTrigger>
-              </Stack>
-            )}
-            <Form.Group>
-              <Button
-                className="mt-2"
-                variant={confession ? 'outline-danger' : 'outline-secondary'}
-                type="submit"
-                disabled={
-                  !formikProps.touched.body ||
-                  !!formikProps.errors.body ||
-                  !!formikProps.errors.title ||
-                  !!formikProps.errors.type
-                }
-              >
-                Submit
-              </Button>
-            </Form.Group>
-          </Form>
-        )}
-      </Formik>
-    </Alert>
+    <Card bg="light" text="dark">
+      <Card.Header>{confession ? 'Confession' : 'New Prayer Request'}</Card.Header>
+      <Card.Body>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={schema}
+          onSubmit={formSubmit}
+          validateOnBlur={false}
+          validateOnChange={true}
+        >
+          {(formikProps: FormikProps<ValuesSchema>) => (
+            <Form noValidate onSubmit={formikProps.handleSubmit}>
+              <Form.Group>
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  id="title"
+                  value={formikProps.values.title}
+                  onChange={formikProps.handleChange}
+                  onBlur={formikProps.handleBlur}
+                  type="text"
+                  placeholder="Title (optional)"
+                  name="title"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Text</Form.Label>
+                <MarkdownBox
+                  content={formikProps.values.body}
+                  changeCallback={(content) => {
+                    formikProps.setFieldValue('body', content);
+                    formikProps.setFieldTouched('body', true);
+                  }}
+                />
+              </Form.Group>
+              {!confession && (
+                <Stack direction="horizontal" className="h1 m-3">
+                  <Form.Control type="hidden" id="type" />
+                  <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={praisePopover}>
+                    <Button
+                      variant={formikProps.values.type === PrayerTypes.praise ? 'success' : 'outline-primary'}
+                      onClick={clickPrayerType(PrayerTypes.praise, formikProps)}
+                    >
+                      <ShieldPlus height="35" width="35" />
+                    </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={requestPopover}>
+                    <Button
+                      variant={formikProps.values.type === PrayerTypes.request ? 'success' : 'outline-primary'}
+                      className="mx-3 mx-lg-2 mx-xxl-3"
+                      onClick={clickPrayerType(PrayerTypes.request, formikProps)}
+                    >
+                      <Tsunami height="35" width="35" />
+                    </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={confessionPopover}>
+                    <Button
+                      variant={formikProps.values.type === PrayerTypes.confession ? 'success' : 'outline-primary'}
+                      onClick={clickPrayerType(PrayerTypes.confession, formikProps)}
+                    >
+                      <EyeFill height="35" width="35" />
+                    </Button>
+                  </OverlayTrigger>
+                </Stack>
+              )}
+              <Form.Group>
+                <Button
+                  className="mt-2"
+                  variant={confession ? 'outline-danger' : 'outline-secondary'}
+                  type="submit"
+                  disabled={
+                    !formikProps.touched.body ||
+                    !!formikProps.errors.body ||
+                    !!formikProps.errors.title ||
+                    !!formikProps.errors.type
+                  }
+                >
+                  Submit
+                </Button>
+              </Form.Group>
+            </Form>
+          )}
+        </Formik>
+      </Card.Body>
+    </Card>
   );
 };
