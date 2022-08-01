@@ -17,7 +17,7 @@ export const PlaceholderCard = () => {
         <Placeholder as={Card.Text} animation="wave">
           <Placeholder xs="12" />
         </Placeholder>
-        <Placeholder.Button variant="primary" xs="4" />
+        <Placeholder.Button variant="outline-primary" xs="4" />
         <Placeholder as={Card.Footer} animation="wave">
           <Placeholder xs="12" />
         </Placeholder>

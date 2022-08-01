@@ -48,7 +48,7 @@ export const ListItem = ({ text, index, isActive, moveListItem, handleActiveInac
   const dragDropRef = dragRef(dropRef(ref));
 
   let classNames = 'bg-light border my-2 p-2';
-  classNames += isDragging ? ' opacity-25' : ' opacity-100';
+  classNames += isDragging ? ' opacity-25' : ' opacity-50';
   if (isOver) {
     classNames += ' border-warning';
   }

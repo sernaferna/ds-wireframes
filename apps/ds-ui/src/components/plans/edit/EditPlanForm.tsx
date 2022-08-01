@@ -284,15 +284,15 @@ export const EditPlanForm = ({
         <Col xs="12" sm="2">
           <div className="sticky-top">
             <div className="d-grid gap-2">
-              <Button variant="primary" onClick={handleSave}>
+              <Button variant="outline-secondary" onClick={handleSave}>
                 Save
               </Button>
               {user.isAdmin && (
-                <Button variant="primary" onClick={handleSubmit}>
+                <Button variant="outline-secondary" onClick={handleSubmit}>
                   Publish
                 </Button>
               )}
-              <Button variant="danger" onClick={handleReset}>
+              <Button variant="outline-secondary" onClick={handleReset}>
                 New
               </Button>
             </div>

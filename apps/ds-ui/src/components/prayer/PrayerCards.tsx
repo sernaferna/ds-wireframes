@@ -82,7 +82,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
     const submitButton = item.completed ? (
       <Button
         size="sm"
-        variant="secondary"
+        variant="outline-secondary"
         onClick={() => {
           handleCompleteButton(item.id, false);
         }}
@@ -92,7 +92,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
     ) : (
       <Button
         size="sm"
-        variant="primary"
+        variant="outline-primary"
         onClick={() => {
           handleCompleteButton(item.id, true);
         }}
@@ -105,7 +105,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
 
     return (
       <Col key={item.id} className="mt-2">
-        <Card className="h-100 shadow reading-text">
+        <Card className="h-100 shadow">
           <Card.Body className="d-flex flex-column">
             <Card.Title>
               {item.title}{' '}
@@ -113,7 +113,7 @@ const getItemList = ({ data, userData, prayerFilterString, handleCompleteButton,
                 {icon}
               </PrayerIconsContainer>
             </Card.Title>
-            <Card.Text as="div" className="overflow-auto flex-grow-1" style={{ maxHeight: '8em' }}>
+            <Card.Text as="div" className="overflow-auto flex-grow-1 reading-text" style={{ maxHeight: '8em' }}>
               <MarkdownBox.Preview content={item.text} shaded={false} />
             </Card.Text>
             <Card.Text className="text-end">{submitButton}</Card.Text>

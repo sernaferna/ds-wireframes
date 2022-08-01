@@ -285,16 +285,16 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
           />
           <div className="m-2 d-flex flex-row-reverse">
             {selectedNote && (
-              <Button variant="danger" className="ms-2" onClick={deleteNoteCallback}>
+              <Button variant="outline-warning" className="ms-2" onClick={deleteNoteCallback}>
                 Delete
               </Button>
             )}
             {selectedNote && (
-              <Button variant="info" className="ms-2" onClick={newNoteBtn}>
+              <Button variant="outline-secondary" className="ms-2" onClick={newNoteBtn}>
                 Close
               </Button>
             )}
-            <Button disabled={!dirty} variant="primary" className="ms-2" type="submit">
+            <Button disabled={!dirty} variant="outline-primary" className="ms-2" type="submit">
               {selectedNote ? 'Update' : 'Save'}
             </Button>
           </div>

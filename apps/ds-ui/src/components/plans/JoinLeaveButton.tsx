@@ -30,7 +30,7 @@ export const JoinLeaveButton = ({ plan, percentageComplete, deleteIP, createIP }
       };
     };
     return (
-      <Button variant="primary" onClick={handleClick(plan.planInstanceId)}>
+      <Button variant="outline-secondary" onClick={handleClick(plan.planInstanceId)}>
         Start
       </Button>
     );
@@ -42,7 +42,7 @@ export const JoinLeaveButton = ({ plan, percentageComplete, deleteIP, createIP }
     };
   };
   return (
-    <Button variant="primary" onClick={handleClick(plan.planInstanceId)}>
+    <Button variant="outline-secondary" onClick={handleClick(plan.planInstanceId)}>
       Leave
     </Button>
   );
