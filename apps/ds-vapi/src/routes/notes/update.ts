@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body, param } from 'express-validator';
-import { validateRequest, CustomError, DatabaseError } from '@devouringscripture/common';
+import { validateRequest, CustomError, DatabaseError, NotFoundError } from '@devouringscripture/common';
 import { Note } from '@devouringscripture/common';
 import { DateTime } from 'luxon';
 import { notesDB } from '../../services/notes-db';
@@ -23,6 +23,10 @@ router.put(
 
     try {
       const index = notesDB.getIndex('/notes', newNote.id);
+      if (index < 0) {
+        throw new NotFoundError(`Note not found: ${newNote.id}`);
+      }
+
       notesDB.push(`/notes[${index}]/passageStart`, bounds[0].lowerBound);
       notesDB.push(`/notes[${index}]/passageEnd`, bounds[0].upperBound);
       notesDB.push(`/notes[${index}]/text`, newNote.text);

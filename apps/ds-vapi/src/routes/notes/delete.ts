@@ -21,6 +21,7 @@ router.delete(
       if (indexOfItem < 0) {
         throw new NotFoundError('Note');
       }
+
       notesDB.delete(`/notes[${indexOfItem}]`);
       res.json(ItemRemovedResponse);
     } catch (err) {
