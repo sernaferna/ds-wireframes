@@ -95,19 +95,6 @@ export const vapiApi = createApi({
           body: note,
         };
       },
-      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          vapiApi.util.updateQueryData('getNoteById', id, (draft) => {
-            Object.assign(draft, patch);
-          })
-        );
-
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
-      },
       invalidatesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : [{ type: 'notes', id: 'LIST' }]),
     }),
   }),
