@@ -31,6 +31,7 @@ router.put(
       notesDB.push(`/notes[${index}]/passageEnd`, bounds[0].upperBound);
       notesDB.push(`/notes[${index}]/text`, newNote.text);
       notesDB.push(`/notes[${index}]/lastUpdateDate`, DateTime.now().toISODate());
+      notesDB.push(`/notes[${index}]/osis`, newNote.osis);
       const updatedItem: Note = notesDB.getObject<Note>(`/notes[${index}]`);
       res.json(updatedItem);
     } catch (err) {
