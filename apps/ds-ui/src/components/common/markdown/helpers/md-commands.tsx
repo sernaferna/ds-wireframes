@@ -12,6 +12,7 @@ import { BookHalf, BookFill, Link45deg, FileRichtextFill } from 'react-bootstrap
 export const lordCommand: ICommand = {
   name: 'LORD',
   keyCommand: 'LORD',
+  shortcuts: 'ctrl+alt+u',
   buttonProps: { 'aria-label': 'Insert LORD', title: 'ALL CAPS' },
   icon: (
     <>

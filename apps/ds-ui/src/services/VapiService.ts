@@ -85,7 +85,7 @@ export const vapiApi = createApi({
           body: note,
         };
       },
-      invalidatesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : [{ type: 'notes', id: 'LIST' }]),
+      invalidatesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : []),
     }),
     updateNote: builder.mutation<Note, Note>({
       query(note) {
@@ -95,7 +95,7 @@ export const vapiApi = createApi({
           body: note,
         };
       },
-      invalidatesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : [{ type: 'notes', id: 'LIST' }]),
+      invalidatesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : []),
     }),
   }),
 });
