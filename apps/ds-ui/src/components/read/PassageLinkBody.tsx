@@ -1,38 +1,21 @@
 import React from 'react';
-import {
-  BasePassage,
-  getReferenceForOSIS,
-  OSISRange,
-  getPassagesForReference,
-  getFormattedReference,
-} from '@devouringscripture/common';
+import { BasePassage } from '@devouringscripture/common';
+import { MarkdownBox } from '../common/markdown/MarkdownBox';
 
-const getLink = (ref: string, version: string): string => {
-  return 'https://www.biblegateway.com/passage/?search=' + encodeURI(ref) + '&version=' + version;
-};
-
-interface IPassageLink {
-  range: OSISRange;
-  version: string;
-  selected: boolean;
-}
-const PassageLink = ({ range, version, selected }: IPassageLink) => {
-  const reference =
-    range.startOsisString === range.endOsisString
-      ? getReferenceForOSIS(range.startOsisString)
-      : getReferenceForOSIS(range.startOsisString) + '-' + getReferenceForOSIS(range.endOsisString);
-  const link = getLink(reference, version);
-
-  return (
-    <a className={selected ? 'link-light' : 'link-primary'} href={link} target="_blank" rel="noreferrer">
-      {getFormattedReference(reference)}
-    </a>
-  );
+/**
+ * Helper function to generate the appropriate markdown for a link to
+ * Bible Gateway.
+ *
+ * @param osis The OSIS to be included for the reference
+ * @param version The version of the Bible to be used in the link
+ * @returns Markdown for a Devouring Scripture link to Scripture on the Bible Gateway
+ */
+const getMDLink = (osis: string, version: string) => {
+  return `[|${osis}|${version}]`;
 };
 
 interface IPassageLinkBody {
   passage: BasePassage;
-  selected: boolean;
 }
 
 /**
@@ -45,25 +28,9 @@ interface IPassageLinkBody {
  * in that case.
  *
  * @param passage The `BasePassage` object to be rendered
- * @param selected Indicates if this passage is currently selected in the UI
  */
-export const PassageLinkBody = ({ passage, selected }: IPassageLinkBody) => {
-  const readablePassage = getFormattedReference(passage.osis);
-  const passages: OSISRange[] = getPassagesForReference(readablePassage);
+export const PassageLinkBody = ({ passage }: IPassageLinkBody) => {
+  const markdownToRender = getMDLink(passage.osis, passage.version);
 
-  const renderedPassages = passages.map((item, index) => (
-    <li key={index}>
-      <PassageLink range={item} version={passage.version} selected={selected} />
-    </li>
-  ));
-
-  return (
-    <>
-      {passages.length > 1 ? (
-        <ul>{renderedPassages}</ul>
-      ) : (
-        <PassageLink range={passages[0]} version={passage.version} selected={selected} />
-      )}
-    </>
-  );
+  return <MarkdownBox.Preview shaded={false} content={markdownToRender} />;
 };

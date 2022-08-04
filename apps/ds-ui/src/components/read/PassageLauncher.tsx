@@ -146,8 +146,8 @@ export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
                 setShowModal(false);
               }}
               passage={{
-                osis: getOSISForReference(formikProps.values.reference),
-                version: formikProps.values.reference,
+                osis: formikProps.values.reference,
+                version: formikProps.values.version,
               }}
             />
           </Form>

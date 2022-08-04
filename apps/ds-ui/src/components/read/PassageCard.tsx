@@ -1,11 +1,11 @@
 import React, { SyntheticEvent, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Card, Placeholder, Col, CloseButton } from 'react-bootstrap';
-import { getFormattedReference } from '@devouringscripture/common';
 import { useDeletePassageItemMutation, useGetPassageByIdQuery } from '../../services/PassagesService';
 import { getSelectedPassage, updateSelectedPassage, updateSelectedNote } from '../../stores/UISlice';
 import { PassageLinkBody } from './PassageLinkBody';
 import { ErrorLoadingDataMessage, LoadingMessage } from '../common/loading';
+import { getFormattedReference } from '@devouringscripture/common';
 
 const PlaceholderCard = () => {
   return (
@@ -71,21 +71,14 @@ const PassageCard = ({ passageID }: IPassageCard) => {
 
   return (
     <Col className="mt-2">
-      <Card
-        bg={selectedPassageID === data!.id ? 'primary' : ''}
-        className={`h-100 shadow reading-text ${selectedPassageID === data!.id ? 'text-white' : ''}`}
-      >
+      <Card bg={selectedPassageID === data!.id ? 'light' : ''} className={`h-100 shadow`}>
         <Card.Body className="d-flex flex-column">
           <Card.Title style={{ cursor: 'pointer' }} onClick={() => titleClicked(data!.id)}>
-            {getFormattedReference(data!.osis)}
-            <CloseButton
-              variant={selectedPassageID === data!.id ? 'white' : undefined}
-              className="float-end"
-              onClick={removeItem}
-            />
+            {getFormattedReference(data!.osis, false)}
+            <CloseButton className="float-end" onClick={removeItem} />
           </Card.Title>
           <Card.Text as="div">
-            <PassageLinkBody passage={data!} selected={selectedPassageID === data!.id ? true : false} />
+            <PassageLinkBody passage={data!} />
           </Card.Text>
         </Card.Body>
       </Card>
