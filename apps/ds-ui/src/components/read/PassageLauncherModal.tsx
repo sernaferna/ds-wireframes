@@ -28,7 +28,7 @@ export const PassageLauncherModal = ({ show, closeFunction, saveFunction, passag
       <Modal.Body>
         <Row className="mb-3">
           <Col>
-            <PassageLinkBody passage={passage} selected={false} />
+            <PassageLinkBody passage={passage} />
           </Col>
         </Row>
         <Row>
