@@ -16,7 +16,9 @@ interface IMarkdownTutorial {
  * @returns
  */
 export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
-  const { data, error, isLoading } = useGetTutorialByIdQuery('2');
+  const { data, error, isLoading } = useGetTutorialByIdQuery('2', {
+    skip: !show,
+  });
 
   if (isLoading) {
     return (
@@ -32,6 +34,9 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
   }
   if (error) {
     return <ErrorLoadingDataMessage theError={error} />;
+  }
+  if (!show) {
+    return <></>;
   }
 
   return (
