@@ -10,14 +10,6 @@ import { vapiApi } from '../services/VapiService';
 import { instantiatedPlanApi } from '../services/InstantiatedPlanService';
 import { planApi } from '../services/PlanService';
 import { tutorialApi } from '../services/TutorialService';
-import { FLUSH, PAUSE, PERSIST, persistReducer, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
-import storage from 'redux-persist-indexeddb-storage';
-
-const persistConfig = {
-  key: 'root',
-  version: 1,
-  storage: storage('devouringScripture'),
-};
 
 const reducers = combineReducers({
   [prayerApi.reducerPath]: prayerApi.reducer,
@@ -31,16 +23,10 @@ const reducers = combineReducers({
   ui: uiReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducers);
-
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    })
+    getDefaultMiddleware()
       .concat(prayerApi.middleware)
       .concat(userApi.middleware)
       .concat(actionsApi.middleware)
@@ -54,7 +40,5 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export default store;
-
-export const persistor = persistStore(store);
 
 setupListeners(store.dispatch);
