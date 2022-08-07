@@ -31,6 +31,7 @@ interface IMarkdownBox {
   fullscreenOption?: boolean;
   showFullScreen?: boolean;
   setFullScreen?: (fs: boolean) => void;
+  hideAllControls?: boolean;
 }
 
 /**
@@ -45,6 +46,7 @@ interface IMarkdownBox {
  * @param fullscreenOption Whether the UI should include a fullscreen option
  * @param showFullScreen Show in fullscreen mode (if `fullscreenOption` is `true`)
  * @param setFullScreen Callback called when fullscreen mode is switched
+ * @param hideAllControls Hide all controls (toolbar, preview button, etc.)
  */
 const MarkdownBox = ({
   content,
@@ -54,6 +56,7 @@ const MarkdownBox = ({
   fullscreenOption = false,
   showFullScreen = false,
   setFullScreen = undefined,
+  hideAllControls = false,
 }: IMarkdownBox) => {
   const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
   const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
@@ -117,7 +120,7 @@ const MarkdownBox = ({
           extraCommands={commandList}
           visiableDragbar={true}
           commandsFilter={commandsFilter}
-          hideToolbar={!showToolbar}
+          hideToolbar={!showToolbar || hideAllControls}
           textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
           style={{ fontFamily: 'Courier Prime, monospace' }}
           previewOptions={{
@@ -126,23 +129,27 @@ const MarkdownBox = ({
           height={showFullScreen ? windowSize.height - 250 : 200}
         />
 
-        <Button
-          variant="link"
-          size="sm"
-          onClick={() => {
-            setShowMDTutorial(true);
-          }}
-        >
-          Show Tutorial
-        </Button>
+        {!hideAllControls && (
+          <Button
+            variant="link"
+            size="sm"
+            onClick={() => {
+              setShowMDTutorial(true);
+            }}
+          >
+            Show Tutorial
+          </Button>
+        )}
 
         {fsButton}
 
-        <Button variant="link" size="sm" onClick={handleHTMLDownload}>
-          Export HTML
-        </Button>
+        {!hideAllControls && (
+          <Button variant="link" size="sm" onClick={handleHTMLDownload}>
+            Export HTML
+          </Button>
+        )}
       </div>
-      {!showFullScreen && (
+      {!showFullScreen && !hideAllControls && (
         <>
           <div className="d-grid gap-2">
             <Button size="sm" variant="outline-secondary" onClick={reversePreviewState()}>

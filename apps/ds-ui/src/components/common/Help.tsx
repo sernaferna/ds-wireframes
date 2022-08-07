@@ -19,7 +19,7 @@ export const Help = () => {
 
   return (
     <Container>
-      <Tutorial sections={data!.sections} />
+      <Tutorial chapters={data!.chapters} />
     </Container>
   );
 };

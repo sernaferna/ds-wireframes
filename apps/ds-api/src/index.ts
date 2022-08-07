@@ -40,6 +40,8 @@ import { getSubscribedIPRouter } from './routes/instantiatedPlans/getSubscribed'
 import { completeIPItemRouter } from './routes/instantiatedPlans/complete';
 
 import { getTutorialByIdRouter } from './routes/tutorials/byId';
+import { getAllTutorialsRouter } from './routes/tutorials/getAll';
+import { updateTutorialRouter } from './routes/tutorials/update';
 
 import { errorHandler, NotFoundError, logAPICall, writeLog } from '@devouringscripture/common';
 
@@ -92,7 +94,7 @@ app.use('/api/ip', [
   getSubscribedIPRouter,
   completeIPItemRouter,
 ]);
-app.use('/api/tutorials', [getTutorialByIdRouter]);
+app.use('/api/tutorials', [getTutorialByIdRouter, getAllTutorialsRouter, updateTutorialRouter]);
 
 app.all('*', async (req, res, next) => {
   return next(new NotFoundError(`${req.method}: ${req.originalUrl}`));
