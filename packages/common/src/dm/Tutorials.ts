@@ -14,12 +14,13 @@ export interface Section {
   parts: SectionPart[];
 }
 
-export interface SectionDocumentation {
+export interface Chapter {
   mainSection: Section;
   subSections: Section[];
 }
 
 export interface Tutorial {
   id: string;
-  sections: SectionDocumentation[];
+  name: string;
+  chapters: Chapter[];
 }

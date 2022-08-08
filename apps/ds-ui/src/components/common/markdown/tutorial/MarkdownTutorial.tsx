@@ -45,7 +45,7 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
         <Modal.Title>Markdown Tutorial</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Tutorial sections={data!.sections} />
+        <Tutorial chapters={data!.chapters} />
       </Modal.Body>
     </Modal>
   );

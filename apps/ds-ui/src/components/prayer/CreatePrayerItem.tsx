@@ -114,6 +114,7 @@ export const CreatePrayerItem = ({ confession = false }) => {
                     formikProps.setFieldValue('body', content);
                     formikProps.setFieldTouched('body', true);
                   }}
+                  hideAllControls={true}
                 />
               </Form.Group>
               {!confession && (
