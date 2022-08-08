@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
 import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 import { RenderedPart } from '../../common/tutorial/RenderedChapter';
@@ -15,6 +15,8 @@ interface IEditPart {
 }
 
 export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpers }: IEditPart) => {
+  const [showResult, setShowResult] = useState<boolean>(false);
+
   const partFieldName =
     sectionIndex < 0
       ? `chapters[${chapterIndex}].mainSection.parts[${partIndex}]`
@@ -57,7 +59,7 @@ export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpe
             </Row>
           )}
         </Col>
-        <Col xs="5">
+        <Col xs={showResult ? '5' : '9'}>
           <FloatingLabel label="Type">
             <Form.Select
               name={partFieldName + '.type'}
@@ -80,10 +82,22 @@ export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpe
             hideAllControls={true}
           />
         </Col>
-        <Col xs="5">
-          <RenderedPart part={getPartFromFormik(fp.getFieldProps(partFieldName).value)} />
+        <Col xs={showResult ? '5' : '1'}>
+          {showResult && (
+            <>
+              <RenderedPart part={getPartFromFormik(fp.getFieldProps(partFieldName).value)} />
+              <Button variant="outline-secondary" onClick={() => setShowResult(false)}>
+                Hide Result
+              </Button>
+            </>
+          )}
+          {!showResult && (
+            <Button variant="outline-secondary" onClick={() => setShowResult(true)}>
+              Show Result
+            </Button>
+          )}
         </Col>
-        <Col>
+        <Col xs="1">
           <Button
             variant="outline-danger"
             onClick={() => {

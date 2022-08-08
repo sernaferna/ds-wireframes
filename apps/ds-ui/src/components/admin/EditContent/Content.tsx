@@ -18,7 +18,7 @@ export const Content = () => {
         <td>{item.name}</td>
         <td>
           <Button
-            variant="outline-secondary"
+            variant={selectedTutId === item.id ? 'warning' : 'outline-secondary'}
             onClick={() => {
               if (selectedTutId === item.id) {
                 setSelectedTutId('');

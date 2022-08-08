@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditSection } from './EditSection';
 import { FieldArray, FormikProps } from 'formik';
-import { Button, Row } from 'react-bootstrap';
+import { Accordion, Button, Row } from 'react-bootstrap';
 import { FormikTutorialType } from './formik-helpers';
 
 interface IEditChapter {
@@ -11,31 +11,37 @@ interface IEditChapter {
 export const EditChapter = ({ chapterIndex, fp }: IEditChapter) => {
   return (
     <div className="mb-4">
-      <>
-        <Row>
-          <EditSection
-            key={`${fp.values.id}-ch-${chapterIndex}`}
-            isMainSection={true}
-            fp={fp}
-            sectionIndex={-1}
-            chapterIndex={chapterIndex}
-          />
-        </Row>
+      <Accordion>
+        <Accordion.Item eventKey={`ai-${chapterIndex}-xx`} key={`ai-${chapterIndex}-xx`}>
+          <Accordion.Header>{fp.values.chapters![chapterIndex].mainSection.title}</Accordion.Header>
+          <Accordion.Body>
+            <EditSection
+              key={`${fp.values.id}-ch-${chapterIndex}`}
+              isMainSection={true}
+              fp={fp}
+              sectionIndex={-1}
+              chapterIndex={chapterIndex}
+            />
+          </Accordion.Body>
+        </Accordion.Item>
 
         <FieldArray
           name="subSections"
           render={(arrayHelpers) => (
             <>
               {fp.values.chapters![chapterIndex].subSections!.map((ss, index) => (
-                <Row key={`ch-ss-${index}`}>
-                  <EditSection
-                    key={`${fp.values.id}-ss-${index}`}
-                    isMainSection={false}
-                    fp={fp}
-                    sectionIndex={index}
-                    chapterIndex={chapterIndex}
-                  />
-                </Row>
+                <Accordion.Item eventKey={`ai-${chapterIndex}-ss-${index}`} key={`ai-${chapterIndex}-ss-${index}`}>
+                  <Accordion.Header>{fp.values.chapters![chapterIndex].subSections![index].title}</Accordion.Header>
+                  <Accordion.Body>
+                    <EditSection
+                      key={`${fp.values.id}-ss-${index}`}
+                      isMainSection={false}
+                      fp={fp}
+                      sectionIndex={index}
+                      chapterIndex={chapterIndex}
+                    />
+                  </Accordion.Body>
+                </Accordion.Item>
               ))}
 
               <Row>
@@ -54,7 +60,7 @@ export const EditChapter = ({ chapterIndex, fp }: IEditChapter) => {
             </>
           )}
         />
-      </>
+      </Accordion>
     </div>
   );
 };

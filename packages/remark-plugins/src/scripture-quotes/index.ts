@@ -4,7 +4,7 @@ import { Literal } from 'unist';
 import { is } from 'unist-util-is';
 import { parseLink, getBibleLinkObj } from '../bible-links/bible-link-helpers';
 
-const firstLineMatchRE = /^\|> (?:\((.*)\) )?/;
+const firstLineMatchRE = /^\|> (?:\(\((.*)\)\) )?/;
 const lineMatchRE = /^\|> /;
 
 interface InternalParagraph {

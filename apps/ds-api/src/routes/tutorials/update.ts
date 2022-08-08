@@ -10,7 +10,7 @@ router.put(
   [
     param('id').notEmpty().withMessage('ID required'),
     body('id').notEmpty().withMessage('ID required'),
-    body('sections').isArray().withMessage('Sections required'),
+    body('chapters').isArray().withMessage('Chapters required'),
   ],
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {

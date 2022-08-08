@@ -1,11 +1,12 @@
 import React, { useCallback } from 'react';
-import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
+import { Accordion, Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useGetTutorialByIdQuery, useUpdateTutorialMutation } from '../../../services/TutorialService';
-import { ErrorLoadingDataMessage, LoadingMessage } from '../../common/loading';
+import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';
 import { EditChapter } from './EditChapter';
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import { tutorialSchema, FormikTutorialType, getTutorialFromFormik, getEmptyChapter } from './formik-helpers';
 import { ArrowDownCircleFill, ArrowUpCircleFill, TrashFill } from 'react-bootstrap-icons';
+import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 
 interface IEditTutorial {
   tutId: string;
@@ -13,14 +14,25 @@ interface IEditTutorial {
 export const EditTutorial = ({ tutId }: IEditTutorial) => {
   const { data, error, isLoading } = useGetTutorialByIdQuery(tutId);
   const [updateTutorial] = useUpdateTutorialMutation();
+  const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
 
   const submitForm = useCallback(
     (values: FormikTutorialType, fh: FormikHelpers<FormikTutorialType>) => {
       const tutorial = getTutorialFromFormik(values);
-      updateTutorial(tutorial);
-      fh.resetForm();
+      updateTutorial(tutorial)
+        .unwrap()
+        .then((result) => {
+          fh.resetForm({ values: result });
+        })
+        .catch((err) => {
+          if ('data' in err) {
+            addErrorMessage(generateErrorStringFromError(err.data));
+          } else {
+            addErrorMessage('Error saving content');
+          }
+        });
     },
-    [updateTutorial]
+    [updateTutorial, addErrorMessage]
   );
 
   if (isLoading) {
@@ -36,6 +48,7 @@ export const EditTutorial = ({ tutId }: IEditTutorial) => {
 
   return (
     <Container fluid>
+      <AlertUI />
       <Formik
         initialValues={initialValues}
         validationSchema={tutorialSchema}
@@ -44,7 +57,7 @@ export const EditTutorial = ({ tutId }: IEditTutorial) => {
         validateOnChange={true}
       >
         {(fp: FormikProps<FormikTutorialType>) => (
-          <>
+          <Form noValidate onSubmit={fp.handleSubmit}>
             <Row>
               <Col>
                 <h4>{fp.values.name}</h4>
@@ -136,7 +149,7 @@ export const EditTutorial = ({ tutId }: IEditTutorial) => {
                 </div>
               </Col>
             </Row>
-          </>
+          </Form>
         )}
       </Formik>
     </Container>
