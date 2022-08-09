@@ -32,7 +32,7 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
     const db: Database = getDB();
 
     db.all(
-      'SELECT versenum, osis, apoc FROM verses WHERE versenum >= ? AND versenum <= ?',
+      'SELECT versenum, osis, apoc, nt FROM verses WHERE versenum >= ? AND versenum <= ?',
       [lowerBound, upperBound],
       (err, rows) => {
         if (err) {
@@ -44,6 +44,7 @@ export const getVersesByNum = (lowerBound: number = 0, upperBound: number = 4000
           versenum: row.versenum,
           osis: row.osis,
           apocrypha: row.apoc === 1 ? true : false,
+          newTestament: row.nt === 1 ? true : false,
         }));
         db.close();
         return resolve(verses);
@@ -62,7 +63,7 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
   return new Promise<Verse>((resolve, reject) => {
     const db: Database = getDB();
 
-    db.get('SELECT versenum, osis, apoc FROM verses WHERE osis = ?', [osis], (err, row) => {
+    db.get('SELECT versenum, osis, apoc, nt FROM verses WHERE osis = ?', [osis], (err, row) => {
       if (err) {
         db.close();
         return reject(new DatabaseError('getVerseByOSIS'));
@@ -73,7 +74,12 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
         return reject(new InvalidPassageError(osis));
       }
 
-      const verse: Verse = { versenum: row.versenum, osis: row.osis, apocrypha: row.apoc === 1 ? true : false };
+      const verse: Verse = {
+        versenum: row.versenum,
+        osis: row.osis,
+        apocrypha: row.apoc === 1 ? true : false,
+        newTestament: row.nt === 1 ? true : false,
+      };
       db.close();
       return resolve(verse);
     });
@@ -88,15 +94,15 @@ export const getVerseByOSIS = (osis: string): Promise<Verse> => {
  */
 export const populateDB = (db: Database) => {
   db.serialize(() => {
-    db.run('CREATE TABLE IF NOT EXISTS verses ( versenum INTEGER, osis VARCHAR(20), apoc INTEGER)');
+    db.run('CREATE TABLE IF NOT EXISTS verses ( versenum INTEGER, osis VARCHAR(20), apoc INTEGER, nt INTEGER)');
     db.run('BEGIN TRANSACTION;');
 
     fs.createReadStream('data/verses.csv')
       .pipe(csv({ separator: ',' }))
       .on('data', (row) => {
         db.run(
-          'INSERT INTO verses (versenum, osis, apoc) VALUES (?, ?, ?)',
-          [row.versenum, row.osis, row.apoc],
+          'INSERT INTO verses (versenum, osis, apoc, nt) VALUES (?, ?, ?, ?)',
+          [row.versenum, row.osis, row.apoc, row.nt],
           (err: any) => {
             if (err) {
               writeLog('error inserting into table', undefined, undefined, 'ERROR', err);
