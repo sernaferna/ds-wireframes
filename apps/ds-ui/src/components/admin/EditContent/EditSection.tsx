@@ -10,6 +10,14 @@ interface IEditSection {
   fp: FormikProps<FormikTutorialType>;
   section: FieldInputProps<FormikSectionType>;
 }
+
+/**
+ * Renders a **Section** within a larger tutorial.
+ *
+ * @param isMainSection Indicates if this is the "main" or a sub-section
+ * @param fp The `FormikProps` object for the overall tutorial
+ * @param section The `FormikProps` object for this specific section
+ */
 export const EditSection = ({ isMainSection, fp, section }: IEditSection) => {
   return (
     <div className="mb-2">

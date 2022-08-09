@@ -14,6 +14,19 @@ interface IEditPart {
   part: FieldInputProps<FormikPartType>;
 }
 
+/**
+ * Renders an individual "part" within the Tutorial. Because parts are
+ * an array, and need to be aware of their location within the array
+ * (e.g. don't show the "move up" button if this is the first item),
+ * the `part` object isn't enough context on its own, so the `partIndex`
+ * and `totalPartsInList` params are also required.
+ *
+ * @param partIndex Index of this part within the larger array to which it belongs
+ * @param totalPartsInList Total number of parts in the array of which this is part
+ * @param fp The `FormikProps` object for the overall tutorial
+ * @param arrayHelpers The function from the parent which controls adding/removing/reordering parts
+ * @param part The `FormikProps` object for this specific part.
+ */
 export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }: IEditPart) => {
   const [showResult, setShowResult] = useState<boolean>(false);
 
