@@ -109,8 +109,8 @@ export const EditTutorial = ({ tutId }: IEditTutorial) => {
                                     <Col xs="10">
                                       <EditChapter
                                         key={`${fp.values.id}-edit-chapter-${index}`}
-                                        chapterIndex={index}
                                         fp={fp}
+                                        chapter={fp.getFieldProps(`chapters[${index}]`)}
                                       />
                                     </Col>
                                     <Col xs="1">
