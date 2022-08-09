@@ -9,6 +9,13 @@ interface IEditChapter {
   fp: FormikProps<FormikTutorialType>;
   chapter: FieldInputProps<FormikChapterType>;
 }
+
+/**
+ * Component for editing an individual chapter within a tutorial.
+ *
+ * @param fp The `FormikProps` object for the overall tutorial.
+ * @param chapter The `FormikProps` object for this specific chapter.
+ */
 export const EditChapter = ({ fp, chapter }: IEditChapter) => {
   const [activeKey, setActiveKey] = useState<AccordionEventKey>('');
 

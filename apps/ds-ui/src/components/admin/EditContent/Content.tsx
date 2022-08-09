@@ -4,6 +4,10 @@ import { useGetAllTutorialsQuery } from '../../../services/TutorialService';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { EditTutorial } from './EditTutorial';
 
+/**
+ * Component used for admins to edit "content" (typically called
+ * "totorials" in the codebase).
+ */
 export const Content = () => {
   const { data: fullList, error: fullListError, isLoading: fullListIsLoading } = useGetAllTutorialsQuery();
   const [selectedTutId, setSelectedTutId] = useState<string>('');

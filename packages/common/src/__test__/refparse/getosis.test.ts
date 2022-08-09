@@ -36,4 +36,8 @@ describe('get OSIS test suite', () => {
   it('keeps non-contiguous commas', () => {
     expect(getOSISForReference('Gen 1:1, Genesis 1:2–3, Gen 2:4-Gen 2:5')).toEqual('Gen.1.1-Gen.1.3,Gen.2.4-Gen.2.5');
   });
+
+  it('handles OSIS', () => {
+    expect(getOSISForReference('Matt.1.1')).toEqual('Matt.1.1');
+  });
 });

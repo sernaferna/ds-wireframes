@@ -13,6 +13,14 @@ describe('get ref from OSIS test suite', () => {
     expect(getReferenceForOSIS('Luke.24.1-John.1.1')).toEqual('Luke 24:1—John 1:1');
   });
 
+  it('simplifies down to the chapter level when indicated', () => {
+    expect(getReferenceForOSIS('Gen.1.1-Gen.1.31', false)).toEqual('Genesis 1');
+  });
+
+  it('does not simplify down to the chapter level when not indicated', () => {
+    expect(getReferenceForOSIS('Gen.1.1-Gen.1.31', true)).toEqual('Genesis 1:1–31');
+  });
+
   it('throws error for non-existant book', () => {
     expect(() => {
       getReferenceForOSIS('blah.1.1');

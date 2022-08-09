@@ -19,6 +19,12 @@ export const chapterSchema = yup.object({
 });
 export type FormikChapterType = yup.InferType<typeof chapterSchema>;
 
+/**
+ * Helper function to generate an empty chapter, for insertion
+ * into the tree.
+ *
+ * @returns Empty `FormikChapterType` object
+ */
 export const getEmptyChapter = (): FormikChapterType => ({
   mainSection: {
     title: '',
@@ -34,6 +40,13 @@ export const tutorialSchema = yup.object({
 });
 export type FormikTutorialType = yup.InferType<typeof tutorialSchema>;
 
+/**
+ * Helper function to convert browser-side Formik data to server-friendly
+ * data for working with the API.
+ *
+ * @param formikObj Data as captured by Formik
+ * @returns A `SectionPart` object as used by the DS APIs
+ */
 export const getPartFromFormik = (formikObj: FormikPartType): SectionPart => ({
   type: formikObj.type as PartType,
   content: formikObj.content,
@@ -42,22 +55,29 @@ export const getPartFromFormik = (formikObj: FormikPartType): SectionPart => ({
 export const getPartsFromFormik = (formikArr: FormikPartType[]): SectionPart[] =>
   formikArr.map((part) => getPartFromFormik(part));
 
-export const getSectionFromFormik = (formikObj: FormikSectionType): Section => ({
+const getSectionFromFormik = (formikObj: FormikSectionType): Section => ({
   title: formikObj.title,
   parts: getPartsFromFormik(formikObj.parts || []),
 });
 
-export const getSectionsFromFormik = (formikArr: FormikSectionType[]): Section[] =>
+const getSectionsFromFormik = (formikArr: FormikSectionType[]): Section[] =>
   formikArr.map((s) => getSectionFromFormik(s));
 
-export const getChapterFromFormik = (formikObj: FormikChapterType): Chapter => ({
+const getChapterFromFormik = (formikObj: FormikChapterType): Chapter => ({
   mainSection: getSectionFromFormik(formikObj.mainSection),
   subSections: getSectionsFromFormik(formikObj.subSections || []),
 });
 
-export const getChaptersFromFormik = (formikArr: FormikChapterType[]): Chapter[] =>
+const getChaptersFromFormik = (formikArr: FormikChapterType[]): Chapter[] =>
   formikArr.map((ch) => getChapterFromFormik(ch));
 
+/**
+ * Helper function to convert browser-side Formik data to server-friendly
+ * data for working with the API.
+ *
+ * @param formikObj Data as captured by Formik
+ * @returns A `Tutorial` object as used by the DS APIs
+ */
 export const getTutorialFromFormik = (formikObj: FormikTutorialType): Tutorial => ({
   id: formikObj.id,
   name: formikObj.name,

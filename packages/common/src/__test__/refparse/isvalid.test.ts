@@ -5,6 +5,10 @@ describe('isValid test suite', () => {
     expect(isReferenceValid('Rev 1:1')).toBeTruthy();
   });
 
+  it('returns true for valid OSIS', () => {
+    expect(isReferenceValid('Rev.1.1')).toBeTruthy();
+  });
+
   it('returns true for valid passage', () => {
     expect(isReferenceValid('Rev 1:1-19')).toBeTruthy();
   });

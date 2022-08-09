@@ -11,6 +11,19 @@ import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 interface IEditTutorial {
   tutId: string;
 }
+
+/**
+ * Component used for editing a Tutorial. Responsible for retrieving
+ * its own data.
+ *
+ * Formik heavily used under the covers; this component passes on
+ * `FormikChapterType` objects to the `<EditChapter>` component,
+ * which passes on Formik data to *its* sub-components, and so on.
+ * All components/sub-components depend on the overall Formik
+ * Props to both render the information in the form and update it.
+ *
+ * @param tutId ID of the tutorial to be retrieved from the API
+ */
 export const EditTutorial = ({ tutId }: IEditTutorial) => {
   const { data, error, isLoading } = useGetTutorialByIdQuery(tutId);
   const [updateTutorial] = useUpdateTutorialMutation();
