@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { ListGroup, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { useGetSubscribedPlansQuery } from '../../../services/InstantiatedPlanService';
 import { useUserSettings } from '../../../hooks/UserSettings';
 import { getDateForReadingPlan, updateDateShowingInReadingPlan } from '../../../stores/UISlice';
@@ -137,7 +137,8 @@ export const CurrentReadingPlan = ({ showTitle = false }: ICurrentReadingPlan) =
           </h6>
         </Card.Body>
       </Card>
-      <ListGroup>{plansToShow}</ListGroup>
+
+      {plansToShow}
     </>
   );
 };
