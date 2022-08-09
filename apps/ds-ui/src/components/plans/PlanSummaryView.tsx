@@ -114,7 +114,11 @@ export const PlanSummaryView = ({ planId, percentageComplete = undefined }: IPla
           </Col>
           <Col xs="8">
             {percentageComplete !== undefined ? (
-              <ProgressBar variant="primary" now={percentageComplete * 100} label={`${percentageComplete * 100}%`} />
+              <ProgressBar
+                variant="primary"
+                now={percentageComplete * 100}
+                label={`${Math.round(percentageComplete * 100)}%`}
+              />
             ) : (
               <i>Not subscribed</i>
             )}
