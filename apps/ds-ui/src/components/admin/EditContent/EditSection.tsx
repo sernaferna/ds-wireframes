@@ -1,21 +1,16 @@
 import React from 'react';
-import { FieldArray, FormikProps } from 'formik';
+import { FieldArray, FieldInputProps, FormikProps } from 'formik';
 import { Button, Form, Row, FloatingLabel } from 'react-bootstrap';
 import { EditPart } from './EditPart';
 import { Pen, PenFill } from 'react-bootstrap-icons';
-import { FormikPartType, FormikSectionType, FormikTutorialType } from './formik-helpers';
+import { FormikSectionType, FormikTutorialType } from './formik-helpers';
 
 interface IEditSection {
   isMainSection: boolean;
-  sectionIndex: number;
-  chapterIndex: number;
   fp: FormikProps<FormikTutorialType>;
+  section: FieldInputProps<FormikSectionType>;
 }
-export const EditSection = ({ isMainSection, sectionIndex, chapterIndex, fp }: IEditSection) => {
-  const sectionFieldName = isMainSection
-    ? `chapters[${chapterIndex}].mainSection`
-    : `chapters[${chapterIndex}].subSections[${sectionIndex}]`;
-
+export const EditSection = ({ isMainSection, fp, section }: IEditSection) => {
   return (
     <div className="mb-2">
       <>
@@ -34,27 +29,27 @@ export const EditSection = ({ isMainSection, sectionIndex, chapterIndex, fp }: I
         >
           <Form.Control
             type="text"
-            name={sectionFieldName + '.title'}
+            name={section.name + '.title'}
             id="title"
-            value={fp.getFieldProps(sectionFieldName + '.title').value}
+            value={section.value.title}
             onChange={fp.handleChange}
             onBlur={fp.handleBlur}
           />
         </FloatingLabel>
 
         <FieldArray
-          name={sectionFieldName + '.parts'}
+          name={section.name + '.parts'}
           render={(arrayHelpers) => (
             <>
               <Row>
-                {(fp.getFieldProps(sectionFieldName + '.parts').value as FormikPartType[]).map((part, index) => (
+                {section.value.parts!.map((part, index) => (
                   <EditPart
-                    key={`${fp.values.id}-ss${sectionIndex}-p-${index}`}
+                    key={`ss-${section.name}`}
                     partIndex={index}
                     fp={fp}
                     arrayHelpers={arrayHelpers}
-                    chapterIndex={chapterIndex}
-                    sectionIndex={sectionIndex}
+                    part={fp.getFieldProps(section.name + `.parts[${index}]`)}
+                    totalPartsInList={section.value.parts!.length}
                   />
                 ))}
               </Row>
@@ -62,7 +57,7 @@ export const EditSection = ({ isMainSection, sectionIndex, chapterIndex, fp }: I
                 <Button
                   variant="outline-secondary"
                   onClick={() => {
-                    arrayHelpers.insert((fp.getFieldProps(sectionFieldName).value as FormikSectionType).parts!.length, {
+                    arrayHelpers.insert(section.value.parts!.length, {
                       type: 'text',
                       content: '',
                     });

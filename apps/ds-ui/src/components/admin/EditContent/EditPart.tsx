@@ -3,28 +3,19 @@ import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstra
 import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 import { RenderedPart } from '../../common/tutorial/RenderedChapter';
 import { ArrowDownSquare, ArrowUpSquare, TrashFill } from 'react-bootstrap-icons';
-import { FieldArrayRenderProps, FormikProps } from 'formik';
+import { FieldArrayRenderProps, FieldInputProps, FormikProps } from 'formik';
 import { FormikPartType, FormikTutorialType, getPartFromFormik } from './formik-helpers';
 
 interface IEditPart {
   partIndex: number;
-  chapterIndex: number;
-  sectionIndex: number;
+  totalPartsInList: number;
   fp: FormikProps<FormikTutorialType>;
   arrayHelpers: FieldArrayRenderProps;
+  part: FieldInputProps<FormikPartType>;
 }
 
-export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpers }: IEditPart) => {
+export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }: IEditPart) => {
   const [showResult, setShowResult] = useState<boolean>(false);
-
-  const partFieldName =
-    sectionIndex < 0
-      ? `chapters[${chapterIndex}].mainSection.parts[${partIndex}]`
-      : `chapters[${chapterIndex}].subSections[${sectionIndex}].parts[${partIndex}]`;
-  const totalPartsInList =
-    sectionIndex < 0
-      ? fp.values.chapters![chapterIndex].mainSection.parts!.length
-      : fp.values.chapters![chapterIndex].subSections![sectionIndex].parts!.length;
 
   return (
     <Container fluid className="bg-light">
@@ -62,8 +53,8 @@ export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpe
         <Col xs={showResult ? '5' : '9'}>
           <FloatingLabel label="Type">
             <Form.Select
-              name={partFieldName + '.type'}
-              value={(fp.getFieldProps(partFieldName).value as FormikPartType).type}
+              name={part.name + '.type'}
+              value={part.value.type}
               onChange={fp.handleChange}
               onBlur={fp.handleBlur}
             >
@@ -74,10 +65,10 @@ export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpe
           </FloatingLabel>
           <MarkdownBox
             showToolbar={false}
-            content={(fp.getFieldProps(partFieldName).value as FormikPartType).content}
+            content={part.value.content}
             changeCallback={(newValue) => {
-              fp.setFieldValue(partFieldName + '.content', newValue);
-              fp.setFieldTouched(partFieldName + '.content');
+              fp.setFieldValue(part.name + '.content', newValue);
+              fp.setFieldTouched(part.name + '.content');
             }}
             hideAllControls={true}
           />
@@ -85,7 +76,7 @@ export const EditPart = ({ partIndex, chapterIndex, sectionIndex, fp, arrayHelpe
         <Col xs={showResult ? '5' : '1'}>
           {showResult && (
             <>
-              <RenderedPart part={getPartFromFormik(fp.getFieldProps(partFieldName).value)} />
+              <RenderedPart part={getPartFromFormik(fp.getFieldProps(part.name).value)} />
               <Button variant="outline-secondary" onClick={() => setShowResult(false)}>
                 Hide Result
               </Button>

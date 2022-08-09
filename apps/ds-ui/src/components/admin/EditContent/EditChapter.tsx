@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
 import { EditSection } from './EditSection';
-import { FieldArray, FormikProps } from 'formik';
+import { FieldArray, FieldInputProps, FormikProps } from 'formik';
 import { Accordion, Button, Row } from 'react-bootstrap';
-import { FormikTutorialType } from './formik-helpers';
+import { FormikChapterType, FormikTutorialType } from './formik-helpers';
 import { AccordionEventKey } from 'react-bootstrap/esm/AccordionContext';
 
 interface IEditChapter {
-  chapterIndex: number;
   fp: FormikProps<FormikTutorialType>;
+  chapter: FieldInputProps<FormikChapterType>;
 }
-export const EditChapter = ({ chapterIndex, fp }: IEditChapter) => {
+export const EditChapter = ({ fp, chapter }: IEditChapter) => {
   const [activeKey, setActiveKey] = useState<AccordionEventKey>('');
 
   return (
     <div className="mb-4">
       <Accordion activeKey={activeKey} onSelect={(e) => setActiveKey(e)}>
-        <Accordion.Item eventKey={`ai-${chapterIndex}-xx`} key={`ai-${chapterIndex}-xx`}>
-          <Accordion.Header>{fp.values.chapters![chapterIndex].mainSection.title}</Accordion.Header>
+        <Accordion.Item eventKey={chapter.name + 'ss-xx'} key={chapter.name + 'ss-xx'}>
+          <Accordion.Header>{chapter.value.mainSection.title}</Accordion.Header>
           <Accordion.Body>
-            {activeKey === `ai-${chapterIndex}-xx` && (
+            {activeKey === chapter.name + 'ss-xx' && (
               <EditSection
-                key={`${fp.values.id}-ch-${chapterIndex}`}
+                key={`${fp.values.id}-ss-ss-xx`}
                 isMainSection={true}
                 fp={fp}
-                sectionIndex={-1}
-                chapterIndex={chapterIndex}
+                section={fp.getFieldProps(chapter.name + '.mainSection')}
               />
             )}
           </Accordion.Body>
@@ -34,17 +33,16 @@ export const EditChapter = ({ chapterIndex, fp }: IEditChapter) => {
           name="subSections"
           render={(arrayHelpers) => (
             <>
-              {fp.values.chapters![chapterIndex].subSections!.map((ss, index) => (
-                <Accordion.Item eventKey={`ai-${chapterIndex}-ss-${index}`} key={`ai-${chapterIndex}-ss-${index}`}>
-                  <Accordion.Header>{fp.values.chapters![chapterIndex].subSections![index].title}</Accordion.Header>
+              {chapter.value.subSections!.map((ss, index) => (
+                <Accordion.Item eventKey={chapter.name + `ss-${index}`} key={chapter.name + `ss-${index}`}>
+                  <Accordion.Header>{chapter.value.subSections![index].title}</Accordion.Header>
                   <Accordion.Body>
-                    {activeKey === `ai-${chapterIndex}-ss-${index}` && (
+                    {activeKey === chapter.name + `ss-${index}` && (
                       <EditSection
-                        key={`${fp.values.id}-ss-${index}`}
+                        key={`${fp.values.id}-ss-ss-${index}`}
                         isMainSection={false}
                         fp={fp}
-                        sectionIndex={index}
-                        chapterIndex={chapterIndex}
+                        section={fp.getFieldProps(chapter.name + `.subSections[${index}]`)}
                       />
                     )}
                   </Accordion.Body>
@@ -55,7 +53,7 @@ export const EditChapter = ({ chapterIndex, fp }: IEditChapter) => {
                 <Button
                   variant="secondary"
                   onClick={() => {
-                    arrayHelpers.insert(fp.values.chapters![chapterIndex].subSections!.length, {
+                    arrayHelpers.insert(chapter.value.subSections!.length, {
                       title: '',
                       parts: [],
                     });
