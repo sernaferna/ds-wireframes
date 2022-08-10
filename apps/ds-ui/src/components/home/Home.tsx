@@ -5,6 +5,7 @@ import { PrayerSnapshot } from '../prayer/PrayerSnapshot';
 import { ActionsWidget } from '../do/ActionsWidget';
 import { CreatePrayerItem } from '../prayer/CreatePrayerItem';
 import { useErrorsAndWarnings } from '../../hooks/ErrorsAndWarning';
+import { MarkedMD } from '../common/marked/MarkedMD';
 
 /**
  * Main page/component for the **Home** section of teh application. Sets
@@ -18,6 +19,11 @@ export const Home = () => {
     <Container fluid={true} className="page-main-container">
       <AlertUI />
 
+      <Row>
+        <Col xs="12">
+          <MarkedMD />
+        </Col>
+      </Row>
       <Row>
         <Col xs="12" sm="6" lg="4" xxl="3">
           <CurrentReadingPlan showTitle={true} />
