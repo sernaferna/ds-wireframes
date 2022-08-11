@@ -1,10 +1,10 @@
 import { marked } from 'marked';
-import { allUpperExtension } from './allUpperExtension';
-import { highlightExtension } from './highlightExtension';
-import { smallCapsExtension } from './smallCapsExtension';
-import { eraExtension } from './eraExtension';
-import { bibleLinkExtension } from './bibleLinkExtension';
-import { scriptureQuotesExtension } from './scriptureQuotes';
+import { allUpperExtension } from './extensions/allUpperExtension';
+import { highlightExtension } from './extensions/highlightExtension';
+import { smallCapsExtension } from './extensions/smallCapsExtension';
+import { eraExtension } from './extensions/eraExtension';
+import { bibleLinkExtension } from './extensions/bibleLinkExtension';
+import { scriptureQuotesExtension } from './extensions/scriptureQuotes';
 
 export const renderedOutputFromMarkdown = (md: string): string => {
   marked.use({
