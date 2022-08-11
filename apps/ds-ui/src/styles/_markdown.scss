@@ -11,7 +11,7 @@
 }
 
 .ds-md-editor {
-  font-family: 'Courier Prime', fixed-width;
+  @extend .monospace-text;
 }
 
 .ds-md-viewer {

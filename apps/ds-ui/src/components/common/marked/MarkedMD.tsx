@@ -1,42 +1,135 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { renderedOutputFromMarkdown } from '../../../helpers/markdown/markdown-utils';
+import { useWindowSize } from '../../../hooks/WindowSize';
+import fileDownload from 'js-file-download';
+import { ClientSideErrorLoading } from '../loading';
+import { MarkdownTutorial } from '../markdown/tutorial/MarkdownTutorial';
+import { MarkedMDPreview } from './MarkedMDPreview';
 
-const sampleMD = `# This is some markdown
+interface IMarkedMD {
+  content: string;
+  changeCallback: (newContent: string) => void;
+  showToolbar?: boolean;
+  showSidePreview?: boolean;
+  fullScreenOption?: boolean;
+  showingFullScreen?: boolean;
+  setFullSreen?: (fs: boolean) => void;
+  hideAllControls?: boolean;
+}
 
-It "contains" some **bold** and *italics* and ==highlighting== but "contains" didn't need quotes. There's also some ^-^Small Caps^-^ just for fun, and the year ^^A.D.^^2020 is included too.
+const MarkedMD = ({
+  content,
+  changeCallback,
+  showToolbar = true,
+  showSidePreview = false,
+  fullScreenOption = false,
+  showingFullScreen = false,
+  setFullSreen = undefined,
+  hideAllControls = false,
+}: IMarkedMD) => {
+  const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [showTutorial, setShowTutorial] = useState<boolean>(false);
+  const windowSize = useWindowSize();
 
-| Column A | Column B |
-| -------- | -------- |
-| value    | value    |
-| value 2  | value 2  |
+  const fsButton = useMemo(() => {
+    if (!fullScreenOption) {
+      return <></>;
+    }
 
-There is also a link to [Google](https://www.google.ca) and [|Rev 1:1 (verse 1)|NIV;s], and a reference to the ^^^LORD^^^.
+    if (showingFullScreen) {
+      return (
+        <Button variant="link" size="sm" onClick={() => setFullSreen!(false)}>
+          Show Normal View
+        </Button>
+      );
+    } else {
+      return (
+        <Button variant="link" size="sm" onClick={() => setFullSreen!(true)}>
+          Show Full Screen
+        </Button>
+      );
+    }
+  }, [fullScreenOption, setFullSreen, showingFullScreen]);
 
-|> ((Rev 1:1)) This isn't *actually* Rev 1:1
-|> |> but it's a quote regardless
+  const reversePreviewState = () => {
+    return () => {
+      setShowPreview(!showPreview);
+    };
+  };
 
-And this is some text that *should* be outside the Scripture quote`;
+  const handleChangeEvent = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    changeCallback(event.currentTarget.value || '');
+  };
 
-export const MarkedMD = () => {
-  const [md, setMD] = useState(sampleMD);
+  const handleHTMLDownload = useCallback(() => {
+    const formattedHTML = renderedOutputFromMarkdown(content);
+    fileDownload(formattedHTML, 'notes.html');
+  }, [content]);
+
+  if (fullScreenOption && !setFullSreen) {
+    return (
+      <ClientSideErrorLoading>
+        <p>Error loading page; bad configuration</p>
+      </ClientSideErrorLoading>
+    );
+  }
 
   return (
     <Container fluid>
       <Row>
-        <Col>
-          <Form.Control
-            className="ds-md-editor"
-            as="textarea"
-            rows={50}
-            value={md}
-            onChange={(e) => setMD(e.currentTarget.value)}
-          />
+        <Col xs={showSidePreview ? '6' : '12'}>
+          <div>TOOLBAR</div>
+          <Form.Control className="ds-md-editor" as="textarea" rows={25} value={content} onChange={handleChangeEvent} />
         </Col>
+        {showSidePreview && (
+          <Col xs="6">
+            <MarkedMDPreview content={content} shaded={false} />
+          </Col>
+        )}
+      </Row>
+      <Row>
         <Col>
-          <div className="ds-md-viewer" dangerouslySetInnerHTML={{ __html: renderedOutputFromMarkdown(md) }} />
+          {!hideAllControls && (
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => {
+                setShowTutorial(true);
+              }}
+            >
+              Show Tutorial
+            </Button>
+          )}
+
+          {fsButton}
+
+          {!hideAllControls && (
+            <Button variant="link" size="sm" onClick={handleHTMLDownload}>
+              Export HTML
+            </Button>
+          )}
         </Col>
       </Row>
+      {!showingFullScreen && !hideAllControls && (
+        <Row>
+          <Col className="d-grid gap-2">
+            <Button size="sm" variant="outline-secondary" onClick={reversePreviewState()}>
+              {showPreview ? 'Hide Preview' : 'Show Preview'}
+            </Button>
+
+            {showPreview && <MarkedMDPreview content={content} shaded={true} />}
+          </Col>
+        </Row>
+      )}
+
+      <MarkdownTutorial show={showTutorial} handleClose={() => setShowTutorial(false)} />
     </Container>
   );
 };
+
+const InternalMarkedMD = Object.assign(MarkedMD, {
+  Preview: MarkedMDPreview,
+});
+
+export { InternalMarkedMD as MarkedMD };
