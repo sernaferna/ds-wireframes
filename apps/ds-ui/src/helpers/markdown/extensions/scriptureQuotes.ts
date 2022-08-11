@@ -9,11 +9,12 @@ interface InternalParagraph {
   text: string;
   type: 'qs' | 'c' | 'n';
   tokens: marked.Token[];
+  formattedText?: string;
 }
 
 const createP = (p: InternalParagraph): string => {
   if (p.type === 'n') {
-    return `<p>${p.text}</p>`;
+    return `<p>${p.formattedText}</p>`;
   }
 
   let response = `<p style="margin-top: 0; margin-bottom: 0; `;
@@ -23,11 +24,7 @@ const createP = (p: InternalParagraph): string => {
   if (p.type === 'c') {
     response += 'text-align: right; font-style: italic;">';
   }
-  if (p.type === 'c' && isReferenceValid(p.text)) {
-    response += `[|${p.text}|]</p>`;
-  } else {
-    response += p.text + '</p>';
-  }
+  response += p.formattedText + '</p>';
 
   return response;
 };
@@ -39,7 +36,7 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
     return src.match(/|> /)?.index || -1;
   },
   tokenizer(src, tokens) {
-    const match = fullMatchRE.exec(src);
+    const match = lineMatchRE.exec(src);
     if (!match) {
       return;
     }
@@ -52,7 +49,13 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
     for (let i = 0; i < rawParagraphs.length; i++) {
       if (!lineMatchRE.test(rawParagraphs[i])) {
         if (citation) {
-          returnParagraphs.push({ level: 0, text: citation, type: 'c', tokens: this.lexer.inlineTokens(citation, []) });
+          const mdCitation = isReferenceValid(citation) && !/\[\|/.test(citation) ? `[|${citation}|]` : citation;
+          returnParagraphs.push({
+            level: 0,
+            text: citation,
+            type: 'c',
+            tokens: this.lexer.inlineTokens(mdCitation, []),
+          });
           citation = null;
         }
 
@@ -83,6 +86,16 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
       returnParagraphs.push({ level, text: fixedString, type: 'qs', tokens: this.lexer.inlineTokens(fixedString, []) });
     }
 
+    if (citation) {
+      const mdCitation = isReferenceValid(citation) && !/\[\|/.test(citation) ? `[|${citation}|]` : citation;
+      returnParagraphs.push({
+        level: 0,
+        text: citation,
+        type: 'c',
+        tokens: this.lexer.inlineTokens(mdCitation, []),
+      });
+    }
+
     const token = {
       type: 'scriptureQuotesExtension',
       raw: src,
@@ -99,6 +112,8 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
     let response = '<blockquote>';
 
     for (let i = 0; i < paraInputs.length; i++) {
+      paraInputs[i].formattedText = this.parser.parseInline(paraInputs[i].tokens);
+      console.log(paraInputs[i].formattedText);
       if (inQuote && (paraInputs[i].type === 'c' || paraInputs[i].type === 'qs')) {
         response += createP(paraInputs[i]);
         continue;

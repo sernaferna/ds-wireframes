@@ -6,6 +6,7 @@ import { NotesForPassage } from './NotesForPassage';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
 import { Alert } from 'react-bootstrap';
 import { useGetPassageByIdQuery } from '../../../services/PassagesService';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IPassageNotes {
   showMDFullScreen: boolean;
@@ -61,6 +62,7 @@ export const PassageNotes = ({ showMDFullScreen, setShowMDFullScreen, autosaveNo
         showMDFullScreen={showMDFullScreen}
         setShowMDFullScreen={setShowMDFullScreen}
         autosaveNotes={autosaveNotes}
+        key={selectedNoteID || uuidv4()}
       />
 
       {showNotesForPassage && <NotesForPassage osis={data ? data.osis : ''} />}

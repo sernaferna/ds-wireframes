@@ -1,178 +1,201 @@
-import React, { useState, useMemo, useCallback } from 'react';
-import MDEditor, { ICommand } from '@uiw/react-md-editor';
-import { Button } from 'react-bootstrap';
-import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
-import { getCommandList } from './helpers/md-commands';
-import { MarkdownPreview } from './MarkdownPreview';
-import { ClientSideErrorLoading } from '../loading';
-import { useWindowSize } from '../../../hooks/WindowSize';
-import { getHTMLForMD, getPluginList } from '@devouringscripture/remark-plugins';
+import React, { ChangeEvent, useCallback, useMemo, useState, useRef } from 'react';
+import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
+import { ClientSideErrorLoading } from '../loading';
+import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
+import { MDPreview } from './MDPreview';
+import { TextAreaTextApi, getStateFromTextArea, renderedOutputFromMarkdown } from '../../../helpers/markdown';
+import { useWindowSize } from '../../../hooks/WindowSize';
+import { toolbar } from './helpers/md-commands';
 
-const commandsToFilterOut = ['code', 'image', 'checked-list', 'hr'];
+const AUTOSAVE_INTERVAL = 3000;
 
-const commandsFilter = (command: ICommand<string>, isExtra: boolean) => {
-  if (isExtra) {
-    return command;
-  }
-
-  if (new RegExp(commandsToFilterOut.join('|')).test(command.name!)) {
-    return false;
-  }
-
-  return command;
-};
-
-interface IMarkdownBox {
+interface IMarkedMD {
   content: string;
-  changeCallback: (newValue: string) => void;
+  changeCallback: (newContent: string) => void;
   showToolbar?: boolean;
   showSidePreview?: boolean;
-  fullscreenOption?: boolean;
-  showFullScreen?: boolean;
-  setFullScreen?: (fs: boolean) => void;
+  fullScreenOption?: boolean;
+  showingFullScreen?: boolean;
+  setFullSreen?: (fs: boolean) => void;
   hideAllControls?: boolean;
+  height?: number;
+  readOnly?: boolean;
 }
 
-/**
- * Displays an editable text box accepting **Markdown** format, with
- * capabilities for handling some special MD formats (e.g. highlighting)
- * as well as plugins specific to Devouring Scripture.
- *
- * @param content The MD text to be displayed
- * @param changeCallback Callback function to be called as the text is modified
- * @param showToolbar Whether the toolbar should be shown (defaults to no)
- * @param showSidePreview  Whether the sidebar preview should be shown (defaults to no)
- * @param fullscreenOption Whether the UI should include a fullscreen option
- * @param showFullScreen Show in fullscreen mode (if `fullscreenOption` is `true`)
- * @param setFullScreen Callback called when fullscreen mode is switched
- * @param hideAllControls Hide all controls (toolbar, preview button, etc.)
- */
-const MarkdownBox = ({
+const MarkedMD = ({
   content,
   changeCallback,
   showToolbar = true,
   showSidePreview = false,
-  fullscreenOption = false,
-  showFullScreen = false,
-  setFullScreen = undefined,
+  fullScreenOption = false,
+  showingFullScreen = false,
+  setFullSreen = undefined,
   hideAllControls = false,
-}: IMarkdownBox) => {
-  const [showPreviewState, setShowPreviewState] = useState<boolean>(false);
-  const [showMDTutorial, setShowMDTutorial] = useState<boolean>(false);
+  height = 20,
+  readOnly = false,
+}: IMarkedMD) => {
+  const [md, setMD] = useState(content);
+  const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [showTutorial, setShowTutorial] = useState<boolean>(false);
+  const editorRef = useRef<HTMLTextAreaElement>(null);
   const windowSize = useWindowSize();
 
   const fsButton = useMemo(() => {
-    if (!fullscreenOption) {
+    if (!fullScreenOption) {
       return <></>;
     }
 
-    if (showFullScreen) {
+    if (showingFullScreen) {
       return (
-        <Button variant="link" size="sm" onClick={() => setFullScreen!(false)}>
-          Show normal view
+        <Button variant="link" size="sm" onClick={() => setFullSreen!(false)}>
+          Show Normal View
         </Button>
       );
     } else {
       return (
-        <Button variant="link" size="sm" onClick={() => setFullScreen!(true)}>
-          Show full screen
+        <Button variant="link" size="sm" onClick={() => setFullSreen!(true)}>
+          Show Full Screen
         </Button>
       );
     }
-  }, [fullscreenOption, showFullScreen, setFullScreen]);
+  }, [fullScreenOption, setFullSreen, showingFullScreen]);
+
+  const fullScreenHeight = useMemo(() => {
+    if (!editorRef.current) {
+      return height;
+    }
+    const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
+    const newHeight = windowSize.height / fontHeight / 2;
+    return newHeight;
+  }, [editorRef, windowSize, height]);
+
+  const renderedToolbar: JSX.Element = useMemo(() => {
+    return (
+      <ButtonToolbar aria-label="Markdown Toolbar">
+        {toolbar.buttonGroups.map((g, index) => (
+          <ButtonGroup size="sm" key={`buttongroup-${index}`}>
+            {g.buttons.map((b, buttonIndex) => (
+              <Button
+                variant="outline-dark"
+                onClick={() => {
+                  const state = getStateFromTextArea(editorRef.current!);
+                  const api = new TextAreaTextApi(editorRef.current!);
+                  b.execute(state, api);
+                }}
+                key={`button-${buttonIndex}`}
+              >
+                {b.buttonContents}
+              </Button>
+            ))}
+          </ButtonGroup>
+        ))}
+      </ButtonToolbar>
+    );
+  }, [editorRef]);
 
   const reversePreviewState = () => {
     return () => {
-      setShowPreviewState(!showPreviewState);
+      setShowPreview(!showPreview);
     };
   };
 
-  const handleChangeEvent = (newValue: string | undefined) => {
-    changeCallback(newValue || '');
+  const sendBackData = () => {
+    if (timer) {
+      clearTimeout(timer);
+      setTimer(null);
+    }
+
+    changeCallback(md);
+  };
+
+  const handleChangeEvent = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    setMD(event.currentTarget.value || '');
+    setTimer(setTimeout(sendBackData, AUTOSAVE_INTERVAL));
   };
 
   const handleHTMLDownload = useCallback(() => {
-    const formattedHTML = getHTMLForMD(content);
+    const formattedHTML = renderedOutputFromMarkdown(content);
     fileDownload(formattedHTML, 'notes.html');
   }, [content]);
 
-  if (fullscreenOption && !setFullScreen) {
+  if (fullScreenOption && !setFullSreen) {
     return (
       <ClientSideErrorLoading>
-        <p>Error loading page; bad configuration.</p>
+        <p>Error loading page; bad configuration</p>
       </ClientSideErrorLoading>
     );
   }
 
-  const pluginList = getPluginList();
-  const commandList = getCommandList();
-
   return (
-    <div>
-      <div className="mb-2">
-        <MDEditor
-          value={content}
-          onChange={handleChangeEvent}
-          highlightEnable={true}
-          preview={showSidePreview ? 'live' : 'edit'}
-          defaultTabEnable={true}
-          extraCommands={commandList}
-          visiableDragbar={true}
-          commandsFilter={commandsFilter}
-          hideToolbar={!showToolbar || hideAllControls}
-          textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
-          style={{ fontFamily: 'Courier Prime, monospace' }}
-          previewOptions={{
-            remarkPlugins: pluginList,
-          }}
-          height={showFullScreen ? windowSize.height - 250 : 200}
-        />
+    <>
+      <Row>
+        <Col xs={showSidePreview ? '6' : '12'}>
+          {!hideAllControls && showToolbar && renderedToolbar}
 
-        {!hideAllControls && (
-          <Button
-            variant="link"
-            size="sm"
-            onClick={() => {
-              setShowMDTutorial(true);
-            }}
-          >
-            Show Tutorial
-          </Button>
+          <Form.Control
+            ref={editorRef}
+            className="ds-md-editor"
+            as="textarea"
+            rows={showingFullScreen ? fullScreenHeight : height}
+            value={md}
+            onChange={handleChangeEvent}
+            disabled={readOnly}
+          />
+        </Col>
+        {showSidePreview && (
+          <Col xs="6">
+            <MDPreview content={content} shaded={false} />
+          </Col>
         )}
+      </Row>
+      <Row>
+        <Col>
+          {!hideAllControls && (
+            <Button
+              variant="link"
+              size="sm"
+              onClick={() => {
+                setShowTutorial(true);
+              }}
+            >
+              Show Tutorial
+            </Button>
+          )}
 
-        {fsButton}
+          {fsButton}
 
-        {!hideAllControls && (
-          <Button variant="link" size="sm" onClick={handleHTMLDownload}>
-            Export HTML
-          </Button>
-        )}
-      </div>
-      {!showFullScreen && !hideAllControls && (
-        <>
-          <div className="d-grid gap-2">
+          {!hideAllControls && (
+            <Button variant="link" size="sm" onClick={handleHTMLDownload}>
+              Export HTML
+            </Button>
+          )}
+        </Col>
+      </Row>
+      {!showingFullScreen && !hideAllControls && (
+        <Row>
+          <Col className="d-grid gap-2">
             <Button size="sm" variant="outline-secondary" onClick={reversePreviewState()}>
-              {showPreviewState ? 'Hide Preview' : 'Show Preview'}
+              {showPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
 
-            {showPreviewState && <MarkdownPreview content={content} />}
-          </div>
-        </>
+            {showPreview && <MDPreview content={content} shaded={true} />}
+          </Col>
+        </Row>
       )}
 
-      <MarkdownTutorial
-        show={showMDTutorial}
-        handleClose={() => {
-          setShowMDTutorial(false);
-        }}
-      />
-    </div>
+      <MarkdownTutorial show={showTutorial} handleClose={() => setShowTutorial(false)} />
+    </>
   );
 };
 
-const InternalMDBox = Object.assign(MarkdownBox, {
-  Preview: MarkdownPreview,
+const InternalMarkedMD = Object.assign(MarkedMD, {
+  Preview: MDPreview,
 });
 
-export { InternalMDBox as MarkdownBox };
+export { InternalMarkedMD as MarkdownBox };

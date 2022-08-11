@@ -17,10 +17,10 @@ import {
 import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { getSelectedPassage, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
 import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
-import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 import * as yup from 'yup';
 import { Formik, FormikProps } from 'formik';
 import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';
+import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 
 const AUTOSAVE_INTERVAL = 3000;
 
@@ -278,10 +278,11 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
                 setTimer(setTimeout(autoSaveFunc, AUTOSAVE_INTERVAL));
               }
             }}
-            fullscreenOption={true}
-            showFullScreen={showMDFullScreen}
-            setFullScreen={switchFS}
+            fullScreenOption={true}
+            showingFullScreen={showMDFullScreen}
+            setFullSreen={switchFS}
             showSidePreview={showMDFullScreen ? true : false}
+            height={10}
           />
           <div className="m-2 d-flex flex-row-reverse">
             {selectedNote && (

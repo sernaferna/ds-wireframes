@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
-import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 import { RenderedPart } from '../../common/tutorial/RenderedChapter';
 import { ArrowDownSquare, ArrowUpSquare, TrashFill } from 'react-bootstrap-icons';
 import { FieldArrayRenderProps, FieldInputProps, FormikProps } from 'formik';
 import { FormikPartType, FormikTutorialType, getPartFromFormik } from './formik-helpers';
+import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 
 interface IEditPart {
   partIndex: number;
@@ -84,6 +84,7 @@ export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }
               fp.setFieldTouched(part.name + '.content');
             }}
             hideAllControls={true}
+            height={10}
           />
         </Col>
         <Col xs={showResult ? '5' : '1'}>

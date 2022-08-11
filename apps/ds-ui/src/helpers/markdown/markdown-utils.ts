@@ -5,6 +5,7 @@ import { smallCapsExtension } from './extensions/smallCapsExtension';
 import { eraExtension } from './extensions/eraExtension';
 import { bibleLinkExtension } from './extensions/bibleLinkExtension';
 import { scriptureQuotesExtension } from './extensions/scriptureQuotes';
+import { superscriptExtension } from './extensions/superscriptExtension';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 export const renderedOutputFromMarkdown = (md: string): string => {
@@ -17,12 +18,13 @@ export const renderedOutputFromMarkdown = (md: string): string => {
     smartypants: true,
     xhtml: true,
     extensions: [
+      scriptureQuotesExtension,
       highlightExtension,
       allUpperExtension,
       smallCapsExtension,
       eraExtension,
       bibleLinkExtension,
-      scriptureQuotesExtension,
+      superscriptExtension,
     ],
   });
 
