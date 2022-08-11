@@ -16,11 +16,13 @@ export const smallCapsExtension: marked.TokenizerExtension | marked.RendererExte
     const token = {
       type: 'smallCapsExtension',
       raw: match[0],
-      scText: this.lexer.inlineTokens(match[1]),
+      scText: match[1],
+      tokens: [],
     };
+    this.lexer.inline(token.scText, token.tokens);
     return token;
   },
   renderer(token) {
-    return `<span style="font-variant: small-caps;">${this.parser.parseInline(token.scText)}</span> `;
+    return `<span style="font-variant: small-caps;">${this.parser.parseInline(token.tokens || token.scText)}</span> `;
   },
 };

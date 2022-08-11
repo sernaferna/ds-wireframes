@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useMemo, useState, useRef } from 'react';
-import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup, Container } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
 import { ClientSideErrorLoading } from '../loading';
 import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
@@ -134,26 +134,28 @@ const MarkedMD = ({
 
   return (
     <>
-      <Row>
-        <Col xs={showSidePreview ? '6' : '12'}>
-          {!hideAllControls && showToolbar && renderedToolbar}
+      <Container fluid>
+        <Row>
+          <Col xs={showSidePreview ? '6' : '12'}>
+            {!hideAllControls && showToolbar && renderedToolbar}
 
-          <Form.Control
-            ref={editorRef}
-            className="ds-md-editor"
-            as="textarea"
-            rows={showingFullScreen ? fullScreenHeight : height}
-            value={md}
-            onChange={handleChangeEvent}
-            disabled={readOnly}
-          />
-        </Col>
-        {showSidePreview && (
-          <Col xs="6">
-            <MDPreview content={content} shaded={false} />
+            <Form.Control
+              ref={editorRef}
+              className="ds-md-editor"
+              as="textarea"
+              rows={showingFullScreen ? fullScreenHeight : height}
+              value={md}
+              onChange={handleChangeEvent}
+              disabled={readOnly}
+            />
           </Col>
-        )}
-      </Row>
+          {showSidePreview && (
+            <Col xs="6">
+              <MDPreview content={md} shaded={false} />
+            </Col>
+          )}
+        </Row>
+      </Container>
       <Row>
         <Col>
           {!hideAllControls && (
@@ -184,7 +186,7 @@ const MarkedMD = ({
               {showPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
 
-            {showPreview && <MDPreview content={content} shaded={true} />}
+            {showPreview && <MDPreview content={md} shaded={true} />}
           </Col>
         </Row>
       )}

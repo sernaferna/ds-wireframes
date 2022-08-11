@@ -50,25 +50,31 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
       if (!lineMatchRE.test(rawParagraphs[i])) {
         if (citation) {
           const mdCitation = isReferenceValid(citation) && !/\[\|/.test(citation) ? `[|${citation}|]` : citation;
-          returnParagraphs.push({
+          const citPara: InternalParagraph = {
             level: 0,
-            text: citation,
+            text: mdCitation,
             type: 'c',
-            tokens: this.lexer.inlineTokens(mdCitation, []),
-          });
+            tokens: [],
+          };
+          this.lexer.inline(citPara.text, citPara.tokens);
+          returnParagraphs.push(citPara);
+
           citation = null;
         }
 
-        returnParagraphs.push({
+        const regPara: InternalParagraph = {
           level: 0,
           text: rawParagraphs[i],
           type: 'n',
-          tokens: this.lexer.inlineTokens(rawParagraphs[i], []),
-        });
+          tokens: [],
+        };
+        this.lexer.inline(regPara.text, regPara.tokens);
+        returnParagraphs.push(regPara);
         continue;
       }
 
       let fixedString = rawParagraphs[i];
+      console.log(fixedString);
 
       const citationMatch = fullMatchRE.exec(rawParagraphs[i]);
       if (citationMatch) {
@@ -83,17 +89,28 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
         fixedString = fixedString.replace(lineMatchRE, '');
       }
 
-      returnParagraphs.push({ level, text: fixedString, type: 'qs', tokens: this.lexer.inlineTokens(fixedString, []) });
+      const qsPara: InternalParagraph = {
+        level,
+        text: fixedString,
+        type: 'qs',
+        tokens: [],
+      };
+      this.lexer.inline(qsPara.text, qsPara.tokens);
+      returnParagraphs.push(qsPara);
     }
 
     if (citation) {
       const mdCitation = isReferenceValid(citation) && !/\[\|/.test(citation) ? `[|${citation}|]` : citation;
-      returnParagraphs.push({
+      const citPara: InternalParagraph = {
         level: 0,
-        text: citation,
+        text: mdCitation,
         type: 'c',
-        tokens: this.lexer.inlineTokens(mdCitation, []),
-      });
+        tokens: [],
+      };
+      this.lexer.inline(citPara.text, citPara.tokens);
+      returnParagraphs.push(citPara);
+
+      citation = null;
     }
 
     const token = {
@@ -113,7 +130,6 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
 
     for (let i = 0; i < paraInputs.length; i++) {
       paraInputs[i].formattedText = this.parser.parseInline(paraInputs[i].tokens);
-      console.log(paraInputs[i].formattedText);
       if (inQuote && (paraInputs[i].type === 'c' || paraInputs[i].type === 'qs')) {
         response += createP(paraInputs[i]);
         continue;

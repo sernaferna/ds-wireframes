@@ -16,11 +16,11 @@ export const superscriptExtension: marked.TokenizerExtension | marked.RendererEx
     const token = {
       type: 'superscriptExtension',
       raw: match[0],
-      markText: this.lexer.inlineTokens(match[1]),
+      markText: match[1],
     };
     return token;
   },
   renderer(token) {
-    return `<sup>${this.parser.parseInline(token.markText)}</sup>`;
+    return `<sup>${token.markText}</sup>`;
   },
 };

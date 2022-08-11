@@ -16,11 +16,13 @@ export const highlightExtension: marked.TokenizerExtension | marked.RendererExte
     const token = {
       type: 'highlightExtension',
       raw: match[0],
-      markText: this.lexer.inlineTokens(match[1]),
+      markText: match[1],
+      tokens: [],
     };
+    this.lexer.inline(token.markText, token.tokens);
     return token;
   },
   renderer(token) {
-    return `<mark>${this.parser.parseInline(token.markText)}</mark>`;
+    return `<mark>${this.parser.parseInline(token.tokens || token.markText)}</mark>`;
   },
 };
