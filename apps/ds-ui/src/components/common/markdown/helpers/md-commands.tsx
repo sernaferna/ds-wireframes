@@ -94,6 +94,7 @@ export const toolbar: MDToolbar = {
       buttons: [
         {
           name: 'Link',
+          keyboardShortcut: 'ctrl+shift+K',
           buttonContents: <Link45deg />,
           execute(state, api) {
             const linkURL = prompt('Please enter the URL:');
