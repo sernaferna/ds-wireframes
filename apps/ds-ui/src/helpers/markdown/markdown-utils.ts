@@ -5,6 +5,7 @@ import { smallCapsExtension } from './extensions/smallCapsExtension';
 import { eraExtension } from './extensions/eraExtension';
 import { bibleLinkExtension } from './extensions/bibleLinkExtension';
 import { scriptureQuotesExtension } from './extensions/scriptureQuotes';
+import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 export const renderedOutputFromMarkdown = (md: string): string => {
   marked.use({
@@ -27,3 +28,18 @@ export const renderedOutputFromMarkdown = (md: string): string => {
 
   return marked.parse(md);
 };
+
+export interface MDToolbarButton {
+  name: string;
+  keyboardShortcut?: string;
+  buttonContents: JSX.Element;
+  execute: (state: TextState, api: TextAreaTextApi) => void;
+}
+
+export interface MDToolbarButtonGroup {
+  buttons: MDToolbarButton[];
+}
+
+export interface MDToolbar {
+  buttonGroups: MDToolbarButtonGroup[];
+}
