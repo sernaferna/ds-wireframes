@@ -9,11 +9,14 @@ It "contains" some **bold** and *italics* and ==highlighting== but "contains" di
 | Column A | Column B |
 | -------- | -------- |
 | value    | value    |
+| value 2  | value 2  |
 
 There is also a link to [Google](https://www.google.ca) and [|Rev 1:1 (verse 1)|NIV;s], and a reference to the ^^^LORD^^^.
 
 |> ((Rev 1:1)) This isn't *actually* Rev 1:1
-|> |> but it's a quote regardless`;
+|> |> but it's a quote regardless
+
+And this is some text that *should* be outside the Scripture quote`;
 
 export const MarkedMD = () => {
   const [md, setMD] = useState(sampleMD);

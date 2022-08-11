@@ -11,33 +11,15 @@
 }
 
 .ds-md-editor {
-  font-family: 'Merriweather', serif;
+  font-family: 'Courier Prime', fixed-width;
 }
 
 .ds-md-viewer {
   @extend .reading-text;
 
   table {
-    border-collapse: collapse;
-    box-sizing: border-box;
-    display: table;
-    margin-bottom: 1em;
-
-    th {
-      border-width: 1px;
-      border-bottom-width: 3px;
-      padding-left: 1em;
-      padding-right: 1em;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
-    }
-
-    td {
-      border-width: 1px;
-      padding-left: 1em;
-      padding-right: 1em;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
-    }
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-hover;
   }
 }
