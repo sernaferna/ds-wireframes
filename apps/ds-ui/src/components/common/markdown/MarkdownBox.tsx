@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useCallback, useMemo, useState, useRef } from 'react';
-import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup, Container } from 'react-bootstrap';
+import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
 import { ClientSideErrorLoading } from '../loading';
 import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
@@ -134,28 +134,28 @@ const MarkedMD = ({
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col xs={showSidePreview ? '6' : '12'}>
-            {!hideAllControls && showToolbar && renderedToolbar}
+      <Row>
+        <Col xs={showSidePreview ? '6' : '12'}>
+          {!hideAllControls && showToolbar && renderedToolbar}
 
-            <Form.Control
-              ref={editorRef}
-              className="ds-md-editor"
-              as="textarea"
-              rows={showingFullScreen ? fullScreenHeight : height}
-              value={md}
-              onChange={handleChangeEvent}
-              disabled={readOnly}
-            />
-          </Col>
-          {showSidePreview && (
-            <Col xs="6">
+          <Form.Control
+            ref={editorRef}
+            className="ds-md-editor"
+            as="textarea"
+            rows={showingFullScreen ? fullScreenHeight : height}
+            value={md}
+            onChange={handleChangeEvent}
+            disabled={readOnly}
+          />
+        </Col>
+        {showSidePreview && (
+          <Col xs="6" className="h-100 d-flex flex-column">
+            <div className="position-absolute">
               <MDPreview content={md} shaded={false} />
-            </Col>
-          )}
-        </Row>
-      </Container>
+            </div>
+          </Col>
+        )}
+      </Row>
       <Row>
         <Col>
           {!hideAllControls && (

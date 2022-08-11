@@ -6,7 +6,8 @@ interface IMDPreview {
   shaded?: boolean;
 }
 export const MDPreview = ({ content, shaded = true }: IMDPreview) => {
-  const classNames: string = 'ds-md-viewer ' + (shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '');
+  const classNames: string =
+    'ds-md-viewer overflow-auto flex-grow-1 ' + (shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '');
 
   return <div className={classNames} dangerouslySetInnerHTML={{ __html: renderedOutputFromMarkdown(content) }} />;
 };
