@@ -1,3 +1,8 @@
+// All of the code here was lifted from `uiwjs/react-md-editor`. While that
+// component turned out to be less performant than necessary, the
+// code for working with TextAreas -- as well as the approach to
+// handling toolbar buttons -- was invaluable.
+
 export interface TextRange {
   start: number;
   end: number;

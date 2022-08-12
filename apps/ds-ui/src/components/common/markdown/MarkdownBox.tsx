@@ -8,6 +8,10 @@ import { TextAreaTextApi, getStateFromTextArea, renderedOutputFromMarkdown } fro
 import { useWindowSize } from '../../../hooks/WindowSize';
 import { toolbar } from './helpers/md-commands';
 
+/**
+ * How often (in milliseconds) this component should call back to the
+ * parent component with updated text.
+ */
 const AUTOSAVE_INTERVAL = 3000;
 
 interface IMarkedMD {
@@ -23,6 +27,33 @@ interface IMarkedMD {
   readOnly?: boolean;
 }
 
+/**
+ * Reusable rich-text editing component that uses **markdown**. Rendering
+ * handled by **marked**.
+ *
+ * For smoother UI, the component doesn't immediately report back to the
+ * caller when text is modified, as the rendering gets too choppy.
+ *
+ * There are various forms of chrome (toolbar, preview, side preview, etc.) that
+ * can be enabled/disabled. Not all combinations may have been tested together,
+ * but some definitely override. e.g. setting `hideAllControls` will hide all
+ * of the controls, even if, for example, `showSidePreview` is set to true.
+ *
+ * Has a callback for indicating to the parent component when the fullscreen status
+ * changes, because the parent may neet to adjust its own UI accordingly to
+ * accommodate the fullscreen version of this component.
+ *
+ * @param content The markdown to be displayed
+ * @param changeCallback Callback function to be called when the content is updated
+ * @param showToolbar Whether the toolbar should be displayed
+ * @param showSidePreview Whether the side preview should be displayed
+ * @param fullScreenOption Whether the component should allow the user to switch to fullscreen mode
+ * @param showingFullScreen Indicates if the component should currently be displayed full screen
+ * @param setFullScreen Callback function to call when the full screen indicator changes
+ * @param hideAllControls Hides all chrome (toolbar, previews, save HTML, etc.)
+ * @param height Height of the editor, in terms of lines to display in the textarea (*not* pixels)
+ * @param readOnly If the component should be rendered readonly
+ */
 const MarkedMD = ({
   content,
   changeCallback,
@@ -228,6 +259,10 @@ const MarkedMD = ({
   );
 };
 
+/**
+ * Include the `MDPreview` component into this component's interface,
+ * so that it can be included via `<MarkdownBox.Preview>`.
+ */
 const InternalMarkedMD = Object.assign(MarkedMD, {
   Preview: MDPreview,
 });

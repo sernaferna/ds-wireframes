@@ -32,6 +32,11 @@ const interpolateFootnotes = (text: string) => {
   return footnoteContainerTemplate(replacedText);
 };
 
+/**
+ * Handles footnote notation. Lifted from an Issue on the marked GitHub repo.
+ *
+ * https://github.com/markedjs/marked/issues/1562#issuecomment-749652111
+ */
 export const footnotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
   paragraph(text) {
     return marked.Renderer.prototype.paragraph.apply(null, [interpolateReferences(interpolateFootnotes(text))]);

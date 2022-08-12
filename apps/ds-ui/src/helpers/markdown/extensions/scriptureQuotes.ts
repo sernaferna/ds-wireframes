@@ -4,6 +4,9 @@ import { isReferenceValid } from '@devouringscripture/common';
 const fullMatchRE = /^\|> (?:\|> )*(?:\(\((.*)\)\) )/;
 const lineMatchRE = /^\|> /;
 
+/**
+ * Handles formatting for `\>` style Scripture Quotes.
+ */
 export const scriptureQuotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
   paragraph(text) {
     if (!/^\|&gt; /.test(text)) {

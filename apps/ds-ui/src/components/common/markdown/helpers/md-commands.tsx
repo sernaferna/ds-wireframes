@@ -21,6 +21,19 @@ import {
   BookFill,
 } from 'react-bootstrap-icons';
 
+/**
+ * Helper function to surround some text in a text area with token(s). If text
+ * is selected in the textarea it will be surrounded with the tokens and the
+ * cursor will be left in a comfortable spot; if no text is selected some
+ * default text can be supplied. If no text is selected and no default
+ * text is supplied, the tokens are simply inserted at the cursor location.
+ *
+ * @param state The `TextState` object represenging the textarea's state
+ * @param api The `TextAreaTextApi` class for working with the textarea
+ * @param token The token to be inserted before (and maybe after) the text
+ * @param endToken Optional: the token to be inserted after the text. If not supplied, `token` is used in both places.
+ * @param defaultText Text that should be inserted if none is selected in the textarea.
+ */
 const replaceTextWith = (
   state: TextState,
   api: TextAreaTextApi,
@@ -47,6 +60,14 @@ const replaceTextWith = (
   });
 };
 
+/**
+ * The buttons to be rendered into the MDEditors toolbar in the format:
+ *
+ * * name: The name of the item (not used for anything)
+ * * keyboardShortcut (optional): Keyboard shortcut to activate this command
+ * * buttonContents: The content/UI to be shown in the button; typically an icon
+ * * execute: The function to call when the button is clicked.
+ */
 export const toolbar: MDToolbar = {
   buttonGroups: [
     {
