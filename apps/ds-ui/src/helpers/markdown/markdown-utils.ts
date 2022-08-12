@@ -4,8 +4,9 @@ import { highlightExtension } from './extensions/highlightExtension';
 import { smallCapsExtension } from './extensions/smallCapsExtension';
 import { eraExtension } from './extensions/eraExtension';
 import { bibleLinkExtension } from './extensions/bibleLinkExtension';
-import { scriptureQuotesExtension } from './extensions/scriptureQuotes';
 import { superscriptExtension } from './extensions/superscriptExtension';
+import { scriptureQuotes } from './extensions/scriptureQuotes';
+import { linksInNewWindow } from './extensions/links';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 export const renderedOutputFromMarkdown = (md: string): string => {
@@ -18,7 +19,6 @@ export const renderedOutputFromMarkdown = (md: string): string => {
     smartypants: true,
     xhtml: true,
     extensions: [
-      scriptureQuotesExtension,
       highlightExtension,
       allUpperExtension,
       smallCapsExtension,
@@ -27,6 +27,8 @@ export const renderedOutputFromMarkdown = (md: string): string => {
       superscriptExtension,
     ],
   });
+  marked.use({ renderer: scriptureQuotes });
+  marked.use({ renderer: linksInNewWindow });
 
   return marked.parse(md);
 };
