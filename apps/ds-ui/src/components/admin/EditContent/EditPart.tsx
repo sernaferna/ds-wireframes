@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
-import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 import { RenderedPart } from '../../common/tutorial/RenderedChapter';
 import { ArrowDownSquare, ArrowUpSquare, TrashFill } from 'react-bootstrap-icons';
 import { FieldArrayRenderProps, FieldInputProps, FormikProps } from 'formik';
 import { FormikPartType, FormikTutorialType, getPartFromFormik } from './formik-helpers';
+import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 
 interface IEditPart {
   partIndex: number;
   totalPartsInList: number;
   fp: FormikProps<FormikTutorialType>;
-  arrayHelpers: FieldArrayRenderProps;
+  sectionArrayHelpers: FieldArrayRenderProps;
   part: FieldInputProps<FormikPartType>;
 }
 
@@ -27,7 +27,7 @@ interface IEditPart {
  * @param arrayHelpers The function from the parent which controls adding/removing/reordering parts
  * @param part The `FormikProps` object for this specific part.
  */
-export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }: IEditPart) => {
+export const EditPart = ({ partIndex, totalPartsInList, fp, sectionArrayHelpers, part }: IEditPart) => {
   const [showResult, setShowResult] = useState<boolean>(false);
 
   return (
@@ -40,7 +40,7 @@ export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }
                 <Button
                   variant="outline-dark"
                   onClick={() => {
-                    arrayHelpers.swap(partIndex, partIndex - 1);
+                    sectionArrayHelpers.swap(partIndex, partIndex - 1);
                   }}
                 >
                   <ArrowUpSquare />
@@ -54,7 +54,7 @@ export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }
                 <Button
                   variant="outline-dark"
                   onClick={() => {
-                    arrayHelpers.swap(partIndex, partIndex + 1);
+                    sectionArrayHelpers.swap(partIndex, partIndex + 1);
                   }}
                 >
                   <ArrowDownSquare />
@@ -84,6 +84,7 @@ export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }
               fp.setFieldTouched(part.name + '.content');
             }}
             hideAllControls={true}
+            height={10}
           />
         </Col>
         <Col xs={showResult ? '5' : '1'}>
@@ -105,7 +106,7 @@ export const EditPart = ({ partIndex, totalPartsInList, fp, arrayHelpers, part }
           <Button
             variant="outline-danger"
             onClick={() => {
-              arrayHelpers.remove(partIndex);
+              sectionArrayHelpers.remove(partIndex);
             }}
           >
             <TrashFill />

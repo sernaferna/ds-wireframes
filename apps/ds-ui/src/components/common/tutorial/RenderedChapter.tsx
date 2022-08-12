@@ -1,8 +1,7 @@
 import React from 'react';
 import { PartType, Chapter, SectionPart } from '@devouringscripture/common';
-import { MarkdownBox } from '../markdown/MarkdownBox';
-import MDEditor from '@uiw/react-md-editor';
 import { Accordion } from 'react-bootstrap';
+import { MarkdownBox } from '../markdown/MarkdownBox';
 
 interface IReadOnlyMarkdownBox {
   text: string;
@@ -16,15 +15,14 @@ interface IReadOnlyMarkdownBox {
  */
 const ReadOnlyMarkdownBox = ({ text }: IReadOnlyMarkdownBox) => {
   return (
-    <MDEditor
-      value={text}
-      highlightEnable={true}
-      preview="edit"
-      defaultTabEnable={false}
-      visiableDragbar={false}
-      hideToolbar={true}
-      textareaProps={{ style: { fontFamily: 'Courier Prime, monospace' } }}
-      style={{ fontFamily: 'Courier Prime, monospace' }}
+    <MarkdownBox
+      content={text}
+      hideAllControls={true}
+      changeCallback={(newText) => {
+        // do nothing
+      }}
+      readOnly={true}
+      height={10}
     />
   );
 };

@@ -10,7 +10,6 @@ The projects and libraries are:
   - `ds-vapi` is a separate API specifically for handling verses and notes, created only because it required a more robust DB than `ds-api`
 - Libraries:
   - `@devouringscripture/common` is a library that provides common type definitions and code
-  - `@devouringscripture/remark-plugins` provides a set of **Remark** plugins that are used in the application's markdown editor
 
 # Common Commands
 

@@ -85,7 +85,7 @@ export const EditTutorial = ({ tutId }: IEditTutorial) => {
                       <Accordion>
                         {fp.values.chapters
                           ? fp.values.chapters.map((item, index) => (
-                              <Accordion.Item eventKey={`${index}`} key={`ed-ai-${index}`}>
+                              <Accordion.Item eventKey={`${fp.values.id}-ch-${index}`} key={`ed-ai-${index}`}>
                                 <Accordion.Header>{item.mainSection.title}</Accordion.Header>
                                 <Accordion.Body>
                                   <Row>

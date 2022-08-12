@@ -112,6 +112,10 @@ strong {
   font-family: 'Merriweather', serif;
 }
 
+.monospace-text {
+  font-family: 'Courier Prime', Courier, monospace;
+}
+
 .page-main-container {
   @extend .m-0;
   @extend .p-3;

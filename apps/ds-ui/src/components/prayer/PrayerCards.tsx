@@ -15,10 +15,10 @@ import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { getPrayerViewFilter } from '../../stores/UISlice';
 import { paginateItems } from '../../hooks/pagination';
-import { MarkdownBox } from '../common/markdown/MarkdownBox';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
 import { SetMessageFunction } from '../../hooks/ErrorsAndWarning';
+import { MarkdownBox } from '../common/markdown/MarkdownBox';
 
 export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   if (type === undefined) {

@@ -50,6 +50,8 @@ export const EditChapter = ({ fp, chapter }: IEditChapter) => {
                         isMainSection={false}
                         fp={fp}
                         section={fp.getFieldProps(chapter.name + `.subSections[${index}]`)}
+                        chapterArrayHelpers={arrayHelpers}
+                        sectionIndex={index}
                       />
                     )}
                   </Accordion.Body>

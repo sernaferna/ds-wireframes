@@ -9,3 +9,30 @@
     @extend .btn-group;
   }
 }
+
+.ds-md-editor {
+  @extend .monospace-text;
+}
+
+.ds-md-viewer {
+  @extend .reading-text;
+
+  table {
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-hover;
+  }
+
+  code {
+    @extend .monospace-text;
+  }
+
+  blockquote {
+    @extend .blockquote;
+    @extend .border-start;
+    @extend .border-3;
+    @extend .ps-2;
+    @extend .border-secondary;
+    font-size: 1em;
+  }
+}
