@@ -62,14 +62,18 @@ const MarkedMD = ({
     }
   }, [fullScreenOption, setFullSreen, showingFullScreen]);
 
-  const fullScreenHeight = useMemo(() => {
-    if (!editorRef.current) {
-      return height;
+  const [editorLineHeight, editorPixelHeight] = useMemo(() => {
+    if (!editorRef.current || !showingFullScreen) {
+      return [height, 0];
     }
+
+    const pixelHeight = editorRef.current!.style.height;
+
     const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
     const newHeight = windowSize.height / fontHeight / 2;
-    return newHeight;
-  }, [editorRef, windowSize, height]);
+
+    return [newHeight, pixelHeight];
+  }, [editorRef, windowSize, height, showingFullScreen]);
 
   const renderedToolbar: JSX.Element = useMemo(() => {
     return (
@@ -142,15 +146,15 @@ const MarkedMD = ({
             ref={editorRef}
             className="ds-md-editor"
             as="textarea"
-            rows={showingFullScreen ? fullScreenHeight : height}
+            rows={editorLineHeight}
             value={md}
             onChange={handleChangeEvent}
             disabled={readOnly}
           />
         </Col>
         {showSidePreview && (
-          <Col xs="6" className="h-100 d-flex flex-column">
-            <div className="position-absolute">
+          <Col xs="6" className="overflow-auto">
+            <div style={{ height: `${editorPixelHeight}px` }}>
               <MDPreview content={md} shaded={false} />
             </div>
           </Col>
