@@ -40,6 +40,10 @@ const MarkedMD = ({
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [showTutorial, setShowTutorial] = useState<boolean>(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
+  const editorContainerRef = useRef<HTMLDivElement>(null);
+  const viewerRef = useRef<HTMLDivElement>(null);
+  const [preventScrollEvent, setPreventScrollEvent] = useState<boolean>(false);
+  const [viewerLastScroll, setViewerLastScroll] = useState(0);
   const windowSize = useWindowSize();
 
   const fsButton = useMemo(() => {
@@ -67,7 +71,7 @@ const MarkedMD = ({
       return [height, 0];
     }
 
-    const pixelHeight = editorRef.current!.style.height;
+    const pixelHeight = editorContainerRef.current!.clientHeight;
 
     const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
     const newHeight = windowSize.height / fontHeight / 2;
@@ -128,6 +132,29 @@ const MarkedMD = ({
     fileDownload(formattedHTML, 'notes.html');
   }, [content]);
 
+  const handleEditorScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+    if (preventScrollEvent) {
+      setPreventScrollEvent(false);
+      return;
+    }
+
+    setPreventScrollEvent(true);
+    viewerRef.current!.scrollTop = e.currentTarget.scrollTop;
+  };
+
+  const handleViewerScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    if (preventScrollEvent) {
+      setPreventScrollEvent(false);
+      return;
+    }
+
+    if (e.currentTarget.scrollTop !== viewerLastScroll) {
+      setPreventScrollEvent(true);
+      editorRef.current!.scrollTop = e.currentTarget.scrollTop;
+      setViewerLastScroll(e.currentTarget.scrollTop);
+    }
+  };
+
   if (fullScreenOption && !setFullSreen) {
     return (
       <ClientSideErrorLoading>
@@ -139,7 +166,7 @@ const MarkedMD = ({
   return (
     <>
       <Row>
-        <Col xs={showSidePreview ? '6' : '12'}>
+        <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
           {!hideAllControls && showToolbar && renderedToolbar}
 
           <Form.Control
@@ -150,10 +177,11 @@ const MarkedMD = ({
             value={md}
             onChange={handleChangeEvent}
             disabled={readOnly}
+            onScroll={handleEditorScroll}
           />
         </Col>
         {showSidePreview && (
-          <Col xs="6" className="overflow-auto">
+          <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
             <div style={{ height: `${editorPixelHeight}px` }}>
               <MDPreview content={md} shaded={false} />
             </div>
