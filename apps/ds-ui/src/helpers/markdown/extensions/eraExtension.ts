@@ -1,5 +1,8 @@
 import { marked } from 'marked';
 
+/**
+ * Handles text in the format ^^A.D.^^
+ */
 export const eraExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'eraExtension',
   level: 'inline',

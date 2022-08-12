@@ -1,5 +1,8 @@
 import { marked } from 'marked';
 
+/**
+ * Handles text in the format `^^^TEXT^^^`
+ */
 export const allUpperExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'allUpperExtension',
   level: 'inline',

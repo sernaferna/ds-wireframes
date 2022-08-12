@@ -3,6 +3,9 @@ import { getFormattedReference, isReferenceValid } from '@devouringscripture/com
 
 export const bibleLinkRE = /^\[\|([^(|]+)(?:\s+\(([^)]*)\))?\|([^;\]]*)(?:;([^\]]))?\]/;
 
+/**
+ * Converts `[|REF|]` notation to links to Bible Gateway
+ */
 export const bibleLinkExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'bibleLinkExtension',
   level: 'inline',
