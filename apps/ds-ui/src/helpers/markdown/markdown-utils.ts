@@ -7,9 +7,11 @@ import { bibleLinkExtension } from './extensions/bibleLinkExtension';
 import { superscriptExtension } from './extensions/superscriptExtension';
 import { scriptureQuotes } from './extensions/scriptureQuotes';
 import { linksInNewWindow } from './extensions/links';
+import { footnotes } from './extensions/fnExtension';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 export const renderedOutputFromMarkdown = (md: string): string => {
+  marked.use({ renderer: footnotes });
   marked.use({
     pedantic: false,
     gfm: true,

@@ -183,7 +183,7 @@ declare module 'marked' {
       list(this: Renderer | RendererThis, body: string, ordered: boolean, start: number): string | T;
       listitem(this: Renderer | RendererThis, text: string, task: boolean, checked: boolean): string | T;
       checkbox(this: Renderer | RendererThis, checked: boolean): string | T;
-      paragraph(this: Renderer | RendererThis, text: string): string | T;
+      paragraph(this: Renderer | RendererThis | null, text: string): string | T;
       table(this: Renderer | RendererThis, header: string, body: string): string | T;
       tablerow(this: Renderer | RendererThis, content: string): string | T;
       tablecell(
@@ -201,7 +201,7 @@ declare module 'marked' {
       del(this: Renderer | RendererThis, text: string): string | T;
       link(this: Renderer | RendererThis, href: string | null, title: string | null, text: string): string | T;
       image(this: Renderer | RendererThis, href: string | null, title: string | null, text: string): string | T;
-      text(this: Renderer | RendererThis, text: string): string | T;
+      text(this: Renderer | RendererThis | null, text: string): string | T;
     }
 
     type RendererObject = Partial<Omit<Renderer<false>, 'constructor' | 'options'>>;
