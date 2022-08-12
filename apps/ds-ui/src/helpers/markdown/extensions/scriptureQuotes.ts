@@ -74,7 +74,6 @@ export const scriptureQuotesExtension: marked.RendererExtension | marked.Tokeniz
       }
 
       let fixedString = rawParagraphs[i];
-      console.log(fixedString);
 
       const citationMatch = fullMatchRE.exec(rawParagraphs[i]);
       if (citationMatch) {
