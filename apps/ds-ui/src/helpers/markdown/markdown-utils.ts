@@ -7,7 +7,7 @@ import { bibleLinkExtension } from './extensions/bibleLinkExtension';
 import { superscriptExtension } from './extensions/superscriptExtension';
 import { scriptureQuotes } from './extensions/scriptureQuotes';
 import { linksInNewWindow } from './extensions/links';
-import { footnotes, fixFootnoteDiv } from './extensions/fnExtension';
+import { footnotes } from './extensions/fnExtension';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 /**
@@ -40,7 +40,6 @@ export const renderedOutputFromMarkdown = (md: string): string => {
   });
   marked.use({ renderer: scriptureQuotes });
   marked.use({ renderer: linksInNewWindow });
-  marked.use({ renderer: fixFootnoteDiv });
 
   return marked.parse(md);
 };

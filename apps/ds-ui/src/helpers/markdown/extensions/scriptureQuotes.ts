@@ -9,6 +9,9 @@ const lineMatchRE = /^\|> /;
  */
 export const scriptureQuotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
   paragraph(text) {
+    if (/<h5>Footnotes/.test(text)) {
+      return '<div>' + text + '</div>';
+    }
     if (!/^\|&gt; /.test(text)) {
       return '<p>' + text + '</p>';
     }
