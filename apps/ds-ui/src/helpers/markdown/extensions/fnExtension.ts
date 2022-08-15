@@ -45,3 +45,13 @@ export const footnotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
     return marked.Renderer.prototype.text.apply(null, [interpolateReferences(interpolateFootnotes(text))]);
   },
 };
+
+export const fixFootnoteDiv: Partial<Omit<marked.Renderer<false>, 'options'>> = {
+  paragraph(text) {
+    if (/<h5>Footnotes/.test(text)) {
+      return '<div>' + text + '</div>';
+    } else {
+      return '<p>' + text + '</p>';
+    }
+  },
+};
