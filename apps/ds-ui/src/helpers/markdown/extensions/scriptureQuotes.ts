@@ -7,52 +7,60 @@ const lineMatchRE = /^\|> /;
 /**
  * Handles formatting for `\>` style Scripture Quotes.
  */
-export const scriptureQuotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
-  paragraph(text) {
-    if (/<h5>Footnotes/.test(text)) {
-      return '<div>' + text + '</div>';
-    }
-    if (!/^\|&gt; /.test(text)) {
-      return '<p>' + text + '</p>';
-    }
+export const scriptureQuotes = (
+  defaultVersion: string | undefined = 'ESV',
+  context: string | undefined = undefined
+): Partial<Omit<marked.Renderer<false>, 'options'>> => {
+  return {
+    paragraph(text) {
+      if (/<h5>Footnotes/.test(text)) {
+        return '<div>' + text + '</div>';
+      }
+      if (!/^\|&gt; /.test(text)) {
+        return '<p>' + text + '</p>';
+      }
 
-    let responseString = '<blockquote>';
-    let fixedText = text.replaceAll('&gt;', '>');
-    const rawPagraphs = fixedText.split('\n');
-    let citation: string | undefined = undefined;
+      let responseString = '<blockquote>';
+      let fixedText = text.replaceAll('&gt;', '>');
+      const rawPagraphs = fixedText.split('\n');
+      let citation: string | undefined = undefined;
 
-    for (let i = 0; i < rawPagraphs.length; i++) {
-      let fixedString = rawPagraphs[i];
+      for (let i = 0; i < rawPagraphs.length; i++) {
+        let fixedString = rawPagraphs[i];
 
-      if (i === 0) {
-        const citationMatch = fullMatchRE.exec(fixedString);
-        if (citationMatch) {
-          citation = citationMatch[1];
-          fixedString = fixedString.replace(citationMatch[0], '|> ');
+        if (i === 0) {
+          const citationMatch = fullMatchRE.exec(fixedString);
+          if (citationMatch) {
+            citation = citationMatch[1];
+            fixedString = fixedString.replace(citationMatch[0], '|> ');
+          }
         }
+
+        let level = 0;
+
+        while (lineMatchRE.test(fixedString)) {
+          level++;
+          fixedString = fixedString.replace(lineMatchRE, '');
+        }
+
+        if (fixedString.trim() === '') {
+          fixedString = '&nbsp;';
+        }
+        responseString += `<p style="margin-top: 0; margin-bottom: 0; padding-left: ${level}em;">${fixedString}</p>`;
       }
 
-      let level = 0;
-
-      while (lineMatchRE.test(fixedString)) {
-        level++;
-        fixedString = fixedString.replace(lineMatchRE, '');
+      if (citation) {
+        let mdCitation =
+          isReferenceValid(citation, context) && !/<a/.test(citation)
+            ? `[|${citation}|${defaultVersion}${context && ';s'}]`
+            : citation;
+        mdCitation = marked.parseInline(mdCitation);
+        responseString += `<p style="margin-top: 0; margin-bottom: 0; text-align: right; font-style: italic;">${mdCitation}</p>`;
       }
 
-      if (fixedString.trim() === '') {
-        fixedString = '&nbsp;';
-      }
-      responseString += `<p style="margin-top: 0; margin-bottom: 0; padding-left: ${level}em;">${fixedString}</p>`;
-    }
+      responseString += '</blockquote>';
 
-    if (citation) {
-      let mdCitation = isReferenceValid(citation) && !/<a/.test(citation) ? `[|${citation}|]` : citation;
-      mdCitation = marked.parseInline(mdCitation);
-      responseString += `<p style="margin-top: 0; margin-bottom: 0; text-align: right; font-style: italic;">${mdCitation}</p>`;
-    }
-
-    responseString += '</blockquote>';
-
-    return responseString;
-  },
+      return responseString;
+    },
+  };
 };

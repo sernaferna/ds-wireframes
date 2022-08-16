@@ -63,7 +63,7 @@ export const renderedOutputFromMarkdown = (md: string): string => {
       superscriptExtension,
     ],
   });
-  marked.use({ renderer: scriptureQuotes });
+  marked.use({ renderer: scriptureQuotes(options.defaultVersion, options.scriptureContext) });
   marked.use({ renderer: linksInNewWindow });
 
   return marked.parse(markdownString);
