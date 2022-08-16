@@ -42,13 +42,25 @@ const replaceTextWith = (
   defaultText: string | undefined = undefined
 ): void => {
   const closingToken = endToken ? endToken : token;
-  let newText = '';
-  if (defaultText) {
-    newText = defaultText;
-  }
+  let newText = defaultText ? defaultText : '';
   if (state.selectedText.length > 0) {
     newText = state.selectedText;
   }
+
+  const startStartPosition = state.selection.start - token.length;
+  const endEndPosition = state.selection.end + closingToken.length;
+  const beforeText = state.text.substring(startStartPosition, state.selection.start);
+  const afterText = state.text.substring(state.selection.end, endEndPosition);
+  if (beforeText === token && afterText === closingToken) {
+    const oldSelectedText = state.selectedText;
+    api.setSelectionRange({
+      start: startStartPosition,
+      end: endEndPosition,
+    });
+    api.replaceSelection(oldSelectedText);
+    return;
+  }
+
   const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
   const state1 = api.setSelectionRange(newSelectionRange);
   const modifyText = token + newText + closingToken;
