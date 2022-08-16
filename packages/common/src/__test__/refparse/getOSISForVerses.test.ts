@@ -1,4 +1,4 @@
-import { getRangesForOSIS, getRefForVerses } from '../../helpers/refparse/index';
+import { getRefForVerses } from '../../helpers/refparse/index';
 import { Verse } from '../../dm/Verse';
 
 describe('getOSISForVerses tests', () => {

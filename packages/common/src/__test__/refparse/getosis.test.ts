@@ -40,4 +40,20 @@ describe('get OSIS test suite', () => {
   it('handles OSIS', () => {
     expect(getOSISForReference('Matt.1.1')).toEqual('Matt.1.1');
   });
+
+  it('handles a verse with context', () => {
+    expect(getOSISForReference('verse 16', 'John 3')).toEqual('John.3.16');
+  });
+
+  it('handles a chapter with context', () => {
+    expect(getOSISForReference('chapter 3', 'John')).toEqual('John.3.1-John.3.36');
+  });
+
+  it('handles a verse outside a context chapter', () => {
+    expect(getOSISForReference('verse 100', 'John 3')).toEqual('');
+  });
+
+  it('handles a chapter outside a context book', () => {
+    expect(getOSISForReference('Chapter 100', 'John')).toEqual('');
+  });
 });

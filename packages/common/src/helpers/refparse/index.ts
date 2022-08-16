@@ -16,10 +16,15 @@ export interface OSISRange {
  * Wrapper over the `bible-passage-reference-parser` library, to make
  * it a simple Boolean instead of parsing OSIS strings.
  *
+ * Handles **context**, such that the reference can be a string such
+ * as `verse 1`, the context can be `John 3`, and the result will be
+ * true since there is a John 3:1.
+ *
  * @param ref The reference to be checked
+ * @param context The context (if any)
  * @returns Boolean indicator that the reference is valid
  */
-export const isReferenceValid = (ref: string): boolean => {
+export const isReferenceValid = (ref: string, context: string | undefined = undefined): boolean => {
   const bcv = new bcv_parser();
   bcv.set_options({
     osis_compaction_strategy: 'b',
@@ -27,7 +32,7 @@ export const isReferenceValid = (ref: string): boolean => {
     book_alone_strategy: 'full',
     book_range_strategy: 'include',
   });
-  const osisString: string = bcv.parse(ref).osis();
+  const osisString: string = context ? bcv.parse_with_context(ref, context).osis() : bcv.parse(ref).osis();
 
   if (osisString.length > 0) {
     return true;
@@ -45,10 +50,13 @@ export const isReferenceValid = (ref: string): boolean => {
  * Wrapper over the `bible-passage-reference-parser` library, with a
  * couple of standard options supplied.
  *
+ * Handles **context** similar to `isReferenceValid`
+ *
  * @param ref The **reference** string
+ * @param context The context to use for the ref (if any)
  * @returns The OSIS version of that passage reference
  */
-export const getOSISForReference = (ref: string): string => {
+export const getOSISForReference = (ref: string, context: string | undefined = undefined): string => {
   const bcv = new bcv_parser();
   bcv.set_options({
     osis_compaction_strategy: 'bcv',
@@ -56,7 +64,7 @@ export const getOSISForReference = (ref: string): string => {
     book_alone_strategy: 'full',
     book_range_strategy: 'include',
   });
-  const osisString: string = bcv.parse(ref).osis();
+  const osisString: string = context ? bcv.parse_with_context(ref, context).osis() : bcv.parse(ref).osis();
   return osisString;
 };
 
@@ -169,14 +177,21 @@ export const getPassagesForReference = (reference: string): OSISRange[] => {
  *
  * The `includeVerses` param works the same as for `getReferenceForOSIS`.
  *
+ * Handles **context** similar to `isReferenceValid`.
+ *
  * @param osisOrRef Initial string; either a reference or an OSIS string will work
  * @param includeVerses Indicates whether extra verses should be supplied
+ * @param context Context (if any)
  * @returns Human-reable formatted string
  */
-export const getFormattedReference = (osisOrRef: string, includeVerses: boolean = true): string => {
-  if (!isReferenceValid(osisOrRef)) {
+export const getFormattedReference = (
+  osisOrRef: string,
+  includeVerses: boolean = true,
+  context: string | undefined = undefined
+): string => {
+  if (!isReferenceValid(osisOrRef, context)) {
     return '';
   }
 
-  return getReferenceForOSIS(getOSISForReference(osisOrRef), includeVerses);
+  return getReferenceForOSIS(getOSISForReference(osisOrRef, context), includeVerses);
 };

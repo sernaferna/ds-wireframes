@@ -36,4 +36,20 @@ describe('isValid test suite', () => {
   it('returns false for an empty string', () => {
     expect(isReferenceValid('')).toBeFalsy();
   });
+
+  it('returns true for a verse with context', () => {
+    expect(isReferenceValid('verse 1', 'John 3')).toBeTruthy();
+  });
+
+  it('returns false for a verse outside of context', () => {
+    expect(isReferenceValid('verse 100', 'John 3')).toBeFalsy();
+  });
+
+  it('returns true for a chapter with context', () => {
+    expect(isReferenceValid('Chapter 6', 'John')).toBeTruthy();
+  });
+
+  it('returns false for a chapter outside of context', () => {
+    expect(isReferenceValid('Chapter 100', 'John')).toBeFalsy();
+  });
 });
