@@ -20,4 +20,9 @@ module.exports = {
     ],
   },
   devtool: '#sourcemap',
+  resolve: {
+    fallback: {
+      buffer: require.resolve('buffer/'),
+    },
+  },
 };

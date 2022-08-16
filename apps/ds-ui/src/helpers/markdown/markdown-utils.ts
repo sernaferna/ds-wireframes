@@ -1,4 +1,5 @@
 import { marked } from 'marked';
+import fm from 'front-matter';
 import { allUpperExtension } from './extensions/allUpperExtension';
 import { highlightExtension } from './extensions/highlightExtension';
 import { smallCapsExtension } from './extensions/smallCapsExtension';
@@ -10,6 +11,15 @@ import { linksInNewWindow } from './extensions/links';
 import { footnotes } from './extensions/fnExtension';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
+interface MarkdownOptions {
+  defaultVersion: string;
+  scriptureContext?: string;
+}
+
+const defaultOptions: MarkdownOptions = {
+  defaultVersion: '',
+};
+
 /**
  * Parses markdown and produces formatted, HTML output. All of the
  * heavy lifting is done by **marked**; this function serves mostly
@@ -20,6 +30,21 @@ import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
  * @returns Formatted (HTML) string
  */
 export const renderedOutputFromMarkdown = (md: string): string => {
+  const options = { ...defaultOptions };
+  let markdownString = md;
+
+  try {
+    const fmResult = fm(md);
+    markdownString = fmResult.body;
+    if ((fmResult.attributes as any).defaultVersion) {
+      options.defaultVersion = (fmResult.attributes as any).defaultVersion;
+    }
+    if ((fmResult.attributes as any).scriptureContext) {
+      options.scriptureContext = (fmResult.attributes as any).scriptureContext;
+    }
+  } catch {
+    // do nothing; can easily throw exceptions when fm being edited
+  }
   marked.use({ renderer: footnotes });
   marked.use({
     pedantic: false,
@@ -34,14 +59,14 @@ export const renderedOutputFromMarkdown = (md: string): string => {
       allUpperExtension,
       smallCapsExtension,
       eraExtension,
-      bibleLinkExtension,
+      bibleLinkExtension(options.defaultVersion, options.scriptureContext),
       superscriptExtension,
     ],
   });
   marked.use({ renderer: scriptureQuotes });
   marked.use({ renderer: linksInNewWindow });
 
-  return marked.parse(md);
+  return marked.parse(markdownString);
 };
 
 /**
