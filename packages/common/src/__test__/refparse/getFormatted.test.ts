@@ -13,6 +13,12 @@ describe('get formatted test suite', () => {
     expect(formatted).toEqual('Genesis 1:1');
   });
 
+  it('handles readable with context', () => {
+    const formatted = getFormattedReference('verse 1', true, 'Genesis 1');
+
+    expect(formatted).toEqual('Genesis 1:1');
+  });
+
   it('handles OSIS multipassage', () => {
     const formatted = getFormattedReference('Gen.1.1-Gen.1.2');
 
@@ -24,6 +30,14 @@ describe('get formatted test suite', () => {
     expect(formatted).toEqual('Genesis 1:1–2');
 
     formatted = getFormattedReference('Genesis 1:1-1:2');
+    expect(formatted).toEqual('Genesis 1:1–2');
+  });
+
+  it('handles readable multipassage with context', () => {
+    let formatted = getFormattedReference('verses 1-2', true, 'Genesis 1');
+    expect(formatted).toEqual('Genesis 1:1–2');
+
+    formatted = getFormattedReference('1:1-1:2', true, 'Genesis 1');
     expect(formatted).toEqual('Genesis 1:1–2');
   });
 
@@ -63,8 +77,20 @@ describe('get formatted test suite', () => {
     expect(formatted).toEqual('Romans 1:1–32');
   });
 
+  it('returns verse range when ref is to the chapter level with context', () => {
+    const formatted = getFormattedReference('Chapter 1', true, 'Romans');
+
+    expect(formatted).toEqual('Romans 1:1–32');
+  });
+
   it('does not return verse range when ref is to the chapter level but false is passed to verse param', () => {
     const formatted = getFormattedReference('Rom 1', false);
+
+    expect(formatted).toEqual('Romans 1');
+  });
+
+  it('does not return verse range when ref is to the chapter level but false is passed to verse param with context', () => {
+    const formatted = getFormattedReference('chapter 1', false, 'Rom');
 
     expect(formatted).toEqual('Romans 1');
   });
@@ -77,6 +103,12 @@ describe('get formatted test suite', () => {
 
   it('still includes verses when a ref includes only part of a chapter', () => {
     const formatted = getFormattedReference('Rom 1:1-5', false);
+
+    expect(formatted).toEqual('Romans 1:1–5');
+  });
+
+  it('still includes verses when a ref includes only part of a chapter with context', () => {
+    const formatted = getFormattedReference('verses 1-5', false, 'rom 1');
 
     expect(formatted).toEqual('Romans 1:1–5');
   });
