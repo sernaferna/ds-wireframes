@@ -74,7 +74,7 @@ export const toolbar: MDToolbar = {
       buttons: [
         {
           name: 'Bold',
-          keyboardShortcut: 'ctrl+shift+B',
+          keyboardShortcut: 'ctrl+b',
           buttonContents: <TypeBold />,
           execute(state, api) {
             replaceTextWith(state, api, '**');
@@ -82,7 +82,7 @@ export const toolbar: MDToolbar = {
         },
         {
           name: 'Italics',
-          keyboardShortcut: 'ctrl+shift+L',
+          keyboardShortcut: 'ctrl+i',
           buttonContents: <TypeItalic />,
           execute(state, api) {
             replaceTextWith(state, api, '*');
@@ -115,7 +115,7 @@ export const toolbar: MDToolbar = {
       buttons: [
         {
           name: 'Link',
-          keyboardShortcut: 'ctrl+shift+K',
+          keyboardShortcut: 'ctrl+shift+k',
           buttonContents: <Link45deg />,
           execute(state, api) {
             const linkURL = prompt('Please enter the URL:');
@@ -129,7 +129,7 @@ export const toolbar: MDToolbar = {
         },
         {
           name: 'Quote',
-          keyboardShortcut: 'ctrl+alt+Q',
+          keyboardShortcut: 'ctrl+q',
           buttonContents: <Quote />,
           execute(state, api) {
             replaceTextWith(state, api, '> ', ' ', 'QUOTE');
@@ -178,7 +178,7 @@ export const toolbar: MDToolbar = {
         },
         {
           name: 'All Upper',
-          keyboardShortcut: 'ctrl+shift+U',
+          keyboardShortcut: 'alt+u',
           buttonContents: (
             <b>
               L<span style={{ fontVariant: 'small-caps' }}>ord</span>
@@ -208,7 +208,7 @@ export const toolbar: MDToolbar = {
       buttons: [
         {
           name: 'Scripture Link',
-          keyboardShortcut: 'ctrl+shift+S',
+          keyboardShortcut: 'ctrl+shift+s',
           buttonContents: (
             <>
               <BookHalf />
@@ -221,7 +221,7 @@ export const toolbar: MDToolbar = {
         },
         {
           name: 'Custom Scripture Link',
-          keyboardShortcut: 'ctrl+alt+S',
+          keyboardShortcut: 'alt+s',
           buttonContents: (
             <>
               <BookFill />

@@ -7,6 +7,7 @@ import { MDPreview } from './MDPreview';
 import { TextAreaTextApi, getStateFromTextArea, renderedOutputFromMarkdown } from '../../../helpers/markdown';
 import { useWindowSize } from '../../../hooks/WindowSize';
 import { toolbar } from './helpers/md-commands';
+import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
 
 /**
  * How often (in milliseconds) this component should call back to the
@@ -110,24 +111,32 @@ const MarkedMD = ({
     return [newHeight, pixelHeight];
   }, [editorRef, windowSize, height, showingFullScreen]);
 
+  let keyMap = useRef<KeyMap>({});
+
+  let handlers = useRef({});
+
   const renderedToolbar: JSX.Element = useMemo(() => {
     return (
       <ButtonToolbar aria-label="Markdown Toolbar">
         {toolbar.buttonGroups.map((g, index) => (
           <ButtonGroup size="sm" key={`buttongroup-${index}`}>
-            {g.buttons.map((b, buttonIndex) => (
-              <Button
-                variant="outline-dark"
-                onClick={() => {
-                  const state = getStateFromTextArea(editorRef.current!);
-                  const api = new TextAreaTextApi(editorRef.current!);
-                  b.execute(state, api);
-                }}
-                key={`button-${buttonIndex}`}
-              >
-                {b.buttonContents}
-              </Button>
-            ))}
+            {g.buttons.map((b, buttonIndex) => {
+              const clickFn = () => {
+                const state = getStateFromTextArea(editorRef.current!);
+                const api = new TextAreaTextApi(editorRef.current!);
+                b.execute(state, api);
+              };
+              if (b.keyboardShortcut) {
+                keyMap.current = { ...keyMap.current, [b.name]: b.keyboardShortcut };
+                handlers.current = { ...handlers.current, [b.name]: clickFn };
+              }
+              const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
+              return (
+                <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
+                  {b.buttonContents}
+                </Button>
+              );
+            })}
           </ButtonGroup>
         ))}
       </ButtonToolbar>
@@ -194,22 +203,29 @@ const MarkedMD = ({
     );
   }
 
+  hotkeyConfigure({
+    ignoreTags: [],
+    stopEventPropagationAfterHandling: true,
+  });
+
   return (
     <>
       <Row>
         <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
           {!hideAllControls && showToolbar && renderedToolbar}
 
-          <Form.Control
-            ref={editorRef}
-            className="ds-md-editor"
-            as="textarea"
-            rows={editorLineHeight}
-            value={md}
-            onChange={handleChangeEvent}
-            disabled={readOnly}
-            onScroll={handleEditorScroll}
-          />
+          <HotKeys keyMap={keyMap.current} handlers={handlers.current}>
+            <Form.Control
+              ref={editorRef}
+              className="ds-md-editor"
+              as="textarea"
+              rows={editorLineHeight}
+              value={md}
+              onChange={handleChangeEvent}
+              disabled={readOnly}
+              onScroll={handleEditorScroll}
+            />
+          </HotKeys>
         </Col>
         {showSidePreview && (
           <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
