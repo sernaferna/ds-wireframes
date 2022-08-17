@@ -33,7 +33,7 @@ export const allUpperExtension: marked.TokenizerExtension | marked.RendererExten
       )}</span><span style="text-transform: lowercase; font-variant: small-caps;">${word.substring(
         1,
         word.length
-      )}</span>`;
+      )}</span> `;
     });
 
     return returnString;

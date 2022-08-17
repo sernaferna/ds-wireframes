@@ -213,7 +213,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
       validationSchema={schema}
       onSubmit={formSubmit}
       validateOnBlur={false}
-      validateOnChange={true}
+      validateOnChange={false}
       innerRef={formikRef}
       enableReinitialize={true}
     >
