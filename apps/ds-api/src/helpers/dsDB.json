@@ -5551,5 +5551,582 @@
         }
       ]
     }
-  ]
+  ],
+  "tutorials": [
+    {
+        "id": "1",
+        "name": "Help Screen",
+        "chapters": [
+            {
+                "mainSection": {
+                    "title": "Devouring Scripture",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "This is a **wireframe** for the **Devouring Scripture** website. It's intended to be run from a local developer's machine and/or demoed to potential users of the future site, for the purposes of designing what the eventual site should look like and how it should behave. "
+                        }
+                    ]
+                },
+                "subSections": []
+            },
+            {
+                "mainSection": {
+                    "title": "Parts of the Site",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "There are a few parts to the site:\n\n| Section | Description |\n| -- | -- |\n| Home | A landing page into the application, where the most commonly used functions reside |\n| Pray | A page devoted to your prayer life. Prayer requests can be entered, tracked, and even marked complete when they've been answered or are no longer relevant. |\n| Read/Write | A page devoted to reading the Scripture and taking notes |\n| Do | A page devoted to tracking all of your spiritual activities; reading the Scripture, praying, journalling, or whatever other activities you want to remind yourself to do on a regular basis |\n| Plans | A list of all of the reading plans made available from **Devouring Scripture**, as well as the ability to create your own |\n| Stats | A page where you can track how you've been doing. |\n\nEach of these sections is outlined in more detail below."
+                        }
+                    ]
+                },
+                "subSections": [
+                    {
+                        "title": "Home",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "The **Home** tab---the default page you see when coming to the app---is a one stop shop for commonly used functions. The ability to access today's reading(s) from the reading plans you're subscribed to, the ability to check off items you've accomplished (such as praying, or reading the Scripture, or journalling), and an at-a-glance view of your prayer list, can all be found here.\n\nMore fulsome versions of all of this functionality can be found elsewhere across the site, but you shouldn't have to navigate all around the site when all you want to do is mark an item complete from your daily to-do list or see today's Scripture from your reading plans."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Pray",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "This part of the site is devoted to your prayer life. New prayer items can be entered, and a list of all existing prayer items can be viewed. There are even filters to help you find exactly what you're looking for.\n\nPrayer items can be as complex or as simple as desired. You can include a **title** or not, as you wish, as well as optionally specifying the *kind* of prayer item:\n\n* **Praise**: Something you want to praise God for\n* **Request**: Something you want to ask God for\n* **Confession**: Something you want to confess to God\n\nOr you can just type in your prayer request and leave it as simple as that"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Read",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "The **Read** tab is focused on reading the Scriptures, with the ability to keep notes. It's mostly a driver to bring you to the **Bible Gateway** website, and a holding area for all your notes."
+                            },
+                            {
+                                "type": "text",
+                                "content": "One important part of this page is the ability to take notes, which can be as simple or as complex as you wish. The notes use a format called **markdown**, and for those who are into **journaling** there are some features provided by the app that make taking notes in a Christian context much easier; for example, the ability to quote large passages of Scripture, or to create a specialised link to a passage of Scripture (via the **Bible Gateway** website).\n\nLook for the \"markdown tutorial\" link to get lots more information on how it all works"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Do",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "The **Do** tab is focused on tracking all of your spiritual action items. Did you read the Scriptures today? Pray? Disciple your children? Any activities you want to track can be tracked here. We've created a number of activities we think you might want to track, but you don't have to go with our ideas! Create your own, if you wish!\n\nYou might find yourself using the **Do** tab in conjunction with the **Stats** tab, as they go hand-in-hand: The **Stats** tab is where you can track how you've been doing."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Plans",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "The **Plans** tab is where you can track all of the **Reading Plans** you're subscribed to, and subscribe to new plans (or unsubscribe as the case may be)."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Custom Plans"
+                            },
+                            {
+                                "type": "text",
+                                "content": "If you really want to stay on top of your Bible reading you can even create your own reading plans! Click the **New Plan** button and create something specifically tailored to your needs! \n\nThere are two types of plan you can create: \n\n* Free-Form plans let you manually enter a passage for each day. This type of plan is best when your readings are not necessarily contiguous. For example, if you're creating a plan called \"Two Weeks in the Life of Jesus,\" you would create the plan, make it two weeks long (with or without weekends), and then for each day you can specify a passage from the Gospels.\n* A non-freeform plan lets you choose one large section of the Scriptures and spread the verses evenly across the days of the plan. For example, if you want to create a plan that goes through the Psalms in a year you would be better creating a non-free-form plan, choosing 52 weeks (with or without weekends), entering `Psalms` for the overall reference, and the New Plan page will distribute verses from the Psalms across each day of your 52 weeks.\n  * You have the ability to tweak this by moving verses up or down between the days to get a better delineation between each day. For example, you might want to have an extra verse included in Day 22 and one less in Day 23 because it makes Day 22 end nicely."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Stats",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "The **Stats** tab provides a visualisation of how you've been doing with the items you track in the **Do** tab. You may not care about all of the stats we're tracking, so feel free to hide any of the graphics that are less helpful to you, and re-order them as you wish!"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "mainSection": {
+                    "title": "Feedback",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "We hope you enjoy use of the **Devouring Scripture** website, but you're welcome to provide feedback anytime!"
+                        }
+                    ]
+                },
+                "subSections": []
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Markdown Tutorial",
+        "chapters": [
+            {
+                "mainSection": {
+                    "title": "Formatting Text in Devouring Scripture: Markdown",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "Any of the **text** you enter into the **Devouring Scripture** app, such as prayer requests or notes, supports a notation called **markdown** that provides the capability to add **formatting**. The text can be viewed in its raw, textual form or rendered with the formatting. (For example, seeing text rendered in *italics* is helpful, but seeing text \\*emphasized\\* with \\*asterisks\\* is still intuitive to the reade.)\n\nThis tutorial introduces the markdown syntax, first as a \"cheat sheet\" giving an at-a-glance view of the notations and then more detailed tutorials for those who *really* want to get into all that can be done with markdown."
+                        },
+                        {
+                            "type": "text",
+                            "content": "For those who are already familiar with markdown it should be noted that **Devouring Scripture** adds some specialized notations; what you already know continues to work, but there are also some extras you can use."
+                        }
+                    ]
+                },
+                "subSections": [
+                    {
+                        "title": "Is this needed?",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "You might be wondering, \"Do I really *need* to learn this 'markdown' notation? All I want to do is capture a few notes on some Bible passages and remember my prayer list!\" And the answer is no, you don't! 🙂\n          \nMarkdown is designed such that you only need to use the parts you want---if any---and ignore everything else.\n\n* You can write text with no formatting whatsoever. No learning curve required!\n* When you want to break your text into multiple paragraphs you can. Press *Enter* and it \"just works.\"\n* If you ever want to use *italics,* it's intuitive to just surround the text with asterisks, like `*this*` -- or you can add **bold** like `**this**` \n* If you want to ==highlight something== (just like you do in your paper Bible), you can use a similar notation `==like this==`. \n* If you want to create a link to a particular Bible verse you can learn a simple notation for that (such as `[|Mark 1|]`), whereby Devouring Scripture will create a link to **Bible Gateway** for you\n\nAll of this is mix-and match; you can learn as much or little of markdown as you need without burdening yourself with the parts you don't need."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Toolbar"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Best of all, many of these notations are available right from the toolbar. If you ever forget the notation for making text bold, just select the text and click the **B** button, and **Devouring Scripture** will add the notation for you. (When the toolbar isn't present, the markdown notations still work.) "
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "mainSection": {
+                    "title": "Cheat Sheet",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "This section gives some quick tips on how to use the most common markdown notations."
+                        }
+                    ]
+                },
+                "subSections": [
+                    {
+                        "title": "Text Formatting",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "A few simple notations provide 90% of what you might want to do with markdown.\n                \n| Notation | Syntax | Keyboard Shortcut |\n| --- | --- | --- |\n| **Bold** | `**Bold**` or `__Bold__` | *Ctrl+B* |\n| *Italics* | `*Italics*` or `_Italics_` | *Ctrl+I* |\n| ==Highlight== | `==Highlight==` | *Ctrl+Shift+H* |\n| Superscript: 1^st^ | `Superscript: 1^st^` |\n| UPPERCASE | `^^^UPPERCASE^^^` | *Alt+U*|\n| Era: 2020^^A.D.^^ | `2020^^A.D.^^` |  |\n| ^-^Small Caps^-^ | `^-^Small Caps^-^` | |"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Emoji",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "Can emoji be included? 🤔 They sure can! 😀 If the keyboard supports emoji, they can be inserted anywhere in the text! 👍🏻"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Paragraphs",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "No special formatting is required for paragraphs.\n\nLeaving multiple lines between will create paragraphs, as one would expect."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Links",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "A link to [Google](https://www.google.ca) and a link to the **Bible Gateway** to [|Acts 2:1|]"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Keyboard Shortcuts"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Selecting the text `Google` and pressing *Ctrl+Shift+K* will create a normal markdown link, in the format, `[Google](url)`. If no text is selcted `[](url)` will be inserted (with the cursor inside the square brackets). Either way, `url` must be replaced with a valid URL.\n\nSelecting the text `Rev 1:1` and pressing *Ctrl+Shift+S* will create a Scripture link, in the format `[|Rev 1:1|]`.\n\nSelecting the text `Rev 1:1`  and pressing *Alt+S*  will pop up a prompt for custom text to be used; if the text `verse 1` is entered in that prompt, `[|Rev 1:1 (verse 1)|]` will be inserted."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Headings",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "# Heading 1\nnormal text\n## Heading 2\nnormal text\n### Heading 3\nnormal text"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Separators",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "A line consisting of three hyphens will create a horizontal line between paragraphs.\n                \n---\n\nA line is above this paragraph."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Quotes",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "For a normal quotation:\n\n> this is a quotation\n> \n> > quotations can be nested\n> \n> this is the first quotation\n\nFor a Scripture quotation, such as a Psalm:\n\n|> ((Ps 1:1)) ^1^ Blessed is the man\n|> |>    who walks not in the counsel of the wicked,\n|> nor stands in the way of sinners,\n|> |>    nor sits in the seat of scoffers;"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Keyboard Shortcuts"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Selecting a block of text and pressing *Ctrl+Q*  will make it a regular blockquote.\n          \nSelecting a block of text and pressing *Ctrl+Shift+P* will create a Scripture Quote."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Lists",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "* bullet 1\n* bullet 2\n  * sub-bullet\n* bullet 3\n\n1. Numbered item 1\n1. Numbered item 2\n    1. sub-item\n1. Numbered item 3 "
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Ignore Formatting",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "Surrounding text with **backticks** will cause formatting to be ignored (in markdown this is called a **code** section), and it will be printed with a fixed with font, such as `*This* text.` \n          \nLonger blocks of text can similarly have the formatting \"ignored\" by placing it within a **code block** like this:\n\n```\n*This* text has what **looks** like formatting, but it will not be ==formatted==.\n```"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "mainSection": {
+                    "title": "Advanced Notation: Standard Markdown",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "This section goes into more detail on some of the **advanced notations** available in markdown. These are not specific to **Devouring Scripture**, they're available in most tools where markdown notation is used."
+                        }
+                    ]
+                },
+                "subSections": [
+                    {
+                        "title": "Tables",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "A table can be created with careful use of the `|` (pipe) character to delineate cells within the table."
+                            },
+                            {
+                                "type": "example",
+                                "content": "| Person | Score |\n|--|--|\n| Suresh | 15 |\n| Samantha | 20 |"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Notice the three parts of the table:\n          \n1. Header cells for the table come at the top\n1. A separator row (with dashes inside the cells)\n1. As many rows as desired of cells for the body of the table.\n\nIf desired, the spacing can be made more precise; it won't change the resultant formatted view, but sometimes helps with readability in markdown format:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "| Person   | Score |\n|----------|-------|\n| Suresh   | 15    |\n| Samantha | 20    |"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Tables *can* get very large in which case attempting to format them can be nearly impossible but as long as the notation is followed (with the right number of `|` characters), the table can still be rendered into the formatted version."
+                            },
+                            {
+                                "type": "example",
+                                "content": "A more complex table might look like this:\n\n| Man | Situation | Reaction |\n|--|--|--|\n| Peter | Cornelius bows down to worship him | Immediately stops Cornelius, saying he's only a man just like Cornelius |\n| Paul and Barnabas | Called \"gods\" because of a miracle they've performed | Tear their garments in an act of distress, and rush to tell the crowds that they're only men, and it's God whom the people should be worshipping |\n| Herod | Called \"a god\" by a crowd | Says, yeah, that sounds about right |"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Alignment"
+                            },
+                            {
+                                "type": "text",
+                                "content": "In most cases that second row of dashes appears purely so that markdown can separate the header from the other cells, but the dashes  can also be used to control alignment for the column:\n\n* Putting a colon at the beginning of the dashes such as `:--` will cause the text to be left justified (which is the default)\n* Putting a colon on both ends of the dashes such as `:--:` will cause the text to be centred\n* Putting a colon at the end of the dashes such as `--:` will cause the text to be right justified."
+                            },
+                            {
+                                "type": "example",
+                                "content": "| Left | Centre | Right |\n| :-- | :--: | --: |\n| This text is left justified | This text is centered | This text is right justified |\n| Still left justified | Still centred | Still right justified |"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Footnotes",
+                        "parts": [
+                            {
+                                "type": "example",
+                                "content": "This text includes[^1] a footnote.\n            \n[^1]: This is the footnote. It will show up at the bottom of the formatted output, regardless of where it comes in the markdown.\n    \nThis paragraph continues on after the first one."
+                            },
+                            {
+                                "type": "text",
+                                "content": "In the formatted output, notice that the footnotes always show up at the very bottom of the formatted text, regardless of where they were placed in the markdown text. In addition, the footnote reference is rendered as a link, which the user can click to go to the text of the actual footnote, and there is another link at the end of the footnote text to bring the reader back to the original spot in the text where the footnote reference resided. "
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Ordering of Numbers"
+                            },
+                            {
+                                "type": "text",
+                                "content": "The actual numbering used in the markdown doesn't matter, footnotes will be rendered in the order they're found, as long as the number in the footnote reference and the number in the footnot itself match:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "This text includes[^2] a couple[^1] of footnotes.\n            \n[^2]: This is the first footnote\n    \n[^1]: This is the second\n\nIt also includes another paragraph of text."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "mainSection": {
+                    "title": "Advanced Notation: Markdown for the Scriptures",
+                    "parts": [
+                        {
+                            "type": "text",
+                            "content": "**Devouring Scripture** has introduced some special notations that can be used specifically for the kind of text that often gets created in Christian contexts."
+                        }
+                    ]
+                },
+                "subSections": [
+                    {
+                        "title": "Links to the Bible Gateway",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "**Hyperlinks** can be created the standard `[Hyperlink text](hyperlinkUrl)` markdown notation but **Devouring Scripture** also introduces a shortcut specifically for the creation of links to passages of Scripture (via the **Bible Gateway** website), in the format `[|Reference|]`. For example:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "A link to [|Rom 1:32-2:4|]"
+                            },
+                            {
+                                "type": "text",
+                                "content": "This is a nice, compact notation in markdown, but, as shown, a number of enhancements are made when the link is rendered into the formatted version:\n* A small cross icon is appended to highlight that this link goes specifically to the **Bible Gateway** for a passage of Scripture, as opposed to a \"normal\" link\n* The reference is expanded to a longform notation (i.e. `Rom 1:32-2:4` becomes `Romans 1:32—2:4`)\n* The specific version of the Bible that's being used is appended in parentheses (in this case using the user's default version)\n\n*Other notations were considered, such as `[[REF]]` or `||REF||`, but these notations might have caused confusion with other flavours of markdown. For example, the `[[link]]` notation is often used in wikis for in-wiki links, and `||some text||` is used for \"spoilers\" on some sites (e.g. Discord). So `[|REF|]` was deemed the least confusing, in the larger context of the web.*"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Specifying the Version"
+                            },
+                            {
+                                "type": "text",
+                                "content": "As mentioned, the user's default Bible version is used by default, but a specific version can be specified as follows:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "A link to [|Rom 1|NIV] and a link to [|Rom 1|NKJV]"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Any version supported by Bible Gateway can be used but keep in mind that **Devouring Scripture** won't *validate* it, the specified version will be passed to **Bible Gateway** as-is. So something like `[|Rom 1|ABC]` would create the link as normal, using the version `ABC`, but clicking the link would prompt an error from **Bible Gateway** because it doesn't recognize a version of the Bible named `ABC`."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Specifying the Resultant Text"
+                            },
+                            {
+                                "type": "text",
+                                "content": "In case different text is desired to be shown to the reader when the formatted text is rendered, it can be added in parentheses after the passage but before the second pipe."
+                            },
+                            {
+                                "type": "example",
+                                "content": "A link to [|Rom 1:1 (verse 1)|] of Romans 1, or [|John 3:16 (the most popular verse in the Bible)|]"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Other Options"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Other options can be specified by placing a `;` and specifying the options before the final `]`. \n            \nThe only option currently available is `s` (for \"short\"), which specifies that the reference should not be expanded into a more readable form; as long as it's valid, it will be rendered as-is. In other words, `Jn 1:1` would remain `Jn 1:1` instead of becoming `John 1:1`."
+                            },
+                            {
+                                "type": "example",
+                                "content": "We can include a long link to [|Rom 1:32-2:4|] or a shortened link to [|Rom 1:32-2:4|;s]"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Invalid References"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Although **Devouring Scripture** doesn't validate Bible versions it *does* validate the **reference**. If the reference isn't valid the link won't be created, the the text will just be left alone."
+                            },
+                            {
+                                "type": "example",
+                                "content": "The link to [|Ex 5:1|] will work, but [|Blah 5:1|] won't because `Blah` isn't a valid book in the Bible, and [|Rev 23|] won't work either because Revelations only has 22 chapters."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Mixing and Matching"
+                            },
+                            {
+                                "type": "text",
+                                "content": "All of these approaches and notations for creating **Bible Gateway** links can be mixed and matched in text as desired:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "It says in [|Rom 1:1|NIV] that Paul is an Apostle, even though he wasn't one of the *original* Apostles (as called out in [|Matt 10:5-15|ESV;s] or [|Mark 3:13-21 (Mark 3)|NIV] or ==other examples==.)\n            \nIf you're interested, the **Apostles' Creed** can be found at the [Christian Reformed Church website](https://www.crcna.org/welcome/beliefs/creeds/apostles-creed)"
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Adding Context"
+                            },
+                            {
+                                "type": "text",
+                                "content": "An advanced feature---but a timesaving one for large notes! ---is the ability to add **context** to the beginning of a note. This context can change the way links are created.\n\nThe best way to understand it is to see it in action:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "---\ndefaultVersion: NIV\nscriptureContext: Psalms 1\n---\nThis note is for Psalm 1, which states:\n\n|> ((verses 1-2)) ^1^ Blessed is the man\n|> |>    who walks not in the counsel of the wicked,\n|> nor stands in the way of sinners,\n|> |>    nor sits in the seat of scoffers;\n|> ^2^ but his delight is in the law of the ^^^LORD^^^,\n|> |>    and on his law he meditates day and night.\n\nWe can also create a verbose link to [|verse 3|], or a shorter one to [|verse 3|;s] using the aforementioned `;s` notation"
+                            },
+                            {
+                                "type": "text",
+                                "content": "There are two pieces of **context** that can be set, between the `---` notation at the very beginning of the note:\n\n* `defaultVersion`: Used to set the version of the Bible that should be used for links \n(even if it's different from the default version you've saved in your settings -- this context applies to the  individual note).\n* `scriptureContext`: The larger passage covered by this note. This allows the references used in individual links to be `verse 1` instead of having to specify the longer version of `Psalm 1:1`.\n\nHere are some more examples of how the `scriptureContext` can work:\n\n| Context | Reference | The \"Full\" Reference |\n| -- | -- | -- |\n| `Psalm 1` | `verse 1` | Psalm 1:1 |\n| `Psalm 1` | `verses 1-2` or just `1-2` | Psalm 1:1--2 |\n| `Psalms` | `Chapter 1` | Psalm 1 |\n| `Psalms` | `1:1` | Psalm 1:1 |\n"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Biblical Quotations",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "Standard markdown blockquotes (discussed above) can, of course, be used for quoting passages of Scripture, but a special notation using `|>` instead of `>` can be used instead, which works the same as regular blockquotes but with some important additions specific to quoting Scripture.\n          \nThe notation is useful on its own, but using the **Scripture Quotation** button to generate this markup is even more helpful, as discussed below.\n\nFor example:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "To quote King David:\n          \n|> ((Ps 1:1-2)) ^1^ Blessed is the man\n|> |>  who walks not in the counsel of the wicked,\n|> nor stands in the way of sinners,\n|> |>  nor sits in the seat of scoffers;\n|> ^2^ but his delight is in the law of the ^^^LORD^^^,\n|> |>  and on his law he meditates day and night."
+                            },
+                            {
+                                "type": "text",
+                                "content": "These special forms of blockquotes do a couple of things:\n          \n* Indentation works well for **poetry** when `|> |>` notations are nested\n* Optional: If a **citation**  is specified at the beginning it will be appended to the end of the quote, aligned on the right; if Devouring Scripture recognizes it as a Bible reference a link will automatically be created\n  * If a version other than the default version is to be used, a link should be created manually using the `[|REF|VER]` notation discussed above. Some examples below will demonstrate this.\n\nBoth of these will be discussed in more detail below."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Reference Citations"
+                            },
+                            {
+                                "type": "text",
+                                "content": "As mentioned, a **citation** for the quote can be included at the beginning, in double parentheses. It will be stripped out of the main quotation and re-appended at the end, aligned to the right and in italics.\n          \nFormatting should not be included, other than Scripture links.\n\nA reference to Scripture can be included using the `[|Ref|]`  notation, or, if the citation is a valid reference to Scripture, Devouring Scripture can create the link automatically."
+                            },
+                            {
+                                "type": "example",
+                                "content": "Citations aren't necessary, so, for example, we could quote [|Ps 7:3-5|] without including the reference in the quote:\n\n|> ^3^ O ^^^LORD^^^ my God, if I have done this,\n|> |>    if there is wrong in my hands,\n|> ^4^ if I have repaid my friend with evil\n|> |>    or plundered my enemy without cause,\n|> ^5^ let the enemy pursue my soul and overtake it,\n|> |>    and let him trample my life to the ground\n|> |>    and lay my glory in the dust.\n\nOr they can be specified within the quote in double parentheses on the first line:\n\n|> ((Ps 7:3-5)) ^3^ O ^^^LORD^^^ my God, if I have done this,\n|> |>    if there is wrong in my hands,\n|> ^4^ if I have repaid my friend with evil\n|> |>    or plundered my enemy without cause,\n|> ^5^ let the enemy pursue my soul and overtake it,\n|> |>    and let him trample my life to the ground\n|> |>    and lay my glory in the dust.\n\nDevouring Scripture will recognize the reference and create the link automatically.\n\nIf a specific version is desired (other than the default), and no context is provided, the `[|REF|VER]` syntax can  be used:\n\n|> (([|Ps 7:3-5|NKJV])) ^3^ O ^^^LORD^^^ my God, if I have done this:\n|> If there is iniquity in my hands,\n|> ^4^ If I have repaid evil to him who was at peace with me,\n|> Or have plundered my enemy without cause,\n|> ^5^ Let the enemy pursue me and overtake me;\n|> Yes, let him trample my life to the earth,\n|> And lay my honor in the dust. \n\n\nMore complex content can be included, such as:\n\n|> (([|Ps 7:3-5|ESV], emphasis added)) ^3^ O ^^^LORD^^^ my God, if I have done this,\n|> |>    if there is wrong in my hands,\n|> ^4^ if I have **repaid my friend with evil**\n|> |>    or plundered my enemy without cause,\n|> ^5^ let the enemy pursue my soul and overtake it,\n|> |>    and let him trample my life to the ground\n|> |>    and lay my glory in the dust.\n\nQuotations might come from elsewhere than the Scriptures, as well, so a \"reference\" that's *not* a Scripture reference can also be included---it just won't be a link:\n\n|> ((Wikipedia)) Two ancient Israelite and Jewish places of worship on the Temple Mount in the Old City of Jerusalem have been called the Temple in Jerusalem, or the Holy Temple (Hebrew: בֵּית־הַמִּקְדָּשׁ, Modern: Bēt HaMīqdaš, Tiberian: Bēṯ HamMīqdāš; Arabic: بيت المقدس Bait al-Maqdis). The First Temple or Solomon's Temple was built in 957 B.C.E. and destroyed by the Babylonians in 587 or 586 B.C.E.. The Second Temple was completed in 515 B.C.E., and was destroyed by the Romans during the Siege of Jerusalem in 70 C.E."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Indentation for Poetry"
+                            },
+                            {
+                                "type": "text",
+                                "content": "A place where the special `|>` notation comes in handy is with **poetry**, especially when it comes to **indentation**. Multiple levels of indentation can be achieved by having multiple levels of `|>` notation, such as:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "We read in the Psalms:\n\n|> ((Ps 1:1-2)) ^1^ Blessed is the man\n|> |> who walks not in the counsel of the wicked,\n|> nor stands in the way of sinners,\n|> |> nor sits in the seat of scoffers;\n|> ^2^ but his delight is in the law of the ^^^LORD^^^,\n|> |> and on his law he meditates day and night."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Spaces at the Beginning of Lines"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Spaces at the beginning of the line (after the `|>` notation) are ignored, which allows the author to clean up the way the text is typed into the markdown box (if desired), without impacting the way the formatted version is rendered. \n\nThis is completely optional but you could write, for example: "
+                            },
+                            {
+                                "type": "example",
+                                "content": "|>      ^1^ Blessed is the man\n|> |>      who walks not in the counsel of the wicked,\n|>      nor stands in the way of sinners,\n|> |>   nor sits in the seat of scoffers;\n|>      ^2^ but his delight is in the law of the ^^^LORD^^^,\n|> |>      and on his law he meditates day and night."
+                            },
+                            {
+                                "type": "text",
+                                "content": "As illustrated, the extra spaces before each line don't impact the way the text is finally rendered, as long as the proper number of `|>` headings come at the beginning of each line. In the example above, the author forgot to put extra spaces at the beginning of the 4^th^ line, but because the right number of `|> |>` entries were included it still renders correctly in the formatted version."
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Using the \"Scripture Quotation\" Button"
+                            },
+                            {
+                                "type": "text",
+                                "content": "An easy way to quote large passages of Scripture is to copy and paste the verses directly, select the text, and then click the **Scripture Quotation** button in the editor's toolbar to apply the formatting necessary for quoting Scripture. Devouring Scripture  will automatically insert the `|>` notation at the beginning of each line, and, in cases where lines are indented (via sets of 2 spaces at the beginning of the line), add *multiple* `|> |>` notations as necesary.\n          \nIt will also look for numbers in the text and superscript them, under the assumption that they're verse numbers, and apply the `^^^` notation to any words appearing all in uppercase."
+                            },
+                            {
+                                "type": "text",
+                                "content": "For example, when initially pasting in Psalm 1:1--2 it will look like this:\n\n\n```\n1 Blessed is the man[a]\n    who walks not in the counsel of the wicked,\nnor stands in the way of sinners,\n    nor sits in the seat of scoffers;\n2 but his delight is in the law[b] of the Lord,\n    and on his law he meditates day and night.\n```\n\nThe text may include footnote references (such as the `[a]` and `[b]` above), so these should be removed. Additionally, some words that appear all in uppercase on the screen, such as the word ^^^LORD^^^ in verse 2, might *not* be all uppercase when copied and pasted, as illustrated above. (This is due to the way some websites display text using HTML and CSS , which isn't worth going into in this tutorial.)\n\nOnce the text is cleaned up by removing those footnotes and making text uppercase again, it might look more like this:\n\n```\n1 Blessed is the man\n    who walks not in the counsel of the wicked,\nnor stands in the way of sinners,\n    nor sits in the seat of scoffers;\n2 but his delight is in the law of the LORD,\n    and on his law he meditates day and night.\n```\n\nIf that block of text is selected and the **Scripture Quotation** button is clicked, it will be formatted like this:\n\n```\n|> ^1^ Blessed is the man\n|> |>    who walks not in the counsel of the wicked,\n|> nor stands in the way of sinners,\n|> |>    nor sits in the seat of scoffers;\n|> ^2^ but his delight is in the law of the ^^^LORD^^^,\n|> |>    and on his law he meditates day and night.\n```\n\nWhich will render similar to:\n\n|> ^1^ Blessed is the man\n|> |>    who walks not in the counsel of the wicked,\n|> nor stands in the way of sinners,\n|> |>    nor sits in the seat of scoffers;\n|> ^2^ but his delight is in the law of the ^^^LORD^^^,\n|> |>    and on his law he meditates day and night."
+                            },
+                            {
+                                "type": "text",
+                                "content": "Citations/references are not automatically added, so these would need to be added manually to the beginning of the text if desired."
+                            },
+                            {
+                                "type": "text",
+                                "content": "Be careful with passages that include numbers other than verse numbers, because the **Scripture Quotation** button will make the numbers superscript."
+                            },
+                            {
+                                "type": "text",
+                                "content": "Pasting Acts 13:20--21 would yield the following:\n\n```\n20 All this took about 450 years. And after that he gave them judges until Samuel the prophet. 21 Then they asked for a king, and God gave them Saul the son of Kish, a man of the tribe of Benjamin, for forty years.\n```\n\nSelecting that text and clicking the **Scripture Quotation** button would yield this:\n\n```\n|> ^20^ All this took about ^450^ years. And after that he gave them judges until Samuel the prophet. ^21^ Then they asked for a king, and God gave them Saul the son of Kish, a man of the tribe of Benjamin, for forty years.\n```"
+                            },
+                            {
+                                "type": "text",
+                                "content": "It would be necessary to remove the `^` characters from around the number **450** since, in this case, that's a number that shows in the text, as opposed to a verse number."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Special Formatting for Christian Use: Words in UPPERCASE",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "This was mentioned in the cheat sheet, but it's worth revisiting here.\n          \nScripture sometimes contains words that appear IN ALL CAPITAL LETTERS (often, but not always, proper names, such as the name of the LORD). In printed Bibles, and on some websites, such text is often formatted as ^^^SMALL CAPS^^^ for readability. For the Christian, these words should always be in all uppercase, even if they're formatted differently on the screen/page.\n\nDevouring Scripture uses the `^^^` notation to achieve this effect; words surrounded with sets of three caret characters will appear in all uppercase, in Small Caps, on devices that support this formatting. On devices that don't support the capability, they'll simply show as all uppercase. In other words, `^^^LORD^^^` will be rendered as ^^^LORD^^^. "
+                            },
+                            {
+                                "type": "heading",
+                                "content": "Automatic Handling"
+                            },
+                            {
+                                "type": "text",
+                                "content": "When using the **Scripture Quotation** button in the toolbar, this formatting will be applied on your behalf. "
+                            },
+                            {
+                                "type": "text",
+                                "content": "For example, suppose the following text is pasted into the editor:\n          \n```\nThe kings of the earth set themselves,\n  and the rulers take counsel together,\n  against the LORD and against his Anointed, saying,\n```\n\nIf it is selected, and the **Scripture Quotation** tool is clicked in the toolbar, the text will be formatted as follows:\n\n```\n|> The kings of the earth set themselves,\n|> |> and the rulers take counsel together,\n|> |> against the ^^^LORD^^^ and against his Anointed, saying,\n```\n\nThere may be cases where this is not the desired behaviour; for example, consider the following:\n\n```markdown\n((some website)) The ESV and the NIV translate this passage differently, so the ESV has been chosen in this case.\n```\n\nIn this case, if that text is selected and the **Scripture Quotation** button is clicked, it will be converted to:\n\n```markdown\n|> (some website)) The ^^^ESV^^^ and the ^^^NIV^^^ translate this passage differently, so the ^^^ESV^^^ has been chosen in this case.\n```\n\nThis is probably not what the original author wanted, so the `^^^` notations should be removed so that it reads NIV instead of ^^^NIV^^^ in the rendered output.\n\nSimilarly---though this is a matter of preference---if the following text is entered:\n\n```markdown\nThus saith the LORD GOD ALMIGHTY\n```\n\nThe **Scripture Quotation** tool will produce the following:\n\n```markdown\n|> Thus saith the ^^^LORD^^^ ^^^GOD^^^ ^^^ALMIGHTY^^^\n```\n\nThis is perfectly valid, and will render correctly, but some might prefer to edit the text to turn `^^^LORD^^^ ^^^GOD^^^ ^^^ALMIGHTY^^^` into `^^^LORD GOD ALMIGHTY^^^`"
+                            },
+                            {
+                                "type": "text",
+                                "content": "Text surrounded with the `^^^` notation doesn't *have* to be written all in uppercase---the text `^^^this is some text^^^` will still render as ^^^this is some text^^^---however, the usual intent is to use this type of formatting for text that's all uppercase in the original, such as the name of the ^^^LORD^^^ in Old Testament Scriptures."
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Special Formatting for Christian Use: Writing Eras for Dates",
+                        "parts": [
+                            {
+                                "type": "text",
+                                "content": "Another example of this type of formatting is for cases where the **era** is being specified for a date; for example, the year 100^^B.C.^^. The **era** is often written in small capitals. (That is, ^^SMALL CAPS^^, where all of the letters are the small version of ^^^SMALL CAPS^^^.) A similar notation can be used as is the case for all capitalized words, using `^^` instead of `^^^`:"
+                            },
+                            {
+                                "type": "example",
+                                "content": "The year ^^A.D.^^2020 (a.k.a. 2020^^C.E.^^) was a rough one around the world because of the pandemic, but there was an even worse pandemic around 3000^^B.C.^^ in China."
+                            },
+                            {
+                                "type": "text",
+                                "content": "Similar to the `^^^` notation, the `^^` notation doesn't require text in markdown to be all uppercase, so `^^a.d.^^` will still be shown as ^^A.D.^^, but the notation is *usually* used for text that is all uppercase."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
 }
