@@ -26,15 +26,19 @@ export const allUpperExtension: marked.TokenizerExtension | marked.RendererExten
   renderer(token) {
     let returnString = '';
 
-    token.individualWords.forEach((word: string) => {
-      returnString += `<span style="text-transform: uppercase;">${word.substring(
+    for (let i = 0; i < token.individualWords.length; i++) {
+      const theWord = token.individualWords[i];
+      returnString += `<span style="text-transform: uppercase;">${theWord.substring(
         0,
         1
-      )}</span><span style="text-transform: lowercase; font-variant: small-caps;">${word.substring(
+      )}</span><span style="text-transform: lowercase; font-variant: small-caps;">${theWord.substring(
         1,
-        word.length
-      )}</span> `;
-    });
+        theWord.length
+      )}</span>`;
+      if (i < token.individualWords.length - 1) {
+        returnString += ' ';
+      }
+    }
 
     return returnString;
   },

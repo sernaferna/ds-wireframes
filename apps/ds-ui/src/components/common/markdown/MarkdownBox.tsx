@@ -103,10 +103,6 @@ const MarkedMD = ({
     return [newHeight, pixelHeight];
   }, [editorRef, windowSize, height, showingFullScreen]);
 
-  let keyMap = useRef<KeyMap>({});
-
-  let handlers = useRef({});
-
   const reversePreviewState = () => {
     return () => {
       setShowPreview(!showPreview);
@@ -141,19 +137,23 @@ const MarkedMD = ({
     }
   };
 
+  let keyMap: KeyMap = {};
+  let handlers = {};
+
   const renderedToolbar: JSX.Element = (
     <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
       {toolbar.buttonGroups.map((g, index) => (
         <ButtonGroup size="sm" key={`buttongroup-${index}`}>
           {g.buttons.map((b, buttonIndex) => {
             const clickFn = () => {
+              console.log(`${b.name} called`);
               const state = getStateFromTextArea(editorRef.current!);
               const api = new TextAreaTextApi(editorRef.current!);
               b.execute(state, api);
             };
             if (b.keyboardShortcut) {
-              keyMap.current = { ...keyMap.current, [b.name]: b.keyboardShortcut };
-              handlers.current = { ...handlers.current, [b.name]: clickFn };
+              keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
+              handlers = { ...handlers, [b.name]: clickFn };
             }
             const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
             return (
@@ -186,7 +186,7 @@ const MarkedMD = ({
         <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
           {renderedToolbar}
 
-          <HotKeys keyMap={keyMap.current} handlers={handlers.current}>
+          <HotKeys keyMap={keyMap} handlers={handlers}>
             <Form.Control
               ref={editorRef}
               className="ds-md-editor"
