@@ -272,7 +272,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
               }
 
               setDirty(true);
-              fp.setFieldValue('value', content);
+              fp.setFieldValue('value', content, false);
               fp.setFieldTouched('value', true);
               if (autosaveNotes) {
                 setTimer(setTimeout(autoSaveFunc, AUTOSAVE_INTERVAL));

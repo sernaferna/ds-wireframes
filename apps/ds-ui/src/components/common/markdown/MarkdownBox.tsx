@@ -107,34 +107,6 @@ const MarkedMD = ({
 
   let handlers = useRef({});
 
-  const renderedToolbar: JSX.Element = useMemo(() => {
-    return (
-      <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
-        {toolbar.buttonGroups.map((g, index) => (
-          <ButtonGroup size="sm" key={`buttongroup-${index}`}>
-            {g.buttons.map((b, buttonIndex) => {
-              const clickFn = () => {
-                const state = getStateFromTextArea(editorRef.current!);
-                const api = new TextAreaTextApi(editorRef.current!);
-                b.execute(state, api);
-              };
-              if (b.keyboardShortcut) {
-                keyMap.current = { ...keyMap.current, [b.name]: b.keyboardShortcut };
-                handlers.current = { ...handlers.current, [b.name]: clickFn };
-              }
-              const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
-              return (
-                <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
-                  {b.buttonContents}
-                </Button>
-              );
-            })}
-          </ButtonGroup>
-        ))}
-      </ButtonToolbar>
-    );
-  }, [editorRef, hideAllControls, showToolbar]);
-
   const reversePreviewState = () => {
     return () => {
       setShowPreview(!showPreview);
@@ -168,6 +140,32 @@ const MarkedMD = ({
       setViewerLastScroll(e.currentTarget.scrollTop);
     }
   };
+
+  const renderedToolbar: JSX.Element = (
+    <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
+      {toolbar.buttonGroups.map((g, index) => (
+        <ButtonGroup size="sm" key={`buttongroup-${index}`}>
+          {g.buttons.map((b, buttonIndex) => {
+            const clickFn = () => {
+              const state = getStateFromTextArea(editorRef.current!);
+              const api = new TextAreaTextApi(editorRef.current!);
+              b.execute(state, api);
+            };
+            if (b.keyboardShortcut) {
+              keyMap.current = { ...keyMap.current, [b.name]: b.keyboardShortcut };
+              handlers.current = { ...handlers.current, [b.name]: clickFn };
+            }
+            const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
+            return (
+              <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
+                {b.buttonContents}
+              </Button>
+            );
+          })}
+        </ButtonGroup>
+      ))}
+    </ButtonToolbar>
+  );
 
   if (fullScreenOption && !setFullSreen) {
     return (
