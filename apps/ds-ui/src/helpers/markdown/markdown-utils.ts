@@ -17,7 +17,7 @@ interface MarkdownOptions {
 }
 
 const defaultOptions: MarkdownOptions = {
-  defaultVersion: '',
+  defaultVersion: 'ESV',
 };
 
 /**
