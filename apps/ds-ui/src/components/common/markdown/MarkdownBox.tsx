@@ -117,7 +117,7 @@ const MarkedMD = ({
 
   const renderedToolbar: JSX.Element = useMemo(() => {
     return (
-      <ButtonToolbar aria-label="Markdown Toolbar">
+      <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
         {toolbar.buttonGroups.map((g, index) => (
           <ButtonGroup size="sm" key={`buttongroup-${index}`}>
             {g.buttons.map((b, buttonIndex) => {
@@ -141,7 +141,7 @@ const MarkedMD = ({
         ))}
       </ButtonToolbar>
     );
-  }, [editorRef]);
+  }, [editorRef, hideAllControls, showToolbar]);
 
   const reversePreviewState = () => {
     return () => {
@@ -212,7 +212,7 @@ const MarkedMD = ({
     <>
       <Row>
         <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
-          {!hideAllControls && showToolbar && renderedToolbar}
+          {renderedToolbar}
 
           <HotKeys keyMap={keyMap.current} handlers={handlers.current}>
             <Form.Control
