@@ -8,7 +8,7 @@ const lineMatchRE = /^\|> /;
  * Handles formatting for `\>` style Scripture Quotes.
  */
 export const scriptureQuotes = (
-  defaultVersion: string | undefined = 'ESV',
+  defaultVersion: string,
   context: string | undefined = undefined
 ): Partial<Omit<marked.Renderer<false>, 'options'>> => {
   return {
@@ -52,7 +52,7 @@ export const scriptureQuotes = (
       if (citation) {
         let mdCitation =
           isReferenceValid(citation, context) && !/<a/.test(citation)
-            ? `[|${citation}|${defaultVersion}${context && ';s'}]`
+            ? `[|${citation}|${defaultVersion}${context ? ';s' : ''}]`
             : citation;
         mdCitation = marked.parseInline(mdCitation);
         responseString += `<p style="margin-top: 0; margin-bottom: 0; text-align: right; font-style: italic;">${mdCitation}</p>`;
