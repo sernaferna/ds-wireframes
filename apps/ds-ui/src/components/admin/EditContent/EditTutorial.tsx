@@ -67,7 +67,7 @@ export const EditTutorial = ({ tutId }: IEditTutorial) => {
         validationSchema={tutorialSchema}
         onSubmit={submitForm}
         validateOnBlur={false}
-        validateOnChange={true}
+        validateOnChange={false}
       >
         {(fp: FormikProps<FormikTutorialType>) => (
           <Form noValidate onSubmit={fp.handleSubmit}>
