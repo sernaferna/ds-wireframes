@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, useState, useRef } from 'react';
+import React, { useCallback, useMemo, useState, useRef } from 'react';
 import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
 import { ClientSideErrorLoading } from '../loading';
@@ -8,12 +8,6 @@ import { TextAreaTextApi, getStateFromTextArea, renderedOutputFromMarkdown } fro
 import { useWindowSize } from '../../../hooks/WindowSize';
 import { toolbar } from './helpers/md-commands';
 import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
-
-/**
- * How often (in milliseconds) this component should call back to the
- * parent component with updated text.
- */
-const AUTOSAVE_INTERVAL = 3000;
 
 interface IMarkedMD {
   content: string;
@@ -67,8 +61,6 @@ const MarkedMD = ({
   height = 20,
   readOnly = false,
 }: IMarkedMD) => {
-  const [md, setMD] = useState(content);
-  const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [showTutorial, setShowTutorial] = useState<boolean>(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
@@ -149,24 +141,6 @@ const MarkedMD = ({
     };
   };
 
-  const sendBackData = () => {
-    if (timer) {
-      clearTimeout(timer);
-      setTimer(null);
-    }
-
-    changeCallback(md);
-  };
-
-  const handleChangeEvent = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    if (timer) {
-      clearTimeout(timer);
-    }
-
-    setMD(event.currentTarget.value || '');
-    setTimer(setTimeout(sendBackData, AUTOSAVE_INTERVAL));
-  };
-
   const handleHTMLDownload = useCallback(() => {
     const formattedHTML = renderedOutputFromMarkdown(content);
     fileDownload(formattedHTML, 'notes.html');
@@ -220,8 +194,8 @@ const MarkedMD = ({
               className="ds-md-editor"
               as="textarea"
               rows={editorLineHeight}
-              value={md}
-              onChange={handleChangeEvent}
+              value={content}
+              onChange={(newValue) => changeCallback(newValue.currentTarget.value)}
               disabled={readOnly}
               onScroll={handleEditorScroll}
             />
@@ -230,7 +204,7 @@ const MarkedMD = ({
         {showSidePreview && (
           <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
             <div style={{ height: `${editorPixelHeight}px` }}>
-              <MDPreview content={md} shaded={false} />
+              <MDPreview content={content} shaded={false} />
             </div>
           </Col>
         )}
@@ -265,7 +239,7 @@ const MarkedMD = ({
               {showPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
 
-            {showPreview && <MDPreview content={md} shaded={true} />}
+            {showPreview && <MDPreview content={content} shaded={true} />}
           </Col>
         </Row>
       )}
