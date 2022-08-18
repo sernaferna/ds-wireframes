@@ -8,7 +8,6 @@ import { bibleLinkExtension } from './extensions/bibleLinkExtension';
 import { superscriptExtension } from './extensions/superscriptExtension';
 import { scriptureQuotes } from './extensions/scriptureQuotes';
 import { linksInNewWindow } from './extensions/links';
-import { footnotes } from './extensions/fnExtension';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 interface MarkdownOptions {
@@ -45,7 +44,6 @@ export const renderedOutputFromMarkdown = (md: string): string => {
   } catch {
     // do nothing; can easily throw exceptions when fm being edited
   }
-  marked.use({ renderer: footnotes });
   marked.use({
     pedantic: false,
     gfm: true,
