@@ -8,6 +8,7 @@ import { bibleLinkExtension } from './extensions/bibleLinkExtension';
 import { superscriptExtension } from './extensions/superscriptExtension';
 import { scriptureQuotes } from './extensions/scriptureQuotes';
 import { linksInNewWindow } from './extensions/links';
+import { footnoteRefExtension, footnotes } from './extensions/footnotes';
 import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 interface MarkdownOptions {
@@ -53,6 +54,7 @@ export const renderedOutputFromMarkdown = (md: string): string => {
     smartypants: true,
     xhtml: true,
     extensions: [
+      footnoteRefExtension,
       highlightExtension,
       allUpperExtension,
       smallCapsExtension,
@@ -62,6 +64,7 @@ export const renderedOutputFromMarkdown = (md: string): string => {
     ],
   });
   marked.use({ renderer: scriptureQuotes(options.defaultVersion, options.scriptureContext) });
+  marked.use({ renderer: footnotes });
   marked.use({ renderer: linksInNewWindow });
 
   return marked.parse(markdownString);
