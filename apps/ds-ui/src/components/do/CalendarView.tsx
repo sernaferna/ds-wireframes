@@ -99,11 +99,8 @@ export function CalendarView({ dateToShow }: ICalendarView) {
   if (isLoading || userLoading) {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
-  }
-  if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+  if (error || userResponseError) {
+    return <ErrorLoadingDataMessage errors={[error, userResponseError]} />;
   }
 
   return (

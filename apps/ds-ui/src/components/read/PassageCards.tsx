@@ -27,7 +27,7 @@ export const PassageCards = ({ sortOrder }: IPassageCards) => {
     );
   }
   if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
 
   const sortAsc = sortOrder === 'date-asc' ? true : false;

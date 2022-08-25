@@ -180,11 +180,8 @@ export const PrayerCards = ({ errorFunction }: IPrayerCards) => {
       </Row>
     );
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
-  }
-  if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+  if (error || userResponseError) {
+    return <ErrorLoadingDataMessage errors={[error, userResponseError]} />;
   }
 
   const [paginatedItems, paginationElement] = paginateItems(factoredItemList, 6, currentPage, setCurrentPage);

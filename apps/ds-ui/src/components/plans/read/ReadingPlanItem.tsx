@@ -226,14 +226,8 @@ export const ReadingPlanItem = ({ plan, dateToShow, version }: IReadingPlanItem)
   if (isLoading || dayIndex < 0 || passage.osis === '') {
     return <LoadingMessage />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
-  }
-  if (verseError) {
-    return <ErrorLoadingDataMessage theError={verseError} />;
-  }
-  if (actionError) {
-    return <ErrorLoadingDataMessage theError={actionError} />;
+  if (error || verseError || actionError) {
+    return <ErrorLoadingDataMessage errors={[error, verseError, actionError]} />;
   }
 
   const statsContent = versesAreLoading ? (

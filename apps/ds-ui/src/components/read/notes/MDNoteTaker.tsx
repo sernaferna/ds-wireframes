@@ -208,11 +208,8 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   if (passageIsLoading || noteIsLoading) {
     return <LoadingMessage />;
   }
-  if (passageError) {
-    return <ErrorLoadingDataMessage theError={passageError} />;
-  }
-  if (selectedNoteID !== '' && noteError) {
-    return <ErrorLoadingDataMessage theError={noteError} />;
+  if (passageError || (selectedNoteID !== '' && noteError)) {
+    return <ErrorLoadingDataMessage errors={[passageError, noteError]} />;
   }
 
   return (

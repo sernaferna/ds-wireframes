@@ -62,7 +62,7 @@ export const PrayerSettings = () => {
     return <LoadingMessage />;
   }
   if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+    return <ErrorLoadingDataMessage errors={[userResponseError]} />;
   }
 
   const showAll = userData!.settings.prayer.showAllItems;

@@ -33,7 +33,7 @@ export const NotesSnippet = ({ noteID }: INotesSnippet) => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
 
   const textToDisplay = noteID === selectedNoteID ? '[Editing] ' + data!.text : data!.text;

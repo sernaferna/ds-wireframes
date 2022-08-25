@@ -42,7 +42,7 @@ export const Content = () => {
     return <LoadingMessage />;
   }
   if (fullListError) {
-    return <ErrorLoadingDataMessage theError={fullListError} />;
+    return <ErrorLoadingDataMessage errors={[fullListError]} />;
   }
 
   return (

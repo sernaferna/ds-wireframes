@@ -40,7 +40,7 @@ export const PlansPage = () => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
 
   const [paginatedItems, paginationElement] = paginateItems(itemList, 6, currentPage, setCurrentPage);

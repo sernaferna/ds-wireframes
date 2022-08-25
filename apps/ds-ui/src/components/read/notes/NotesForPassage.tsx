@@ -28,7 +28,7 @@ export const NotesForPassage = ({ osis }: INotesForPassage) => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
 
   return (

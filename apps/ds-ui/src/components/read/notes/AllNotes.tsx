@@ -41,7 +41,7 @@ export const AllNotes = () => {
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
 
   const [paginatedNoteList, paginateElement] = paginateItems(noteList, 5, currentPage, setCurrentPage);
