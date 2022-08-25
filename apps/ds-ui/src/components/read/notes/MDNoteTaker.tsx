@@ -6,7 +6,7 @@ import {
   Note,
   getFormattedReference,
   getRangesForOSIS,
-  getOSISForReference,
+  getContextForPassage,
 } from '@devouringscripture/common';
 import {
   useCreateNoteMutation,
@@ -36,8 +36,9 @@ const getStartEndForOsis = (osis: string): [string, string] => {
 
 const schema = yup.object({
   value: yup.string(),
-  startReference: yup.string(),
-  endReference: yup.string(),
+  startReference: yup.string().required('Start ref required'),
+  endReference: yup.string().required('End ref required'),
+  version: yup.string().required('Version required'),
 });
 type ValuesSchema = yup.InferType<typeof schema>;
 
@@ -112,21 +113,26 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
     }
   }, [selectedNote, selectedNoteID, noteIsLoading]);
 
-  const [downloadedStartRef, downloadedEndRef] = useMemo(() => {
+  const [downloadedStartRef, downloadedEndRef, downloadedVersion] = useMemo(() => {
     let start = '';
     let end = '';
+    let version = '';
 
     if (selectedNote && selectedNote.id === selectedNoteID) {
       const [s, e] = getStartEndForOsis(selectedNote.osis);
       start = s;
       end = e;
+      if (selectedNote.version) {
+        version = selectedNote.version;
+      }
     } else if (passage) {
       const [s, e] = getStartEndForOsis(passage.osis);
       start = s;
       end = e;
+      version = passage.version;
     }
 
-    return [start, end];
+    return [start, end, version];
   }, [selectedNote, passage, selectedNoteID]);
 
   const initialValues = useMemo(
@@ -134,8 +140,9 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
       value: downloadedNoteText,
       startReference: downloadedStartRef,
       endReference: downloadedEndRef,
+      version: downloadedVersion,
     }),
-    [downloadedNoteText, downloadedStartRef, downloadedEndRef]
+    [downloadedNoteText, downloadedStartRef, downloadedEndRef, downloadedVersion]
   );
 
   const newNoteBtn = () => {
@@ -145,17 +152,18 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
 
   const formSubmit = useCallback(
     (values: ValuesSchema) => {
-      if (values.value === undefined || values.startReference === undefined || values.endReference === undefined) {
+      if (values.value === undefined) {
         addErrorMessage('Note not valid');
       }
       const textToSend = values.value!;
-      const osisToSend = `${getOSISForReference(values.startReference!)}-${getOSISForReference(values.endReference!)}`;
+      const osisToSend = getContextForPassage(values.startReference, values.endReference);
 
       if (selectedNote) {
         const newNote: Note = {
           ...selectedNote,
           text: textToSend,
           osis: osisToSend,
+          version: values.version,
         };
         setDirty(false);
         updateNote(newNote);
@@ -163,6 +171,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
         const newNote: BaseNote = {
           text: textToSend,
           osis: osisToSend,
+          version: values.version,
         };
         setDirty(false);
         submitNote(newNote)
@@ -224,47 +233,59 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
             </Col>
           </Row>
           <Row ref={mdRef}>
-            <Col>
-              <Row>
-                <Form.Label column="lg" lg="3">
-                  From
-                </Form.Label>
-                <Col>
-                  <Form.Control
-                    name="startReference"
-                    type="search"
-                    placeholder="From..."
-                    value={fp.values.startReference}
-                    onChange={fp.handleChange}
-                    onBlur={fp.handleBlur}
-                    isValid={fp.touched.startReference && !fp.errors.startReference}
-                    isInvalid={fp.touched.startReference && !!fp.errors.startReference}
-                  />
-                </Col>
-              </Row>
+            <Col xs="5">
+              <Form.Group>
+                <Form.Label>From</Form.Label>
+                <Form.Control
+                  name="startReference"
+                  type="search"
+                  placeholder="From..."
+                  value={fp.values.startReference}
+                  onChange={fp.handleChange}
+                  onBlur={fp.handleBlur}
+                  isValid={fp.touched.startReference && !fp.errors.startReference}
+                  isInvalid={fp.touched.startReference && !!fp.errors.startReference}
+                />
+                <Form.Control.Feedback type="invalid">{fp.errors.startReference}</Form.Control.Feedback>
+              </Form.Group>
             </Col>
-            <Col>
-              <Row>
-                <Form.Label column="lg" lg="1">
-                  to
-                </Form.Label>
-                <Col>
-                  <Form.Control
-                    type="search"
-                    placeholder="To..."
-                    value={fp.values.endReference}
-                    onChange={fp.handleChange}
-                    onBlur={fp.handleBlur}
-                    name="endReference"
-                    isValid={fp.touched.endReference && !fp.errors.endReference}
-                    isInvalid={fp.touched.endReference && !!fp.errors.endReference}
-                  />
-                </Col>
-              </Row>
+            <Col xs="5">
+              <Form.Group>
+                <Form.Label>to</Form.Label>
+                <Form.Control
+                  type="search"
+                  placeholder="To..."
+                  value={fp.values.endReference}
+                  onChange={fp.handleChange}
+                  onBlur={fp.handleBlur}
+                  name="endReference"
+                  isValid={fp.touched.endReference && !fp.errors.endReference}
+                  isInvalid={fp.touched.endReference && !!fp.errors.endReference}
+                />
+                <Form.Control.Feedback type="invalid">{fp.errors.endReference}</Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col xs="2">
+              <Form.Group>
+                <Form.Label>Version</Form.Label>
+                <Form.Control
+                  type="search"
+                  placeholder="ESV"
+                  value={fp.values.version}
+                  onChange={fp.handleChange}
+                  onBlur={fp.handleBlur}
+                  name="version"
+                  isValid={fp.touched.version && !fp.errors.version}
+                  isInvalid={fp.touched.version && !!fp.errors.version}
+                />
+                <Form.Control.Feedback type="invalid">{fp.errors.version}</Form.Control.Feedback>
+              </Form.Group>
             </Col>
           </Row>
           <MarkdownBox
             content={fp.values.value || ''}
+            defaultVersion={fp.values.version}
+            passageContext={getContextForPassage(fp.values.startReference, fp.values.endReference)}
             changeCallback={async (content) => {
               if (timer) {
                 clearTimeout(timer);
