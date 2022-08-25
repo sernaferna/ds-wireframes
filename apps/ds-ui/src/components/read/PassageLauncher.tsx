@@ -17,7 +17,7 @@ const schema = yup.object({
       }
       return isReferenceValid(value as string);
     }),
-  version: yup.string().required().oneOf(['ESV', 'NIV'], 'Version required'),
+  version: yup.string().required(),
 });
 type LauncherSchema = yup.InferType<typeof schema>;
 
@@ -105,20 +105,19 @@ export const PassageLauncher = ({ defaultVersion }: IPassageLauncher) => {
                   <InputGroup.Text id="versionIcon">
                     <BookmarkFill />
                   </InputGroup.Text>
-                  <Form.Select
+                  <Form.Control
                     id="version"
-                    value={formikProps.values.version}
-                    onChange={formikProps.handleChange}
                     aria-label="Version"
-                    aria-describedby="versionIcon"
+                    placeholder="ESV"
+                    type="search"
                     size="sm"
+                    value={formikProps.values.version}
+                    aria-describedby="versionIcon"
+                    onChange={formikProps.handleChange}
+                    isInvalid={!!formikProps.errors.version && formikProps.touched.version}
+                    isValid={formikProps.touched.version && !formikProps.errors.version}
                     onBlur={formikProps.handleBlur}
-                    isInvalid={!!formikProps.errors.version}
-                  >
-                    <option>Choose Version...</option>
-                    <option value="NIV">NIV</option>
-                    <option value="ESV">ESV</option>
-                  </Form.Select>
+                  />
                   <Form.Control.Feedback type="invalid">{formikProps.errors.version}</Form.Control.Feedback>
                 </InputGroup>
               </Col>
