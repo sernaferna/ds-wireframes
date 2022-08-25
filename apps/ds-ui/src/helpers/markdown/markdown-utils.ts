@@ -1,6 +1,5 @@
 import { RefObject } from 'react';
 import { marked } from 'marked';
-import fm from 'front-matter';
 import { allUpperExtension } from './extensions/allUpperExtension';
 import { highlightExtension } from './extensions/highlightExtension';
 import { smallCapsExtension } from './extensions/smallCapsExtension';
@@ -27,24 +26,23 @@ const defaultOptions: MarkdownOptions = {
  * that were created, and give a standard set of marked options.
  *
  * @param md String containing markdown
+ * @param defaultVersion Default version of the Bible to use for links
+ * @param passageContext Larger passage context to use for working with references
  * @returns Formatted (HTML) string
  */
-export const renderedOutputFromMarkdown = (md: string): string => {
+export const renderedOutputFromMarkdown = (
+  md: string,
+  defaultVersion?: string | undefined,
+  passageContext?: string | undefined
+): string => {
   const options = { ...defaultOptions };
-  let markdownString = md;
-
-  try {
-    const fmResult = fm(md);
-    markdownString = fmResult.body;
-    if ((fmResult.attributes as any).defaultVersion) {
-      options.defaultVersion = (fmResult.attributes as any).defaultVersion;
-    }
-    if ((fmResult.attributes as any).scriptureContext) {
-      options.scriptureContext = (fmResult.attributes as any).scriptureContext;
-    }
-  } catch {
-    // do nothing; can easily throw exceptions when fm being edited
+  if (defaultVersion) {
+    options.defaultVersion = defaultVersion;
   }
+  if (passageContext) {
+    options.scriptureContext = passageContext;
+  }
+
   marked.use({
     pedantic: false,
     gfm: true,
@@ -67,7 +65,7 @@ export const renderedOutputFromMarkdown = (md: string): string => {
   marked.use({ renderer: footnotes });
   marked.use({ renderer: linksInNewWindow });
 
-  return marked.parse(markdownString);
+  return marked.parse(md);
 };
 
 /**

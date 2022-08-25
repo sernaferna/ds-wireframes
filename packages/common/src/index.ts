@@ -30,3 +30,4 @@ export * from './middlewares/Logger';
 
 export * from './helpers/VersionNumberHelpers';
 export * from './helpers/refparse/index';
+export * from './helpers/NoteHelpers';
