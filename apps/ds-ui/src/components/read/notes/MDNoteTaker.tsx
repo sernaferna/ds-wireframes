@@ -97,7 +97,9 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   const switchFS = useCallback(
     (fs: boolean) => {
       setShowMDFullScreen(fs);
-      mdRef.current!.scrollIntoView({ behavior: 'smooth' });
+      if (mdRef.current) {
+        mdRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     },
     [setShowMDFullScreen]
   );
@@ -186,11 +188,8 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   }, [deleteNote, selectedNote, dispatch]);
 
   const autoSaveFunc = () => {
-    if (!dirty) {
-      return;
-    }
-
     formikRef.current!.handleSubmit();
+
     if (timer) {
       clearTimeout(timer);
       setTimer(null);
@@ -266,7 +265,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
           </Row>
           <MarkdownBox
             content={fp.values.value || ''}
-            changeCallback={(content) => {
+            changeCallback={async (content) => {
               if (timer) {
                 clearTimeout(timer);
               }

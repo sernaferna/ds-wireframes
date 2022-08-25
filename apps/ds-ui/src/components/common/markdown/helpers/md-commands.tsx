@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import {
   TextState,
   TextAreaTextApi,
@@ -5,6 +6,7 @@ import {
   MDToolbar,
   getBreaksNeededForEmptyLineAfter,
   getBreaksNeededForEmptyLineBefore,
+  getStateFromTextArea,
 } from '../../../../helpers/markdown';
 import {
   TypeBold,
@@ -73,6 +75,20 @@ const replaceTextWith = (
 };
 
 /**
+ * Helper function to take a `RefObject` reference to a textarea and get objects from it
+ * for state and the TextAreaTextApi.
+ *
+ * @param ta TextArea ref object
+ * @returns Tuple including `TextState` object and `TextAreaTextApi` object for the textarea
+ */
+const getObjectsFromTextarea = (ta: RefObject<HTMLTextAreaElement>): [TextState, TextAreaTextApi] => {
+  const state = getStateFromTextArea(ta.current!);
+  const api = new TextAreaTextApi(ta.current!);
+
+  return [state, api];
+};
+
+/**
  * The buttons to be rendered into the MDEditors toolbar in the format:
  *
  * * name: The name of the item (not used for anything)
@@ -88,7 +104,9 @@ export const toolbar: MDToolbar = {
           name: 'Bold',
           keyboardShortcut: 'ctrl+b',
           buttonContents: <TypeBold />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Bold: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '**');
           },
         },
@@ -96,28 +114,33 @@ export const toolbar: MDToolbar = {
           name: 'Italics',
           keyboardShortcut: 'ctrl+i',
           buttonContents: <TypeItalic />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Italics: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '*');
           },
         },
         {
           name: 'H1',
           buttonContents: <TypeH1 />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '# ', ' ', 'HEADING');
           },
         },
         {
           name: 'H2',
           buttonContents: <TypeH2 />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '## ', ' ', 'HEADING');
           },
         },
         {
           name: 'H3',
           buttonContents: <TypeH3 />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '### ', ' ', 'HEADING');
           },
         },
@@ -129,12 +152,14 @@ export const toolbar: MDToolbar = {
           name: 'Link',
           keyboardShortcut: 'ctrl+shift+k',
           buttonContents: <Link45deg />,
-          execute(state, api) {
+          execute(ta) {
             const linkURL = prompt('Please enter the URL:');
             if (!linkURL) {
               return;
             }
 
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Link: '${state.selectedText}'; api: `, api);
             const modifyText = `[${state.selectedText}](${linkURL})`;
             api.replaceSelection(modifyText);
           },
@@ -143,7 +168,9 @@ export const toolbar: MDToolbar = {
           name: 'Quote',
           keyboardShortcut: 'ctrl+q',
           buttonContents: <Quote />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Quote: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '> ', ' ', 'QUOTE');
           },
         },
@@ -154,14 +181,16 @@ export const toolbar: MDToolbar = {
         {
           name: 'Bullets',
           buttonContents: <ListUl />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '* ', ' ');
           },
         },
         {
           name: 'Numbered List',
           buttonContents: <ListOl />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '1. ', ' ');
           },
         },
@@ -173,7 +202,9 @@ export const toolbar: MDToolbar = {
           name: 'Highlight',
           keyboardShortcut: 'ctrl+shift+H',
           buttonContents: <mark>abc</mark>,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Highlight: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '==', '==', 'HIGHLIGHT');
           },
         },
@@ -184,7 +215,8 @@ export const toolbar: MDToolbar = {
               2<sup>2</sup>
             </span>
           ),
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '^');
           },
         },
@@ -196,21 +228,25 @@ export const toolbar: MDToolbar = {
               L<span style={{ fontVariant: 'small-caps' }}>ord</span>
             </b>
           ),
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for All Upper: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '^^^', '^^^', 'LORD');
           },
         },
         {
           name: 'SmallCaps',
           buttonContents: <span style={{ fontVariant: 'small-caps' }}>SmCa</span>,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '^-^');
           },
         },
         {
           name: 'Era',
           buttonContents: <span style={{ fontVariant: 'small-caps' }}>b.c.</span>,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
             replaceTextWith(state, api, '^^');
           },
         },
@@ -227,7 +263,9 @@ export const toolbar: MDToolbar = {
               <Link45deg />
             </>
           ),
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Scripture Link: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '[|', '|]', 'REF');
           },
         },
@@ -240,8 +278,13 @@ export const toolbar: MDToolbar = {
               <Link45deg />
             </>
           ),
-          execute(state, api) {
+          execute(ta) {
             const customText = prompt('Enter the custom text for this link:');
+            if (!customText) {
+              return;
+            }
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Custom Scripture Link: '${state.selectedText}'; api: `, api);
             const modifyText = `[|${state.selectedText || 'REF'} (${customText})|]`;
             api.replaceSelection(modifyText);
           },
@@ -250,7 +293,9 @@ export const toolbar: MDToolbar = {
           name: 'Scripture Quotation',
           keyboardShortcut: 'ctrl+shift+P',
           buttonContents: <FileRichtextFill />,
-          execute(state, api) {
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Scripture Quotation: '${state.selectedText}'; api: `, api);
             const selectedText = state.selectedText ? state.selectedText : 'QUOTE';
             const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
             const state1 = api.setSelectionRange(newSelectionRange);

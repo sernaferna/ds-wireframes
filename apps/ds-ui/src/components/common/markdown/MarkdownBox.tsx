@@ -1,13 +1,15 @@
-import React, { useCallback, useMemo, useState, useRef } from 'react';
+import React, { useCallback, useMemo, useState, useRef, KeyboardEvent } from 'react';
 import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
 import { ClientSideErrorLoading } from '../loading';
 import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
 import { MDPreview } from './MDPreview';
-import { TextAreaTextApi, getStateFromTextArea, renderedOutputFromMarkdown } from '../../../helpers/markdown';
+import { renderedOutputFromMarkdown } from '../../../helpers/markdown';
 import { useWindowSize } from '../../../hooks/WindowSize';
 import { toolbar } from './helpers/md-commands';
 import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
+
+const CALLBACK_INTERVAL = 1000;
 
 interface IMarkedMD {
   content: string;
@@ -69,6 +71,8 @@ const MarkedMD = ({
   const [preventScrollEvent, setPreventScrollEvent] = useState<boolean>(false);
   const [viewerLastScroll, setViewerLastScroll] = useState(0);
   const windowSize = useWindowSize();
+  const [md, setMD] = useState(content);
+  const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
 
   const fsButton = useMemo(() => {
     if (!fullScreenOption) {
@@ -121,7 +125,9 @@ const MarkedMD = ({
     }
 
     setPreventScrollEvent(true);
-    viewerRef.current!.scrollTop = e.currentTarget.scrollTop;
+    if (viewerRef.current) {
+      viewerRef.current.scrollTop = e.currentTarget.scrollTop;
+    }
   };
 
   const handleViewerScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -132,40 +138,51 @@ const MarkedMD = ({
 
     if (e.currentTarget.scrollTop !== viewerLastScroll) {
       setPreventScrollEvent(true);
-      editorRef.current!.scrollTop = e.currentTarget.scrollTop;
+      if (editorRef.current) {
+        editorRef.current.scrollTop = e.currentTarget.scrollTop;
+      }
       setViewerLastScroll(e.currentTarget.scrollTop);
     }
   };
 
-  let keyMap: KeyMap = {};
-  let handlers = {};
+  const [renderedToolbar, keyMap, handlers] = useMemo(() => {
+    let keyMap: KeyMap = {};
+    let handlers = {};
 
-  const renderedToolbar: JSX.Element = (
-    <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
-      {toolbar.buttonGroups.map((g, index) => (
-        <ButtonGroup size="sm" key={`buttongroup-${index}`}>
-          {g.buttons.map((b, buttonIndex) => {
-            const clickFn = () => {
-              console.log(`${b.name} called`);
-              const state = getStateFromTextArea(editorRef.current!);
-              const api = new TextAreaTextApi(editorRef.current!);
-              b.execute(state, api);
-            };
-            if (b.keyboardShortcut) {
-              keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
-              handlers = { ...handlers, [b.name]: clickFn };
-            }
-            const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
-            return (
-              <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
-                {b.buttonContents}
-              </Button>
-            );
-          })}
-        </ButtonGroup>
-      ))}
-    </ButtonToolbar>
-  );
+    const renderedToolbar = (
+      <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
+        {toolbar.buttonGroups.map((g, index) => (
+          <ButtonGroup size="sm" key={`buttongroup-${index}`}>
+            {g.buttons.map((b, buttonIndex) => {
+              const clickFn = () => {
+                console.log(`${b.name} called`); // TODO remove
+                b.execute(editorRef);
+              };
+              if (b.keyboardShortcut) {
+                keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
+                handlers = {
+                  ...handlers,
+                  [b.name]: (event: KeyboardEvent) => {
+                    clickFn();
+                    event.preventDefault();
+                    event.stopPropagation();
+                  },
+                };
+              }
+              const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
+              return (
+                <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
+                  {b.buttonContents}
+                </Button>
+              );
+            })}
+          </ButtonGroup>
+        ))}
+      </ButtonToolbar>
+    );
+
+    return [renderedToolbar, keyMap, handlers];
+  }, [editorRef, hideAllControls, showToolbar]);
 
   if (fullScreenOption && !setFullSreen) {
     return (
@@ -186,14 +203,26 @@ const MarkedMD = ({
         <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
           {renderedToolbar}
 
-          <HotKeys keyMap={keyMap} handlers={handlers}>
+          <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={true}>
             <Form.Control
               ref={editorRef}
               className="ds-md-editor"
               as="textarea"
               rows={editorLineHeight}
-              value={content}
-              onChange={(newValue) => changeCallback(newValue.currentTarget.value)}
+              value={md}
+              onChange={(newValue) => {
+                if (timer) {
+                  clearTimeout(timer);
+                }
+
+                setMD(newValue.currentTarget.value);
+                setTimer(
+                  setTimeout(() => {
+                    changeCallback(md);
+                    setTimer(null);
+                  }, CALLBACK_INTERVAL)
+                );
+              }}
               disabled={readOnly}
               onScroll={handleEditorScroll}
             />
@@ -202,7 +231,7 @@ const MarkedMD = ({
         {showSidePreview && (
           <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
             <div style={{ height: `${editorPixelHeight}px` }}>
-              <MDPreview content={content} shaded={false} />
+              <MDPreview content={md} shaded={false} />
             </div>
           </Col>
         )}
@@ -237,7 +266,7 @@ const MarkedMD = ({
               {showPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
 
-            {showPreview && <MDPreview content={content} shaded={true} />}
+            {showPreview && <MDPreview content={md} shaded={true} />}
           </Col>
         </Row>
       )}
