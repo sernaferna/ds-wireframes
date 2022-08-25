@@ -49,7 +49,12 @@ export const NotesSnippet = ({ noteID }: INotesSnippet) => {
 
   return (
     <div className={noteSnippetClass} style={noteSnippetStyles} onClick={selectNote()}>
-      <MarkdownBox.Preview content={noteSnippet} shaded={true} />
+      <MarkdownBox.Preview
+        content={noteSnippet}
+        shaded={true}
+        defaultVersion={data!.version}
+        passageContext={data!.osis}
+      />
     </div>
   );
 };
