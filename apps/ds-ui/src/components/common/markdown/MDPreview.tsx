@@ -3,6 +3,8 @@ import { renderedOutputFromMarkdown } from '../../../helpers/markdown/markdown-u
 
 interface IMDPreview {
   content: string;
+  defaultVersion?: string;
+  passageContext?: string;
   shaded?: boolean;
 }
 
@@ -12,11 +14,18 @@ interface IMDPreview {
  * `<MarkdownBox.Preview>` for simplicity.
  *
  * @param content Markdown to be rendered
+ * @param defaultVersion Default version of the Bible to use for rendering
+ * @param passageContext Context for passage to be rendered
  * @shaded Whether the output should be given a background colour and border to set it apart
  */
-export const MDPreview = ({ content, shaded = true }: IMDPreview) => {
+export const MDPreview = ({ content, defaultVersion, passageContext, shaded = true }: IMDPreview) => {
   const classNames: string =
     'ds-md-viewer overflow-auto flex-grow-1 ' + (shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '');
 
-  return <div className={classNames} dangerouslySetInnerHTML={{ __html: renderedOutputFromMarkdown(content) }} />;
+  return (
+    <div
+      className={classNames}
+      dangerouslySetInnerHTML={{ __html: renderedOutputFromMarkdown(content, defaultVersion, passageContext) }}
+    />
+  );
 };

@@ -13,6 +13,8 @@ const CALLBACK_INTERVAL = 1000;
 
 interface IMarkedMD {
   content: string;
+  defaultVersion?: string;
+  passageContext?: string;
   changeCallback: (newContent: string) => void;
   showToolbar?: boolean;
   showSidePreview?: boolean;
@@ -53,6 +55,8 @@ interface IMarkedMD {
  */
 const MarkedMD = ({
   content,
+  defaultVersion,
+  passageContext,
   changeCallback,
   showToolbar = true,
   showSidePreview = false,
@@ -114,9 +118,9 @@ const MarkedMD = ({
   };
 
   const handleHTMLDownload = useCallback(() => {
-    const formattedHTML = renderedOutputFromMarkdown(content);
+    const formattedHTML = renderedOutputFromMarkdown(content, defaultVersion, passageContext);
     fileDownload(formattedHTML, 'notes.html');
-  }, [content]);
+  }, [content, defaultVersion, passageContext]);
 
   const handleEditorScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
     if (preventScrollEvent) {
@@ -231,7 +235,7 @@ const MarkedMD = ({
         {showSidePreview && (
           <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
             <div style={{ height: `${editorPixelHeight}px` }}>
-              <MDPreview content={md} shaded={false} />
+              <MDPreview content={md} shaded={false} defaultVersion={defaultVersion} passageContext={passageContext} />
             </div>
           </Col>
         )}
@@ -266,7 +270,9 @@ const MarkedMD = ({
               {showPreview ? 'Hide Preview' : 'Show Preview'}
             </Button>
 
-            {showPreview && <MDPreview content={md} shaded={true} />}
+            {showPreview && (
+              <MDPreview content={md} shaded={true} defaultVersion={defaultVersion} passageContext={passageContext} />
+            )}
           </Col>
         </Row>
       )}
