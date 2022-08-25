@@ -106,6 +106,7 @@ export const toolbar: MDToolbar = {
           buttonContents: <TypeBold />,
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Bold: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '**');
           },
         },
@@ -115,6 +116,7 @@ export const toolbar: MDToolbar = {
           buttonContents: <TypeItalic />,
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Italics: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '*');
           },
         },
@@ -157,6 +159,7 @@ export const toolbar: MDToolbar = {
             }
 
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Link: '${state.selectedText}'; api: `, api);
             const modifyText = `[${state.selectedText}](${linkURL})`;
             api.replaceSelection(modifyText);
           },
@@ -167,6 +170,7 @@ export const toolbar: MDToolbar = {
           buttonContents: <Quote />,
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Quote: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '> ', ' ', 'QUOTE');
           },
         },
@@ -200,6 +204,7 @@ export const toolbar: MDToolbar = {
           buttonContents: <mark>abc</mark>,
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Highlight: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '==', '==', 'HIGHLIGHT');
           },
         },
@@ -225,6 +230,7 @@ export const toolbar: MDToolbar = {
           ),
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for All Upper: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '^^^', '^^^', 'LORD');
           },
         },
@@ -259,6 +265,7 @@ export const toolbar: MDToolbar = {
           ),
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Scripture Link: '${state.selectedText}'; api: `, api);
             replaceTextWith(state, api, '[|', '|]', 'REF');
           },
         },
@@ -277,6 +284,7 @@ export const toolbar: MDToolbar = {
               return;
             }
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Custom Scripture Link: '${state.selectedText}'; api: `, api);
             const modifyText = `[|${state.selectedText || 'REF'} (${customText})|]`;
             api.replaceSelection(modifyText);
           },
@@ -287,6 +295,7 @@ export const toolbar: MDToolbar = {
           buttonContents: <FileRichtextFill />,
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
+            console.log(`selected text for Scripture Quotation: '${state.selectedText}'; api: `, api);
             const selectedText = state.selectedText ? state.selectedText : 'QUOTE';
             const newSelectionRange = selectWord({ text: state.text, selection: state.selection });
             const state1 = api.setSelectionRange(newSelectionRange);
