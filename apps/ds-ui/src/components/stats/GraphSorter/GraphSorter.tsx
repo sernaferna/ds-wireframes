@@ -106,7 +106,7 @@ export const GraphSorter = () => {
     return <LoadingMessage />;
   }
   if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+    return <ErrorLoadingDataMessage errors={[userResponseError]} />;
   }
 
   const vizList = vizItems.map((item, index) => (

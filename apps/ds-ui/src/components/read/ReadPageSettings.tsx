@@ -21,7 +21,7 @@ export const ReadPageSettings = () => {
     return <LoadingMessage />;
   }
   if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+    return <ErrorLoadingDataMessage errors={[userResponseError]} />;
   }
 
   let sortOption = userData!.settings.read.sortPassages;

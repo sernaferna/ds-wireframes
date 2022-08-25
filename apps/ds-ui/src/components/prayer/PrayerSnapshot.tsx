@@ -97,11 +97,8 @@ export const PrayerSnapshot = ({ showTitle = false }: IPrayerSnapshot) => {
   if (isLoading || userLoading) {
     return <PlaceholderList />;
   }
-  if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
-  }
-  if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+  if (error || userResponseError) {
+    return <ErrorLoadingDataMessage errors={[error, userResponseError]} />;
   }
 
   const [paginatedItems, paginationElement] = paginateItems(initialItems, 3, currentPage, setCurrentPage, 'sm');

@@ -57,7 +57,7 @@ export const Header = () => {
     return <LoadingMessage />;
   }
   if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+    return <ErrorLoadingDataMessage errors={[userResponseError]} />;
   }
 
   return (

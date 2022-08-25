@@ -56,7 +56,7 @@ export const ToastTester = () => {
     return <LoadingMessage />;
   }
   if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+    return <ErrorLoadingDataMessage errors={[userResponseError]} />;
   }
 
   if (!userData!.settings.showToastTester) {

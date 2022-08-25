@@ -33,7 +33,7 @@ export const MarkdownTutorial = ({ show, handleClose }: IMarkdownTutorial) => {
     );
   }
   if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
   if (!show) {
     return <></>;

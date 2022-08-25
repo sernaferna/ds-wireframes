@@ -13,7 +13,7 @@ export const StatsSettings = () => {
     return <LoadingMessage />;
   }
   if (userResponseError) {
-    return <ErrorLoadingDataMessage theError={userResponseError} />;
+    return <ErrorLoadingDataMessage errors={[userResponseError]} />;
   }
 
   const dataFilter = userData!.settings.stats.statsFilter;

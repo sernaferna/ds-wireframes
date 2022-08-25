@@ -41,7 +41,7 @@ export const PassageNotes = ({ showMDFullScreen, setShowMDFullScreen, autosaveNo
     return <LoadingMessage />;
   }
   if (error) {
-    return <ErrorLoadingDataMessage theError={error} />;
+    return <ErrorLoadingDataMessage errors={[error]} />;
   }
 
   if (selectedNoteID === '' && selectedPassageID === '') {

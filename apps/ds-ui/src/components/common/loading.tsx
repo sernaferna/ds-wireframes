@@ -34,8 +34,9 @@ export const generateErrorStringFromError = (er: ErrorResponse): JSX.Element => 
   );
 };
 
+type ErrorType = Error | FetchBaseQueryError | SerializedError | undefined;
 interface IErrorLoadingDataMessage {
-  theError?: Error | FetchBaseQueryError | SerializedError;
+  errors: ErrorType[];
 }
 
 /**
@@ -43,19 +44,24 @@ interface IErrorLoadingDataMessage {
  * Handles different types of errors that can be returned from RTK API calls,
  * including (but not limited to) `ErrorResponse` errors.
  *
- * @param theError The error object to be displayed, if any
+ * @param errors Array of error objects to be displayed; any might be undefined
  */
-export function ErrorLoadingDataMessage({ theError }: IErrorLoadingDataMessage) {
-  let message: string | JSX.Element = '';
-  if (theError) {
-    if ('data' in theError) {
-      message = generateErrorStringFromError(theError.data as ErrorResponse);
-    } else if ('message' in theError) {
-      message = (theError as Error).message;
-    } else if ('status' in theError) {
-      message = `error status code ${(theError as FetchBaseQueryError).status}` || 'no data';
+export function ErrorLoadingDataMessage({ errors }: IErrorLoadingDataMessage) {
+  let messages: JSX.Element[] = [];
+
+  for (const err of errors) {
+    if (!err) {
+      continue;
+    }
+
+    if ('data' in err) {
+      messages.push(generateErrorStringFromError(err.data as ErrorResponse));
+    } else if ('message' in err) {
+      messages.push(<div>{(err as Error).message}</div>);
+    } else if ('status' in err) {
+      messages.push(<div>{`Error status code ${(err as FetchBaseQueryError).status}`}</div>);
     } else {
-      message = (theError as SerializedError).message || 'no data';
+      messages.push(<div>{(err as SerializedError).message || 'no data'}</div>);
     }
   }
 
@@ -63,7 +69,7 @@ export function ErrorLoadingDataMessage({ theError }: IErrorLoadingDataMessage) 
     <Alert variant="danger">
       <Alert.Heading>Error!</Alert.Heading>
       <div>Error loading data from server</div>
-      <div>{message}</div>
+      {messages}
     </Alert>
   );
 }
