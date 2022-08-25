@@ -1,3 +1,4 @@
+import { RefObject } from 'react';
 import { marked } from 'marked';
 import fm from 'front-matter';
 import { allUpperExtension } from './extensions/allUpperExtension';
@@ -9,7 +10,6 @@ import { superscriptExtension } from './extensions/superscriptExtension';
 import { scriptureQuotes } from './extensions/scriptureQuotes';
 import { linksInNewWindow } from './extensions/links';
 import { footnoteRefExtension, footnotes } from './extensions/footnotes';
-import { TextAreaTextApi, TextState } from './textarea-helpers/TextAreaTextApi';
 
 interface MarkdownOptions {
   defaultVersion: string;
@@ -79,7 +79,7 @@ export interface MDToolbarButton {
   name: string;
   keyboardShortcut?: string;
   buttonContents: JSX.Element;
-  execute: (state: TextState, api: TextAreaTextApi) => void;
+  execute: (textBox: RefObject<HTMLTextAreaElement>) => void;
 }
 
 export interface MDToolbarButtonGroup {
