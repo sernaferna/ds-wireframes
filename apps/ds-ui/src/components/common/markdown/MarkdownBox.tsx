@@ -43,6 +43,8 @@ interface IMarkedMD {
  * accommodate the fullscreen version of this component.
  *
  * @param content The markdown to be displayed
+ * @param defaultVersion (optional) Default Bible version to use for links
+ * @param passageContext (optional) Larger contextual passage to use for relative passages (e.g. `verse 1`)
  * @param changeCallback Callback function to be called when the content is updated
  * @param showToolbar Whether the toolbar should be displayed
  * @param showSidePreview Whether the side preview should be displayed
@@ -282,10 +284,6 @@ const MarkedMD = ({
   );
 };
 
-/**
- * Include the `MDPreview` component into this component's interface,
- * so that it can be included via `<MarkdownBox.Preview>`.
- */
 const InternalMarkedMD = Object.assign(MarkedMD, {
   Preview: MDPreview,
 });
