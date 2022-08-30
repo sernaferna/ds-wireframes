@@ -112,6 +112,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
       return '';
     }
   }, [selectedNote, selectedNoteID, noteIsLoading]);
+  const [mdText, setMdText] = useState(downloadedNoteText);
 
   const [downloadedStartRef, downloadedEndRef, downloadedVersion] = useMemo(() => {
     let start = '';
@@ -151,7 +152,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   };
 
   const formSubmit = useCallback(
-    (values: ValuesSchema) => {
+    async (values: ValuesSchema) => {
       if (values.value === undefined) {
         addErrorMessage('Note not valid');
       }
@@ -280,10 +281,11 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
             </Col>
           </Row>
           <MarkdownBox
-            content={fp.values.value || ''}
+            content={mdText || ''}
             defaultVersion={fp.values.version}
             passageContext={getContextForPassage(fp.values.startReference, fp.values.endReference)}
             changeCallback={async (content) => {
+              setMdText(content);
               if (timer) {
                 clearTimeout(timer);
               }
