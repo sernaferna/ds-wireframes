@@ -9,7 +9,7 @@ import { useWindowSize } from '../../../hooks/WindowSize';
 import { toolbar } from './helpers/md-commands';
 import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
 
-const CALLBACK_INTERVAL = 1000;
+const PREVIEW_DELAY = 500;
 
 interface IMarkedMD {
   content: string;
@@ -77,8 +77,8 @@ const MarkedMD = ({
   const [preventScrollEvent, setPreventScrollEvent] = useState<boolean>(false);
   const [viewerLastScroll, setViewerLastScroll] = useState(0);
   const windowSize = useWindowSize();
-  const [md, setMD] = useState(content);
-  const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
+  const [previewContent, setPreviewContent] = useState(content);
+  const [previewTimer, setPreviewTimer] = useState<NodeJS.Timer | null>(null);
 
   const fsButton = useMemo(() => {
     if (!fullScreenOption) {
@@ -169,6 +169,7 @@ const MarkedMD = ({
                 handlers = {
                   ...handlers,
                   [b.name]: (event: KeyboardEvent) => {
+                    console.log('keyboard shortcut pressed'); // TODO remove
                     clickFn();
                     event.preventDefault();
                     event.stopPropagation();
@@ -200,6 +201,7 @@ const MarkedMD = ({
 
   hotkeyConfigure({
     ignoreTags: [],
+    ignoreEventsCondition: () => false,
     stopEventPropagationAfterHandling: true,
   });
 
@@ -209,24 +211,26 @@ const MarkedMD = ({
         <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
           {renderedToolbar}
 
-          <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={true}>
+          <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
             <Form.Control
               ref={editorRef}
               className="ds-md-editor"
               as="textarea"
               rows={editorLineHeight}
-              value={md}
+              value={content}
               onChange={(newValue) => {
-                if (timer) {
-                  clearTimeout(timer);
+                const newText = newValue.currentTarget.value;
+                changeCallback(newText);
+
+                if (previewTimer) {
+                  clearTimeout(previewTimer);
                 }
 
-                setMD(newValue.currentTarget.value);
-                setTimer(
+                setPreviewTimer(
                   setTimeout(() => {
-                    changeCallback(md);
-                    setTimer(null);
-                  }, CALLBACK_INTERVAL)
+                    setPreviewContent(newText);
+                    setPreviewTimer(null);
+                  }, PREVIEW_DELAY)
                 );
               }}
               disabled={readOnly}
@@ -237,7 +241,12 @@ const MarkedMD = ({
         {showSidePreview && (
           <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
             <div style={{ height: `${editorPixelHeight}px` }}>
-              <MDPreview content={md} shaded={false} defaultVersion={defaultVersion} passageContext={passageContext} />
+              <MDPreview
+                content={previewContent}
+                shaded={false}
+                defaultVersion={defaultVersion}
+                passageContext={passageContext}
+              />
             </div>
           </Col>
         )}
@@ -273,7 +282,12 @@ const MarkedMD = ({
             </Button>
 
             {showPreview && (
-              <MDPreview content={md} shaded={true} defaultVersion={defaultVersion} passageContext={passageContext} />
+              <MDPreview
+                content={previewContent}
+                shaded={true}
+                defaultVersion={defaultVersion}
+                passageContext={passageContext}
+              />
             )}
           </Col>
         </Row>
