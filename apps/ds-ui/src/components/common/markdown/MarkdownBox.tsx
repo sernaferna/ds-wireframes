@@ -73,7 +73,6 @@ const MarkedMD = ({
   const [showTutorial, setShowTutorial] = useState<boolean>(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
-  const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<HTMLDivElement>(null);
   const [preventScrollEvent, setPreventScrollEvent] = useState<boolean>(false);
   const [viewerLastScroll, setViewerLastScroll] = useState(0);
@@ -101,18 +100,15 @@ const MarkedMD = ({
     }
   }, [fullScreenOption, setFullSreen, showingFullScreen]);
 
-  const [editorLineHeight, editorPixelHeight, toolbarPixelHeight] = useMemo(() => {
+  const [editorLineHeight] = useMemo(() => {
     if (!editorRef.current || !showingFullScreen) {
       return [height, 0, 0];
     }
 
-    const pixelHeight = editorContainerRef.current!.clientHeight;
-    const toolbarPixelHeight = toolbarRef.current!.clientHeight;
-
     const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
     const newHeight = windowSize.height / fontHeight / 2;
 
-    return [newHeight, pixelHeight, toolbarPixelHeight];
+    return [newHeight];
   }, [editorRef, windowSize, height, showingFullScreen]);
 
   const reversePreviewState = () => {
@@ -215,7 +211,7 @@ const MarkedMD = ({
   return (
     <>
       <Row>
-        <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
+        <Col xs={showSidePreview ? '6' : '12'}>
           {renderedToolbar}
 
           <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
@@ -247,12 +243,12 @@ const MarkedMD = ({
         </Col>
         {showSidePreview && (
           <Col xs="6">
-            <div style={{ height: `${toolbarPixelHeight}px` }}>&nbsp;</div>
+            <div style={{ height: `${toolbarRef.current!.clientHeight}px` }}>&nbsp;</div>
             <div
               ref={viewerRef}
               className="overflow-auto"
               onScroll={handleViewerScroll}
-              style={{ height: `${editorPixelHeight}px` }}
+              style={{ height: `${editorRef.current!.clientHeight}px` }}
             >
               <MDPreview
                 content={previewContent}
