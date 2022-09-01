@@ -72,6 +72,7 @@ const MarkedMD = ({
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [showTutorial, setShowTutorial] = useState<boolean>(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const editorContainerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<HTMLDivElement>(null);
   const [preventScrollEvent, setPreventScrollEvent] = useState<boolean>(false);
@@ -100,17 +101,18 @@ const MarkedMD = ({
     }
   }, [fullScreenOption, setFullSreen, showingFullScreen]);
 
-  const [editorLineHeight, editorPixelHeight] = useMemo(() => {
+  const [editorLineHeight, editorPixelHeight, toolbarPixelHeight] = useMemo(() => {
     if (!editorRef.current || !showingFullScreen) {
-      return [height, 0];
+      return [height, 0, 0];
     }
 
     const pixelHeight = editorContainerRef.current!.clientHeight;
+    const toolbarPixelHeight = toolbarRef.current!.clientHeight;
 
     const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
     const newHeight = windowSize.height / fontHeight / 2;
 
-    return [newHeight, pixelHeight];
+    return [newHeight, pixelHeight, toolbarPixelHeight];
   }, [editorRef, windowSize, height, showingFullScreen]);
 
   const reversePreviewState = () => {
@@ -156,7 +158,11 @@ const MarkedMD = ({
     let handlers = {};
 
     const renderedToolbar = (
-      <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
+      <ButtonToolbar
+        ref={toolbarRef}
+        aria-label="Markdown Toolbar"
+        className={hideAllControls || !showToolbar ? 'd-none' : ''}
+      >
         {toolbar.buttonGroups.map((g, index) => (
           <ButtonGroup size="sm" key={`buttongroup-${index}`}>
             {g.buttons.map((b, buttonIndex) => {
@@ -240,8 +246,14 @@ const MarkedMD = ({
           </HotKeys>
         </Col>
         {showSidePreview && (
-          <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
-            <div style={{ height: `${editorPixelHeight}px` }}>
+          <Col xs="6">
+            <div style={{ height: `${toolbarPixelHeight}px` }}>&nbsp;</div>
+            <div
+              ref={viewerRef}
+              className="overflow-auto"
+              onScroll={handleViewerScroll}
+              style={{ height: `${editorPixelHeight}px` }}
+            >
               <MDPreview
                 content={previewContent}
                 shaded={false}
