@@ -152,7 +152,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   };
 
   const formSubmit = useCallback(
-    async (values: ValuesSchema) => {
+    (values: ValuesSchema) => {
       if (values.value === undefined) {
         addErrorMessage('Note not valid');
       }
@@ -284,7 +284,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
             content={mdText || ''}
             defaultVersion={fp.values.version}
             passageContext={getContextForPassage(fp.values.startReference, fp.values.endReference)}
-            changeCallback={async (content) => {
+            changeCallback={(content) => {
               setMdText(content);
               if (timer) {
                 clearTimeout(timer);
