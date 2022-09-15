@@ -206,6 +206,7 @@ const MarkedMD = ({
     ignoreEventsCondition: () => false,
     stopEventPropagationAfterHandling: true,
     simulateMissingKeyPressEvents: false,
+    ignoreKeymapAndHandlerChangesByDefault: false,
   });
 
   return (
