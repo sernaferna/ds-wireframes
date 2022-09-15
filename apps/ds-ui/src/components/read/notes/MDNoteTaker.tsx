@@ -7,6 +7,7 @@ import {
   getFormattedReference,
   getRangesForOSIS,
   getContextForPassage,
+  isReferenceValid,
 } from '@devouringscripture/common';
 import {
   useCreateNoteMutation,
@@ -18,7 +19,7 @@ import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { getSelectedPassage, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
 import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import * as yup from 'yup';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';
 import { MarkdownBox } from '../../common/markdown/MarkdownBox';
 
@@ -36,9 +37,27 @@ const getStartEndForOsis = (osis: string): [string, string] => {
 
 const schema = yup.object({
   value: yup.string(),
-  startReference: yup.string().required('Start ref required'),
-  endReference: yup.string().required('End ref required'),
-  version: yup.string().required('Version required'),
+  startReference: yup
+    .string()
+    .required()
+    .test('valid-ref', 'Invalid Reference', (value) => {
+      if (value === undefined) {
+        return false;
+      }
+
+      return isReferenceValid(value as string);
+    }),
+  endReference: yup
+    .string()
+    .required()
+    .test('valid-ref', 'Invalid Reference', (value) => {
+      if (value === undefined) {
+        return false;
+      }
+
+      return isReferenceValid(value as string);
+    }),
+  version: yup.string().min(2).required('Version required'),
 });
 type ValuesSchema = yup.InferType<typeof schema>;
 
@@ -92,7 +111,6 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   const [AlertUI, addErrorMessage] = useErrorsAndWarnings();
   const mdRef = useRef<HTMLDivElement>(null);
   const formikRef = useRef<FormikProps<ValuesSchema>>(null);
-  const [dirty, setDirty] = useState<boolean>(false);
   const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
 
   const switchFS = useCallback(
@@ -152,10 +170,12 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   };
 
   const formSubmit = useCallback(
-    (values: ValuesSchema) => {
+    (values: ValuesSchema, { setFieldTouched, setFieldValue }: FormikHelpers<ValuesSchema>) => {
       if (values.value === undefined) {
         addErrorMessage('Note not valid');
       }
+      setFieldValue('value', mdText, false);
+      setFieldTouched('value', true, false);
       const textToSend = values.value!;
       const osisToSend = getContextForPassage(values.startReference, values.endReference);
 
@@ -166,26 +186,32 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
           osis: osisToSend,
           version: values.version,
         };
-        setDirty(false);
-        updateNote(newNote);
+        updateNote(newNote)
+          .unwrap()
+          .then(() => {
+            setFieldTouched('value', false);
+          })
+          .catch((err) => {
+            addErrorMessage(generateErrorStringFromError(err));
+          });
       } else {
         const newNote: BaseNote = {
           text: textToSend,
           osis: osisToSend,
           version: values.version,
         };
-        setDirty(false);
         submitNote(newNote)
           .unwrap()
           .then((note) => {
             dispatch(updateSelectedNote(note.id));
+            setFieldTouched('value', false);
           })
           .catch((error) => {
             addErrorMessage(generateErrorStringFromError(error));
           });
       }
     },
-    [addErrorMessage, updateNote, submitNote, dispatch, selectedNote]
+    [addErrorMessage, updateNote, submitNote, dispatch, selectedNote, mdText]
   );
 
   const deleteNoteCallback = useCallback(() => {
@@ -239,7 +265,10 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
                   type="search"
                   placeholder="From..."
                   value={fp.values.startReference}
-                  onChange={fp.handleChange}
+                  onChange={(e) => {
+                    fp.setFieldTouched('startReference', true, true);
+                    fp.handleChange(e);
+                  }}
                   onBlur={fp.handleBlur}
                   isValid={fp.touched.startReference && !fp.errors.startReference}
                   isInvalid={fp.touched.startReference && !!fp.errors.startReference}
@@ -254,7 +283,10 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
                   type="search"
                   placeholder="To..."
                   value={fp.values.endReference}
-                  onChange={fp.handleChange}
+                  onChange={(e) => {
+                    fp.setFieldTouched('endReference', true, true);
+                    fp.handleChange(e);
+                  }}
                   onBlur={fp.handleBlur}
                   name="endReference"
                   isValid={fp.touched.endReference && !fp.errors.endReference}
@@ -270,7 +302,10 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
                   type="search"
                   placeholder="ESV"
                   value={fp.values.version}
-                  onChange={fp.handleChange}
+                  onChange={(e) => {
+                    fp.setFieldTouched('version', true, true);
+                    fp.handleChange(e);
+                  }}
                   onBlur={fp.handleBlur}
                   name="version"
                   isValid={fp.touched.version && !fp.errors.version}
@@ -286,13 +321,12 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
             passageContext={getContextForPassage(fp.values.startReference, fp.values.endReference)}
             changeCallback={(content) => {
               setMdText(content);
+              fp.setFieldTouched('value', true, false);
+
               if (timer) {
                 clearTimeout(timer);
               }
 
-              setDirty(true);
-              fp.setFieldValue('value', content, false);
-              fp.setFieldTouched('value', true);
               if (autosaveNotes) {
                 setTimer(setTimeout(autoSaveFunc, AUTOSAVE_INTERVAL));
               }
@@ -314,7 +348,12 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
                 Close
               </Button>
             )}
-            <Button disabled={!dirty} variant="outline-primary" className="ms-2" type="submit">
+            <Button
+              disabled={!fp.touched.value && !fp.errors.endReference && !fp.errors.startReference && !fp.errors.version}
+              variant="outline-primary"
+              className="ms-2"
+              type="submit"
+            >
               {selectedNote ? 'Update' : 'Save'}
             </Button>
           </div>
