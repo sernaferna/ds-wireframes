@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Row, Col, Form } from 'react-bootstrap';
 import {
@@ -132,6 +132,10 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   }, [selectedNote, selectedNoteID, noteIsLoading]);
   const [mdText, setMdText] = useState(downloadedNoteText);
 
+  useEffect(() => {
+    setMdText(downloadedNoteText);
+  }, [setMdText, downloadedNoteText]);
+
   const [downloadedStartRef, downloadedEndRef, downloadedVersion] = useMemo(() => {
     let start = '';
     let end = '';
@@ -176,7 +180,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
       }
       setFieldValue('value', mdText, false);
       setFieldTouched('value', true, false);
-      const textToSend = values.value!;
+      const textToSend = mdText;
       const osisToSend = getContextForPassage(values.startReference, values.endReference);
 
       if (selectedNote) {
@@ -321,6 +325,7 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
             passageContext={getContextForPassage(fp.values.startReference, fp.values.endReference)}
             changeCallback={(content) => {
               setMdText(content);
+              fp.setFieldValue('value', content, false);
               fp.setFieldTouched('value', true, false);
 
               if (timer) {
