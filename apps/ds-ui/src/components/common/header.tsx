@@ -33,7 +33,7 @@ const getLinks = (link: HeaderLink) => {
 const links = [
   { label: 'Home', href: '/' },
   { label: 'Pray', href: '/prayer' },
-  { label: 'Read/Write', href: '/read' },
+  { label: 'Study', href: '/read' },
   { label: 'Do', href: '/do' },
   { label: 'Plans', href: '/plans' },
   { label: 'Stats', href: '/stats' },
