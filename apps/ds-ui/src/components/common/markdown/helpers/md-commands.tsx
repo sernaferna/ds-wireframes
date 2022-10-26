@@ -195,6 +195,22 @@ export const toolbar: MDToolbar = {
     {
       buttons: [
         {
+          name: 'Double Smart Quotes',
+          buttonContents: <span>“a”</span>,
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            replaceTextWith(state, api, '“', '”');
+          },
+        },
+        {
+          name: 'Single Smart Quotes',
+          buttonContents: <span>‘a’</span>,
+          execute(ta) {
+            const [state, api] = getObjectsFromTextarea(ta);
+            replaceTextWith(state, api, '‘', '’');
+          },
+        },
+        {
           name: 'Highlight',
           keyboardShortcut: 'Control+Shift+H',
           buttonContents: <mark>abc</mark>,
