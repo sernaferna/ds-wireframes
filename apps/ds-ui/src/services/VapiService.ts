@@ -95,7 +95,6 @@ export const vapiApi = createApi({
           body: note,
         };
       },
-      invalidatesTags: (result) => (result ? [{ type: 'notes', id: result.id }] : []),
     }),
   }),
 });

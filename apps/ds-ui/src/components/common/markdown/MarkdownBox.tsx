@@ -9,7 +9,7 @@ import { useWindowSize } from '../../../hooks/WindowSize';
 import { toolbar } from './helpers/md-commands';
 import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
 
-const CALLBACK_INTERVAL = 1000;
+const PREVIEW_DELAY = 500;
 
 interface IMarkedMD {
   content: string;
@@ -72,13 +72,13 @@ const MarkedMD = ({
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [showTutorial, setShowTutorial] = useState<boolean>(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
-  const editorContainerRef = useRef<HTMLDivElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<HTMLDivElement>(null);
   const [preventScrollEvent, setPreventScrollEvent] = useState<boolean>(false);
   const [viewerLastScroll, setViewerLastScroll] = useState(0);
   const windowSize = useWindowSize();
-  const [md, setMD] = useState(content);
-  const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
+  const [previewContent, setPreviewContent] = useState(content);
+  const [previewTimer, setPreviewTimer] = useState<NodeJS.Timer | null>(null);
 
   const fsButton = useMemo(() => {
     if (!fullScreenOption) {
@@ -100,18 +100,28 @@ const MarkedMD = ({
     }
   }, [fullScreenOption, setFullSreen, showingFullScreen]);
 
-  const [editorLineHeight, editorPixelHeight] = useMemo(() => {
+  const [editorLineHeight] = useMemo(() => {
     if (!editorRef.current || !showingFullScreen) {
-      return [height, 0];
+      return [height, 0, 0];
     }
-
-    const pixelHeight = editorContainerRef.current!.clientHeight;
 
     const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
     const newHeight = windowSize.height / fontHeight / 2;
 
-    return [newHeight, pixelHeight];
+    return [newHeight];
   }, [editorRef, windowSize, height, showingFullScreen]);
+
+  const getEditorPixelHeight = () => {
+    if (!editorRef.current) return 0;
+
+    return editorRef.current.clientHeight;
+  };
+
+  const getToolbarPixelHeight = () => {
+    if (!toolbarRef.current) return 0;
+
+    return toolbarRef.current.clientHeight;
+  };
 
   const reversePreviewState = () => {
     return () => {
@@ -155,40 +165,35 @@ const MarkedMD = ({
     let keyMap: KeyMap = {};
     let handlers = {};
 
-    const renderedToolbar = (
-      <ButtonToolbar aria-label="Markdown Toolbar" className={hideAllControls || !showToolbar ? 'd-none' : ''}>
-        {toolbar.buttonGroups.map((g, index) => (
-          <ButtonGroup size="sm" key={`buttongroup-${index}`}>
-            {g.buttons.map((b, buttonIndex) => {
-              const clickFn = () => {
-                console.log(`${b.name} called`); // TODO remove
-                b.execute(editorRef);
-              };
-              if (b.keyboardShortcut) {
-                keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
-                handlers = {
-                  ...handlers,
-                  [b.name]: (event: KeyboardEvent) => {
-                    clickFn();
-                    event.preventDefault();
-                    event.stopPropagation();
-                  },
-                };
-              }
-              const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
-              return (
-                <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
-                  {b.buttonContents}
-                </Button>
-              );
-            })}
-          </ButtonGroup>
-        ))}
-      </ButtonToolbar>
-    );
+    const renderedToolbar = toolbar.buttonGroups.map((g, index) => (
+      <ButtonGroup size="sm" key={`buttongroup-${index}`}>
+        {g.buttons.map((b, buttonIndex) => {
+          const clickFn = () => {
+            b.execute(editorRef);
+          };
+          if (b.keyboardShortcut) {
+            keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
+            handlers = {
+              ...handlers,
+              [b.name]: (event: KeyboardEvent) => {
+                clickFn();
+                event.preventDefault();
+                event.stopPropagation();
+              },
+            };
+          }
+          const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
+          return (
+            <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
+              {b.buttonContents}
+            </Button>
+          );
+        })}
+      </ButtonGroup>
+    ));
 
     return [renderedToolbar, keyMap, handlers];
-  }, [editorRef, hideAllControls, showToolbar]);
+  }, [editorRef]);
 
   if (fullScreenOption && !setFullSreen) {
     return (
@@ -200,33 +205,44 @@ const MarkedMD = ({
 
   hotkeyConfigure({
     ignoreTags: [],
+    ignoreEventsCondition: () => false,
     stopEventPropagationAfterHandling: true,
+    simulateMissingKeyPressEvents: false,
+    ignoreKeymapAndHandlerChangesByDefault: false,
   });
 
   return (
     <>
       <Row>
-        <Col xs={showSidePreview ? '6' : '12'} ref={editorContainerRef}>
-          {renderedToolbar}
+        <Col xs={showSidePreview ? '6' : '12'}>
+          <ButtonToolbar
+            ref={toolbarRef}
+            aria-label="Markdown Toolbar"
+            className={hideAllControls || !showToolbar ? 'd-none' : ''}
+          >
+            {renderedToolbar}
+          </ButtonToolbar>
 
-          <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={true}>
+          <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
             <Form.Control
               ref={editorRef}
               className="ds-md-editor"
               as="textarea"
               rows={editorLineHeight}
-              value={md}
+              value={content}
               onChange={(newValue) => {
-                if (timer) {
-                  clearTimeout(timer);
+                const newText = newValue.currentTarget.value;
+                changeCallback(newText);
+
+                if (previewTimer) {
+                  clearTimeout(previewTimer);
                 }
 
-                setMD(newValue.currentTarget.value);
-                setTimer(
+                setPreviewTimer(
                   setTimeout(() => {
-                    changeCallback(md);
-                    setTimer(null);
-                  }, CALLBACK_INTERVAL)
+                    setPreviewContent(newText);
+                    setPreviewTimer(null);
+                  }, PREVIEW_DELAY)
                 );
               }}
               disabled={readOnly}
@@ -235,9 +251,20 @@ const MarkedMD = ({
           </HotKeys>
         </Col>
         {showSidePreview && (
-          <Col ref={viewerRef} xs="6" className="overflow-auto" onScroll={handleViewerScroll}>
-            <div style={{ height: `${editorPixelHeight}px` }}>
-              <MDPreview content={md} shaded={false} defaultVersion={defaultVersion} passageContext={passageContext} />
+          <Col xs="6">
+            <div style={{ height: `${getToolbarPixelHeight()}px` }}>&nbsp;</div>
+            <div
+              ref={viewerRef}
+              className="overflow-auto"
+              onScroll={handleViewerScroll}
+              style={{ height: `${getEditorPixelHeight()}px` }}
+            >
+              <MDPreview
+                content={previewContent}
+                shaded={false}
+                defaultVersion={defaultVersion}
+                passageContext={passageContext}
+              />
             </div>
           </Col>
         )}
@@ -273,7 +300,12 @@ const MarkedMD = ({
             </Button>
 
             {showPreview && (
-              <MDPreview content={md} shaded={true} defaultVersion={defaultVersion} passageContext={passageContext} />
+              <MDPreview
+                content={previewContent}
+                shaded={true}
+                defaultVersion={defaultVersion}
+                passageContext={passageContext}
+              />
             )}
           </Col>
         </Row>

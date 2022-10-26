@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { renderedOutputFromMarkdown } from '../../../helpers/markdown/markdown-utils';
 
 interface IMDPreview {
@@ -19,13 +19,13 @@ interface IMDPreview {
  * @shaded Whether the output should be given a background colour and border to set it apart
  */
 export const MDPreview = ({ content, defaultVersion, passageContext, shaded = true }: IMDPreview) => {
-  const classNames: string =
-    'ds-md-viewer overflow-auto flex-grow-1 ' + (shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '');
+  const classNames: string = useMemo(() => {
+    return 'ds-md-viewer overflow-auto flex-grow-1 ' + (shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '');
+  }, [shaded]);
 
-  return (
-    <div
-      className={classNames}
-      dangerouslySetInnerHTML={{ __html: renderedOutputFromMarkdown(content, defaultVersion, passageContext) }}
-    />
-  );
+  const renderedOutput = useMemo(() => {
+    return renderedOutputFromMarkdown(content, defaultVersion, passageContext);
+  }, [content, defaultVersion, passageContext]);
+
+  return <div className={classNames} dangerouslySetInnerHTML={{ __html: renderedOutput }} />;
 };

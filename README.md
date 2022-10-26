@@ -17,13 +17,15 @@ Some common command-line tools are highlighted here.
 
 ## Start a Session
 
-In order for **ds-ui** to function both APIs must also be running. A script has been defined in the root `package.json` to start all three applications at once:
+In order for **ds-ui** to function both APIs must also be running. A `start` script has been defined in the root `package.json` to start all three applications at once:
 
 ```bash
 npm start
 ```
 
 Of course, this means that the logs from all three applications -- `ds-ui`, `ds-api`, and `ds-vapi` -- get mashed into one terminal window, and all get started/stopped together.
+
+**Note**: There is a long delay for the React app to start. When the `npm start` command is executed the APIs will load and the React app will also start loading, with all of the log messages mixed together, then it will say `Starting the development server...` and a browser will be launched automatically, but with a delay before the React app finishes starting and the browser actually populates with content.
 
 If desired the projects can be launched independently in separate terminals, with the following commands (still from the root):
 
