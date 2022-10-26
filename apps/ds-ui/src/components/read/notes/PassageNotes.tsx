@@ -4,7 +4,7 @@ import { getSelectedPassage, getSelectedNote } from '../../../stores/UISlice';
 import { MDNoteTaker } from './MDNoteTaker';
 import { NotesForPassage } from './NotesForPassage';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { Alert } from 'react-bootstrap';
+import { Alert, Col, Row } from 'react-bootstrap';
 import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -56,16 +56,20 @@ export const PassageNotes = ({ showMDFullScreen, setShowMDFullScreen, autosaveNo
   const showNotesForPassage = selectedPassageID !== '' && !showMDFullScreen;
 
   return (
-    <>
-      <h4>Notes</h4>
-      <MDNoteTaker
-        showMDFullScreen={showMDFullScreen}
-        setShowMDFullScreen={setShowMDFullScreen}
-        autosaveNotes={autosaveNotes}
-        key={selectedNoteID || uuidv4()}
-      />
-
-      {showNotesForPassage && <NotesForPassage osis={data ? data.osis : ''} />}
-    </>
+    <Row>
+      {showNotesForPassage && (
+        <Col xs="12" md="6" lg="12" xl="5">
+          <NotesForPassage osis={data ? data.osis : ''} />
+        </Col>
+      )}
+      <Col xs="12" md={showNotesForPassage ? '6' : '12'} lg="12" xl={showNotesForPassage ? '7' : '12'}>
+        <MDNoteTaker
+          showMDFullScreen={showMDFullScreen}
+          setShowMDFullScreen={setShowMDFullScreen}
+          autosaveNotes={autosaveNotes}
+          key={selectedNoteID || uuidv4()}
+        />
+      </Col>
+    </Row>
   );
 };
