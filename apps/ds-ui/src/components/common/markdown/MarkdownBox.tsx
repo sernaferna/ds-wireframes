@@ -111,6 +111,18 @@ const MarkedMD = ({
     return [newHeight];
   }, [editorRef, windowSize, height, showingFullScreen]);
 
+  const getEditorPixelHeight = () => {
+    if (!editorRef.current) return 0;
+
+    return editorRef.current.clientHeight;
+  };
+
+  const getToolbarPixelHeight = () => {
+    if (!toolbarRef.current) return 0;
+
+    return toolbarRef.current.clientHeight;
+  };
+
   const reversePreviewState = () => {
     return () => {
       setShowPreview(!showPreview);
@@ -153,45 +165,35 @@ const MarkedMD = ({
     let keyMap: KeyMap = {};
     let handlers = {};
 
-    const renderedToolbar = (
-      <ButtonToolbar
-        ref={toolbarRef}
-        aria-label="Markdown Toolbar"
-        className={hideAllControls || !showToolbar ? 'd-none' : ''}
-      >
-        {toolbar.buttonGroups.map((g, index) => (
-          <ButtonGroup size="sm" key={`buttongroup-${index}`}>
-            {g.buttons.map((b, buttonIndex) => {
-              const clickFn = () => {
-                console.log(`${b.name} called`); // TODO remove
-                b.execute(editorRef);
-              };
-              if (b.keyboardShortcut) {
-                keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
-                handlers = {
-                  ...handlers,
-                  [b.name]: (event: KeyboardEvent) => {
-                    console.log('keyboard shortcut pressed'); // TODO remove
-                    clickFn();
-                    event.preventDefault();
-                    event.stopPropagation();
-                  },
-                };
-              }
-              const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
-              return (
-                <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
-                  {b.buttonContents}
-                </Button>
-              );
-            })}
-          </ButtonGroup>
-        ))}
-      </ButtonToolbar>
-    );
+    const renderedToolbar = toolbar.buttonGroups.map((g, index) => (
+      <ButtonGroup size="sm" key={`buttongroup-${index}`}>
+        {g.buttons.map((b, buttonIndex) => {
+          const clickFn = () => {
+            b.execute(editorRef);
+          };
+          if (b.keyboardShortcut) {
+            keyMap = { ...keyMap, [b.name]: b.keyboardShortcut };
+            handlers = {
+              ...handlers,
+              [b.name]: (event: KeyboardEvent) => {
+                clickFn();
+                event.preventDefault();
+                event.stopPropagation();
+              },
+            };
+          }
+          const title = b.keyboardShortcut ? `${b.name} (${b.keyboardShortcut})` : b.name;
+          return (
+            <Button variant="outline-dark" onClick={clickFn} key={`button-${buttonIndex}`} title={title}>
+              {b.buttonContents}
+            </Button>
+          );
+        })}
+      </ButtonGroup>
+    ));
 
     return [renderedToolbar, keyMap, handlers];
-  }, [editorRef, hideAllControls, showToolbar]);
+  }, [editorRef]);
 
   if (fullScreenOption && !setFullSreen) {
     return (
@@ -213,7 +215,13 @@ const MarkedMD = ({
     <>
       <Row>
         <Col xs={showSidePreview ? '6' : '12'}>
-          {renderedToolbar}
+          <ButtonToolbar
+            ref={toolbarRef}
+            aria-label="Markdown Toolbar"
+            className={hideAllControls || !showToolbar ? 'd-none' : ''}
+          >
+            {renderedToolbar}
+          </ButtonToolbar>
 
           <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
             <Form.Control
@@ -244,12 +252,12 @@ const MarkedMD = ({
         </Col>
         {showSidePreview && (
           <Col xs="6">
-            <div style={{ height: `${toolbarRef.current!.clientHeight}px` }}>&nbsp;</div>
+            <div style={{ height: `${getToolbarPixelHeight()}px` }}>&nbsp;</div>
             <div
               ref={viewerRef}
               className="overflow-auto"
               onScroll={handleViewerScroll}
-              style={{ height: `${editorRef.current!.clientHeight}px` }}
+              style={{ height: `${getEditorPixelHeight()}px` }}
             >
               <MDPreview
                 content={previewContent}
