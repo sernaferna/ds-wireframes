@@ -35,18 +35,23 @@ import {
  * @param token The token to be inserted before (and maybe after) the text
  * @param endToken Optional: the token to be inserted after the text. If not supplied, `token` is used in both places.
  * @param defaultText Text that should be inserted if none is selected in the textarea.
+ * @param makeUpper Used for special cases where the replaced text should be converted to all uppercase
  */
 const replaceTextWith = (
   state: TextState,
   api: TextAreaTextApi,
   token: string,
   endToken: string | undefined = undefined,
-  defaultText: string | undefined = undefined
+  defaultText: string | undefined = undefined,
+  makeUpper: boolean = false
 ): void => {
   const closingToken = endToken ? endToken : token;
   let newText = defaultText ? defaultText : '';
   if (state.selectedText.length > 0) {
     newText = state.selectedText;
+    if (makeUpper) {
+      newText = newText.toLocaleUpperCase();
+    }
   }
 
   const startStartPosition = state.selection.start - token.length;
@@ -241,7 +246,7 @@ export const toolbar: MDToolbar = {
           ),
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
-            replaceTextWith(state, api, '^^^', '^^^', 'LORD');
+            replaceTextWith(state, api, '^^^', '^^^', 'LORD', true);
           },
         },
         {
@@ -257,7 +262,7 @@ export const toolbar: MDToolbar = {
           buttonContents: <span style={{ fontVariant: 'small-caps' }}>b.c.</span>,
           execute(ta) {
             const [state, api] = getObjectsFromTextarea(ta);
-            replaceTextWith(state, api, '^^');
+            replaceTextWith(state, api, '^^', undefined, undefined, true);
           },
         },
       ],
