@@ -5,7 +5,7 @@ const fullMatchRE = /^\|> (?:\|> )*(?:\(\((.*)\)\) )/;
 const lineMatchRE = /^\|> /;
 
 /**
- * Handles formatting for `\>` style Scripture Quotes.
+ * Handles formatting for `|>` style Scripture Quotes.
  */
 export const scriptureQuotes = (
   defaultVersion: string,
@@ -55,6 +55,7 @@ export const scriptureQuotes = (
             ? `[|${citation}|${defaultVersion}${context ? ';s' : ''}]`
             : citation;
         mdCitation = marked.parseInline(mdCitation);
+        mdCitation = mdCitation.replace(/([0-9])-([0-9])/, '$1–$2');
         responseString += `<p style="margin-top: 0; margin-bottom: 0; text-align: right; font-style: italic;">${mdCitation}</p>`;
       }
 
