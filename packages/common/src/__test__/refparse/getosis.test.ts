@@ -56,4 +56,8 @@ describe('get OSIS test suite', () => {
   it('handles a chapter outside a context book', () => {
     expect(getOSISForReference('Chapter 100', 'John')).toEqual('');
   });
+
+  it('handles "and" in the string', () => {
+    expect(getOSISForReference('verses 1 and 5', 'John 3')).toEqual('John.3.1,John.3.5');
+  });
 });

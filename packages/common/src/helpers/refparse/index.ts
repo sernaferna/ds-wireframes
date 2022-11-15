@@ -68,6 +68,69 @@ export const getOSISForReference = (ref: string, context: string | undefined = u
   return osisString;
 };
 
+interface OsisAndIndicesResult {
+  osis: string;
+  translations: string[];
+  indices: [number, number];
+}
+export interface RefFromStringResult {
+  osis: string;
+  indices: [number, number];
+}
+
+/**
+ * Parses a string to look for any and all **references**, and returns
+ * an array of objects for each found instance of the **OSIS** for that ref and
+ * the **indices** in the original string where the reference was found.
+ *
+ * - e.g. `verse 5` with context `John 3` would return a single
+ * object with OSIS `John.5.5` and indices 0-6
+ * - e.g. `Matt 1:1 and John 5:6 are passages` would return an
+ * object with OSIS `Matt.1.1` indices 0-7 and a second object
+ * with OSIS `John.5.6` and indices 13-20.
+ * - e.g. `verses 1 and 5` with context `John 3` would return an
+ * object with OSIS `John.3.1` and indices 0-7 and a second object
+ * with OSIS `John.3.5` and indices 13-13.
+ * - e.g. `v. 1 & v.5` with context `John 3` would return an
+ * object with OSIS `John.3.1` and indices 0-3 and a second object
+ * with OSIS `John.3.5` and indices 8-10.
+ *
+ * Knowledge of how strings are parsed to look for references is helpful;
+ * e.g. the example of `verses 1 and 5` might be non-obvious, where
+ * the parser finds `verses 1` as the first ref and `5` as the second.
+ *
+ * This function purposely doesn't combine strings together the way others
+ * might; e.g. `verses 1 and 5` with context `John 3` would produce
+ * `John.3.1,John.3.5` as one combined OSIS from `getOSISForReference()`,
+ * whereas `getAllRefsFromString()` would split it into two separate OSISes.
+ *
+ * @param osisOrRef String to be parsed
+ * @param context Context for the string (if any)
+ * @returns Array of `RefFromStringResult` objects with the OSIS text and the range from the input string
+ */
+export const getAllRefsFromString = (
+  osisOrRef: string,
+  context: string | undefined = undefined
+): RefFromStringResult[] => {
+  const bcv = new bcv_parser();
+  bcv.set_options({
+    osis_compaction_strategy: 'bcv',
+    book_sequence_strategy: 'full',
+    book_range_strategy: 'include',
+    sequence_combination_strategy: 'separate',
+  });
+
+  const bcvResult: OsisAndIndicesResult[] = context
+    ? bcv.parse_with_context(osisOrRef, context).osis_and_indices()
+    : bcv.parse(osisOrRef).osis_and_indices();
+  const response: RefFromStringResult[] = bcvResult.map((item) => ({
+    osis: item.osis,
+    indices: [item.indices[0], item.indices[1] - 1],
+  }));
+
+  return response;
+};
+
 /**
  * Takes a machine-friendly OSIS string and converts it to a human-
  * readable string. The `includeVerses` parameter controls how to

@@ -1,5 +1,5 @@
 import { marked } from 'marked';
-import { isReferenceValid } from '@devouringscripture/common';
+import { getAllRefsFromString } from '@devouringscripture/common';
 
 const fullMatchRE = /^\|> (?:\|> )*(?:\(\((.*)\)\) )/;
 const lineMatchRE = /^\|> /;
@@ -50,12 +50,23 @@ export const scriptureQuotes = (
       }
 
       if (citation) {
-        let mdCitation =
-          isReferenceValid(citation, context) && !/<a/.test(citation)
-            ? `[|${citation}|${defaultVersion}${context ? ';s' : ''}]`
-            : citation;
+        let mdCitation = citation;
+        const refs = getAllRefsFromString(mdCitation, context);
+        let indexFactor = 0;
+        for (let i = 0; i < refs.length; i++) {
+          mdCitation =
+            mdCitation.substring(0, refs[i].indices[0] + indexFactor) +
+            `[|${refs[i].osis}|]` +
+            mdCitation.substring(refs[i].indices[1] + 1 + indexFactor);
+          indexFactor = mdCitation.length - citation.length;
+        }
         mdCitation = marked.parseInline(mdCitation);
-        mdCitation = mdCitation.replace(/([0-9])-([0-9])/, '$1–$2');
+        // let mdCitation =
+        //   isReferenceValid(citation, context) && !/<a/.test(citation)
+        //     ? `[|${citation}|${defaultVersion}${context ? ';s' : ''}]`
+        //     : citation;
+        // mdCitation = marked.parseInline(mdCitation);
+        // mdCitation = mdCitation.replace(/([0-9])-([0-9])/, '$1–$2');
         responseString += `<p style="margin-top: 0; margin-bottom: 0; text-align: right; font-style: italic;">${mdCitation}</p>`;
       }
 
