@@ -25,6 +25,8 @@ jobs:
               - 'apps/ds-ui/**'
             vapi:
               - 'apps/ds-vapi/**'
+            mde:
+              - '/packages/mde/**'
       - name: 'Bump version for UI'
         uses: 'phips28/gh-action-bump-version@master'
         if: steps.filter.outputs.ui == 'true'
@@ -60,6 +62,18 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: 'apps/ds-vapi'
+          GITHUB_REF: ${{ github.ref}}
+      - name: 'Bump version for MDE'
+        uses: 'phips28/gh-action-bump-version@master'
+        if: steps.filter.outputs.mde == 'true'
+        with:
+          target-branch: 'main'
+          skip-tag: 'true'
+          major-wording: 'MAJOR'
+          minor-wording: 'MINOR'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: 'packages/mde'
           GITHUB_REF: ${{ github.ref}}
       - name: 'Bump version for Workspace'
         uses: 'phips28/gh-action-bump-version@master'
