@@ -4,7 +4,7 @@ import { RenderedPart } from '../../common/tutorial/RenderedChapter';
 import { ArrowDownSquare, ArrowUpSquare, TrashFill } from 'react-bootstrap-icons';
 import { FieldArrayRenderProps, FieldInputProps, FormikProps } from 'formik';
 import { FormikPartType, FormikTutorialType, getPartFromFormik } from './formik-helpers';
-import { MarkdownBox } from '../../common/markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 interface IEditPart {
   partIndex: number;

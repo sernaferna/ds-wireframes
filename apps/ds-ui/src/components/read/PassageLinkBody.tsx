@@ -1,6 +1,6 @@
 import React from 'react';
 import { BasePassage } from '@devouringscripture/common';
-import { MarkdownBox } from '../common/markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 /**
  * Helper function to generate the appropriate markdown for a link to

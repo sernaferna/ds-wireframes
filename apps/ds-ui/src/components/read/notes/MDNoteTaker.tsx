@@ -21,7 +21,7 @@ import { useErrorsAndWarnings } from '../../../hooks/ErrorsAndWarning';
 import * as yup from 'yup';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { ErrorLoadingDataMessage, generateErrorStringFromError, LoadingMessage } from '../../common/loading';
-import { MarkdownBox } from '../../common/markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 const AUTOSAVE_INTERVAL = 3000;
 
