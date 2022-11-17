@@ -26,7 +26,7 @@ jobs:
             vapi:
               - 'apps/ds-vapi/**'
             mde:
-              - '/packages/mde/**'
+              - 'packages/mde/**'
       - name: 'Bump version for UI'
         uses: 'phips28/gh-action-bump-version@master'
         if: steps.filter.outputs.ui == 'true'
