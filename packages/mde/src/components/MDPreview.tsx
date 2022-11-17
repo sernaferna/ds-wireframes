@@ -8,9 +8,9 @@ export interface IMDPreview {
   shaded?: boolean;
 }
 
-export const MDPreview = ({ content, defaultVersion, passageContext, shaded }: IMDPreview) => {
+export const MDPreview = ({ content, defaultVersion, passageContext, shaded = true }: IMDPreview) => {
   const classNames: string = useMemo(() => {
-    return `ds-md-viewer overflow-auto flex-grow-1 ` + shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '';
+    return `ds-md-viewer overflow-auto flex-grow-1 ` + (shaded ? 'bg-secondary bg-opacity-10 border mx-1 my-2' : '');
   }, [shaded]);
 
   const renderedOutput = useMemo(() => {
