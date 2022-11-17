@@ -3,7 +3,7 @@ import { marked } from 'marked';
 /**
  * Handles `^sup^` notation.
  */
-export const superscriptExtension: marked.TokenizerExtension | marked.RendererExtension = {
+export const SuperscriptExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'superscriptExtension',
   level: 'inline',
   start(src) {

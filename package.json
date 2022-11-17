@@ -3,7 +3,7 @@
   "version": "15.7.1",
   "scripts": {
     "start": "npm start -w ds-api & npm start -w ds-vapi & npm start -w ds-ui",
-    "build": "npm run build -w @devouringscripture/common",
+    "build": "npm run build -w @devouringscripture/common & npm run build -w @devouringscripture/mde",
     "test": "npm run test -w @devouringscripture/common"
   },
   "workspaces": [

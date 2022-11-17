@@ -18,7 +18,7 @@ import { paginateItems } from '../../hooks/pagination';
 import { PrayerIconsContainer } from './PrayerIconsContainer';
 import { PlaceholderCard } from './PlaceholderCard';
 import { SetMessageFunction } from '../../hooks/ErrorsAndWarning';
-import { MarkdownBox } from '../common/markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 export const getPrayerIcon = (type: string | undefined): JSX.Element => {
   if (type === undefined) {

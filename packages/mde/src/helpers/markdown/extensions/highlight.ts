@@ -3,7 +3,7 @@ import { marked } from 'marked';
 /**
  * Handles text in the format `==text==`
  */
-export const highlightExtension: marked.TokenizerExtension | marked.RendererExtension = {
+export const HighlightExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'highlightExtension',
   level: 'inline',
   start(src) {

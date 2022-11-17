@@ -7,8 +7,7 @@ const lineMatchRE = /^\|> /;
 /**
  * Handles formatting for `|>` style Scripture Quotes.
  */
-export const scriptureQuotes = (
-  defaultVersion: string,
+export const ScriptureQuotes = (
   context: string | undefined = undefined
 ): Partial<Omit<marked.Renderer<false>, 'options'>> => {
   return {

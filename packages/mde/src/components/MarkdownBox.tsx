@@ -1,17 +1,15 @@
 import React, { useCallback, useMemo, useState, useRef, KeyboardEvent } from 'react';
 import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
-import { ClientSideErrorLoading } from '../loading';
-import { MarkdownTutorial } from './tutorial/MarkdownTutorial';
 import { MDPreview } from './MDPreview';
-import { renderedOutputFromMarkdown } from '../../../helpers/markdown';
-import { useWindowSize } from '../../../hooks/WindowSize';
-import { toolbar } from './helpers/md-commands';
+import { outputFromMD } from '../helpers/markdown';
+import { useWindowSize } from '../hooks/WindowSize';
+import { toolbar } from '../helpers/markdown/md-commands';
 import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
 
 const PREVIEW_DELAY = 500;
 
-interface IMarkedMD {
+export interface IMarkedMD {
   content: string;
   defaultVersion?: string;
   passageContext?: string;
@@ -55,7 +53,7 @@ interface IMarkedMD {
  * @param height Height of the editor, in terms of lines to display in the textarea (*not* pixels)
  * @param readOnly If the component should be rendered readonly
  */
-const MarkedMD = ({
+export const MarkdownBox = ({
   content,
   defaultVersion,
   passageContext,
@@ -70,7 +68,7 @@ const MarkedMD = ({
   readOnly = false,
 }: IMarkedMD) => {
   const [showPreview, setShowPreview] = useState<boolean>(false);
-  const [showTutorial, setShowTutorial] = useState<boolean>(false);
+  //   const [showTutorial, setShowTutorial] = useState<boolean>(false);
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const toolbarRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<HTMLDivElement>(null);
@@ -130,7 +128,7 @@ const MarkedMD = ({
   };
 
   const handleHTMLDownload = useCallback(() => {
-    const formattedHTML = renderedOutputFromMarkdown(content, defaultVersion, passageContext);
+    const formattedHTML = outputFromMD(content, defaultVersion, passageContext);
     fileDownload(formattedHTML, 'notes.html');
   }, [content, defaultVersion, passageContext]);
 
@@ -194,14 +192,6 @@ const MarkedMD = ({
 
     return [renderedToolbar, keyMap, handlers];
   }, [editorRef]);
-
-  if (fullScreenOption && !setFullSreen) {
-    return (
-      <ClientSideErrorLoading>
-        <p>Error loading page; bad configuration</p>
-      </ClientSideErrorLoading>
-    );
-  }
 
   hotkeyConfigure({
     ignoreTags: [],
@@ -271,7 +261,7 @@ const MarkedMD = ({
       </Row>
       <Row>
         <Col>
-          {!hideAllControls && (
+          {/* {!hideAllControls && (
             <Button
               variant="link"
               size="sm"
@@ -281,7 +271,7 @@ const MarkedMD = ({
             >
               Show Tutorial
             </Button>
-          )}
+          )} */}
 
           {fsButton}
 
@@ -310,14 +300,6 @@ const MarkedMD = ({
           </Col>
         </Row>
       )}
-
-      <MarkdownTutorial show={showTutorial} handleClose={() => setShowTutorial(false)} />
     </>
   );
 };
-
-const InternalMarkedMD = Object.assign(MarkedMD, {
-  Preview: MDPreview,
-});
-
-export { InternalMarkedMD as MarkdownBox };

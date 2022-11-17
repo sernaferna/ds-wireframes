@@ -1,13 +1,12 @@
-import { RefObject } from 'react';
+import React, { RefObject } from 'react';
 import {
   TextState,
   TextAreaTextApi,
   selectWord,
-  MDToolbar,
   getBreaksNeededForEmptyLineAfter,
   getBreaksNeededForEmptyLineBefore,
   getStateFromTextArea,
-} from '../../../../helpers/markdown';
+} from './TextAreaTextApi';
 import {
   TypeBold,
   TypeItalic,
@@ -16,27 +15,28 @@ import {
   TypeH3,
   Link45deg,
   Quote,
-  ListOl,
   ListUl,
+  ListOl,
   BookHalf,
-  FileRichtextFill,
   BookFill,
+  FileRichtextFill,
 } from 'react-bootstrap-icons';
 
-/**
- * Helper function to surround some text in a text area with token(s). If text
- * is selected in the textarea it will be surrounded with the tokens and the
- * cursor will be left in a comfortable spot; if no text is selected some
- * default text can be supplied. If no text is selected and no default
- * text is supplied, the tokens are simply inserted at the cursor location.
- *
- * @param state The `TextState` object represenging the textarea's state
- * @param api The `TextAreaTextApi` class for working with the textarea
- * @param token The token to be inserted before (and maybe after) the text
- * @param endToken Optional: the token to be inserted after the text. If not supplied, `token` is used in both places.
- * @param defaultText Text that should be inserted if none is selected in the textarea.
- * @param makeUpper Used for special cases where the replaced text should be converted to all uppercase
- */
+interface MDToolbarButton {
+  name: string;
+  keyboardShortcut?: string;
+  buttonContents: JSX.Element;
+  execute: (tb: RefObject<HTMLTextAreaElement>) => void;
+}
+
+interface MDToolbarButtonGroup {
+  buttons: MDToolbarButton[];
+}
+
+export interface MDToolbar {
+  buttonGroups: MDToolbarButtonGroup[];
+}
+
 const replaceTextWith = (
   state: TextState,
   api: TextAreaTextApi,
@@ -79,13 +79,6 @@ const replaceTextWith = (
   });
 };
 
-/**
- * Helper function to take a `RefObject` reference to a textarea and get objects from it
- * for state and the TextAreaTextApi.
- *
- * @param ta TextArea ref object
- * @returns Tuple including `TextState` object and `TextAreaTextApi` object for the textarea
- */
 const getObjectsFromTextarea = (ta: RefObject<HTMLTextAreaElement>): [TextState, TextAreaTextApi] => {
   const state = getStateFromTextArea(ta.current!);
   const api = new TextAreaTextApi(ta.current!);
@@ -93,14 +86,6 @@ const getObjectsFromTextarea = (ta: RefObject<HTMLTextAreaElement>): [TextState,
   return [state, api];
 };
 
-/**
- * The buttons to be rendered into the MDEditors toolbar in the format:
- *
- * * name: The name of the item (not used for anything)
- * * keyboardShortcut (optional): Keyboard shortcut to activate this command
- * * buttonContents: The content/UI to be shown in the button; typically an icon
- * * execute: The function to call when the button is clicked.
- */
 export const toolbar: MDToolbar = {
   buttonGroups: [
     {

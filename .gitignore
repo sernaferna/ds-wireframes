@@ -10,6 +10,7 @@
 
 # production
 **/build/
+packages/mde/lib/*
 
 # misc
 .DS_Store

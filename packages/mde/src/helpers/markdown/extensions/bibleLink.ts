@@ -6,7 +6,7 @@ export const bibleLinkRE = /^\[\|([^(|]+)(?:\s+\(([^)]*)\))?\|([^;\]]*)(?:;([^\]
 /**
  * Converts `[|REF|]` notation to links to Bible Gateway
  */
-export const bibleLinkExtension = (
+export const BibleLinkExtension = (
   defaultVersion: string = 'ESV',
   context: string | undefined = undefined
 ): marked.TokenizerExtension | marked.RendererExtension => {

@@ -1,23 +1,19 @@
 import { marked } from 'marked';
 
-/**
- * Handles text in the format `^^^TEXT^^^`
- */
-export const allUpperExtension: marked.TokenizerExtension | marked.RendererExtension = {
-  name: 'allUpperExtension',
+const upperRE = /^\^\^\^([^^]+)\^\^\^/;
+
+export const AllUpperExtension: marked.TokenizerExtension | marked.RendererExtension = {
+  name: 'AllUpperExtension',
   level: 'inline',
   start(src) {
     return src.match(/\^\^\^/)?.index || -1;
   },
   tokenizer(src, tokens) {
-    const rule = /^\^\^\^([^^]+)\^\^\^/;
-    const match = rule.exec(src);
-    if (!match) {
-      return;
-    }
+    const match = upperRE.exec(src);
+    if (!match) return;
 
     const token = {
-      type: 'allUpperExtension',
+      type: 'AllUpperExtension',
       raw: match[0],
       individualWords: match[1].split(' '),
     };
@@ -27,7 +23,7 @@ export const allUpperExtension: marked.TokenizerExtension | marked.RendererExten
     let returnString = '';
 
     for (let i = 0; i < token.individualWords.length; i++) {
-      const theWord = token.individualWords[i];
+      const theWord: string = token.individualWords[i];
       returnString += `<span style="text-transform: uppercase;">${theWord.substring(
         0,
         1
@@ -35,9 +31,7 @@ export const allUpperExtension: marked.TokenizerExtension | marked.RendererExten
         1,
         theWord.length
       )}</span>`;
-      if (i < token.individualWords.length - 1) {
-        returnString += ' ';
-      }
+      if (i < token.individualWords.length - 1) returnString += ' ';
     }
 
     return returnString;

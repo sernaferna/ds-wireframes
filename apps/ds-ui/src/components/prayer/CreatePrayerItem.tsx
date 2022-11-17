@@ -5,7 +5,7 @@ import { ShieldPlus, Tsunami, EyeFill } from 'react-bootstrap-icons';
 import { PrayerTypes, BasePrayerListItem } from '@devouringscripture/common';
 import * as yup from 'yup';
 import { Formik, FormikProps, FormikHelpers } from 'formik';
-import { MarkdownBox } from '../common/markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 const praisePopover = (
   <Popover id="praise-popover">

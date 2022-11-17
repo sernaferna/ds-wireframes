@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useGetNoteByIdQuery } from '../../../services/VapiService';
 import { updateSelectedPassage, getSelectedNote, updateSelectedNote } from '../../../stores/UISlice';
 import { LoadingMessage, ErrorLoadingDataMessage } from '../../common/loading';
-import { MarkdownBox } from '../../common/markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 interface INotesSnippet {
   noteID: string;

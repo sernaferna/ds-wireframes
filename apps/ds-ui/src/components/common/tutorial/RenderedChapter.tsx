@@ -1,7 +1,7 @@
 import React from 'react';
 import { PartType, Chapter, SectionPart } from '@devouringscripture/common';
 import { Accordion } from 'react-bootstrap';
-import { MarkdownBox } from '../markdown/MarkdownBox';
+import { MarkdownBox } from '@devouringscripture/mde';
 
 interface IReadOnlyMarkdownBox {
   text: string;

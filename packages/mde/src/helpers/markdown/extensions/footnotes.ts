@@ -3,7 +3,7 @@ import { marked } from 'marked';
 const fnRefRE = /^\[\^([^\]]+)\](?!:)/;
 const fnRE = /^\[\^([^\]]+)\]: /;
 
-export const footnoteRefExtension: marked.TokenizerExtension | marked.RendererExtension = {
+export const FootnoteRefExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'footnoteRefExtension',
   level: 'inline',
   start(src) {
@@ -28,7 +28,7 @@ export const footnoteRefExtension: marked.TokenizerExtension | marked.RendererEx
   },
 };
 
-export const footnotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
+export const Footnotes: Partial<Omit<marked.Renderer<false>, 'options'>> = {
   paragraph(text) {
     const fnMatch = fnRE.exec(text);
     if (!fnMatch) {

@@ -3,7 +3,7 @@ import { marked } from 'marked';
 /**
  * Uses ^-^Some Text^-^ notation to create small caps.
  */
-export const smallCapsExtension: marked.TokenizerExtension | marked.RendererExtension = {
+export const SmallCapsExtension: marked.TokenizerExtension | marked.RendererExtension = {
   name: 'smallCapsExtension',
   level: 'inline',
   start(src) {
