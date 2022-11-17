@@ -8,7 +8,7 @@ export { outputFromMD } from './helpers/markdown';
  */
 const InternalMarkdownBox = Object.assign(MarkdownBox, {
   /**
-   * This is the Markdown Preview Component
+   * This is the Markdown Preview Component, which can be used on its own
    */
   Preview: MDPreview,
 });
