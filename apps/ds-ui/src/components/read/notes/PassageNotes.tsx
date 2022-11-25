@@ -9,8 +9,6 @@ import { useGetPassageByIdQuery } from '../../../services/PassagesService';
 import { v4 as uuidv4 } from 'uuid';
 
 interface IPassageNotes {
-  showMDFullScreen: boolean;
-  setShowMDFullScreen(fs: boolean): void;
   autosaveNotes: boolean;
 }
 
@@ -28,11 +26,9 @@ interface IPassageNotes {
  * * **ReadPage** includes *PassageNotes*
  * * *PassageNotes* displays **MDNoteTaker** and **NotesForPassage**
  *
- * @param showMDFullScreen Whether the MD editor should be shown full screen
- * @param setShowMDFullScreen Callback function to call when switching in/out of MD fullscreen
  * @param autosaveNotes Indicates whether notes should be autosaved (passthrough to `MDNoteTaker`)
  */
-export const PassageNotes = ({ showMDFullScreen, setShowMDFullScreen, autosaveNotes }: IPassageNotes) => {
+export const PassageNotes = ({ autosaveNotes }: IPassageNotes) => {
   const selectedPassageID = useSelector(getSelectedPassage);
   const selectedNoteID = useSelector(getSelectedNote);
   const { data, error, isLoading } = useGetPassageByIdQuery(selectedPassageID);
@@ -53,7 +49,7 @@ export const PassageNotes = ({ showMDFullScreen, setShowMDFullScreen, autosaveNo
     );
   }
 
-  const showNotesForPassage = selectedPassageID !== '' && !showMDFullScreen;
+  const showNotesForPassage = selectedPassageID !== '';
 
   return (
     <Row>
@@ -63,12 +59,7 @@ export const PassageNotes = ({ showMDFullScreen, setShowMDFullScreen, autosaveNo
         </Col>
       )}
       <Col xs="12" md={showNotesForPassage ? '6' : '12'} lg="12" xl={showNotesForPassage ? '7' : '12'}>
-        <MDNoteTaker
-          showMDFullScreen={showMDFullScreen}
-          setShowMDFullScreen={setShowMDFullScreen}
-          autosaveNotes={autosaveNotes}
-          key={selectedNoteID || uuidv4()}
-        />
+        <MDNoteTaker autosaveNotes={autosaveNotes} key={selectedNoteID || uuidv4()} />
       </Col>
     </Row>
   );

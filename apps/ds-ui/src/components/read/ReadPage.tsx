@@ -34,14 +34,6 @@ import { AllNotes } from './notes/AllNotes';
  */
 export const ReadPage = () => {
   const [userData, userResponseError, userLoading] = useUserSettings();
-  const [showMDFullScreen, setShowMDFullScreen] = useState<boolean>(false);
-
-  const switchMDFullScreen = useCallback(
-    (fs: boolean) => {
-      setShowMDFullScreen(fs);
-    },
-    [setShowMDFullScreen]
-  );
 
   if (userLoading) {
     return <LoadingMessage />;
@@ -57,23 +49,15 @@ export const ReadPage = () => {
       </Container>
       <Container fluid={true} className="page-main-container">
         <Row>
-          {!showMDFullScreen && (
-            <Col xs="12" lg="6">
-              <PassageCards sortOrder={userData!.settings.read.sortPassages} />
-            </Col>
-          )}
-          <Col xs="12" lg={showMDFullScreen ? '12' : '6'}>
-            <PassageNotes
-              setShowMDFullScreen={switchMDFullScreen}
-              showMDFullScreen={showMDFullScreen}
-              autosaveNotes={userData!.settings.read.autosavePassageNotes}
-            />
+          <Col xs="12" lg="6">
+            <PassageCards sortOrder={userData!.settings.read.sortPassages} />
           </Col>
-          {!showMDFullScreen && (
-            <Col xs="12">
-              <AllNotes />
-            </Col>
-          )}
+          <Col xs="12" lg="6">
+            <PassageNotes autosaveNotes={userData!.settings.read.autosavePassageNotes} />
+          </Col>
+          <Col xs="12">
+            <AllNotes />
+          </Col>
         </Row>
       </Container>
     </>

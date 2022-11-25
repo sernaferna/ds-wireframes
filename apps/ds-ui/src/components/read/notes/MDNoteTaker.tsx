@@ -62,8 +62,6 @@ const schema = yup.object({
 type ValuesSchema = yup.InferType<typeof schema>;
 
 interface IMDNoteTaker {
-  showMDFullScreen: boolean;
-  setShowMDFullScreen(fs: boolean): void;
   autosaveNotes: boolean;
 }
 
@@ -85,11 +83,9 @@ interface IMDNoteTaker {
  * * **ReadPage** includes **PassageNotes**
  * * PassageNotes displays *MDNoteTaker* and **NotesForPassage**
  *
- * @param showMDFullScreen Indicates if the MD editor should be shown full screen
- * @param setShowMDFullScreen Callback function to call when switching between full and non-full screen MD mode
  * @param autosaveNotes Indicates whether notes should be automatically saved every few seconds
  */
-export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNotes }: IMDNoteTaker) => {
+export const MDNoteTaker = ({ autosaveNotes }: IMDNoteTaker) => {
   const selectedPassageID = useSelector(getSelectedPassage);
   const selectedNoteID = useSelector(getSelectedNote);
   const {
@@ -112,16 +108,6 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
   const mdRef = useRef<HTMLDivElement>(null);
   const formikRef = useRef<FormikProps<ValuesSchema>>(null);
   const [timer, setTimer] = useState<NodeJS.Timer | null>(null);
-
-  const switchFS = useCallback(
-    (fs: boolean) => {
-      setShowMDFullScreen(fs);
-      if (mdRef.current) {
-        mdRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    },
-    [setShowMDFullScreen]
-  );
 
   const downloadedNoteText = useMemo(() => {
     if (selectedNote && !noteIsLoading && selectedNoteID === selectedNote.id) {
@@ -170,7 +156,6 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
 
   const newNoteBtn = () => {
     dispatch(updateSelectedNote(''));
-    setShowMDFullScreen(false);
   };
 
   const formSubmit = useCallback(
@@ -337,9 +322,6 @@ export const MDNoteTaker = ({ showMDFullScreen, setShowMDFullScreen, autosaveNot
               }
             }}
             fullScreenOption={true}
-            showingFullScreen={showMDFullScreen}
-            setFullSreen={switchFS}
-            showSidePreview={showMDFullScreen ? true : false}
             height={10}
           />
           <div className="m-2 d-flex flex-row-reverse">

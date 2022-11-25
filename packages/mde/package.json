@@ -68,5 +68,11 @@
     "@types/react-dom": {
       "optional": true
     }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   }
 }
