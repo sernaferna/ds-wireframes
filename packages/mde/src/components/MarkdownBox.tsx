@@ -1,11 +1,12 @@
 import React, { useCallback, useMemo, useState, useRef, KeyboardEvent } from 'react';
-import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import { Row, Col, Form, Button, ButtonToolbar, ButtonGroup, Modal } from 'react-bootstrap';
 import fileDownload from 'js-file-download';
 import { MDPreview } from './MDPreview';
 import { outputFromMD } from '../helpers/markdown';
 import { useWindowSize } from '../hooks/WindowSize';
 import { toolbar } from '../helpers/markdown/md-commands';
 import { HotKeys, configure as hotkeyConfigure, KeyMap } from 'react-hotkeys';
+import { FullScreenButton } from './helpers/FullScreenButton';
 
 const PREVIEW_DELAY = 500;
 
@@ -15,10 +16,7 @@ export interface IMarkedMD {
   passageContext?: string;
   changeCallback: (newContent: string) => void;
   showToolbar?: boolean;
-  showSidePreview?: boolean;
   fullScreenOption?: boolean;
-  showingFullScreen?: boolean;
-  setFullSreen?: (fs: boolean) => void;
   hideAllControls?: boolean;
   height?: number;
   readOnly?: boolean;
@@ -36,19 +34,12 @@ export interface IMarkedMD {
  * but some definitely override. e.g. setting `hideAllControls` will hide all
  * of the controls, even if, for example, `showSidePreview` is set to true.
  *
- * Has a callback for indicating to the parent component when the fullscreen status
- * changes, because the parent may neet to adjust its own UI accordingly to
- * accommodate the fullscreen version of this component.
- *
  * @param content The markdown to be displayed
  * @param defaultVersion (optional) Default Bible version to use for links
  * @param passageContext (optional) Larger contextual passage to use for relative passages (e.g. `verse 1`)
  * @param changeCallback Callback function to be called when the content is updated
  * @param showToolbar Whether the toolbar should be displayed
- * @param showSidePreview Whether the side preview should be displayed
  * @param fullScreenOption Whether the component should allow the user to switch to fullscreen mode
- * @param showingFullScreen Indicates if the component should currently be displayed full screen
- * @param setFullScreen Callback function to call when the full screen indicator changes
  * @param hideAllControls Hides all chrome (toolbar, previews, save HTML, etc.)
  * @param height Height of the editor, in terms of lines to display in the textarea (*not* pixels)
  * @param readOnly If the component should be rendered readonly
@@ -59,10 +50,7 @@ export const MarkdownBox = ({
   passageContext,
   changeCallback,
   showToolbar = true,
-  showSidePreview = false,
   fullScreenOption = false,
-  showingFullScreen = false,
-  setFullSreen = undefined,
   hideAllControls = false,
   height = 20,
   readOnly = false,
@@ -77,37 +65,18 @@ export const MarkdownBox = ({
   const windowSize = useWindowSize();
   const [previewContent, setPreviewContent] = useState(content);
   const [previewTimer, setPreviewTimer] = useState<NodeJS.Timer | null>(null);
+  const [fs, setFS] = useState<boolean>(false);
 
-  const fsButton = useMemo(() => {
-    if (!fullScreenOption) {
-      return <></>;
-    }
-
-    if (showingFullScreen) {
-      return (
-        <Button variant="link" size="sm" onClick={() => setFullSreen!(false)}>
-          Show Normal View
-        </Button>
-      );
-    } else {
-      return (
-        <Button variant="link" size="sm" onClick={() => setFullSreen!(true)}>
-          Show Full Screen
-        </Button>
-      );
-    }
-  }, [fullScreenOption, setFullSreen, showingFullScreen]);
-
-  const [editorLineHeight] = useMemo(() => {
-    if (!editorRef.current || !showingFullScreen) {
-      return [height, 0, 0];
+  const editorLineHeight = useMemo(() => {
+    if (!editorRef.current || !fs) {
+      return height;
     }
 
     const fontHeight = parseFloat(getComputedStyle(editorRef.current!).fontSize);
     const newHeight = windowSize.height / fontHeight / 2;
 
-    return [newHeight];
-  }, [editorRef, windowSize, height, showingFullScreen]);
+    return newHeight;
+  }, [editorRef, windowSize, height, fs]);
 
   const getEditorPixelHeight = () => {
     if (!editorRef.current) return 0;
@@ -203,62 +172,46 @@ export const MarkdownBox = ({
 
   return (
     <>
-      <Row>
-        <Col xs={showSidePreview ? '6' : '12'}>
-          <ButtonToolbar
-            ref={toolbarRef}
-            aria-label="Markdown Toolbar"
-            className={hideAllControls || !showToolbar ? 'd-none' : ''}
-          >
-            {renderedToolbar}
-          </ButtonToolbar>
-
-          <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
-            <Form.Control
-              ref={editorRef}
-              className="ds-md-editor"
-              as="textarea"
-              rows={editorLineHeight}
-              value={content}
-              onChange={(newValue) => {
-                const newText = newValue.currentTarget.value;
-                changeCallback(newText);
-
-                if (previewTimer) {
-                  clearTimeout(previewTimer);
-                }
-
-                setPreviewTimer(
-                  setTimeout(() => {
-                    setPreviewContent(newText);
-                    setPreviewTimer(null);
-                  }, PREVIEW_DELAY)
-                );
-              }}
-              disabled={readOnly}
-              onScroll={handleEditorScroll}
-            />
-          </HotKeys>
-        </Col>
-        {showSidePreview && (
-          <Col xs="6">
-            <div style={{ height: `${getToolbarPixelHeight()}px` }}>&nbsp;</div>
-            <div
-              ref={viewerRef}
-              className="overflow-auto"
-              onScroll={handleViewerScroll}
-              style={{ height: `${getEditorPixelHeight()}px` }}
+      {!fs && (
+        <Row>
+          <Col>
+            <ButtonToolbar
+              ref={toolbarRef}
+              aria-label="Markdown Toolbar"
+              className={hideAllControls || !showToolbar ? 'd-none' : ''}
             >
-              <MDPreview
-                content={previewContent}
-                shaded={false}
-                defaultVersion={defaultVersion}
-                passageContext={passageContext}
+              {renderedToolbar}
+            </ButtonToolbar>
+
+            <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
+              <Form.Control
+                ref={editorRef}
+                className="ds-md-editor"
+                as="textarea"
+                rows={editorLineHeight}
+                value={content}
+                onChange={(newValue) => {
+                  const newText = newValue.currentTarget.value;
+                  changeCallback(newText);
+
+                  if (previewTimer) {
+                    clearTimeout(previewTimer);
+                  }
+
+                  setPreviewTimer(
+                    setTimeout(() => {
+                      setPreviewContent(newText);
+                      setPreviewTimer(null);
+                    }, PREVIEW_DELAY)
+                  );
+                }}
+                disabled={readOnly}
+                onScroll={handleEditorScroll}
               />
-            </div>
+            </HotKeys>
           </Col>
-        )}
-      </Row>
+        </Row>
+      )}
       <Row>
         <Col>
           {/* {!hideAllControls && (
@@ -273,7 +226,7 @@ export const MarkdownBox = ({
             </Button>
           )} */}
 
-          {fsButton}
+          {fullScreenOption && <FullScreenButton isFullScreen={fs} stateSetter={setFS} />}
 
           {!hideAllControls && (
             <Button variant="link" size="sm" onClick={handleHTMLDownload}>
@@ -282,7 +235,7 @@ export const MarkdownBox = ({
           )}
         </Col>
       </Row>
-      {!showingFullScreen && !hideAllControls && (
+      {!fs && !hideAllControls && (
         <Row>
           <Col className="d-grid gap-2">
             <Button size="sm" variant="outline-secondary" onClick={reversePreviewState()}>
@@ -299,6 +252,73 @@ export const MarkdownBox = ({
             )}
           </Col>
         </Row>
+      )}
+
+      {fs && (
+        <Modal show={true} onHide={() => setFS(false)} keyboard={false} fullscreen>
+          <Modal.Header closeButton>
+            <Modal.Title>Editor</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Row>
+              <Col xs="6">
+                <ButtonToolbar
+                  ref={toolbarRef}
+                  aria-label="Markdown Toolbar"
+                  className={hideAllControls || !showToolbar ? 'd-none' : ''}
+                >
+                  {renderedToolbar}
+                </ButtonToolbar>
+
+                <HotKeys keyMap={keyMap} handlers={handlers} allowChanges={false}>
+                  <Form.Control
+                    ref={editorRef}
+                    className="ds-md-editor"
+                    as="textarea"
+                    rows={editorLineHeight}
+                    value={content}
+                    onChange={(newValue) => {
+                      const newText = newValue.currentTarget.value;
+                      changeCallback(newText);
+
+                      if (previewTimer) {
+                        clearTimeout(previewTimer);
+                      }
+
+                      setPreviewTimer(
+                        setTimeout(() => {
+                          setPreviewContent(newText);
+                          setPreviewTimer(null);
+                        }, PREVIEW_DELAY)
+                      );
+                    }}
+                    disabled={readOnly}
+                    onScroll={handleEditorScroll}
+                  />
+                </HotKeys>
+              </Col>
+              <Col xs="6">
+                <div style={{ height: `${getToolbarPixelHeight()}px` }}>&nbsp;</div>
+                <div
+                  ref={viewerRef}
+                  className="overflow-auto"
+                  onScroll={handleViewerScroll}
+                  style={{ height: `${getEditorPixelHeight()}px` }}
+                >
+                  <MDPreview
+                    content={previewContent}
+                    shaded={false}
+                    defaultVersion={defaultVersion}
+                    passageContext={passageContext}
+                  />
+                </div>
+              </Col>
+            </Row>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => setFS(false)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       )}
     </>
   );
