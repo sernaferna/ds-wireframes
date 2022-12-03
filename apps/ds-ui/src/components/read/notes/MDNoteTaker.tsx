@@ -323,6 +323,10 @@ export const MDNoteTaker = ({ autosaveNotes }: IMDNoteTaker) => {
             }}
             fullScreenOption={true}
             height={10}
+            fullScreenTitle={`Notes for ${getFormattedReference(
+              getContextForPassage(fp.values.startReference, fp.values.endReference),
+              false
+            )}`}
           />
           <div className="m-2 d-flex flex-row-reverse">
             {selectedNote && (
