@@ -17,6 +17,7 @@ export interface IMarkedMD {
   changeCallback: (newContent: string) => void;
   showToolbar?: boolean;
   fullScreenOption?: boolean;
+  fullScreenTitle?: string;
   hideAllControls?: boolean;
   height?: number;
   readOnly?: boolean;
@@ -40,6 +41,7 @@ export interface IMarkedMD {
  * @param changeCallback Callback function to be called when the content is updated
  * @param showToolbar Whether the toolbar should be displayed
  * @param fullScreenOption Whether the component should allow the user to switch to fullscreen mode
+ * @param fullScreenTitle: (optional) Title to show in the Full Screen view
  * @param hideAllControls Hides all chrome (toolbar, previews, save HTML, etc.)
  * @param height Height of the editor, in terms of lines to display in the textarea (*not* pixels)
  * @param readOnly If the component should be rendered readonly
@@ -51,6 +53,7 @@ export const MarkdownBox = ({
   changeCallback,
   showToolbar = true,
   fullScreenOption = false,
+  fullScreenTitle,
   hideAllControls = false,
   height = 20,
   readOnly = false,
@@ -256,9 +259,11 @@ export const MarkdownBox = ({
 
       {fs && (
         <Modal show={true} onHide={() => setFS(false)} keyboard={false} fullscreen>
-          <Modal.Header closeButton>
-            <Modal.Title>Editor</Modal.Title>
-          </Modal.Header>
+          {fullScreenTitle && (
+            <Modal.Header closeButton>
+              <Modal.Title>{fullScreenTitle}</Modal.Title>
+            </Modal.Header>
+          )}
           <Modal.Body>
             <Row>
               <Col xs="6">
