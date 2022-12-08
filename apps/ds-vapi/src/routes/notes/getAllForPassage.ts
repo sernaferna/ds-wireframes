@@ -13,7 +13,7 @@ router.post('/notesForPassage', async (req: Request, res: Response, next: NextFu
 
     const boundsForPassage: Bounds[] = await getBoundsForPassage(req.body.osis);
 
-    const all: Note[] = getAllNotes();
+    const all: Note[] = await getAllNotes();
     const response: Note[] = all.filter((item) => {
       for (let i = 0; i < boundsForPassage.length; i++) {
         if (item.passageStart >= boundsForPassage[i].lowerBound && item.passageEnd <= boundsForPassage[i].upperBound) {

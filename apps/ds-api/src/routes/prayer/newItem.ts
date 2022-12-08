@@ -21,7 +21,7 @@ router.post(
     };
 
     try {
-      db.push('/prayerItems[]', newItem);
+      await db.push('/prayerItems[]', newItem);
     } catch (err) {
       const error = new DatabaseError('newPrayerItem');
       return next(error);

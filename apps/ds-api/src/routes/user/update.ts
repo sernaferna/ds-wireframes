@@ -14,8 +14,8 @@ router.put(
   async (req: Request, res: Response) => {
     const newUser: UserAttributes = req.body as UserAttributes;
 
-    db.delete('/users[0]');
-    db.push('/users[]', newUser);
+    await db.delete('/users[0]');
+    await db.push('/users[]', newUser);
 
     res.json(newUser);
   }

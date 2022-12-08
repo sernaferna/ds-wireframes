@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/subscribed', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const plans = db.getObject<InstantiatedPlan[]>('/instantiatedPlans');
+    const plans = await db.getObject<InstantiatedPlan[]>('/instantiatedPlans');
     res.json(plans);
   } catch (err) {
     if (err instanceof CustomError) {

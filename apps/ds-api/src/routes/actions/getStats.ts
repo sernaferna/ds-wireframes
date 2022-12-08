@@ -45,7 +45,7 @@ router.get(
           earliestDate = DateTime.fromISO('1900-01-01');
           break;
       }
-      const response = db.getObject<ActionsForDay[]>('/actions/entries');
+      const response = await db.getObject<ActionsForDay[]>('/actions/entries');
       response.forEach((item) => {
         const itemDate = DateTime.fromISO(item.date);
         if (itemDate < earliestDate!) {

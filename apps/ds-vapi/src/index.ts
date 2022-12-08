@@ -32,8 +32,8 @@ const PORT: number = parseInt(process.env.PORT as string, 10);
 const db: Database = getDB();
 writeLog('Connected to DB');
 
-db.serialize(() => {
-  db.get('SELECT COUNT(versenum) c FROM verses', (err: any, row: any) => {
+db.serialize(async () => {
+  await db.get('SELECT COUNT(versenum) c FROM verses', (err: any, row: any) => {
     if (err) {
       populateDB(db);
     }

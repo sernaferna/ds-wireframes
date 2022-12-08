@@ -8,7 +8,7 @@ router.get('/', async (req: Request, res: Response) => {
   let response;
 
   try {
-    response = db.getObject<PassageItems>('/passages');
+    response = await db.getObject<PassageItems>('/passages');
   } catch (err) {
     response = [];
   }

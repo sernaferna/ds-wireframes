@@ -28,9 +28,11 @@ router.post(
 
       const passages: Bounds[] = await getBoundsForPassage(osis);
       for (const bound of passages) {
-        const verses: Verse[] = await getVersesByNum(bound.lowerBound, bound.upperBound);
+        const verses = await getVersesByNum(bound.lowerBound, bound.upperBound);
         response = response.concat(verses);
       }
+
+      console.log(response);
 
       res.json(response);
     } catch (err) {

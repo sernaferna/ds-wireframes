@@ -13,12 +13,12 @@ router.get(
     const tutorialId = req.params.tutorialId;
 
     try {
-      const index = db.getIndex('/tutorials', tutorialId);
+      const index = await db.getIndex('/tutorials', tutorialId);
       if (index < 0) {
         throw new NotFoundError(`Tutorial ${tutorialId}`);
       }
 
-      const tutorial = db.getObject<Tutorial>(`/tutorials[${index}]`);
+      const tutorial = await db.getObject<Tutorial>(`/tutorials[${index}]`);
       res.json(tutorial);
     } catch (err) {
       if (err instanceof CustomError) {

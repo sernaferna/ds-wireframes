@@ -22,17 +22,17 @@ router.put(
     const bounds: Bounds[] = await getBoundsForPassage(newNote.osis);
 
     try {
-      const index = notesDB.getIndex('/notes', newNote.id);
+      const index = await notesDB.getIndex('/notes', newNote.id);
       if (index < 0) {
         throw new NotFoundError(`Note not found: ${newNote.id}`);
       }
 
-      notesDB.push(`/notes[${index}]/passageStart`, bounds[0].lowerBound);
-      notesDB.push(`/notes[${index}]/passageEnd`, bounds[0].upperBound);
-      notesDB.push(`/notes[${index}]/text`, newNote.text);
-      notesDB.push(`/notes[${index}]/lastUpdateDate`, DateTime.now().toISODate());
-      notesDB.push(`/notes[${index}]/osis`, newNote.osis);
-      const updatedItem: Note = notesDB.getObject<Note>(`/notes[${index}]`);
+      await notesDB.push(`/notes[${index}]/passageStart`, bounds[0].lowerBound);
+      await notesDB.push(`/notes[${index}]/passageEnd`, bounds[0].upperBound);
+      await notesDB.push(`/notes[${index}]/text`, newNote.text);
+      await notesDB.push(`/notes[${index}]/lastUpdateDate`, DateTime.now().toISODate());
+      await notesDB.push(`/notes[${index}]/osis`, newNote.osis);
+      const updatedItem: Note = await notesDB.getObject<Note>(`/notes[${index}]`);
       res.json(updatedItem);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('updateNote'));

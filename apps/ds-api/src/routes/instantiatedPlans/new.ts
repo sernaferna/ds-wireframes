@@ -25,7 +25,7 @@ router.post(
     const newBaseIP: BaseInstantiatedPlan = req.body;
 
     try {
-      const plan = getPlanById(newBaseIP.planInstanceId);
+      const plan = await getPlanById(newBaseIP.planInstanceId);
       if (!plan.days) {
         throw new InvalidPlanDaysError(plan.days);
       }
@@ -51,7 +51,7 @@ router.post(
         days: days,
       };
 
-      db.push(`/instantiatedPlans[]`, newIP);
+      await db.push(`/instantiatedPlans[]`, newIP);
       res.status(201).json(newIP);
     } catch (err) {
       if (err instanceof CustomError) {

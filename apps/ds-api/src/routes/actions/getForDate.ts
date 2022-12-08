@@ -6,14 +6,14 @@ import { param } from 'express-validator';
 
 const router = express.Router();
 
-export const getActionForDateInternal = (actionDate: string): ActionsForDay => {
+export const getActionForDateInternal = async (actionDate: string): Promise<ActionsForDay> => {
   let response;
 
   try {
-    const itemIndex = db.getIndex('/actions/entries', actionDate, 'date');
+    const itemIndex = await db.getIndex('/actions/entries', actionDate, 'date');
 
     if (itemIndex >= 0) {
-      response = db.getObject<ActionsForDay>(`/actions/entries[${itemIndex}]`);
+      response = await db.getObject<ActionsForDay>(`/actions/entries[${itemIndex}]`);
     } else {
       response = populateActionsForDay(actionDate);
     }
@@ -29,7 +29,7 @@ router.get(
   [param('actionDate').isDate().withMessage('Valid date required')],
   validateRequest,
   async (req: Request, res: Response) => {
-    const response = getActionForDateInternal(req.params.actionDate);
+    const response = await getActionForDateInternal(req.params.actionDate);
 
     res.json(response);
   }

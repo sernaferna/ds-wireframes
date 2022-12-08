@@ -9,10 +9,10 @@ router.get('/', async (req: Request, res: Response) => {
   let response;
 
   try {
-    response = db.getObject<PrayerListItems>('/prayerItems');
+    response = await db.getObject<PrayerListItems>('/prayerItems');
   } catch (err) {
     response = generatePrayerItems();
-    db.push('/prayerItems', response);
+    await db.push('/prayerItems', response);
   }
 
   res.json(response);

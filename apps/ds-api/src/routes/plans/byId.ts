@@ -9,13 +9,13 @@ import { db } from '../../services/db';
  * @param id Plan Instance ID
  * @returns Plan
  */
-export const getPlanById = (id: string): PlanAttributes => {
+export const getPlanById = async (id: string): Promise<PlanAttributes> => {
   try {
-    const index = db.getIndex('/plans', id, 'planInstanceId');
+    const index = await db.getIndex('/plans', id, 'planInstanceId');
     if (index < 0) {
       throw new NotFoundError(`Plan ${id}`);
     }
-    const item = db.getObject<PlanAttributes>(`/plans[${index}]`);
+    const item = await db.getObject<PlanAttributes>(`/plans[${index}]`);
     return item;
   } catch (err) {
     if (err instanceof CustomError) {
@@ -36,7 +36,7 @@ router.get(
     const planInstanceId: string = req.params.planInstanceId;
 
     try {
-      const item = getPlanById(planInstanceId);
+      const item = await getPlanById(planInstanceId);
       res.json(item);
     } catch (err) {
       if (err instanceof CustomError) {

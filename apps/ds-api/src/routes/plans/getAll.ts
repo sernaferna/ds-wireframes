@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
+    const publicPlans: PlanAttributes[] = await db.getObject<PlanAttributes[]>('/plans');
     res.json(publicPlans);
   } catch (err) {
     res.json([]);

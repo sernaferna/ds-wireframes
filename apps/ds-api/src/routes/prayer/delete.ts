@@ -17,11 +17,11 @@ router.delete(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const indexOfItem = db.getIndex('/prayerItems', req.params.id);
+      const indexOfItem = await db.getIndex('/prayerItems', req.params.id);
       if (indexOfItem < 0) {
         throw new NotFoundError('Prayer item');
       }
-      db.delete(`/prayerItems[${indexOfItem}]`);
+      await db.delete(`/prayerItems[${indexOfItem}]`);
       res.json(ItemRemovedResponse);
     } catch (err) {
       if (err instanceof CustomError) {

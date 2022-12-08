@@ -19,12 +19,12 @@ router.delete(
     const ipId: string = req.params.ipId;
 
     try {
-      const planIndex = db.getIndex(`/instantiatedPlans`, ipId, 'planInstanceId');
+      const planIndex = await db.getIndex(`/instantiatedPlans`, ipId, 'planInstanceId');
       if (planIndex < 0) {
         throw new NotFoundError(`Plan ${ipId}`);
       }
 
-      db.delete(`/instantiatedPlans[${planIndex}]`);
+      await db.delete(`/instantiatedPlans[${planIndex}]`);
       res.json(ItemRemovedResponse);
     } catch (err) {
       if (err instanceof CustomError) {

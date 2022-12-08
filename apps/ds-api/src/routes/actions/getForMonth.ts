@@ -19,7 +19,7 @@ router.get(
     const nextMonth = passedMonth.plus({ month: 1 });
 
     try {
-      const fullList = db.getObject<ActionsForDay[]>('/actions/entries');
+      const fullList = await db.getObject<ActionsForDay[]>('/actions/entries');
       const filteredList = fullList.filter((item) => {
         const itemDate = DateTime.fromISO(item.date);
         return (
