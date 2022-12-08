@@ -16,15 +16,15 @@ router.get(
     let user: UserAttributes | null = null;
 
     try {
-      const index = db.getIndex('/users', userId);
+      const index = await db.getIndex('/users', userId);
       if (index < 0) {
         throw new UserNotFoundError(userId);
       }
-      user = db.getData(`/users[${index}]`);
+      user = await db.getData(`/users[${index}]`);
     } catch (err) {
       if (userId === '2f740108-8596-4a8a-b334-518ab34a8c50') {
         user = generateDefaultUser();
-        db.push('/users[]', user);
+        await db.push('/users[]', user);
       } else {
         return next(err);
       }

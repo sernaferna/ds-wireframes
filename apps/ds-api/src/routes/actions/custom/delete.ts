@@ -17,11 +17,11 @@ router.delete(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const indexOfItem = db.getIndex('/actions/custom', req.params.id);
+      const indexOfItem = await db.getIndex('/actions/custom', req.params.id);
       if (indexOfItem < 0) {
         throw new NotFoundError('custom action');
       }
-      db.delete(`/actions/custom[${indexOfItem}]`);
+      await db.delete(`/actions/custom[${indexOfItem}]`);
       res.status(200).json(ItemRemovedResponse);
     } catch (err) {
       if (err instanceof CustomError) {

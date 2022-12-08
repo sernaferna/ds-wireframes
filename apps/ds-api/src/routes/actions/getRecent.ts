@@ -9,10 +9,10 @@ router.get('/recent', async (req: Request, res: Response) => {
   let response;
 
   try {
-    response = db.getObject<ActionsForDay[]>('/actions/entries');
+    response = await db.getObject<ActionsForDay[]>('/actions/entries');
   } catch (err) {
     response = generateActionBacklog();
-    db.push('/actions/entries', response);
+    await db.push('/actions/entries', response);
   }
 
   res.json(response);

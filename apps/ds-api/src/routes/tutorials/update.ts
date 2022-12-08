@@ -17,13 +17,13 @@ router.put(
     try {
       const newTut: Tutorial = req.body;
 
-      const index = db.getIndex('/tutorials', newTut.id);
+      const index = await db.getIndex('/tutorials', newTut.id);
       if (index < 0) {
         throw new NotFoundError(`Tutorial ${newTut.id}`);
       }
 
-      db.delete(`/tutorials[${index}]`);
-      db.push('/tutorials[]', newTut);
+      await db.delete(`/tutorials[${index}]`);
+      await db.push('/tutorials[]', newTut);
 
       res.json(newTut);
     } catch (err) {

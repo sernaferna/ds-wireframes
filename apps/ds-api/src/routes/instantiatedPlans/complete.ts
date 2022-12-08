@@ -32,19 +32,19 @@ router.put(
     }
 
     try {
-      const indexOfPlan = db.getIndex('/instantiatedPlans', planId, 'planInstanceId');
+      const indexOfPlan = await db.getIndex('/instantiatedPlans', planId, 'planInstanceId');
       if (indexOfPlan < 0) {
         throw new InvalidPlanError(`Plan ID: ${planId}`);
       }
 
       try {
-        const dayInDB = db.getObject<InstantiatedPlanDay>(`/instantiatedPlans[${indexOfPlan}]/days[${dayIndex}]`);
+        const dayInDB = await db.getObject<InstantiatedPlanDay>(`/instantiatedPlans[${indexOfPlan}]/days[${dayIndex}]`);
       } catch {
         throw new InvalidDayForPlanError();
       }
 
-      db.push(`/instantiatedPlans[${indexOfPlan}]/days[${dayIndex}]/completed`, day.completed);
-      const plan = db.getObject<InstantiatedPlan>(`/instantiatedPlans[${indexOfPlan}]`);
+      await db.push(`/instantiatedPlans[${indexOfPlan}]/days[${dayIndex}]/completed`, day.completed);
+      const plan = await db.getObject<InstantiatedPlan>(`/instantiatedPlans[${indexOfPlan}]`);
       if (!plan.days) {
         throw new InvalidPlanError(`${planId} has no days in DB`);
       }
@@ -55,7 +55,7 @@ router.put(
         }
       }
       const percentComplete = (completedDays / plan.days!.length).toFixed(2);
-      db.push(`/instantiatedPlans[${indexOfPlan}]/percentageComplete`, percentComplete);
+      await db.push(`/instantiatedPlans[${indexOfPlan}]/percentageComplete`, percentComplete);
       res.json(day);
     } catch (err) {
       if (err instanceof CustomError) {

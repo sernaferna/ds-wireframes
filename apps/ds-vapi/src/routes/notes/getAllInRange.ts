@@ -18,7 +18,7 @@ router.get(
     const upperBound: number = parseInt(req.params.upperBound as string, 10);
 
     try {
-      const allResults = notesDB.getObject<Note[]>('/notes');
+      const allResults = await notesDB.getObject<Note[]>('/notes');
       const response = allResults.filter((item) => {
         return item.passageStart >= lowerBound && item.passageEnd <= upperBound;
       });

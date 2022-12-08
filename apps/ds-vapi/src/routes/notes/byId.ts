@@ -5,13 +5,13 @@ import { notesDB } from '../../services/notes-db';
 
 const router = express.Router();
 
-export const getNoteById = (id: string): Note => {
+export const getNoteById = async (id: string): Promise<Note> => {
   try {
-    const index = notesDB.getIndex('/notes', id);
+    const index = await notesDB.getIndex('/notes', id);
     if (index < 0) {
       throw new NotFoundError('Note');
     }
-    const item: Note = notesDB.getData(`/notes[${index}]`);
+    const item: Note = await notesDB.getData(`/notes[${index}]`);
     return item;
   } catch (err) {
     throw err;
@@ -25,7 +25,7 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     let item: Note | null = null;
     try {
-      item = getNoteById(req.params.id);
+      item = await getNoteById(req.params.id);
       res.json(item);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('getNoteByID'));

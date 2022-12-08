@@ -23,7 +23,7 @@ router.post(
     };
 
     try {
-      db.push('/passages[]', newItem);
+      await db.push('/passages[]', newItem);
       res.status(201).json(newItem);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('newReadingItem'));

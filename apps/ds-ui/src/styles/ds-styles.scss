@@ -85,6 +85,7 @@ $font-weight-normal: 300;
 $font-weight-base: $font-weight-normal;
 // $headings-font-family: '', sans-serif;
 
+@import '~bootstrap/scss/maps';
 @import '~bootstrap/scss/utilities';
 
 // changes to BS utilities here

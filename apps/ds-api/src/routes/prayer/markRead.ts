@@ -12,12 +12,12 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     let item: PrayerListItem | null = null;
     try {
-      const index = db.getIndex('/prayerItems', req.params.itemId);
+      const index = await db.getIndex('/prayerItems', req.params.itemId);
       if (index < 0) {
         throw new NotFoundError('Prayer item');
       }
-      db.push(`/prayerItems[${index}]/completed`, true);
-      item = db.getObject<PrayerListItem>(`/prayerItems[${index}]`);
+      await db.push(`/prayerItems[${index}]/completed`, true);
+      item = await db.getObject<PrayerListItem>(`/prayerItems[${index}]`);
     } catch (err) {
       const error = new DatabaseError('markPrayerRead');
       next(error);
@@ -34,12 +34,12 @@ router.put(
   async (req: Request, res: Response, next: NextFunction) => {
     let item: PrayerListItem | null = null;
     try {
-      const index = db.getIndex('/prayerItems', req.params.itemId);
+      const index = await db.getIndex('/prayerItems', req.params.itemId);
       if (index < 0) {
         throw new NotFoundError('Prayer item');
       }
-      db.push(`/prayerItems[${index}]/completed`, false);
-      item = db.getObject<PrayerListItem>(`/prayerItems[${index}]`);
+      await db.push(`/prayerItems[${index}]/completed`, false);
+      item = await db.getObject<PrayerListItem>(`/prayerItems[${index}]`);
     } catch (err) {
       const error = new DatabaseError('markPrayerRead');
       return next(error);

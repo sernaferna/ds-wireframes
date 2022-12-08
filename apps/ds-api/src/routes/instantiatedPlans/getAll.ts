@@ -13,11 +13,11 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const instantiatedPlans: InstantiatedPlan[] = db.getObject<InstantiatedPlan[]>(`/instantiatedPlans`);
+    const instantiatedPlans: InstantiatedPlan[] = await db.getObject<InstantiatedPlan[]>(`/instantiatedPlans`);
 
     const returnArray: BaseInstantiatedPlan[] = instantiatedPlans.slice();
 
-    const publicPlans: PlanAttributes[] = db.getObject<PlanAttributes[]>('/plans');
+    const publicPlans: PlanAttributes[] = await db.getObject<PlanAttributes[]>('/plans');
     for (const plan of publicPlans) {
       if (instantiatedPlans.filter((p) => p.planInstanceId === plan.planInstanceId).length < 1) {
         if (plan.status !== PlanStatus.Deleted) {

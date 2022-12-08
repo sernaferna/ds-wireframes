@@ -17,11 +17,11 @@ router.delete(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const indexOfItem = db.getIndex('/passages', req.params.id);
+      const indexOfItem = await db.getIndex('/passages', req.params.id);
       if (indexOfItem < 0) {
         throw new NotFoundError('Passage item');
       }
-      db.delete(`/passages[${indexOfItem}]`);
+      await db.delete(`/passages[${indexOfItem}]`);
       res.json(ItemRemovedResponse);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('deletePassage'));

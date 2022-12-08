@@ -23,12 +23,12 @@ router.put(
     const newIP: InstantiatedPlan = req.body;
 
     try {
-      const planIndex = db.getIndex(`/instantiatedPlans`, newIP.id);
+      const planIndex = await db.getIndex(`/instantiatedPlans`, newIP.id);
       if (planIndex < 0) {
         throw new NotFoundError('Instantiated Plan not found in DB');
       }
 
-      db.push(`/instantiatedPlans[${planIndex}]/percentageComplete`, newIP.percentageComplete);
+      await db.push(`/instantiatedPlans[${planIndex}]/percentageComplete`, newIP.percentageComplete);
 
       res.json(newIP);
     } catch (err) {

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const fullList = db.getObject<Tutorial[]>('/tutorials');
+    const fullList = await db.getObject<Tutorial[]>('/tutorials');
     if (!fullList || fullList.length < 1) {
       throw new NotFoundError('Tutorials');
     }

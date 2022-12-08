@@ -26,7 +26,7 @@ router.post(
     };
 
     try {
-      notesDB.push('/notes[]', newItem);
+      await notesDB.push('/notes[]', newItem);
       res.status(201).json(newItem);
     } catch (err) {
       return next(err instanceof CustomError ? err : new DatabaseError('createNewNote'));

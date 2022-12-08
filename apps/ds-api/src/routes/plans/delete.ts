@@ -20,11 +20,11 @@ router.delete(
     const planInstanceId = req.params.planInstanceId;
 
     try {
-      const index = db.getIndex(`/plans`, planInstanceId, 'planInstanceId');
+      const index = await db.getIndex(`/plans`, planInstanceId, 'planInstanceId');
       if (index < 0) {
         throw new NotFoundError(`Plan ${planInstanceId}`);
       }
-      db.push(`/plans[${index}]/status`, PlanStatus.Deleted);
+      await db.push(`/plans[${index}]/status`, PlanStatus.Deleted);
       res.json(ItemRemovedResponse);
     } catch (err) {
       if (err instanceof CustomError) {

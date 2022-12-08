@@ -6,9 +6,9 @@ import { validateRequest } from '@devouringscripture/common';
 
 const router = express.Router();
 
-export const getActionByIdInternal = (id: string): ActionsForDay => {
-  const itemIndex = db.getIndex('/actions/entries', id);
-  const response = db.getObject<ActionsForDay>(`/actions/entries[${itemIndex}]`);
+export const getActionByIdInternal = async (id: string): Promise<ActionsForDay> => {
+  const itemIndex = await db.getIndex('/actions/entries', id);
+  const response = await db.getObject<ActionsForDay>(`/actions/entries[${itemIndex}]`);
 
   return response;
 };
@@ -19,7 +19,7 @@ router.get(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const response: ActionsForDay = getActionByIdInternal(req.params.actionDayId);
+      const response: ActionsForDay = await getActionByIdInternal(req.params.actionDayId);
       res.json(response);
     } catch (err) {
       const error = new NotFoundError('Action');

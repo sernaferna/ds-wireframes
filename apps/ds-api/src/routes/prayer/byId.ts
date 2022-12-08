@@ -13,11 +13,11 @@ router.get(
     let item: PrayerListItem | null = null;
 
     try {
-      const index = db.getIndex('/prayerItems', req.params.itemId);
+      const index = await db.getIndex('/prayerItems', req.params.itemId);
       if (index < 0) {
         throw new NotFoundError('Prayer item');
       }
-      item = db.getData(`/prayerItems[${index}]`);
+      item = await db.getData(`/prayerItems[${index}]`);
     } catch (error) {
       if (error instanceof CustomError) {
         return next(error);

@@ -57,28 +57,28 @@ router.post(
 
       if (plan.status === PlanStatus.Unsaved) {
         plan.status = PlanStatus.Published;
-        db.push('/plans[]', plan);
+        await db.push('/plans[]', plan);
         return res.status(201).json(plan);
       }
 
       if (plan.status === PlanStatus.Saved) {
         plan.status = PlanStatus.Published;
-        const oldIndex = db.getIndex('/plans', plan.planInstanceId, 'planInstanceId');
+        const oldIndex = await db.getIndex('/plans', plan.planInstanceId, 'planInstanceId');
         if (oldIndex < 0) {
           throw new InvalidPlanError('Plan not found');
         }
-        db.push(`/plans[${oldIndex}]/name`, plan.name);
-        db.push(`/plans[${oldIndex}]/description`, plan.description);
-        db.push(`/plans[${oldIndex}]/includeWeekends`, plan.includeWeekends);
-        db.push(`/plans[${oldIndex}]/includesApocrypha`, plan.includesApocrypha);
-        db.push(`/plans[${oldIndex}]/isAdmin`, plan.isAdmin);
-        db.push(`/plans[${oldIndex}]/length`, plan.length);
-        db.push(`/plans[${oldIndex}]/isFreeform`, plan.isFreeform);
-        // db.push(`/plans[${oldIndex}]/osis`, plan.osis); // can save OSIS, but not Publish
-        db.delete(`/plans[${oldIndex}]/osis`);
-        db.push(`/plans[${oldIndex}]/status`, plan.status);
-        db.push(`/plans[${oldIndex}]/version`, plan.version);
-        db.push(`/plans[${oldIndex}]/days`, plan.days);
+        await db.push(`/plans[${oldIndex}]/name`, plan.name);
+        await db.push(`/plans[${oldIndex}]/description`, plan.description);
+        await db.push(`/plans[${oldIndex}]/includeWeekends`, plan.includeWeekends);
+        await db.push(`/plans[${oldIndex}]/includesApocrypha`, plan.includesApocrypha);
+        await db.push(`/plans[${oldIndex}]/isAdmin`, plan.isAdmin);
+        await db.push(`/plans[${oldIndex}]/length`, plan.length);
+        await db.push(`/plans[${oldIndex}]/isFreeform`, plan.isFreeform);
+        // await db.push(`/plans[${oldIndex}]/osis`, plan.osis); // can save OSIS, but not Publish
+        await db.delete(`/plans[${oldIndex}]/osis`);
+        await db.push(`/plans[${oldIndex}]/status`, plan.status);
+        await db.push(`/plans[${oldIndex}]/version`, plan.version);
+        await db.push(`/plans[${oldIndex}]/days`, plan.days);
         return res.json(plan);
       }
 
@@ -87,11 +87,11 @@ router.post(
       }
 
       //anything else means published
-      const oldPlanIndex = db.getIndex('/plans', plan.planInstanceId, 'planInstanceId');
+      const oldPlanIndex = await db.getIndex('/plans', plan.planInstanceId, 'planInstanceId');
       if (oldPlanIndex < 0) {
         throw new InvalidPlanError('Plan not found');
       }
-      const oldPlan = db.getObject<PlanAttributes>(`/plans[${oldPlanIndex}]`);
+      const oldPlan = await db.getObject<PlanAttributes>(`/plans[${oldPlanIndex}]`);
       if (!v2GTV1(plan.version, oldPlan.version)) {
         throw new PlanVersionError(plan.version);
       }
@@ -99,7 +99,7 @@ router.post(
         throw new PlanAdminToNonError(plan.name);
       }
 
-      deleteOldPlanIfNotInUse(oldPlan.planInstanceId, oldPlanIndex);
+      await deleteOldPlanIfNotInUse(oldPlan.planInstanceId, oldPlanIndex);
 
       const newPlan: PlanAttributes = {
         ...plan,
@@ -107,7 +107,7 @@ router.post(
         status: PlanStatus.Published,
       };
       delete newPlan.osis;
-      db.push('/plans[]', newPlan);
+      await db.push('/plans[]', newPlan);
       return res.json(plan);
     } catch (err) {
       if (err instanceof CustomError) {

@@ -18,7 +18,7 @@ router.post(
     };
 
     try {
-      db.push('/actions/custom[]', newItem);
+      await db.push('/actions/custom[]', newItem);
     } catch (err) {
       return next(new DatabaseError('newCustomAction'));
     }

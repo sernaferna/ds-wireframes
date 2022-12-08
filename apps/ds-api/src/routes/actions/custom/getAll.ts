@@ -9,10 +9,10 @@ router.get('/', async (req: Request, res: Response) => {
   let response;
 
   try {
-    response = db.getObject<ActionType[]>('/actions/custom');
+    response = await db.getObject<ActionType[]>('/actions/custom');
   } catch (err) {
     response = defaultCustomActions;
-    db.push('/actions/custom', response);
+    await db.push('/actions/custom', response);
   }
 
   res.json(response);

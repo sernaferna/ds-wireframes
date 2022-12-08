@@ -11,11 +11,11 @@ router.get(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const index: number = db.getIndex('/passages', req.params.id);
+      const index: number = await db.getIndex('/passages', req.params.id);
       if (index < 0) {
         throw new NotFoundError('Passage by ID');
       }
-      const response: Passage = db.getObject<Passage>(`/passages[${index}]`);
+      const response: Passage = await db.getObject<Passage>(`/passages[${index}]`);
       res.json(response);
     } catch (err) {
       if (err instanceof CustomError) {
